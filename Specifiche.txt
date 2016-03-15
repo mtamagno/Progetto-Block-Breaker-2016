@@ -1,0 +1,21 @@
+Base:
+Board;
+
+Elementi da rompere: più scuro è il colore, più difficile è romperli; dopo ogni hit il blocco cambia classe;
+Pallina;
+Muro tipo pong ovunque ma non nella parte inferiore, anche il player è fatto di muro ma ha gli angoli smussati;
+Elemento del punteggio;
+
+Algoritmi:
+Algoritmo della pallina del rimbalzo: ogni angolo interpreta la nuova triettoria da prendere;
+Velocità crescente: non c'è limite di tempo ma diventa sempre più facile perdere;
+
+
+
+
+
+
+
+
+TODO:
+POWER UP;
