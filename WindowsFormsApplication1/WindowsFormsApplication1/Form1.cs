@@ -49,7 +49,7 @@ namespace WindowsFormsApplication1
                 _y += 10;
             if (_objPosition == Position.Rendi)
             {
-                spritebatch.begin();
+                spritebatch.Begin();
                 spritebatch.Draw(s);
                 spritebatch.End();
             }

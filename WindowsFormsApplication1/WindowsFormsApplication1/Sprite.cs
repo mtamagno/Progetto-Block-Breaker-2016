@@ -20,6 +20,7 @@ namespace WindowsFormsApplication1
             {
                 g.DrawImage(texture, 0, 0, width, height);
             }
+            Texture = b;
             X = x;
             Y = y;
             Width = width;

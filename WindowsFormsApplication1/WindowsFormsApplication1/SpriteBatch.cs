@@ -20,9 +20,9 @@ namespace WindowsFormsApplication1
             Gfx = gfx;
         }
 
-        public void begin()
+        public void Begin()
         {
-            bfgfx.Graphics.Clear(Color.Black);
+            bfgfx.Graphics.Clear(Color.Black);  
         }
 
         public void Draw(Sprite s)
