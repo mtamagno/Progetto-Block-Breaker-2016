@@ -12,60 +12,78 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
+        enum Position {
+            Left, Up, Right, Down, Rendi
+        }
 
-        Graphics drawings;
+        private int _x;
+        private int _y;
+        private Position _objPosition;
+        private Sprite s;
+        private SpriteBatch spritebatch;
+
 
         public Form1()
         {
+            s = new Sprite(Properties.Resources.Pallina, 100, 100, 100,100);
             InitializeComponent();
-            drawings = pictureBox1.CreateGraphics();
+            _x = 50;
+            _y = 50;
+            _objPosition = Position.Right;
         }
 
-        //public class Ball
-        //{
-        //    private void DrawRectangle()
-        //    {
-        //        System.Drawing.Pen myPen = new System.Drawing.Pen(System.Drawing.Color.Red);
-        //        System.Drawing.Graphics formGraphics;
-        //        formGraphics = Form1.pictureBox1.CreateGraphics();
-        //        formGraphics.DrawRectangle(myPen, new Rectangle(0, 0, 200, 300));
-        //        myPen.Dispose();
-        //        formGraphics.Dispose();
-        //    }
-        //}
+        private void Form1_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.FillRectangle(Brushes.Blue, _x, _y, 100, 100);
+        }
 
+        private void timer_tick(object sender, EventArgs e)
+        {
+            if(_objPosition==Position.Right)
+            _x += 10;
+            if (_objPosition == Position.Left)
+                _x -= 10;
+            if (_objPosition == Position.Up)
+                _y -= 10;
+            if (_objPosition == Position.Down)
+                _y += 10;
+            if (_objPosition == Position.Rendi)
+            {
+                spritebatch.begin();
+                spritebatch.Draw(s);
+                spritebatch.End();
+            }
+
+            Invalidate();
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Left)
+            {
+                _objPosition = Position.Left;
+            }
+            if (e.KeyCode == Keys.Right)
+            {
+                _objPosition = Position.Right;
+            }
+            if (e.KeyCode == Keys.Up)
+            {
+                _objPosition = Position.Up;
+            }
+            if (e.KeyCode == Keys.Down)
+            {
+                _objPosition = Position.Down;
+            }
+            if(e.KeyCode == Keys.D)
+            {
+                _objPosition = Position.Rendi;
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SolidBrush myBrush = new System.Drawing.SolidBrush(System.Drawing.Color.Black);
-            Graphics formGraphics;
-            drawings.FillRectangle(myBrush, new Rectangle(0, 0, 50, 50));
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        //private void FillRectangleInt(PaintEventArgs ciao)
-        //{
-
-        //    // Create solid brush.
-        //    SolidBrush blueBrush = new SolidBrush(Color.Blue);
-
-        //    // Create location and size of rectangle.
-        //    int x = 0;
-        //    int y = 0;
-        //    int width = 200;
-        //    int height = 200;
-
-        //    // Fill rectangle to screen.
-        //    ciao.Graphics.FillRectangle(blueBrush, x, y, width, height);
-        //}
-        
     }
 }
+
