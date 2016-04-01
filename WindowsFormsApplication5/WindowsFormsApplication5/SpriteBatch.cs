@@ -25,7 +25,7 @@ namespace WindowsFormsApplication5
 
         public void Begin()
         {
-            bfgfx.Graphics.Clear(Color.Black);
+            bfgfx.Graphics.Clear(Color.White);
         }
 
         public void Draw(Sprite s)

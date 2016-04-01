@@ -14,6 +14,11 @@ namespace WindowsFormsApplication5
 {
     public partial class Form1 : Form
     {
+        public int Speed_x = 4; // setto la velocita' nell asse delle x
+        public int Speed_y = -4; // setto la velocita' nell asse delle y
+        public int score = 0; //Punteggio
+
+
         public Form1()
         {
             InitializeComponent();
@@ -36,11 +41,13 @@ namespace WindowsFormsApplication5
         private Point MousePoint;
         private float deltaTime;
         private long LastTime;
-        private Sprite s;
+        private Sprite ball;
+        private Sprite racchetta;
 
         private void loadContent()
         {
-            s = new Sprite(Properties.Resources.ball,100,100,100,100);
+            ball = new Sprite(Properties.Resources.ball, 0, 0, 20, 20);
+            racchetta = new Sprite(Properties.Resources.New_Piskel, 0, 200, 150, 50);
             spriteBatch = new SpriteBatch(this.ClientSize, this.CreateGraphics());
             Thread game = new Thread(gameLoop);
             game.Start();
@@ -98,7 +105,8 @@ namespace WindowsFormsApplication5
         private void render()
         {      
             spriteBatch.Begin();
-            spriteBatch.Draw(s);
+            spriteBatch.Draw(ball);
+            spriteBatch.Draw(racchetta);
             spriteBatch.End();
         }
 
@@ -146,5 +154,10 @@ namespace WindowsFormsApplication5
             }
         }
 
+
+     
     }
+
+
+
 }
