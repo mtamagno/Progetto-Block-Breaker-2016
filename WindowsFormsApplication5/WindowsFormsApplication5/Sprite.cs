@@ -1,20 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
     class Sprite
     {
-
         public Bitmap Texture;
         public float X, Y;
         public int Width, Height;
+        public PointF velocity;
+        public int Speed_x = 1; // setto la velocita' nell asse delle x
+        public int Speed_y = 1; // setto la velocita' nell asse delle y
+        public SpriteType Type;
+        public enum SpriteType { player , ball , blocks, view};
+        public bool canFall;
+        public bool canCollide;
+        public bool followPointer;
 
-       public Sprite(Bitmap texture,float x, float y, int width, int height)
+       public Sprite(Bitmap texture,float x, float y, int width, int height, SpriteType thisType)
         {
             Bitmap b = new Bitmap(width, height);
             using (Graphics g = Graphics.FromImage(b))
@@ -28,6 +38,106 @@ namespace WindowsFormsApplication5
 
             Width = width;
             Height = height;
+
+            Type = thisType;
+
+            switch (thisType)
+            {
+                case SpriteType.ball:
+                    canFall = true;
+                    canCollide = true;
+                    followPointer = false;
+
+                    break;
+
+                case SpriteType.blocks:
+                    canFall = false;
+                    canCollide = true;
+                    followPointer = false;
+                    break;
+
+                case SpriteType.player:
+                    canFall = false;
+                    canCollide = true;
+                    followPointer = true;
+                    break;
+
+                case SpriteType.view:
+                    canFall = false;
+                    canCollide = false;
+                    followPointer = false;
+                    break;
+
+            }
+
+            
+        }
+
+
+        public void Update(InputManager iManager)
+        {
+            if (canFall)
+            {
+                velocity.X += Speed_x;
+                velocity.Y += Speed_y;
+                this.X += velocity.X * iManager.deltaTime;
+                this.Y += velocity.Y * iManager.deltaTime;
+            }
+
+            if(followPointer)
+            {
+                this.X = Cursor.Position.X - (this.Width + this.Width/4 - 5);
+            }
+
+            Collider(iManager);
+        }
+
+        private void Collider(InputManager iManager)
+        {
+            foreach(Sprite s in iManager.inGameSprites)
+            {
+
+                if (this.isCollidingWith(s))
+                {
+                    switch (this.Type)
+                    {
+                        case SpriteType.ball:
+                            break;
+
+                        case SpriteType.blocks:
+                            break;
+
+                        case SpriteType.player:
+                            switch (this.Type)
+                            {
+                                case SpriteType.ball:
+                                    if (s.isCollidingWith(this)){
+                                        velocity.Y = -velocity.Y;
+                                    }
+                                    if (s.isTouchingTop(this))
+                                    {
+                                        s.Y = this.Y - s.Height;
+                                        velocity.Y *= -1;
+                                    }
+                                    break;
+
+                                case SpriteType.blocks:
+                                    break;
+
+                                case SpriteType.player:
+                                    break;
+
+                                case SpriteType.view:
+                                    break;
+                            }
+                            break;
+
+                        case SpriteType.view:
+                            break;
+                    }
+                }
+
+            }
         }
 
         public Rectangle toRec
@@ -65,6 +175,52 @@ namespace WindowsFormsApplication5
 
     static class SpriteHelper
     {
+        public static bool isCollidingWith(this Sprite s1, Sprite s2)
+        {
+            if (s1.toRec.IntersectsWith(s2.toRec))
+                return true;
+            else
+                return false;
+        }
 
+        public static bool isTouchingLeft(this Sprite s1, Sprite s2)
+        {
+            if (s1.Right.IntersectsWith(s2.Left))
+                return true;
+            else
+                return false;
+        }
+
+        public static bool isTouchingRight(this Sprite s1, Sprite s2)
+        {
+            if (s1.Left.IntersectsWith(s2.Right))
+                return true;
+            else
+                return false;
+        }
+
+        public static bool isTouchingTop(this Sprite s1, Sprite s2)
+        {
+            if (s1.Top.IntersectsWith(s2.Bottom))
+                return true;
+            else
+                return false;
+        }
+
+        public static bool isTouchingBottom(this Sprite s1, Sprite s2)
+        {
+            if (s1.Bottom.IntersectsWith(s2.Top))
+                return true;
+            else
+                return false;
+        }
+
+        public static bool isOnStage(this Sprite s1, Rectangle clientRec)
+        {
+            if (s1.toRec.IntersectsWith(clientRec))
+                return true;
+            else
+                return false;
+        }
     }
 }

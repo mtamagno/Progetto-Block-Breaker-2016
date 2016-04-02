@@ -14,8 +14,7 @@ namespace WindowsFormsApplication5
 {
     public partial class Form1 : Form
     {
-        public int Speed_x = 1; // setto la velocita' nell asse delle x
-        public int Speed_y = 1; // setto la velocita' nell asse delle y
+      
         public int score = 0; //Punteggio
 
 
@@ -29,16 +28,21 @@ namespace WindowsFormsApplication5
         }
         /* se l utente inizia a mandare input troppo early potrebbe non verificarsi il corretto funzionamento del 
         programma quindi ci serve una booleana per dare i permessi*/
-        private bool AllowInput;
-        private Stopwatch gameTime = new Stopwatch();
-        private int fps;
+        private bool AllowInput; /* Variabile booleana per decidere quando l utente puo' immettere degli input*/
+        private Stopwatch gameTime = new Stopwatch(); /* Stopwatch e' una classe che ha un set di metodi utili a misurare il tempo trascorso*/
+        private int fps; /*fps totali*/
         private int fpsCounter;
+        private int interval = 1000/63;
+        private int uCounter;
+        private int Ups; /* update per second " fps reali, dopo l utilizzo di un fps limiter" */
+        private int previousSecond;
+        private long uTime;
         private long fpsTime;
         private List<Keys> KeysPressed = new List<Keys>();
         private List<Keys> KeysHeld = new List<Keys>();
         private SpriteBatch spriteBatch;
         private InputManager iManager = new InputManager();
-        private Point MousePoint;
+        public Point MousePoint;
         private float deltaTime;
         private long LastTime;
         private Sprite ball;
@@ -50,6 +54,8 @@ namespace WindowsFormsApplication5
 
         private void loadContent()
         {
+            ball = new Sprite(Properties.Resources.ball, ball_x, ball_y, 20, 20, Sprite.SpriteType.ball);
+            racchetta = new Sprite(Properties.Resources.New_Piskel, 150, 300, 150, 50, Sprite.SpriteType.player);
             Thread game = new Thread(gameLoop);
             game.Start();
         }
@@ -59,8 +65,7 @@ namespace WindowsFormsApplication5
             /*Gioco in esecuzione*/
             while (this.Created)
             {
-                ball = new Sprite(Properties.Resources.ball, ball_x, ball_y, 20, 20);
-                racchetta = new Sprite(Properties.Resources.New_Piskel, (float)MousePoint.X-150/2, (float)MousePoint.Y-50/2, 150, 50);
+               
                 spriteBatch = new SpriteBatch(this.ClientSize, this.CreateGraphics());
                 checkfps();
                 deltaTime = gameTime.ElapsedMilliseconds - LastTime;
@@ -68,10 +73,7 @@ namespace WindowsFormsApplication5
                 input();
                 logic();
                 render();
-                ball_x += Speed_x;
-                ball_y += Speed_y;
-                if ((ball_x+10) >= ((float)MousePoint.X - 150) && (ball_x-10) <= ((float)MousePoint.X + 150) && ball_y + 10 == ((float)MousePoint.Y - 50))
-                    Speed_y = - Speed_y;
+
             }
 
         }
@@ -84,7 +86,7 @@ namespace WindowsFormsApplication5
             {
                 this.Invoke(new MethodInvoker(delegate
                 {
-                    this.Text = fps.ToString();
+                    this.Text = "fps: " + fps.ToString() + "Ups:" + Ups.ToString();
                     MousePoint = this.PointToClient(Cursor.Position);
                 }));
             }
@@ -107,7 +109,24 @@ namespace WindowsFormsApplication5
 
         private void logic()
         {
-
+            if(gameTime.ElapsedMilliseconds - uTime > interval)
+            {
+                ball.Update(iManager);
+                racchetta.Update(iManager);
+                ball.isCollidingWith(racchetta);
+                racchetta.isCollidingWith(ball);
+                racchetta.isTouchingTop(ball);
+                if (gameTime.Elapsed.Seconds != previousSecond)
+                {
+                    previousSecond = gameTime.Elapsed.Seconds;
+                    Ups = uCounter;
+                    uCounter = 0;
+                }
+                uTime = gameTime.ElapsedMilliseconds;
+                uCounter++; 
+            }
+            
+            
         }
 
         private void render()

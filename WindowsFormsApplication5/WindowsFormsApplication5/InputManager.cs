@@ -15,6 +15,7 @@ namespace WindowsFormsApplication5
         public Keys[] keyHeld;
         public Stopwatch gameTime;
         public float deltaTime;
+        public List<Sprite> inGameSprites = new List<Sprite>();
 
         public void update(Point mp, Keys[] kp, Keys[] kh, Stopwatch gt, float dt)
         {
@@ -22,7 +23,7 @@ namespace WindowsFormsApplication5
             keyPressed = kp;
             keyHeld = kh;
             gameTime = gt;
-            deltaTime = dt;
+            deltaTime = dt/1000;
         }
     }
 }
