@@ -14,8 +14,8 @@ namespace WindowsFormsApplication5
 {
     public partial class Form1 : Form
     {
-        public int Speed_x = 4; // setto la velocita' nell asse delle x
-        public int Speed_y = -4; // setto la velocita' nell asse delle y
+        public int Speed_x = 1; // setto la velocita' nell asse delle x
+        public int Speed_y = 1; // setto la velocita' nell asse delle y
         public int score = 0; //Punteggio
 
 
@@ -26,10 +26,10 @@ namespace WindowsFormsApplication5
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
-
-        private bool AllowInput; /* se l utente inizia a mandare input troppo early potrebbe non verificarsi il corretto funzionamento del programma quindi ci serve una booleana per dare i permessi*/
+        /* se l utente inizia a mandare input troppo early potrebbe non verificarsi il corretto funzionamento del 
+        programma quindi ci serve una booleana per dare i permessi*/
+        private bool AllowInput;
         private Stopwatch gameTime = new Stopwatch();
         private int fps;
         private int fpsCounter;
@@ -43,27 +43,35 @@ namespace WindowsFormsApplication5
         private long LastTime;
         private Sprite ball;
         private Sprite racchetta;
+        public float ball_x = 10;
+        public float ball_y = 10;
+        //public float racchetta_x = MousePosition.X;
+        //public float racchetta_y = MousePosition.Y;
 
         private void loadContent()
         {
-            ball = new Sprite(Properties.Resources.ball, 0, 0, 20, 20);
-            racchetta = new Sprite(Properties.Resources.New_Piskel, 0, 200, 150, 50);
-            spriteBatch = new SpriteBatch(this.ClientSize, this.CreateGraphics());
             Thread game = new Thread(gameLoop);
             game.Start();
         }
-
         private void gameLoop()
         {
             gameTime.Start();
+            /*Gioco in esecuzione*/
             while (this.Created)
             {
+                ball = new Sprite(Properties.Resources.ball, ball_x, ball_y, 20, 20);
+                racchetta = new Sprite(Properties.Resources.New_Piskel, (float)MousePoint.X-150/2, (float)MousePoint.Y-50/2, 150, 50);
+                spriteBatch = new SpriteBatch(this.ClientSize, this.CreateGraphics());
                 checkfps();
                 deltaTime = gameTime.ElapsedMilliseconds - LastTime;
                 LastTime = gameTime.ElapsedMilliseconds;
                 input();
                 logic();
                 render();
+                ball_x += Speed_x;
+                ball_y += Speed_y;
+                if ((ball_x+10) >= ((float)MousePoint.X - 150) && (ball_x-10) <= ((float)MousePoint.X + 150) && ball_y + 10 == ((float)MousePoint.Y - 50))
+                    Speed_y = - Speed_y;
             }
 
         }
