@@ -55,7 +55,9 @@ namespace WindowsFormsApplication5
         private void loadContent()
         {
             ball = new Sprite(Properties.Resources.ball, ball_x, ball_y, 20, 20, Sprite.SpriteType.ball);
+            iManager.inGameSprites.Add(ball);
             racchetta = new Sprite(Properties.Resources.New_Piskel, 150, 300, 150, 50, Sprite.SpriteType.player);
+            iManager.inGameSprites.Add(ball);
             Thread game = new Thread(gameLoop);
             game.Start();
         }
@@ -65,7 +67,6 @@ namespace WindowsFormsApplication5
             /*Gioco in esecuzione*/
             while (this.Created)
             {
-               
                 spriteBatch = new SpriteBatch(this.ClientSize, this.CreateGraphics());
                 checkfps();
                 deltaTime = gameTime.ElapsedMilliseconds - LastTime;
@@ -73,7 +74,6 @@ namespace WindowsFormsApplication5
                 input();
                 logic();
                 render();
-
             }
 
         }
@@ -113,9 +113,9 @@ namespace WindowsFormsApplication5
             {
                 ball.Update(iManager);
                 racchetta.Update(iManager);
-                ball.isCollidingWith(racchetta);
-                racchetta.isCollidingWith(ball);
-                racchetta.isTouchingTop(ball);
+                //ball.isCollidingWith(racchetta);
+                //racchetta.isCollidingWith(ball);
+                //racchetta.isTouchingTop(ball);
                 if (gameTime.Elapsed.Seconds != previousSecond)
                 {
                     previousSecond = gameTime.Elapsed.Seconds;

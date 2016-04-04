@@ -16,8 +16,8 @@ namespace WindowsFormsApplication5
         public float X, Y;
         public int Width, Height;
         public PointF velocity;
-        public int Speed_x = 1; // setto la velocita' nell asse delle x
-        public int Speed_y = 1; // setto la velocita' nell asse delle y
+        public int Accel_x = 3;  //setto la velocita' nell asse delle x
+        public int Accel_y = 3;  //setto la velocita' nell asse delle y
         public SpriteType Type;
         public enum SpriteType { player , ball , blocks, view};
         public bool canFall;
@@ -78,10 +78,29 @@ namespace WindowsFormsApplication5
         {
             if (canFall)
             {
-                velocity.X += Speed_x;
-                velocity.Y += Speed_y;
-                this.X += velocity.X * iManager.deltaTime;
-                this.Y += velocity.Y * iManager.deltaTime;
+                if (velocity.X >= 0)
+                {
+                    velocity.X += Accel_x;
+                    this.X += velocity.X * iManager.deltaTime;
+                }
+                else
+                {
+                    velocity.X -= Accel_x;
+                    this.X += velocity.X * iManager.deltaTime;
+                }
+                if (velocity.Y >= 0)
+                {
+                    velocity.Y += Accel_y;
+                    this.Y += velocity.Y * iManager.deltaTime;
+
+                }
+                else
+                {
+                    velocity.Y -= Accel_y;
+                    this.Y += velocity.Y * iManager.deltaTime;
+                }
+
+
             }
 
             if(followPointer)
@@ -108,16 +127,17 @@ namespace WindowsFormsApplication5
                             break;
 
                         case SpriteType.player:
-                            switch (this.Type)
+                            switch (s.Type)
                             {
                                 case SpriteType.ball:
-                                    if (s.isCollidingWith(this)){
-                                        velocity.Y = -velocity.Y;
-                                    }
+                                    //questo l'ho lasciato commentato anche se penso sia inutile perchè nel momento in cui tocca il top sta anche collidendo
+                                    //if (s.isCollidingWith(this)){
+                                    //    s.velocity.Y = -s.velocity.Y;
+                                    //}
                                     if (s.isTouchingTop(this))
                                     {
                                         s.Y = this.Y - s.Height;
-                                        velocity.Y *= -1;
+                                        s.velocity.Y *= -1;
                                     }
                                     break;
 
