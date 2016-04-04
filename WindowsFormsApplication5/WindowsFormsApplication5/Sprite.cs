@@ -148,12 +148,25 @@ namespace WindowsFormsApplication5
                                     break;
 
                                 case SpriteType.view:
+                                    switch (s.Type)
+                                    {
+                                        case SpriteType.ball:
+
+                                            if (s.isTouchingTop(this) || s.isTouchingBottom(this))
+                                            {
+                                                s.velocity.Y = -s.velocity.Y;
+                                            }
+                                            if (s.isTouchingRight(this) || s.isTouchingLeft(this))
+                                            {
+                                                s.velocity.X = -s.velocity.X;
+                                            }
+
+                                            break;
+                                    }
                                     break;
                             }
                             break;
 
-                        case SpriteType.view:
-                            break;
                     }
                 }
 
