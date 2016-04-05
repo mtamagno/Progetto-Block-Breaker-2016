@@ -131,10 +131,11 @@ namespace WindowsFormsApplication5
                             {
                                 case SpriteType.ball:
                                     //questo l'ho lasciato commentato anche se penso sia inutile perchè nel momento in cui tocca il top sta anche collidendo
-                                    //if (s.isCollidingWith(this)){
-                                    //    s.velocity.Y = -s.velocity.Y;
-                                    //}
-                                    if (s.isTouchingTop(this))
+                                    /*if (s.isCollidingWith(this)){
+                                    s.Y = this.Y - s.Height;
+                                        s.velocity.Y = -s.velocity.Y;
+                                    }*/
+                                    if (s.isTouchingBottom(this))
                                     {
                                         s.Y = this.Y - s.Height;
                                         s.velocity.Y *= -1;
