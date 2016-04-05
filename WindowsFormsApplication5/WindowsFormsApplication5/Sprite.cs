@@ -24,8 +24,10 @@ namespace WindowsFormsApplication5
         public bool canCollide;
         public bool followPointer;
 
+        
        public Sprite(Bitmap texture,float x, float y, int width, int height, SpriteType thisType)
         {
+           
             Bitmap b = new Bitmap(width, height);
             using (Graphics g = Graphics.FromImage(b))
             {
