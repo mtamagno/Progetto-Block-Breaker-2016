@@ -54,7 +54,7 @@ namespace WindowsFormsApplication5
 
         private void loadContent()
         {
-            racchetta = new Sprite(Properties.Resources.New_Piskel,MousePoint.X , , 128, 24, Sprite.SpriteType.player);
+            racchetta = new Sprite(Properties.Resources.New_Piskel,MousePoint.X , 300, 128, 24, Sprite.SpriteType.player);
             iManager.inGameSprites.Add(racchetta);
             ball = new Sprite(Properties.Resources.ball, ball_x, ball_y, 10, 10, Sprite.SpriteType.ball);
             iManager.inGameSprites.Add(ball);
