@@ -47,6 +47,7 @@ namespace WindowsFormsApplication5
         private long LastTime;
         private Sprite ball;
         private Sprite racchetta;
+        private Sprite background;
         public float ball_x = 10;
         public float ball_y = 10;
         //public float racchetta_x = MousePosition.X;
@@ -54,9 +55,13 @@ namespace WindowsFormsApplication5
 
         private void loadContent()
         {
-            racchetta = new Sprite(Properties.Resources.New_Piskel,MousePoint.X/2 , 300, 128, 24, Sprite.SpriteType.player);
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.Bounds = Screen.PrimaryScreen.Bounds;
+            background = new Sprite(Properties.Resources.Background, 0, 0, 1280, 720, Sprite.SpriteType.view);
+            iManager.inGameSprites.Add(background);
+            racchetta = new Sprite(Properties.Resources.New_Piskel,MousePoint.X , 300, 128, 24, Sprite.SpriteType.player);
             iManager.inGameSprites.Add(racchetta);
-            ball = new Sprite(Properties.Resources.ball, ball_x, ball_y, 10, 10, Sprite.SpriteType.ball);
+            ball = new Sprite(Properties.Resources.ball, 300, 301, 10, 10, Sprite.SpriteType.ball);
             iManager.inGameSprites.Add(ball);
             Thread game = new Thread(gameLoop);
             game.Start();
@@ -113,6 +118,7 @@ namespace WindowsFormsApplication5
             {
                 ball.Update(iManager);
                 racchetta.Update(iManager);
+                background.Update(iManager);
                 //ball.isCollidingWith(racchetta);
                 //racchetta.isCollidingWith(ball);
                 //racchetta.isTouchingTop(ball);
@@ -132,6 +138,7 @@ namespace WindowsFormsApplication5
         private void render()
         {      
             spriteBatch.Begin();
+            spriteBatch.Draw(background);
             spriteBatch.Draw(ball);
             spriteBatch.Draw(racchetta);
             spriteBatch.End();

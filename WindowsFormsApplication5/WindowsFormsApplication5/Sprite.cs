@@ -27,6 +27,7 @@ namespace WindowsFormsApplication5
         
        public Sprite(Bitmap texture,float x, float y, int width, int height, SpriteType thisType)
         {
+            
            
             Bitmap b = new Bitmap(width, height);
             using (Graphics g = Graphics.FromImage(b))
@@ -66,7 +67,7 @@ namespace WindowsFormsApplication5
 
                 case SpriteType.view:
                     canFall = false;
-                    canCollide = false;
+                    canCollide = true;
                     followPointer = false;
                     break;
 
@@ -108,9 +109,9 @@ namespace WindowsFormsApplication5
 
             if(followPointer)
             {
-                this.X = Cursor.Position.X - (this.Width + this.Width/4 - 5);
+                this.X = Cursor.Position.X;
             }
-
+            if(canCollide == true)
             Collider(iManager);
         }
 
@@ -140,7 +141,7 @@ namespace WindowsFormsApplication5
                                     }*/
                                     if (s.isTouchingBottom(this))
                                     {
-                                        s.Y = this.Y - s.Height;
+                                        //s.Y = this.Y - s.Height;
                                         s.velocity.Y *= -1;
                                     }
                                     break;
@@ -152,21 +153,24 @@ namespace WindowsFormsApplication5
                                     break;
 
                                 case SpriteType.view:
-                                    switch (s.Type)
+                                    break;
+                            }
+                            break;
+
+                        case SpriteType.view:
+                            switch (s.Type)
+                            {
+                                case SpriteType.ball:
+
+                                    if (s.isTouchingTop(this) || s.isTouchingBottom(this))
                                     {
-                                        case SpriteType.ball:
-
-                                            if (s.isTouchingTop(this) || s.isTouchingBottom(this))
-                                            {
-                                                s.velocity.Y = -s.velocity.Y;
-                                            }
-                                            if (s.isTouchingRight(this) || s.isTouchingLeft(this))
-                                            {
-                                                s.velocity.X = -s.velocity.X;
-                                            }
-
-                                            break;
+                                        s.velocity.Y = -s.velocity.Y;
                                     }
+                                    if (s.isTouchingRight(this) || s.isTouchingLeft(this))
+                                    {
+                                        s.velocity.X = -s.velocity.X;
+                                    }
+
                                     break;
                             }
                             break;
@@ -184,22 +188,22 @@ namespace WindowsFormsApplication5
 
         public Rectangle Top
         {
-            get { return new Rectangle((int)X, (int)Y, Width, Height/4); }
+            get { return new Rectangle((int)X, (int)Y, Width, 10); }
         }
 
         public Rectangle Bottom
         {
-            get { return new Rectangle((int)X, (int)Y + this.Height/2 + this.Height/4, Width, Height); }
+            get { return new Rectangle((int)X, (int)Y + this.Height, Width, 10); }
         }
 
         public Rectangle Left
         {
-            get { return new Rectangle((int)X, (int)Y, Width/4, Height); }
+            get { return new Rectangle((int)X, (int)Y, 10, Height); }
         }
 
         public Rectangle Right
         {
-            get { return new Rectangle((int)X + Width/2 + Width/4, (int)Y + this.Height / 2 + this.Height / 4, Width, Height); }
+            get { return new Rectangle((int)X + this.Width, (int)Y , 10, Height); }
         }
 
         public void Draw(SpriteBatch sb)
