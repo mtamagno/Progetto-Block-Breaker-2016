@@ -23,7 +23,7 @@ namespace WindowsFormsApplication5
             keyPressed = kp;
             keyHeld = kh;
             gameTime = gt;
-            deltaTime = dt/1000;
+            deltaTime = dt/1000f;
         }
     }
 }

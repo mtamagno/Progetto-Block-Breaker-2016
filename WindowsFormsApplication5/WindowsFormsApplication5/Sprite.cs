@@ -16,8 +16,8 @@ namespace WindowsFormsApplication5
         public float X, Y;
         public int Width, Height;
         public PointF velocity;
-        public int Accel_x = 3;  //setto la velocita' nell asse delle x
-        public int Accel_y = 3;  //setto la velocita' nell asse delle y
+        public int Accel_x = 2;  //setto la velocita' nell asse delle x
+        public int Accel_y = 2;  //setto la velocita' nell asse delle y
         public SpriteType Type;
         public enum SpriteType { player , ball , blocks, view};
         public bool canFall;
@@ -81,23 +81,24 @@ namespace WindowsFormsApplication5
                 if (velocity.X >= 0)
                 {
                     velocity.X += Accel_x;
-                    this.X += velocity.X * iManager.deltaTime;
+                    this.X += velocity.X * 1/500;
                 }
                 else
                 {
                     velocity.X -= Accel_x;
-                    this.X += velocity.X * iManager.deltaTime;
+                    this.X += velocity.X * 1/500;
                 }
                 if (velocity.Y >= 0)
                 {
+                   
                     velocity.Y += Accel_y;
-                    this.Y += velocity.Y * iManager.deltaTime;
+                    this.Y += velocity.Y * 1/500;
 
                 }
                 else
                 {
                     velocity.Y -= Accel_y;
-                    this.Y += velocity.Y * iManager.deltaTime;
+                    this.Y += velocity.Y * 1/500;
                 }
 
 
