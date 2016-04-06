@@ -27,8 +27,6 @@ namespace WindowsFormsApplication5
         
        public Sprite(Bitmap texture,float x, float y, int width, int height, SpriteType thisType)
         {
-            
-           
             Bitmap b = new Bitmap(width, height);
             using (Graphics g = Graphics.FromImage(b))
             {
@@ -76,6 +74,21 @@ namespace WindowsFormsApplication5
             
         }
 
+        public void redraw(Sprite sprite, int new_Width, int new_Heigth,Bitmap risorsa, float nuova_X, float nuova_Y)
+        {
+            sprite.Width = new_Width;
+            sprite.Height = new_Heigth;
+
+            Bitmap b = new Bitmap(sprite.Width, sprite.Height);
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                g.DrawImage(risorsa,0, 0, sprite.Width, sprite.Height);
+            }
+            sprite.X = sprite.X * nuova_X;
+            sprite.Y = sprite.Y * nuova_Y;
+
+            sprite.Texture = b;
+        }
 
         public void Update(InputManager iManager)
         {

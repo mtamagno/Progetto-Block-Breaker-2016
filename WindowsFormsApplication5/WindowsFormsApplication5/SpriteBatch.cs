@@ -10,9 +10,9 @@ namespace WindowsFormsApplication5
     
     class SpriteBatch
     {
-        private Graphics Gfx;
-        private BufferedGraphics bfgfx; /* Si usa per rimuovere i "white flashes" "quello che puo' sembrare lag" */
-        private BufferedGraphicsContext cntxt = BufferedGraphicsManager.Current;
+        public Graphics Gfx;
+        public BufferedGraphics bfgfx; /* Si usa per rimuovere i "white flashes" "quello che puo' sembrare lag" */
+        public BufferedGraphicsContext cntxt = BufferedGraphicsManager.Current;
         
 
         public SpriteBatch(Size clientSize , Graphics gfx)
@@ -20,7 +20,6 @@ namespace WindowsFormsApplication5
             cntxt.MaximumBuffer = new Size(clientSize.Width + 1, clientSize.Height + 1);
             bfgfx = cntxt.Allocate(gfx, new Rectangle(Point.Empty, clientSize));
             Gfx = gfx;
-
         }
 
         public void Begin()
