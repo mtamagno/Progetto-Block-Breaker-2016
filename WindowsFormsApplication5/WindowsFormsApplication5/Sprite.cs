@@ -84,8 +84,7 @@ namespace WindowsFormsApplication5
             {
                 g.DrawImage(risorsa,0, 0, sprite.Width, sprite.Height);
             }
-            sprite.X = sprite.X * nuova_X;
-            sprite.Y = sprite.Y * nuova_Y;
+
 
             sprite.Texture = b;
         }
@@ -122,7 +121,8 @@ namespace WindowsFormsApplication5
 
             if(followPointer)
             {
-                this.X = Cursor.Position.X;
+                if(Form1.MousePosition.X > Form1.ActiveForm.Location.X && Form1.MousePosition.X < Form1.ActiveForm.Location.X + Form1.ActiveForm.Width)
+                this.X = Form1.MousePosition.X - Form1.ActiveForm.Location.X - this.Width / 2 - this.Width/16;
             }
             if(canCollide == true)
             Collider(iManager);
@@ -131,8 +131,7 @@ namespace WindowsFormsApplication5
         private void Collider(InputManager iManager)
         {
             foreach(Sprite s in iManager.inGameSprites)
-            {
-
+            {           
                 if (this.isCollidingWith(s))
                 {
                     switch (this.Type)
@@ -155,6 +154,19 @@ namespace WindowsFormsApplication5
                                     if (s.isTouchingBottom(this))
                                     {
                                         //s.Y = this.Y - s.Height;
+                                        if (s.X < this.X + this.Width / 2)
+                                        {
+                                            if (s.velocity.X < 0)
+                                                s.velocity.X *= ((this.X + this.Width) / (s.X + this.Width));
+                                            else
+                                                s.velocity.X *= (-(this.X + this.Width) / (s.X + this.Width));
+                                        }
+                                        else {
+                                            if (s.velocity.X > 0)
+                                                s.velocity.X *= ((this.X + this.Width) / (s.X + this.Width));
+                                            else
+                                                s.velocity.X *= (-(this.X + this.Width) / (s.X + this.Width));
+                                        }
                                         s.velocity.Y *= -1;
                                     }
                                     break;

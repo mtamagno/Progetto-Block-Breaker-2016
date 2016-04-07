@@ -33,7 +33,7 @@ namespace WindowsFormsApplication5
         private Stopwatch gameTime = new Stopwatch(); /* Stopwatch e' una classe che ha un set di metodi utili a misurare il tempo trascorso*/
         private int fps; /*fps totali*/
         private int fpsCounter;
-        private int interval = 1000 / 60;
+        private int interval = 1000 / 65;
         private int uCounter;
         private int Ups; /* update per second " fps reali, dopo l utilizzo di un fps limiter" */
         private int previousSecond;
@@ -53,6 +53,8 @@ namespace WindowsFormsApplication5
         public float ball_y = 10;
         public int Lunghezza_Client_inziale = 0;
         public int Altezza_Client_iniziale = 0;
+        public float lunghezza = 0;
+        public float altezza = 0;
 
         private void loadContent()
         {
@@ -62,10 +64,12 @@ namespace WindowsFormsApplication5
             //this.Bounds = Screen.PrimaryScreen.Bounds;
             background = new Sprite(Properties.Resources.Background, 0, 0, this.ClientRectangle.Width, this.ClientRectangle.Height, Sprite.SpriteType.view);
             iManager.inGameSprites.Add(background);
-            racchetta = new Sprite(Properties.Resources.New_Piskel,MousePoint.X , 300, 128, 24, Sprite.SpriteType.player);
+            racchetta = new Sprite(Properties.Resources.New_Piskel,MousePoint.X -this.Location.X , 300, 128, 24, Sprite.SpriteType.player);
             iManager.inGameSprites.Add(racchetta);
-            ball = new Sprite(Properties.Resources.ball, 300, 301, 10, 10, Sprite.SpriteType.ball);
+            ball = new Sprite(Properties.Resources.ball, 300, 288, 10, 10, Sprite.SpriteType.ball);
             iManager.inGameSprites.Add(ball);
+            ball.canFall = false;
+            ball.followPointer = true;
             Thread game = new Thread(gameLoop);
             game.Start();
         }
@@ -190,25 +194,26 @@ namespace WindowsFormsApplication5
             }
         }
 
+
         private void on_resize(object sender, EventArgs e)
         {
-            //background.Width = this.ClientRectangle.Width;
-            //background.Height = this.ClientRectangle.Height;
-            //Bitmap b = new Bitmap(background.Width, background.Height);
-            //using (Graphics g = Graphics.FromImage(b))
-            //{
-            //    g.DrawImage(Properties.Resources.Background, 0, 0, background.Width, background.Height);
-            //}
-            //background.Texture = b;
-            ball.redraw(ball, 10 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 10 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.ball, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
-            racchetta.redraw(racchetta, 150 * this.ClientRectangle.Width / Lunghezza_Client_inziale,25 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.New_Piskel, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
-            background.redraw(background,this.ClientRectangle.Width,this.ClientRectangle.Height,Properties.Resources.Background,0,0);
-            racchetta.Y = this.ClientRectangle.Height*9/10;
-            spriteBatch.cntxt.MaximumBuffer = new Size(ClientSize.Width + 1, ClientSize.Height + 1);
-            spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(this.CreateGraphics(), new Rectangle(Point.Empty, ClientSize));
-            spriteBatch.Gfx = this.CreateGraphics();
+
         }
 
+        private void Form1_ResizeBegin(object sender, EventArgs e)
+        {
+            lunghezza = this.ClientRectangle.Width;
+            altezza = this.ClientRectangle.Height;
+        }
+
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == (char)Keys.Space)
+            {
+                ball.canFall = true;
+                ball.followPointer = false;
+            }
+        }
     }
 
 
