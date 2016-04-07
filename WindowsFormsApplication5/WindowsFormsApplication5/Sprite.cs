@@ -16,7 +16,7 @@ namespace WindowsFormsApplication5
         public float X, Y;
         public int Width, Height;
         public PointF velocity;
-        public int Accel_x = 2;  //setto la velocita' nell asse delle x
+        //public int Accel_x = 2;  //setto la velocita' nell asse delle x
         public int Accel_y = 2;  //setto la velocita' nell asse delle y
         public SpriteType Type;
         public enum SpriteType { player , ball , blocks, view};
@@ -95,12 +95,12 @@ namespace WindowsFormsApplication5
             {
                 if (velocity.X >= 0)
                 {
-                    velocity.X += Accel_x;
+                    //velocity.X += Accel_x;
                     this.X += velocity.X * 1/500;
                 }
                 else
                 {
-                    velocity.X -= Accel_x;
+                    //velocity.X -= Accel_x;
                     this.X += velocity.X * 1/500;
                 }
                 if (velocity.Y >= 0)
@@ -119,19 +119,19 @@ namespace WindowsFormsApplication5
 
             }
 
-            if(followPointer)
+            if (followPointer)
             {
-                if(Form1.MousePosition.X > Form1.ActiveForm.Location.X && Form1.MousePosition.X < Form1.ActiveForm.Location.X + Form1.ActiveForm.Width)
-                this.X = Form1.MousePosition.X - Form1.ActiveForm.Location.X - this.Width / 2 - this.Width/16;
+                if (Form1.MousePosition.X > Form1.ActiveForm.Location.X && Form1.MousePosition.X < Form1.ActiveForm.Location.X + Form1.ActiveForm.Width)
+                    this.X = Form1.MousePosition.X - Form1.ActiveForm.Location.X - this.Width / 2 - this.Width / 16;
             }
-            if(canCollide == true)
+            if (canCollide == true)
             Collider(iManager);
         }
 
         private void Collider(InputManager iManager)
         {
-            foreach(Sprite s in iManager.inGameSprites)
-            {           
+            foreach (Sprite s in iManager.inGameSprites)
+            {
                 if (this.isCollidingWith(s))
                 {
                     switch (this.Type)
@@ -154,18 +154,18 @@ namespace WindowsFormsApplication5
                                     if (s.isTouchingBottom(this))
                                     {
                                         //s.Y = this.Y - s.Height;
-                                        if (s.X < this.X + this.Width / 2)
+                                        if (s.X < (this.X + this.Width / 2))
                                         {
-                                            if (s.velocity.X < 0)
-                                                s.velocity.X *= ((this.X + this.Width) / (s.X + this.Width));
-                                            else
-                                                s.velocity.X *= (-(this.X + this.Width) / (s.X + this.Width));
+                                            //if (s.velocity.X < 0)
+                                            s.velocity.X = -5 * s.velocity.Y * ((s.X + s.Width / 2) / this.X);
+                                            //else
+                                            //    s.velocity.X = - 400 * ((s.X+s.Width/2) / this.X);
                                         }
                                         else {
-                                            if (s.velocity.X > 0)
-                                                s.velocity.X *= ((this.X + this.Width) / (s.X + this.Width));
-                                            else
-                                                s.velocity.X *= (-(this.X + this.Width) / (s.X + this.Width));
+                                            //if (s.velocity.X > 0)
+                                            s.velocity.X = 5 * s.velocity.Y * ((s.X + s.Width / 2) / (this.X + this.Width));
+                                            //else
+                                            //    s.velocity.X = -400 * (this.X+this.Width) / (s.X + s.Width / 2));
                                         }
                                         s.velocity.Y *= -1;
                                     }
@@ -181,30 +181,43 @@ namespace WindowsFormsApplication5
                                     break;
                             }
                             break;
-
-                        case SpriteType.view:
-                            switch (s.Type)
-                            {
-                                case SpriteType.ball:
-
-                                    if (s.isTouchingTop(this) || s.isTouchingBottom(this))
-                                    {
-                                        s.velocity.Y = -s.velocity.Y;
-                                    }
-                                    if (s.isTouchingRight(this) || s.isTouchingLeft(this))
-                                    {
-                                        s.velocity.X = -s.velocity.X;
-                                    }
-
-                                    break;
-                            }
-                            break;
-
                     }
                 }
 
+                switch (this.Type)
+                {
+                    case SpriteType.view:
+                        switch (s.Type)
+                        {
+                            case SpriteType.ball:
+                                if (s.X + s.Width >= (float)this.Width)
+                                {
+                                    s.velocity.X *= -1;
+                                    s.X = (float)this.Width - s.Width;
+                                }
+                                if (s.X < 0)
+                                {
+                                    s.velocity.X *= -1;
+                                    s.X = 0;
+                                }
+                                if (s.Y + s.Height >= (float)this.Height)
+                                {
+                                    s.velocity.Y *= -1;
+                                    s.Y = (float)this.Height - s.Height;
+                                }
+                                if (s.Y < 0)
+                                {
+                                    s.velocity.Y *= -1;
+                                    s.Y = 0;
+                                }
+
+                                break;
+                        }
+                        break;
+                }
             }
         }
+                
 
         public Rectangle toRec
         {

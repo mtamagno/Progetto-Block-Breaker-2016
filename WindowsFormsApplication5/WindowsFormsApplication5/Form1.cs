@@ -55,7 +55,7 @@ namespace WindowsFormsApplication5
         public int Altezza_Client_iniziale = 0;
         public float lunghezza = 0;
         public float altezza = 0;
-
+        
         private void loadContent()
         {
             Lunghezza_Client_inziale = this.ClientRectangle.Width;
@@ -71,6 +71,7 @@ namespace WindowsFormsApplication5
             ball.canFall = false;
             ball.followPointer = true;
             Thread game = new Thread(gameLoop);
+            ball.velocity.X = 400;
             game.Start();
         }
         private void gameLoop()
@@ -126,9 +127,6 @@ namespace WindowsFormsApplication5
                 ball.Update(iManager);
                 racchetta.Update(iManager);
                 background.Update(iManager);
-                //ball.isCollidingWith(racchetta);
-                //racchetta.isCollidingWith(ball);
-                //racchetta.isTouchingTop(ball);
                 if (gameTime.Elapsed.Seconds != previousSecond)
                 {
                     previousSecond = gameTime.Elapsed.Seconds;
@@ -197,7 +195,13 @@ namespace WindowsFormsApplication5
 
         private void on_resize(object sender, EventArgs e)
         {
-
+            ball.redraw(ball, 10 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 10 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.ball, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
+            racchetta.redraw(racchetta, 150 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 25 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.New_Piskel, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
+            background.redraw(background, this.ClientRectangle.Width, this.ClientRectangle.Height, Properties.Resources.Background, 0, 0);
+            racchetta.Y = this.ClientRectangle.Height * 9 / 10;
+            spriteBatch.cntxt.MaximumBuffer = new Size(ClientSize.Width + 1, ClientSize.Height + 1);
+            spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(this.CreateGraphics(), new Rectangle(Point.Empty, ClientSize));
+            spriteBatch.Gfx = this.CreateGraphics();
         }
 
         private void Form1_ResizeBegin(object sender, EventArgs e)
