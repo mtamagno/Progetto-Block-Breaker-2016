@@ -121,13 +121,13 @@ namespace WindowsFormsApplication5
 
             if (followPointer)
             {
-                if (Form1.MousePosition.X > Form1.ActiveForm.Location.X && Form1.MousePosition.X < Form1.ActiveForm.Location.X + Form1.ActiveForm.Width)
-                    this.X = Form1.MousePosition.X - Form1.ActiveForm.Location.X - this.Width / 2 - this.Width / 16;
+                if (Form1.ActiveForm != null)
+                    if(Form1.MousePosition.X > Form1.ActiveForm.Location.X && Form1.MousePosition.X < Form1.ActiveForm.Location.X + Form1.ActiveForm.Width)
+                        this.X = Form1.MousePosition.X - Form1.ActiveForm.Location.X - this.Width / 2 - this.Width / 16;
             }
             if (canCollide == true)
             Collider(iManager);
         }
-
         private void Collider(InputManager iManager)
         {
             foreach (Sprite s in iManager.inGameSprites)
@@ -146,26 +146,38 @@ namespace WindowsFormsApplication5
                             switch (s.Type)
                             {
                                 case SpriteType.ball:
-                                    //questo l'ho lasciato commentato anche se penso sia inutile perchè nel momento in cui tocca il top sta anche collidendo
-                                    /*if (s.isCollidingWith(this)){
-                                    s.Y = this.Y - s.Height;
-                                        s.velocity.Y = -s.velocity.Y;
-                                    }*/
                                     if (s.isTouchingBottom(this))
                                     {
-                                        //s.Y = this.Y - s.Height;
-                                        if (s.X < (this.X + this.Width / 2))
+                                        //Se la pallina rimbalza nella prima delle 3 parti della racchetta
+                                        if (s.X < (this.X + this.Width / 3))
                                         {
-                                            //if (s.velocity.X < 0)
-                                            s.velocity.X = -5 * s.velocity.Y * ((s.X + s.Width / 2) / this.X);
-                                            //else
-                                            //    s.velocity.X = - 400 * ((s.X+s.Width/2) / this.X);
+                                            s.velocity.X = -5 * s.velocity.Y / ((s.X + s.Width / 2) / this.X);
                                         }
-                                        else {
-                                            //if (s.velocity.X > 0)
+                                        else
+                                        //Se la pallina rimbalza nella seconda delle 3 parti della racchetta
+                                        if(s.X < (this.X + (2 * this.Width / 3)))
+                                        {
+                                            //Se la pallina rimbalza nella prima delle 3 parti centrali della racchetta
+                                            if(s.X < (this.X + (2 * this.Width / 9)))
+                                            {
+                                                s.velocity.X = ((float)-2.5 * s.velocity.Y / ((s.X + (s.Width / 2) / this.X)));
+                                            }else 
+                                            //Se la pallina finisce nel punto centrale (5/9) della racchetta
+                                            if(s.X < (this.X + (4 * this.Width / 9)))
+                                                {
+                                                    s.velocity.X = 0;
+                                                }
+                                            //Se la pallina finisce nella terza parte delle 3 parti centrali della racchetta
+                                            else
+                                            {
+                                                s.velocity.X = ((float)2.5 * s.velocity.Y * ((s.X + (s.Width / 2) / this.X)));
+                                            }
+                                        }
+                                        else
+                                        //Se la pallina rimbalza nell'ultima delle 3 parti della racchetta
+                                        if(s.X < (this.X + this.Width))
+                                        {
                                             s.velocity.X = 5 * s.velocity.Y * ((s.X + s.Width / 2) / (this.X + this.Width));
-                                            //else
-                                            //    s.velocity.X = -400 * (this.X+this.Width) / (s.X + s.Width / 2));
                                         }
                                         s.velocity.Y *= -1;
                                     }
@@ -190,21 +202,21 @@ namespace WindowsFormsApplication5
                         switch (s.Type)
                         {
                             case SpriteType.ball:
-                                if (s.X + s.Width >= (float)this.Width)
+                                if (s.X + s.Width + s.velocity.X >= (float)this.Width)
                                 {
                                     s.velocity.X *= -1;
                                     s.X = (float)this.Width - s.Width;
-                                }
+                                }else
                                 if (s.X < 0)
                                 {
                                     s.velocity.X *= -1;
                                     s.X = 0;
                                 }
-                                if (s.Y + s.Height >= (float)this.Height)
+                                if (s.Y + s.Height + s.velocity.Y >= (float)this.Height)
                                 {
                                     s.velocity.Y *= -1;
                                     s.Y = (float)this.Height - s.Height;
-                                }
+                                }else
                                 if (s.Y < 0)
                                 {
                                     s.velocity.Y *= -1;
