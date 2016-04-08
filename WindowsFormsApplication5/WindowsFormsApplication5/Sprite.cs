@@ -93,29 +93,38 @@ namespace WindowsFormsApplication5
         {
             if (canFall)
             {
-                if (velocity.X >= 0)
+                if (velocity.X > 300 || velocity.Y > 300)
                 {
-                    //velocity.X += Accel_x;
-                    this.X += velocity.X * 1/500;
+                    if (velocity.X > 300)
+                        velocity.X = 300;
+                    if (velocity.Y > 300)
+                        velocity.Y = 300;
                 }
                 else
                 {
-                    //velocity.X -= Accel_x;
-                    this.X += velocity.X * 1/500;
-                }
-                if (velocity.Y >= 0)
-                {
-                   
-                    velocity.Y += Accel_y;
-                    this.Y += velocity.Y * 1/500;
+                    if (velocity.X >= 0)
+                    {
+                        //velocity.X += Accel_x;
+                        this.X += velocity.X * 1 / 500;
+                    }
+                    else
+                    {
+                        //velocity.X -= Accel_x;
+                        this.X += velocity.X * 1 / 500;
+                    }
+                    if (velocity.Y >= 0)
+                    {
 
-                }
-                else
-                {
-                    velocity.Y -= Accel_y;
-                    this.Y += velocity.Y * 1/500;
-                }
+                        velocity.Y += Accel_y;
+                        this.Y += velocity.Y * 1 / 500;
 
+                    }
+                    else
+                    {
+                        velocity.Y -= Accel_y;
+                        this.Y += velocity.Y * 1 / 500;
+                    }
+                }
 
             }
 
@@ -148,10 +157,11 @@ namespace WindowsFormsApplication5
                                 case SpriteType.ball:
                                     if (s.isTouchingBottom(this))
                                     {
-                                        //Se la pallina rimbalza nella prima delle 3 parti della racchetta
+                                        //Se la pallina rimbalza nella prima delle 3 parti della racchetta, 
+                                        //più è lontana dalla metà della racchetta più dovrà essere aumentata la v.x
                                         if (s.X < (this.X + this.Width / 3))
                                         {
-                                            s.velocity.X = -5 * s.velocity.Y / ((s.X + s.Width / 2) / this.X);
+                                            s.velocity.X = -5 * s.velocity.Y * ((s.X + s.Width / 2) / (this.X + this.Width/3));
                                         }
                                         else
                                         //Se la pallina rimbalza nella seconda delle 3 parti della racchetta
@@ -160,7 +170,7 @@ namespace WindowsFormsApplication5
                                             //Se la pallina rimbalza nella prima delle 3 parti centrali della racchetta
                                             if(s.X < (this.X + (2 * this.Width / 9)))
                                             {
-                                                s.velocity.X = ((float)-2.5 * s.velocity.Y / ((s.X + (s.Width / 2) / this.X)));
+                                                s.velocity.X = ((float)-2.5 * s.velocity.Y * ((s.X + s.Width / 2) / (this.X + 2 * this.Width / 9)));
                                             }else 
                                             //Se la pallina finisce nel punto centrale (5/9) della racchetta
                                             if(s.X < (this.X + (4 * this.Width / 9)))
@@ -170,7 +180,7 @@ namespace WindowsFormsApplication5
                                             //Se la pallina finisce nella terza parte delle 3 parti centrali della racchetta
                                             else
                                             {
-                                                s.velocity.X = ((float)2.5 * s.velocity.Y * ((s.X + (s.Width / 2) / this.X)));
+                                                s.velocity.X = ((float)2.5 * s.velocity.Y * ((s.X + (s.Width / 2) / (this.X + 2 * this.Width / 3))));
                                             }
                                         }
                                         else
@@ -202,7 +212,8 @@ namespace WindowsFormsApplication5
                         switch (s.Type)
                         {
                             case SpriteType.ball:
-                                if (s.X + s.Width + s.velocity.X >= (float)this.Width)
+                                //Ball.X oltre il limite
+                                if ((s.X + (float)s.Width + s.velocity.X) >= (float)this.Width)
                                 {
                                     s.velocity.X *= -1;
                                     s.X = (float)this.Width - s.Width;
@@ -212,7 +223,8 @@ namespace WindowsFormsApplication5
                                     s.velocity.X *= -1;
                                     s.X = 0;
                                 }
-                                if (s.Y + s.Height + s.velocity.Y >= (float)this.Height)
+                                //Ball.Y oltre il limite
+                                if ((s.Y + (float)s.Height + s.velocity.Y) >= (float)this.Height)
                                 {
                                     s.velocity.Y *= -1;
                                     s.Y = (float)this.Height - s.Height;
@@ -222,7 +234,6 @@ namespace WindowsFormsApplication5
                                     s.velocity.Y *= -1;
                                     s.Y = 0;
                                 }
-
                                 break;
                         }
                         break;

@@ -71,7 +71,7 @@ namespace WindowsFormsApplication5
             ball.canFall = false;
             ball.followPointer = true;
             Thread game = new Thread(gameLoop);
-            ball.velocity.X = 100;
+            ball.velocity.X = 50;
             game.Start();
         }
         private void gameLoop()
