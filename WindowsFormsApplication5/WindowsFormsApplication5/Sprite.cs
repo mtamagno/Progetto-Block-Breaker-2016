@@ -224,7 +224,7 @@ namespace WindowsFormsApplication5
                                     s.X = 0;
                                 }
                                 //Ball.Y oltre il limite
-                                if ((s.Y + (float)s.Height + s.velocity.Y) >= (float)this.Height)
+                                if ((s.Y + (float)s.Height) >= (float)this.Height)
                                 {
                                     s.velocity.Y *= -1;
                                     s.Y = (float)this.Height - s.Height;
