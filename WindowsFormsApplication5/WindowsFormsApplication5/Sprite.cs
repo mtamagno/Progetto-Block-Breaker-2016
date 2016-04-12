@@ -23,7 +23,8 @@ namespace WindowsFormsApplication5
         public bool canFall;
         public bool canCollide;
         public bool followPointer;
-
+        public int velocity_tot_raggiunto;
+        public float velocity_tot;
         
        public Sprite(Bitmap texture,float x, float y, int width, int height, SpriteType thisType)
         {
@@ -91,51 +92,44 @@ namespace WindowsFormsApplication5
 
         public void Update(InputManager iManager)
         {
+            //calcolo velotà totale pallina
+            velocity_tot = (float)Math.Sqrt((double)((velocity.X * velocity.X) + (velocity.Y * velocity.Y)));
+            if (velocity_tot < 3000)
+                velocity_tot_raggiunto = 0;
+
+            if (canCollide == true)
+                Collider(iManager);
             if (canFall)
             {
-                if (velocity.X > 300 || velocity.Y > 300)
+                //blocco l'incremento o decremento di velocità oltre i +-5000
+                if (velocity_tot >= 3000 || velocity_tot <= -3000)
                 {
-                    if (velocity.X > 300)
-                        velocity.X = 300;
-                    if (velocity.Y > 300)
-                        velocity.Y = 300;
+                    velocity_tot = 3000;
+                    velocity_tot_raggiunto = 1;
                 }
                 else
                 {
-                    if (velocity.X >= 0)
+                    if(velocity_tot_raggiunto == 0)
                     {
-                        //velocity.X += Accel_x;
-                        this.X += velocity.X * 1 / 500;
-                    }
-                    else
-                    {
-                        //velocity.X -= Accel_x;
-                        this.X += velocity.X * 1 / 500;
-                    }
-                    if (velocity.Y >= 0)
-                    {
-
-                        velocity.Y += Accel_y;
-                        this.Y += velocity.Y * 1 / 500;
-
-                    }
-                    else
-                    {
-                        velocity.Y -= Accel_y;
-                        this.Y += velocity.Y * 1 / 500;
+                        if (velocity.Y >= 0)
+                        {
+                            velocity.Y += Accel_y;
+                        }
+                        else
+                        {
+                            velocity.Y -= Accel_y;
+                        }
                     }
                 }
-
+                this.X += velocity.X * 1 / 500;
+                this.Y += velocity.Y * 1 / 500;
             }
-
             if (followPointer)
             {
                 if (Form1.ActiveForm != null)
                     if(Form1.MousePosition.X > Form1.ActiveForm.Location.X && Form1.MousePosition.X < Form1.ActiveForm.Location.X + Form1.ActiveForm.Width)
                         this.X = Form1.MousePosition.X - Form1.ActiveForm.Location.X - this.Width / 2 - this.Width / 16;
             }
-            if (canCollide == true)
-            Collider(iManager);
         }
         private void Collider(InputManager iManager)
         {
@@ -159,39 +153,70 @@ namespace WindowsFormsApplication5
                                     {
                                         //Se la pallina rimbalza nella prima delle 3 parti della racchetta, 
                                         //più è lontana dalla metà della racchetta più dovrà essere aumentata la v.x
-                                        if (s.X < (this.X + this.Width / 3))
+                                        //if (s.X + s.Width/2 < (this.X + (this.Width / 3)))
+                                        //{
+                                        //    s.velocity.X = -5 * s.velocity.Y * ((s.X + s.Width / 2) / (this.X + (this.Width/3)));
+                                        //}
+                                        //else
+                                        ////Se la pallina rimbalza nella seconda delle 3 parti della racchetta
+                                        //if(s.X + s.Width / 2 < (this.X + (2 * this.Width / 3)))
+                                        //{
+                                        //    //Se la pallina rimbalza nella prima delle 3 parti centrali della racchetta
+                                        //    if ((s.X + s.Width) / 2 >= (this.X + ((4 / 9) * this.Width)) && ((s.X+s.Width) < (this.X + 5/9 * this.Width)))
+                                        //    {
+                                        //        s.velocity.X = ((float)-2.5 * s.velocity.Y * ((s.X + s.Width / 2) / (this.X + (4 / 9) * this.Width)));
+                                        //    }
+                                        //    else
+                                        //    {
+                                        //        //Se la pallina finisce nella terza parte delle 3 parti centrali della racchetta
+                                        //        if (s.X + s.Width / 2 >= (this.X + ((6 / 9) * (float)this.Width)))
+                                        //        {
+                                        //            s.velocity.X = ((float)2.5 * s.velocity.Y * ((s.X + (s.Width / 2)) / (this.X + (2 / 3) * this.Width)));
+                                        //        }
+                                        //        //Se la pallina finisce nel punto centrale (5/9) della racchetta
+                                        //        else
+                                        //        {
+                                        //            s.velocity.X = 0;
+                                        //        }
+                                        //    }
+                                        //}
+                                        //else
+                                        ////Se la pallina rimbalza nell'ultima delle 3 parti della racchetta
+                                        //if(s.X + s.Width / 2 < (this.X + this.Width))
+                                        //{
+                                        //    s.velocity.X = 5 * s.velocity.Y * ((s.X + s.Width / 2) / (this.X + this.Width));
+                                        //}
+                                        //s.velocity.Y *= -1;
+                                        //s.Y = this.Y - s.Height;
+                                        //se implementassimo un'algoritmo che a seconda non della zona ma della distanza dal centro incrementa la X e inverte la Y?
+                                        //Si divide solo in 3 parti, prima di metà, dopo di metà e zona centrale scelta da noi.
+                                        
+                                        //Prima di metà
+                                        //correggi i limiti in modo che la vel massima sia limitata ma possano cambiare x e y
+                                        if((s.X+s.Width/2) <= (this.X + (this.Width*5/12)))
                                         {
-                                            s.velocity.X = -5 * s.velocity.Y * ((s.X + s.Width / 2) / (this.X + this.Width/3));
+                                            s.velocity.X = -s.velocity.Y * (s.X + s.Width / 2)/(this.X);
+                                            s.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
+                                            s.Y = this.Y - s.Height;
                                         }
                                         else
-                                        //Se la pallina rimbalza nella seconda delle 3 parti della racchetta
-                                        if(s.X < (this.X + (2 * this.Width / 3)))
                                         {
-                                            //Se la pallina rimbalza nella prima delle 3 parti centrali della racchetta
-                                            if(s.X < (this.X + (2 * this.Width / 9)))
+                                            //al centro
+                                            if ((s.X + s.Width / 2) <= (this.X + (this.Width * 7 / 12)))
                                             {
-                                                s.velocity.X = ((float)-2.5 * s.velocity.Y * ((s.X + s.Width / 2) / (this.X + 2 * this.Width / 9)));
-                                            }else 
-                                            //Se la pallina finisce nel punto centrale (5/9) della racchetta
-                                            if(s.X < (this.X + (4 * this.Width / 9)))
-                                                {
-                                                    s.velocity.X = 0;
-                                                }
-                                            //Se la pallina finisce nella terza parte delle 3 parti centrali della racchetta
+                                                s.velocity.X = 0;
+                                                s.velocity.Y = -(float)Math.Abs(Math.Sqrt((double)((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
+                                            }
                                             else
+                                            //Dopo metà più 1/12
                                             {
-                                                s.velocity.X = ((float)2.5 * s.velocity.Y * ((s.X + (s.Width / 2) / (this.X + 2 * this.Width / 3))));
+                                                s.velocity.X = s.velocity.Y * (s.X + s.Width / 2) / (this.X + this.Width);
+                                                s.velocity.Y = - (float)Math.Sqrt((double)(Math.Abs((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
+                                                s.Y = this.Y - s.Height;
                                             }
                                         }
-                                        else
-                                        //Se la pallina rimbalza nell'ultima delle 3 parti della racchetta
-                                        if(s.X < (this.X + this.Width))
-                                        {
-                                            s.velocity.X = 5 * s.velocity.Y * ((s.X + s.Width / 2) / (this.X + this.Width));
-                                        }
-                                        s.velocity.Y *= -1;
                                     }
-                                    break;
+                            break;
 
                                 case SpriteType.blocks:
                                     break;
@@ -212,8 +237,8 @@ namespace WindowsFormsApplication5
                         switch (s.Type)
                         {
                             case SpriteType.ball:
-                                //Ball.X oltre il limite
-                                if ((s.X + (float)s.Width + s.velocity.X) >= (float)this.Width)
+                                //Ball.X oltre il limite  + s.velocity.X
+                                if ((s.X + (float)s.Width) >= (float)this.Width)
                                 {
                                     s.velocity.X *= -1;
                                     s.X = (float)this.Width - s.Width;
@@ -223,8 +248,8 @@ namespace WindowsFormsApplication5
                                     s.velocity.X *= -1;
                                     s.X = 0;
                                 }
-                                //Ball.Y oltre il limite
-                                if ((s.Y + (float)s.Height + s.velocity.Y) >= (float)this.Height)
+                                //Ball.Y oltre il limite + s.velocity.Y
+                                if ((s.Y + (float)s.Height) >= (float)this.Height)
                                 {
                                     s.velocity.Y *= -1;
                                     s.Y = (float)this.Height - s.Height;
