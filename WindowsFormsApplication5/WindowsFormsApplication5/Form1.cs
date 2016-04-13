@@ -33,7 +33,7 @@ namespace WindowsFormsApplication5
         private Stopwatch gameTime = new Stopwatch(); /* Stopwatch e' una classe che ha un set di metodi utili a misurare il tempo trascorso*/
         private int fps; /*fps totali*/
         private int fpsCounter;
-        private int interval = 1000 / 65;
+        private int interval = 1000 / 150;
         private int uCounter;
         private int Ups; /* update per second " fps reali, dopo l utilizzo di un fps limiter" */
         private int previousSecond;
@@ -55,6 +55,7 @@ namespace WindowsFormsApplication5
         public int Altezza_Client_iniziale = 0;
         public float lunghezza = 0;
         public float altezza = 0;
+        
         
         private void loadContent()
         {
