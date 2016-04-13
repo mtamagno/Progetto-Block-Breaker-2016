@@ -23,6 +23,7 @@ namespace WindowsFormsApplication5
         public bool canFall;
         public bool canCollide;
         public bool followPointer;
+        public bool torender;
         public int remaining_bounces;
         public int velocity_tot_raggiunto;
         public float velocity_tot;
@@ -50,7 +51,7 @@ namespace WindowsFormsApplication5
                     canFall = true;
                     canCollide = true;
                     followPointer = false;
-
+                    torender = true;
                     break;
 
                 case SpriteType.block:
@@ -58,17 +59,20 @@ namespace WindowsFormsApplication5
                     remaining_bounces = random.Next(0,4);
                     canFall = false;
                     canCollide = true;
+                    torender = true;
                     followPointer = false;
                     break;
 
                 case SpriteType.player:
                     canFall = false;
                     canCollide = true;
+                    torender = true;
                     followPointer = true;
                     break;
 
                 case SpriteType.view:
                     canFall = false;
+                    torender = true;
                     canCollide = true;
                     followPointer = false;
                     break;
@@ -154,7 +158,10 @@ namespace WindowsFormsApplication5
                                         s.velocity.Y *= -1;
                                         this.remaining_bounces--;
                                         if (this.remaining_bounces == 0)
-                                            iManager.inGameSprites.Remove(this);
+                                        {
+                                            this.torender = false;
+                                            this.canCollide = false;
+                                        }
                                     }
                                     break;
                                 }

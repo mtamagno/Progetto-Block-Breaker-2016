@@ -33,7 +33,7 @@ namespace WindowsFormsApplication5
         private Stopwatch gameTime = new Stopwatch(); /* Stopwatch e' una classe che ha un set di metodi utili a misurare il tempo trascorso*/
         private int fps; /*fps totali*/
         private int fpsCounter;
-        private int interval = 1000 / 150;
+        private int interval = 1000 / 65;
         private int uCounter;
         private int Ups; /* update per second " fps reali, dopo l utilizzo di un fps limiter" */
         private int previousSecond;
@@ -49,24 +49,42 @@ namespace WindowsFormsApplication5
         private Sprite ball;
         private Sprite racchetta;
         private Sprite background;
+        private Grid grid;
         public float ball_x = 10;
         public float ball_y = 10;
         public int Lunghezza_Client_inziale = 0;
         public int Altezza_Client_iniziale = 0;
-        public float lunghezza = 0;
-        public float altezza = 0;
+        public float lunghezza_client_effettiva = 0;
+        public float altezza_client_effettiva = 0;
+        public int righe_griglia = 25;
+        public int colonne_griglia = 10;
         
         
         private void loadContent()
         {
             Lunghezza_Client_inziale = this.ClientRectangle.Width;
-            Altezza_Client_iniziale = this.ClientRectangle.Height;    
+            Altezza_Client_iniziale = this.ClientRectangle.Height;
             //this.FormBorderStyle = FormBorderStyle.None;
             //this.Bounds = Screen.PrimaryScreen.Bounds;
+            //inizializzo il background
             background = new Sprite(Properties.Resources.Background, 0, 0, this.ClientRectangle.Width, this.ClientRectangle.Height, Sprite.SpriteType.view);
             iManager.inGameSprites.Add(background);
+            //inizializzo griglia
+            grid = new Grid(0, 0, 5, 5);
+            for (int i = 0; i < 5; i++)
+            {
+                for(int k = 0; k < 5; k++)
+                {
+                    Sprite block = new Sprite(Properties.Resources.Block, k * 100, i * 50, 100, 50, Sprite.SpriteType.block);
+                    iManager.inGameSprites.Add(block);
+                }
+            }
+            grid.insert_grid(Properties.Resources.Block, 25, 10, iManager);
+
+            //inizializzo racchetta
             racchetta = new Sprite(Properties.Resources.New_Piskel,MousePoint.X -this.Location.X , 300, 128, 24, Sprite.SpriteType.player);
             iManager.inGameSprites.Add(racchetta);
+            //inizializzo pallina
             ball = new Sprite(Properties.Resources.ball, 300, 288, 10, 10, Sprite.SpriteType.ball);
             iManager.inGameSprites.Add(ball);
             ball.canFall = false;
@@ -125,9 +143,9 @@ namespace WindowsFormsApplication5
         {
             if(gameTime.ElapsedMilliseconds - uTime > interval)
             {
-                ball.Update(iManager);
-                racchetta.Update(iManager);
-                background.Update(iManager);
+                foreach (Sprite s in iManager.inGameSprites)
+                    if(s.torender == true)
+                    s.Update(iManager);
                 if (gameTime.Elapsed.Seconds != previousSecond)
                 {
                     previousSecond = gameTime.Elapsed.Seconds;
@@ -144,9 +162,9 @@ namespace WindowsFormsApplication5
         private void render()
         {      
             spriteBatch.Begin();
-            spriteBatch.Draw(background);
-            spriteBatch.Draw(ball);
-            spriteBatch.Draw(racchetta);
+            foreach (Sprite s in iManager.inGameSprites)
+                if(s.torender == true)
+                spriteBatch.Draw(s);
             spriteBatch.End();
         }
 
@@ -207,8 +225,8 @@ namespace WindowsFormsApplication5
 
         private void Form1_ResizeBegin(object sender, EventArgs e)
         {
-            lunghezza = this.ClientRectangle.Width;
-            altezza = this.ClientRectangle.Height;
+            lunghezza_client_effettiva = this.ClientRectangle.Width;
+            altezza_client_effettiva = this.ClientRectangle.Height;
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)

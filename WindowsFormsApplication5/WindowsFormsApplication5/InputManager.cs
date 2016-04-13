@@ -16,7 +16,6 @@ namespace WindowsFormsApplication5
         public Stopwatch gameTime;
         public float deltaTime;
         public List<Sprite> inGameSprites = new List<Sprite>();
-
         public void update(Point mp, Keys[] kp, Keys[] kh, Stopwatch gt, float dt)
         {
             mousePoint = mp;
