@@ -213,7 +213,7 @@ namespace WindowsFormsApplication5
                                             else
                                             //Dopo metà più la metà destra del centro
                                             {
-                                                s.velocity.X = s.velocity_tot * (float)Math.Abs(Math.Sin(angolo(s.X + s.Width / 2 -this.X,this.Width)));
+                                                s.velocity.X = s.velocity_tot * (float)Math.Abs(Math.Sin(angolo(s.X + s.Width / 2 -this.X - this.Width/2,this.Width/2)));
                                                 s.velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
                                                 s.Y = this.Y - s.Height;
                                             }
