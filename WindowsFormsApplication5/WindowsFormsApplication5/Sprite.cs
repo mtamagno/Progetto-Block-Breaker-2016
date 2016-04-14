@@ -56,9 +56,10 @@ namespace WindowsFormsApplication5
 
                 case SpriteType.block:
                     Random random = new Random();
-                    remaining_bounces = random.Next(0,4);
+                    remaining_bounces = random.Next(-6,4);
                     canFall = false;
                     canCollide = true;
+                    if(remaining_bounces > 0)
                     torender = true;
                     followPointer = false;
                     break;
@@ -95,6 +96,14 @@ namespace WindowsFormsApplication5
 
 
             sprite.Texture = b;
+        }
+
+        public double angolo(float posizione_attuale, float posizione_massima)
+        {
+            double calcolo = 0;
+            calcolo = (posizione_attuale / posizione_massima) * 90;
+            calcolo = calcolo * Math.PI / 180;
+            return calcolo;
         }
 
         public void Update(InputManager iManager)
@@ -153,11 +162,21 @@ namespace WindowsFormsApplication5
                                 switch (s.Type)
                                 {
                                     case SpriteType.ball:
-                                    if (s.isTouchingTop(this))
+                                    if (s.isTouchingTop(this)|| s.isTouchingBottom(this))
                                     {
                                         s.velocity.Y *= -1;
                                         this.remaining_bounces--;
-                                        if (this.remaining_bounces == 0)
+                                        if (this.remaining_bounces <= 0)
+                                        {
+                                            this.torender = false;
+                                            this.canCollide = false;
+                                        }
+                                    }
+                                    if (s.isTouchingLeft(this) || s.isTouchingRight(this))
+                                    {
+                                        s.velocity.X *= -1;
+                                        this.remaining_bounces--;
+                                        if (this.remaining_bounces <= 0)
                                         {
                                             this.torender = false;
                                             this.canCollide = false;
@@ -174,29 +193,32 @@ namespace WindowsFormsApplication5
                                     if (s.isTouchingBottom(this))
                                     {
                                         //pallina tocca prima metà meno la metà sinistra del centro
-                                        if((s.X+s.Width/2) <= (this.X + (this.Width*5/12)))
+                                        if ((s.X + s.Width / 2) <= (this.X + this.Width/2))
                                         {
-                                            s.velocity.X = -s.velocity.Y * (s.X + s.Width / 2)/(this.X);
+                                            double coseno;
+                                            coseno = Math.Abs(Math.Cos(angolo(s.X + s.Width / 2 - this.X, this.Width / 2)));
+                                            //s.velocity.X = -s.velocity_tot * (s.X + s.Width / 2)/(this.X);
+                                            s.velocity.X = - s.velocity_tot * (float)coseno;
                                             s.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
                                             s.Y = this.Y - s.Height;
                                         }
-                                        else
-                                        {
+                                        //else
+                                        //{
                                             //al centro
-                                            if ((s.X + s.Width / 2) <= (this.X + (this.Width * 7 / 12)))
-                                            {
-                                                s.velocity.X = 0;
-                                                s.velocity.Y = -(float)Math.Abs(Math.Sqrt((double)((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
-                                            }
+                                            //if ((s.X + s.Width / 2) <= (this.X + (this.Width * 7 / 12)))
+                                            //{
+                                            //    s.velocity.X = -s.velocity_tot * (s.X + s.Width / 2) / (this.X); ;
+                                            //    s.velocity.Y = -(float)Math.Abs(Math.Sqrt((double)((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
+                                            //}
                                             else
                                             //Dopo metà più la metà destra del centro
                                             {
-                                                s.velocity.X = s.velocity.Y * (s.X + s.Width / 2) / (this.X + this.Width);
-                                                s.velocity.Y = - (float)Math.Sqrt((double)(Math.Abs((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
+                                                s.velocity.X = s.velocity_tot * (float)Math.Abs(Math.Sin(angolo(s.X + s.Width / 2 -this.X,this.Width)));
+                                                s.velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
                                                 s.Y = this.Y - s.Height;
                                             }
                                         }
-                                    }
+                                    
                             break;
 
                                 case SpriteType.block:
@@ -331,5 +353,9 @@ namespace WindowsFormsApplication5
             else
                 return false;
         }
+
     }
+
+
+
 }
