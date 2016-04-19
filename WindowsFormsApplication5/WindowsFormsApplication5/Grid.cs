@@ -13,24 +13,27 @@ namespace WindowsFormsApplication5
     {
         System.Windows.Forms.DataGridView grid;
 
+        //ok adesso va e gli elementi sono dentro alla griglia ma bisogna trovare il modo per 
+        //approssimare lo scarto che rimane o ridimensionare la griglia 
+        //o le immagini dei blocchi
         public Grid(int x, int y,int row,int column)
         {
             grid = new System.Windows.Forms.DataGridView();
-            grid.Left = 0;
-            grid.Top = 0;
+            grid.Left = x;
+            grid.Top = y;
+            grid.RowCount = row/(3*50);
+            grid.ColumnCount = column/100;
             grid.Width = Form1.ActiveForm.Width;
-            grid.Height = Form1.ActiveForm.Height / 3;
-            grid.RowCount = row;
-            grid.ColumnCount = column;
+            grid.Height = Form1.ActiveForm.Height;
         }
 
         public void insert_grid(Bitmap Texture, InputManager iManager)
         {
-            for (int i = 0; i < grid.Columns.Count; i++)
+            for (int i = 0; i < grid.ColumnCount; i++)
             {
-                for (int k = 0; k < grid.Rows.Count; k++)
+                for (int k = 0; k < grid.RowCount; k++)
                 {
-                    Sprite block = new Sprite(Properties.Resources.Block, grid.Rows[k].Cells[i].ContentBounds.X, grid.Rows[k].Cells[i].ContentBounds.Y, 100, 50, Sprite.SpriteType.block);
+                    Sprite block = new Sprite(Properties.Resources.Block, 100 * i, 50 * k, 100, 50, Sprite.SpriteType.block);
                     grid.Rows[k].Cells[i].Value = block;
                     iManager.inGameSprites.Add(block);
                 }

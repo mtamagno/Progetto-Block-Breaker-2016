@@ -55,7 +55,7 @@ namespace WindowsFormsApplication5
 
                 case SpriteType.block:
                     Random random = new Random();
-                    remaining_bounces = random.Next(0,3);
+                    remaining_bounces = random.Next(1,3);
                     canFall = false;
                     canCollide = true;
                     if(remaining_bounces > 0)

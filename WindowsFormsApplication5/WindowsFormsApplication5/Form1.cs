@@ -71,7 +71,7 @@ namespace WindowsFormsApplication5
             background = new Sprite(Properties.Resources.Background, this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, Sprite.SpriteType.view);
             iManager.inGameSprites.Add(background);
             //inizializzo griglia
-            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, (int)(this.ClientRectangle.Width / 100), (int)(this.ClientRectangle.Height / (50 * 3)));
+            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, (int)(this.ClientRectangle.Height), (int)(this.ClientRectangle.Width));
             grid.insert_grid(Properties.Resources.Block,iManager);
 
 
