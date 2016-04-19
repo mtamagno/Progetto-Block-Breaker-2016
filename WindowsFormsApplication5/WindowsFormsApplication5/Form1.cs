@@ -58,6 +58,7 @@ namespace WindowsFormsApplication5
         public float altezza_client_effettiva = 0;
         public int righe_griglia = 25;
         public int colonne_griglia = 10;
+        public DataTable collection;
         
         
         private void loadContent()
@@ -67,19 +68,25 @@ namespace WindowsFormsApplication5
             //this.FormBorderStyle = FormBorderStyle.None;
             //this.Bounds = Screen.PrimaryScreen.Bounds;
             //inizializzo il background
-            background = new Sprite(Properties.Resources.Background, 0, 0, this.ClientRectangle.Width, this.ClientRectangle.Height, Sprite.SpriteType.view);
+            background = new Sprite(Properties.Resources.Background, this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, Sprite.SpriteType.view);
             iManager.inGameSprites.Add(background);
             //inizializzo griglia
-            grid = new Grid(0, 0, 5, 5);
-            for (int i = 0; i < 5; i++)
-            {
-                for(int k = 0; k < 5; k++)
-                {
-                    Sprite block = new Sprite(Properties.Resources.Block, k * 100, i * 50, 100, 50, Sprite.SpriteType.block);
-                    iManager.inGameSprites.Add(block);
-                }
-            }
-            grid.insert_grid(Properties.Resources.Block, 25, 10, iManager);
+            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, (int)(this.ClientRectangle.Width / 100), (int)(this.ClientRectangle.Height / (50 * 3)));
+            grid.insert_grid(Properties.Resources.Block,iManager);
+
+
+
+
+
+            
+
+            // altrimenti per popolarla seleziono solo gli sprite ma poi non credo convenga perchè non sono autoinseriti credo
+
+            //var query = from Sprite in this.iManager.inGameSprites
+            //            where Sprite.remaining_bounces > 0
+            //            select Sprite;
+
+            //grid.DataSource = query;
 
             //inizializzo racchetta
             racchetta = new Sprite(Properties.Resources.New_Piskel,MousePoint.X -this.Location.X , 300, 128, 24, Sprite.SpriteType.player);

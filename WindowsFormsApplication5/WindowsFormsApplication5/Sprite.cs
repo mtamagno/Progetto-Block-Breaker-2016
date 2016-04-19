@@ -16,8 +16,7 @@ namespace WindowsFormsApplication5
         public float X, Y;
         public int Width, Height;
         public PointF velocity;
-        //public int Accel_x = 2;  //setto la velocita' nell asse delle x
-        public int Accel_y = 2;  //setto la velocita' nell asse delle y
+        public int Accel_y = 2;  //setto l'accelerazione nell' asse delle y
         public SpriteType Type;
         public enum SpriteType { player , ball , block, view};
         public bool canFall;
@@ -56,7 +55,7 @@ namespace WindowsFormsApplication5
 
                 case SpriteType.block:
                     Random random = new Random();
-                    remaining_bounces = random.Next(-6,4);
+                    remaining_bounces = random.Next(0,3);
                     canFall = false;
                     canCollide = true;
                     if(remaining_bounces > 0)
@@ -190,30 +189,24 @@ namespace WindowsFormsApplication5
                             switch (s.Type)
                             {
                                 case SpriteType.ball:
+                                    //la pallina collide con la racchetta
                                     if (s.isTouchingBottom(this))
                                     {
-                                        //pallina tocca prima metà meno la metà sinistra del centro
+                                        //la pallina tocca entro la prima metà
                                         if ((s.X + s.Width / 2) <= (this.X + this.Width/2))
                                         {
                                             double coseno;
                                             coseno = Math.Abs(Math.Cos(angolo(s.X + s.Width / 2 - this.X, this.Width / 2)));
-                                            //s.velocity.X = -s.velocity_tot * (s.X + s.Width / 2)/(this.X);
                                             s.velocity.X = - s.velocity_tot * (float)coseno;
                                             s.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
                                             s.Y = this.Y - s.Height;
                                         }
-                                        //else
-                                        //{
-                                            //al centro
-                                            //if ((s.X + s.Width / 2) <= (this.X + (this.Width * 7 / 12)))
-                                            //{
-                                            //    s.velocity.X = -s.velocity_tot * (s.X + s.Width / 2) / (this.X); ;
-                                            //    s.velocity.Y = -(float)Math.Abs(Math.Sqrt((double)((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
-                                            //}
                                             else
-                                            //Dopo metà più la metà destra del centro
+                                            //Dopo metà 
                                             {
-                                                s.velocity.X = s.velocity_tot * (float)Math.Abs(Math.Sin(angolo(s.X + s.Width / 2 -this.X - this.Width/2,this.Width/2)));
+                                            double seno;
+                                            seno = Math.Abs(Math.Sin(angolo(s.X + s.Width / 2 - this.X - this.Width / 2, this.Width / 2)));
+                                                s.velocity.X = s.velocity_tot * (float)seno;
                                                 s.velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((s.velocity_tot * s.velocity_tot) - (s.velocity.X * s.velocity.X))));
                                                 s.Y = this.Y - s.Height;
                                             }
