@@ -23,7 +23,7 @@ namespace WindowsFormsApplication5
             grid.Top = y;
             grid.Width = (int)client_width;
             grid.Height = (int)client_height/3;
-            grid.RowCount = grid.Height/(50);
+            grid.RowCount = grid.Height/50;
             grid.ColumnCount = grid.Width/100;
         }
 
