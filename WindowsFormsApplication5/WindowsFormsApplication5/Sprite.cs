@@ -26,8 +26,9 @@ namespace WindowsFormsApplication5
         public int remaining_bounces;
         public int velocity_tot_raggiunto;
         public float velocity_tot;
-        
-       public Sprite(Bitmap texture,float x, float y, int width, int height, SpriteType thisType)
+        static Random random = new Random();
+
+        public Sprite(Bitmap texture,float x, float y, int width, int height, SpriteType thisType)
         {
             Bitmap b = new Bitmap(width, height);
             using (Graphics g = Graphics.FromImage(b))
@@ -54,8 +55,7 @@ namespace WindowsFormsApplication5
                     break;
 
                 case SpriteType.block:
-                    Random random = new Random();
-                    remaining_bounces = random.Next(1,3);
+                    remaining_bounces = random.Next(0, 4);
                     canFall = false;
                     canCollide = true;
                     if(remaining_bounces > 0)

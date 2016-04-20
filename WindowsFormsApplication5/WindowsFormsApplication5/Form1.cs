@@ -71,9 +71,8 @@ namespace WindowsFormsApplication5
             background = new Sprite(Properties.Resources.Background, this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, Sprite.SpriteType.view);
             iManager.inGameSprites.Add(background);
             //inizializzo griglia
-            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, (int)(this.ClientRectangle.Height), (int)(this.ClientRectangle.Width));
+            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, (this.Bounds.Height - (this.Bounds.Height - this.ClientRectangle.Height)), (this.Bounds.Width - (this.Bounds.Width - this.ClientRectangle.Width)));
             grid.insert_grid(Properties.Resources.Block,iManager);
-
 
 
 
@@ -217,7 +216,6 @@ namespace WindowsFormsApplication5
                 KeysHeld.Add(e.KeyCode);
             }
         }
-
 
         private void on_resize(object sender, EventArgs e)
         {
