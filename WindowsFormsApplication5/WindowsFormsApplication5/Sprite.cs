@@ -84,17 +84,31 @@ namespace WindowsFormsApplication5
 
         public void redraw(Sprite sprite, int new_Width, int new_Heigth,Bitmap risorsa, float nuova_X, float nuova_Y)
         {
-            sprite.Width = new_Width;
-            sprite.Height = new_Heigth;
-
-            Bitmap b = new Bitmap(sprite.Width, sprite.Height);
-            using (Graphics g = Graphics.FromImage(b))
+            //redraw di un blocco
+            if (sprite.Type == Sprite.SpriteType.block)
             {
-                g.DrawImage(risorsa,0, 0, sprite.Width, sprite.Height);
+
             }
+            //redraw del resto
+            else
+            {
+                sprite.Width = new_Width;
+                sprite.Height = new_Heigth;
 
+                Bitmap b = new Bitmap(sprite.Width, sprite.Height);
+                using (Graphics g = Graphics.FromImage(b))
+                {
+                    g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
+                }
+                sprite.X = nuova_X;
+                //redraw del player all'altezza giusta
+                if (sprite.Type == Sprite.SpriteType.player)
+                    sprite.Y = (Form1.ActiveForm.Height - sprite.Height) * 9 / 10;
+                else
+                    sprite.Y = nuova_Y;
 
-            sprite.Texture = b;
+                sprite.Texture = b;
+            }
         }
 
         public double angolo(float posizione_attuale, float posizione_massima)
@@ -161,7 +175,7 @@ namespace WindowsFormsApplication5
                                 switch (s.Type)
                                 {
                                     case SpriteType.ball:
-                                    if (s.isTouchingTop(this)|| s.isTouchingBottom(this))
+                                    if (s.isTouchingTop(this) || s.isTouchingBottom(this))
                                     {
                                         s.velocity.Y *= -1;
                                         this.remaining_bounces--;
@@ -171,6 +185,7 @@ namespace WindowsFormsApplication5
                                             this.canCollide = false;
                                         }
                                     }
+                                    else
                                     if (s.isTouchingLeft(this) || s.isTouchingRight(this))
                                     {
                                         s.velocity.X *= -1;

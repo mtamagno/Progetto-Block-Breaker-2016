@@ -57,10 +57,8 @@ namespace WindowsFormsApplication5
         public float lunghezza_client_effettiva = 0;
         public float altezza_client_effettiva = 0;
         public int righe_griglia = 25;
-        public int colonne_griglia = 10;
-        public DataTable collection;
-        
-        
+        public int colonne_griglia = 10;        
+                
         private void loadContent()
         {
             Lunghezza_Client_inziale = this.ClientRectangle.Width;
@@ -71,7 +69,7 @@ namespace WindowsFormsApplication5
             background = new Sprite(Properties.Resources.Background, this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, Sprite.SpriteType.view);
             iManager.inGameSprites.Add(background);
             //inizializzo griglia
-            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, (this.Bounds.Height - (this.Bounds.Height - this.ClientRectangle.Height)), (this.Bounds.Width - (this.Bounds.Width - this.ClientRectangle.Width)));
+            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, Altezza_Client_iniziale, Lunghezza_Client_inziale);
             grid.insert_grid(Properties.Resources.Block,iManager);
 
 
@@ -219,13 +217,20 @@ namespace WindowsFormsApplication5
 
         private void on_resize(object sender, EventArgs e)
         {
-            ball.redraw(ball, 10 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 10 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.ball, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
-            racchetta.redraw(racchetta, 150 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 25 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.New_Piskel, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
-            background.redraw(background, this.ClientRectangle.Width, this.ClientRectangle.Height, Properties.Resources.Background, 0, 0);
-            racchetta.Y = this.ClientRectangle.Height * 9 / 10;
-            spriteBatch.cntxt.MaximumBuffer = new Size(ClientSize.Width + 1, ClientSize.Height + 1);
+            //ball.redraw(ball, 10 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 10 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.ball, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
+            //racchetta.redraw(racchetta, 150 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 25 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.New_Piskel, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
+            //background.redraw(background, this.ClientRectangle.Width, this.ClientRectangle.Height, Properties.Resources.Background, 0, 0);
+            grid.redraw_grid(grid, this.ClientRectangle.Height, this.ClientRectangle.Width);
+            foreach (Sprite s in iManager.inGameSprites)
+            {
+                s.redraw(s,s.Width * this.ClientRectangle.Width / Lunghezza_Client_inziale, s.Height * this.ClientRectangle.Height / Altezza_Client_iniziale, s.Texture, s.X * this.ClientRectangle.Height / Altezza_Client_iniziale, s.Y * this.ClientRectangle.Height / Altezza_Client_iniziale);
+            }
+            //
+            spriteBatch.cntxt.MaximumBuffer = new Size(this.ClientSize.Width + 1, this.ClientSize.Height + 1);
             spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(this.CreateGraphics(), new Rectangle(Point.Empty, ClientSize));
             spriteBatch.Gfx = this.CreateGraphics();
+            Lunghezza_Client_inziale = this.ClientRectangle.Width;
+            Altezza_Client_iniziale = this.ClientRectangle.Height;
         }
 
         private void Form1_ResizeBegin(object sender, EventArgs e)
