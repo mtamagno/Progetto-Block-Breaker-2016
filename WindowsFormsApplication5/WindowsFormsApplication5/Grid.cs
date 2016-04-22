@@ -40,7 +40,7 @@ namespace WindowsFormsApplication5
             }
         }
 
-        public void redraw_grid(Grid grid, float client_height, float client_width, InputManager iManager)
+   /*     public void redraw_grid(Grid grid, float client_height, float client_width, InputManager iManager)
         {
             grid.grid.Width = (int)client_width;
             grid.grid.Height= (int)(client_height / 3);
@@ -49,12 +49,11 @@ namespace WindowsFormsApplication5
                 for (int k = 0, spia = 0; k < grid.grid.RowCount; k++)
                 {
                     spia = 0;
-                    if
-                    iManager.inGameSprites.Add(block);
+                  //  iManager.inGameSprites.Add(block);
                     //come facciamo un foreach in contemporanea con un for? bisogna spostare x e y di ogni blocco e non sto capendo bene come
                 }
             }
-        }
+        }*/
     }
     }
-}
+

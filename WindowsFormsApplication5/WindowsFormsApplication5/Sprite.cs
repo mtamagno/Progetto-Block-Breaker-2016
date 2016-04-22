@@ -84,32 +84,25 @@ namespace WindowsFormsApplication5
 
         public void redraw(Sprite sprite, int new_Width, int new_Heigth,Bitmap risorsa, float nuova_X, float nuova_Y)
         {
-            //redraw di un blocco
-            if (sprite.Type == Sprite.SpriteType.block)
-            {
-            }
-            //redraw del resto
-            else
-            {
                 sprite.Width = new_Width;
                 sprite.Height = new_Heigth;
-
+            if (sprite.Type != Sprite.SpriteType.block && sprite.Type != Sprite.SpriteType.player)
+            {
                 Bitmap b = new Bitmap(sprite.Width, sprite.Height);
                 using (Graphics g = Graphics.FromImage(b))
                 {
                     g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
                 }
-                //redraw della pallina alla x giusta
-                if(sprite.Type == Sprite.SpriteType.ball)
                 sprite.X = nuova_X;
                 //redraw del player e della pallina alla y giusta
-                if (sprite.Type == Sprite.SpriteType.player)
-                    sprite.Y = (Form1.ActiveForm.Height - sprite.Height) * 9 / 10;
-                if (sprite.Type == Sprite.SpriteType.ball)
-                    sprite.Y = nuova_Y;
+                //            if (sprite.Type == Sprite.SpriteType.player)
+                //sprite.Y = (Form1.ActiveForm.Height - sprite.Height) * 9 / 10;
+                //        if (sprite.Type == Sprite.SpriteType.ball)
+                //              sprite.Y = nuova_Y;
 
                 sprite.Texture = b;
             }
+            
         }
 
         public double angolo(float posizione_attuale, float posizione_massima)
