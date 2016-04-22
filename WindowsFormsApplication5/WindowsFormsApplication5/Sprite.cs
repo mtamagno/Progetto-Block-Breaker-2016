@@ -87,7 +87,6 @@ namespace WindowsFormsApplication5
             //redraw di un blocco
             if (sprite.Type == Sprite.SpriteType.block)
             {
-
             }
             //redraw del resto
             else
@@ -100,11 +99,13 @@ namespace WindowsFormsApplication5
                 {
                     g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
                 }
+                //redraw della pallina alla x giusta
+                if(sprite.Type == Sprite.SpriteType.ball)
                 sprite.X = nuova_X;
-                //redraw del player all'altezza giusta
+                //redraw del player e della pallina alla y giusta
                 if (sprite.Type == Sprite.SpriteType.player)
                     sprite.Y = (Form1.ActiveForm.Height - sprite.Height) * 9 / 10;
-                else
+                if (sprite.Type == Sprite.SpriteType.ball)
                     sprite.Y = nuova_Y;
 
                 sprite.Texture = b;

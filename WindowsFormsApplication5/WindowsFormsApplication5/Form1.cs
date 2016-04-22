@@ -54,13 +54,12 @@ namespace WindowsFormsApplication5
         public float ball_y = 10;
         public int Lunghezza_Client_inziale = 0;
         public int Altezza_Client_iniziale = 0;
-        public float lunghezza_client_effettiva = 0;
-        public float altezza_client_effettiva = 0;
         public int righe_griglia = 25;
         public int colonne_griglia = 10;        
                 
         private void loadContent()
         {
+            //salvo grandezza iniziale
             Lunghezza_Client_inziale = this.ClientRectangle.Width;
             Altezza_Client_iniziale = this.ClientRectangle.Height;
             //this.FormBorderStyle = FormBorderStyle.None;
@@ -220,10 +219,10 @@ namespace WindowsFormsApplication5
             //ball.redraw(ball, 10 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 10 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.ball, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
             //racchetta.redraw(racchetta, 150 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 25 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.New_Piskel, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
             //background.redraw(background, this.ClientRectangle.Width, this.ClientRectangle.Height, Properties.Resources.Background, 0, 0);
-            grid.redraw_grid(grid, this.ClientRectangle.Height, this.ClientRectangle.Width);
+            grid.redraw_grid(grid, this.ClientRectangle.Height, this.ClientRectangle.Width, iManager);
             foreach (Sprite s in iManager.inGameSprites)
             {
-                s.redraw(s,s.Width * this.ClientRectangle.Width / Lunghezza_Client_inziale, s.Height * this.ClientRectangle.Height / Altezza_Client_iniziale, s.Texture, s.X * this.ClientRectangle.Height / Altezza_Client_iniziale, s.Y * this.ClientRectangle.Height / Altezza_Client_iniziale);
+                s.redraw(s,s.Width * this.ClientRectangle.Width / Lunghezza_Client_inziale, s.Height * this.ClientRectangle.Height / Altezza_Client_iniziale, s.Texture, s.X * this.ClientRectangle.Width / Lunghezza_Client_inziale, s.Y * this.ClientRectangle.Height / Altezza_Client_iniziale);
             }
             //
             spriteBatch.cntxt.MaximumBuffer = new Size(this.ClientSize.Width + 1, this.ClientSize.Height + 1);
@@ -231,12 +230,6 @@ namespace WindowsFormsApplication5
             spriteBatch.Gfx = this.CreateGraphics();
             Lunghezza_Client_inziale = this.ClientRectangle.Width;
             Altezza_Client_iniziale = this.ClientRectangle.Height;
-        }
-
-        private void Form1_ResizeBegin(object sender, EventArgs e)
-        {
-            lunghezza_client_effettiva = this.ClientRectangle.Width;
-            altezza_client_effettiva = this.ClientRectangle.Height;
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
