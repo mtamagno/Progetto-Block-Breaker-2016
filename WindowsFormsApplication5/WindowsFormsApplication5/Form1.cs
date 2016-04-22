@@ -55,7 +55,11 @@ namespace WindowsFormsApplication5
         public int Lunghezza_Client_inziale = 0;
         public int Altezza_Client_iniziale = 0;
         public int righe_griglia = 25;
-        public int colonne_griglia = 10;        
+        public int colonne_griglia = 10;
+        public int altezza;
+        public int larghezza;
+        public int proporzionealtezza;
+        public int proporzionelarghezza;   
 
         private void loadContent()
         {
@@ -216,11 +220,14 @@ namespace WindowsFormsApplication5
 
         private void on_resize(object sender, EventArgs e)
         {
-            int i = 0;
+
+           // proporzionealtezza = ;
+            //proporzionelarghezza = ;
+            Console.WriteLine(proporzionealtezza);
             foreach (Sprite s in iManager.inGameSprites)
             {
                     if(s.Type != Sprite.SpriteType.view)
-                    s.redraw(s, s.Width * this.ClientRectangle.Width / Lunghezza_Client_inziale, s.Height * this.ClientRectangle.Height / Altezza_Client_iniziale, s.Texture, s.X * this.ClientRectangle.Width / Lunghezza_Client_inziale, s.Y * this.ClientRectangle.Height / Altezza_Client_iniziale);
+                    s.redraw(s, s.Width * this.ClientRectangle.Width / larghezza, s.Height * this.ClientRectangle.Height / altezza, s.Texture, s.X * this.ClientRectangle.Width / larghezza, s.Y * this.ClientRectangle.Height / altezza);
                     else
                     s.redraw(background, this.ClientRectangle.Width, this.ClientRectangle.Height, Properties.Resources.Background, 0, 0);
 
@@ -241,6 +248,12 @@ namespace WindowsFormsApplication5
                 ball.canFall = true;
                 ball.followPointer = false;
             }
+        }
+
+        private void Form1_ResizeBegin(object sender, EventArgs e)
+        {
+            altezza = this.ClientRectangle.Height;
+            larghezza = this.ClientRectangle.Width;
         }
     }
 

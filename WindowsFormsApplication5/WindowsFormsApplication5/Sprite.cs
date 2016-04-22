@@ -86,8 +86,7 @@ namespace WindowsFormsApplication5
         {
                 sprite.Width = new_Width;
                 sprite.Height = new_Heigth;
-            if (sprite.Type != Sprite.SpriteType.block && sprite.Type != Sprite.SpriteType.player)
-            {
+            Console.WriteLine(sprite.Width);
                 Bitmap b = new Bitmap(sprite.Width, sprite.Height);
                 using (Graphics g = Graphics.FromImage(b))
                 {
@@ -95,13 +94,13 @@ namespace WindowsFormsApplication5
                 }
                 sprite.X = nuova_X;
                 //redraw del player e della pallina alla y giusta
-                //            if (sprite.Type == Sprite.SpriteType.player)
+                            if (sprite.Type == Sprite.SpriteType.player)
                 //sprite.Y = (Form1.ActiveForm.Height - sprite.Height) * 9 / 10;
-                //        if (sprite.Type == Sprite.SpriteType.ball)
-                //              sprite.Y = nuova_Y;
+                        if (sprite.Type == Sprite.SpriteType.ball)
+                              sprite.Y = nuova_Y;
 
                 sprite.Texture = b;
-            }
+            
             
         }
 
