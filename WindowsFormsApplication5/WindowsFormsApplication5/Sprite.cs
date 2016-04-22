@@ -95,7 +95,7 @@ namespace WindowsFormsApplication5
                 sprite.X = nuova_X;
                 //redraw del player e della pallina alla y giusta
                             if (sprite.Type == Sprite.SpriteType.player)
-                //sprite.Y = (Form1.ActiveForm.Height - sprite.Height) * 9 / 10;
+                sprite.Y = (Form1.ActiveForm.Height - sprite.Height) * 9 / 10;
                         if (sprite.Type == Sprite.SpriteType.ball)
                               sprite.Y = nuova_Y;
 
