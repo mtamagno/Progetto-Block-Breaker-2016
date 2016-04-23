@@ -34,7 +34,7 @@ namespace WindowsFormsApplication5
                 for (int k = 0; k < grid.RowCount; k++)
                 {
                     Sprite block = new Sprite(Texture, (grid.Width/grid.ColumnCount) * i + 2, (grid.Height/grid.RowCount) * k + 2, grid.Width / grid.ColumnCount, grid.Height / grid.RowCount, Sprite.SpriteType.block);
-                    grid.Rows[k].Cells[i].Value = block;
+                    //grid.Rows[k].Cells[i].Value = block;
                     iManager.inGameSprites.Add(block);
                 }
             }
