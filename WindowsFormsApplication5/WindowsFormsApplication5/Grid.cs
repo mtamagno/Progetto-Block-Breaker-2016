@@ -16,7 +16,7 @@ namespace WindowsFormsApplication5
         //ok adesso va e gli elementi sono dentro alla griglia ma bisogna trovare il modo per 
         //approssimare lo scarto che rimane o ridimensionare la griglia 
         //o le immagini dei blocchi
-        public Grid(int x, int y,float client_height,float client_width)
+        public Grid(int x, int y, float client_height, float client_width)
         {
             grid = new System.Windows.Forms.DataGridView();
             grid.ColumnCount = (int)client_width / 100;
@@ -33,27 +33,23 @@ namespace WindowsFormsApplication5
             {
                 for (int k = 0; k < grid.RowCount; k++)
                 {
-                    Sprite block = new Sprite(Texture, (grid.Width/grid.ColumnCount) * i + 2, (grid.Height/grid.RowCount) * k + 2, grid.Width / grid.ColumnCount, grid.Height / grid.RowCount, Sprite.SpriteType.block);
+                    Sprite block = new Sprite(Texture, (grid.Width / grid.ColumnCount) * i + 2, (grid.Height / grid.RowCount) * k + 2, grid.Width / grid.ColumnCount, grid.Height / grid.RowCount, Sprite.SpriteType.block);
                     //grid.Rows[k].Cells[i].Value = block;
                     iManager.inGameSprites.Add(block);
                 }
             }
         }
 
-   /*     public void redraw_grid(Grid grid, float client_height, float client_width, InputManager iManager)
+        public void redraw_grid(Grid grid, float client_height, float client_width)
         {
             grid.grid.Width = (int)client_width;
-            grid.grid.Height= (int)(client_height / 3);
-            for (int i = 0; i < grid.grid.ColumnCount; i++)
-            {
-                for (int k = 0, spia = 0; k < grid.grid.RowCount; k++)
-                {
-                    spia = 0;
-                  //  iManager.inGameSprites.Add(block);
-                    //come facciamo un foreach in contemporanea con un for? bisogna spostare x e y di ogni blocco e non sto capendo bene come
-                }
-            }
-        }*/
+            grid.grid.Height = (int)(client_height / 3);
+        }
+
+        public void redraw_block(Sprite s, int new_width, int new_height, Bitmap risorsa, float nuova_x, float nuova_y)
+        {
+            s.redraw(s, (grid.Width/grid.ColumnCount), (grid.Height/grid.RowCount), risorsa, nuova_x, nuova_y);
+        }
     }
-    }
+}
 

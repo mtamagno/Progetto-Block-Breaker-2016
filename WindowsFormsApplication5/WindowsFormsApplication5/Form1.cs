@@ -221,20 +221,20 @@ namespace WindowsFormsApplication5
         private void on_resize(object sender, EventArgs e)
         {
 
-           // proporzionealtezza = ;
+            // proporzionealtezza = ;
             //proporzionelarghezza = ;
+            grid.redraw_grid(grid, this.ClientRectangle.Height,this.ClientRectangle.Width);
             Console.WriteLine(proporzionealtezza);
             foreach (Sprite s in iManager.inGameSprites)
             {
-                    if(s.Type == Sprite.SpriteType.ball)
-                    s.redraw(s, (int)(10 * (float)this.ClientRectangle.Width / Lunghezza_Client_inziale), (int)(10* (float)this.ClientRectangle.Height / Altezza_Client_iniziale), s.Texture, s.X * this.ClientRectangle.Width / larghezza, s.Y * this.ClientRectangle.Height / altezza);
-                    else if (s.Type == Sprite.SpriteType.player)
-                    s.redraw(s, (int)(128 * (float)this.ClientRectangle.Width / Lunghezza_Client_inziale), (int)(24 * (float)this.ClientRectangle.Height / Altezza_Client_iniziale), s.Texture, s.X * this.ClientRectangle.Width / larghezza, s.Y * this.ClientRectangle.Height / altezza);
-                    else if (s.Type == Sprite.SpriteType.view)
-                    s.redraw(background, this.ClientRectangle.Width, this.ClientRectangle.Height, Properties.Resources.Background, 0, 0);
-                    else if (s.Type == Sprite.SpriteType.block)
-                    s.redraw(s, (int)(112 * (float)this.ClientRectangle.Width / Lunghezza_Client_inziale), (int)(15 * (float)this.ClientRectangle.Height / Altezza_Client_iniziale), s.Texture, s.X * this.ClientRectangle.Width / larghezza, s.Y * this.ClientRectangle.Height / altezza);
-
+                if (s.Type == Sprite.SpriteType.ball)
+                    s.redraw(s, (int)(10 * (float)this.ClientRectangle.Width / Lunghezza_Client_inziale), (int)(10 * (float)this.ClientRectangle.Height / Altezza_Client_iniziale), Properties.Resources.ball, s.X * this.ClientRectangle.Width / larghezza, s.Y * this.ClientRectangle.Height / altezza);
+                else if (s.Type == Sprite.SpriteType.player)
+                    s.redraw(s, (int)(128 * (float)this.ClientRectangle.Width / Lunghezza_Client_inziale), (int)(24 * (float)this.ClientRectangle.Height / Altezza_Client_iniziale), Properties.Resources.New_Piskel, s.X * this.ClientRectangle.Width / larghezza, s.Y * this.ClientRectangle.Height / altezza);
+                else if (s.Type == Sprite.SpriteType.view)
+                    s.redraw(s, this.ClientRectangle.Width, this.ClientRectangle.Height, Properties.Resources.Background, 0, 0);
+                else if (s.Type == Sprite.SpriteType.block)
+                    grid.redraw_block(s, (int)(100 * (float)(this.ClientRectangle.Width / Lunghezza_Client_inziale)), (int)(50 * (float)(this.ClientRectangle.Height / Altezza_Client_iniziale)),Properties.Resources.Block,s.X * this.ClientRectangle.Width / larghezza, s.Y * this.ClientRectangle.Height / altezza);
             }
             //  ball.redraw(ball, 10 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 10 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.ball, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
             // racchetta.redraw(racchetta, 150 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 25 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.New_Piskel, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
