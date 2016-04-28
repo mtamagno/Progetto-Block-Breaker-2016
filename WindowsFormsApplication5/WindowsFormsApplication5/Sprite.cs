@@ -147,7 +147,7 @@ namespace WindowsFormsApplication5
             }
             if (followPointer)
             {
-                    if(Form1.MousePosition != null)
+                    if(Form1.ActiveForm != null)
                         this.X = Form1.MousePosition.X - Form1.ActiveForm.Location.X - this.Width / 2 - this.Width / 16;
             }
         }
