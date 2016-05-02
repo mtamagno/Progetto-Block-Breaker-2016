@@ -28,16 +28,25 @@ namespace WindowsFormsApplication5
             this.Controls.Add(GamePanels);
             Game.TopLevel = false;
             Game.AutoScroll = true;
+            GamePanels.Top = 0;
+            GamePanels.Left = 0;
+
             GamePanels.Width = 1000;
             GamePanels.Height = 500;
             GamePanels.Visible = true;
             GamePanels.Controls.Add(Game);
-            GamePanels.Bounds = Screen.PrimaryScreen.Bounds;
+            this.Dock = DockStyle.Fill;
+            GamePanels.Dock = DockStyle.Fill;
+            //GamePanels.Bounds = this.Bounds;
             Game.Width = GamePanels.Width;
             Game.Height = GamePanels.Height;
             Game.Show();
+            Game.Left = 0;
+            Game.Top = 0;
             Game.FormBorderStyle = FormBorderStyle.None;
-            Game.Bounds = Screen.PrimaryScreen.Bounds;
+            Game.Dock = DockStyle.Fill;
+            //Game.Bounds = this.Bounds;
+            return;
         }
 
 
@@ -48,6 +57,9 @@ namespace WindowsFormsApplication5
 
         }
 
-        
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Game.Close();
+        }
     }
 }
