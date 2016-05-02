@@ -12,13 +12,13 @@ namespace WindowsFormsApplication5
 {
     class Sprite
     {
-        public Bitmap Texture;
+        public Bitmap Texture; 
         public float X, Y;
         public int Width, Height;
         public PointF velocity;
-        public int Accel_y = 2;  //setto l'accelerazione nell' asse delle y
+        public int Accel_y = 2;  
         public SpriteType Type;
-        public enum SpriteType { player , ball , block, view};
+        public enum SpriteType {player , ball , block, view};
         public bool canFall;
         public bool canCollide;
         public bool followPointer;
@@ -27,15 +27,23 @@ namespace WindowsFormsApplication5
         public int velocity_tot_raggiunto;
         public float velocity_tot;
         static Random random = new Random();
-
+        //Metodo sprite per la creazione di ogni sprite
         public Sprite(Bitmap texture,float x, float y, int width, int height, SpriteType thisType)
         {
+            //Disegno il bitmap
             Bitmap b = new Bitmap(width, height);
             using (Graphics g = Graphics.FromImage(b))
             {
+                //per adesso è "thisType == spritetype.ball" ma una volta cambiati gli sprite sarà "thisType != spritetype.background"
+                if (thisType == SpriteType.ball)
+                {
+                    Color backColor = texture.GetPixel(0, 0);
+                    texture.MakeTransparent(backColor);
+                }
                 g.DrawImage(texture,0,0,width,height);
             }
 
+            //Setto tipo di sprite con relativi attributi e gli assegno le coordinate x e y
             Texture = b;
             X = x;
             Y = y;
@@ -76,33 +84,29 @@ namespace WindowsFormsApplication5
                     canCollide = true;
                     followPointer = false;
                     break;
-
             }
-
-            
         }
 
+        //Funzione redraw necessaria ogni qual volta si effettua il resize dei vari sprite
         public void redraw(Sprite sprite, int new_Width, int new_Heigth,Bitmap risorsa, float nuova_X, float nuova_Y)
         {
-                sprite.Width = new_Width;
-                sprite.Height = new_Heigth;
-                Console.WriteLine(sprite.Width);
-                Bitmap b = new Bitmap(sprite.Width, sprite.Height);
-                using (Graphics g = Graphics.FromImage(b))
-                {
-                    g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
-                }
-                sprite.X = nuova_X;
-                 
-            if (sprite.Type == Sprite.SpriteType.view) ;
-            else
-                sprite.Y = nuova_Y;
-            //redraw del player e della pallina alla y giusta
+            sprite.Width = new_Width;
+            sprite.Height = new_Heigth;
+            Console.WriteLine(sprite.Width);
+            Bitmap b = new Bitmap(sprite.Width, sprite.Height);
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
+            }
+            sprite.X = nuova_X;
+            sprite.Y = nuova_Y;
+            //Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
             if (sprite.Type == Sprite.SpriteType.player)
-                sprite.Y = (Form1.ActiveForm.Height - sprite.Height) * 9 / 10;
+                    sprite.Y = (Form1.ActiveForm.Height - sprite.Height) * 9 / 10;
             sprite.Texture = b;
         }
 
+        //Funzione che restituisce l'angolo con cui la pallina deve essere fatta rimbalzare, a seconda del punto di impatto sulla racchetta
         public double angolo(float posizione_attuale, float posizione_massima)
         {
             double calcolo = 0;
@@ -111,23 +115,31 @@ namespace WindowsFormsApplication5
             return calcolo;
         }
 
+        //Funzione che aggiorna la posizione dei vari sprite utilizzando la loro velocità e posizione precedente
         public void Update(InputManager iManager)
         {
-            //calcolo velotà totale pallina
+            //Calcolo la velocità totale della pallina che non deve superare i 3000
             velocity_tot = (float)Math.Sqrt((double)((velocity.X * velocity.X) + (velocity.Y * velocity.Y)));
-            if (velocity_tot < 3000)
-                velocity_tot_raggiunto = 0;
 
+            //Se la velocità totale non è ancora a 3000, setto la spia a 0 così da continuare a farla aumentare
+            if (velocity_tot < 3000 )
+                velocity_tot_raggiunto = 0;
+            
+            //Controllo che non ci siano impatti, in caso inverto prima x o y a seconda di cosa succede, poi aggiorno le posizioni
             if (canCollide == true)
                 Collider(iManager);
-            if (canFall)
+
+            //Se il valore canFall è vero e quindi si tratta della pallina, in caso la velocità massima non sia arrivata a 3000
+            //incremento la velocità y, altrimenti no
+            if (canFall == true)
             {
-                //blocco l'incremento o decremento di velocità oltre i +-5000
-                if (velocity_tot >= 3000 || velocity_tot <= -3000)
+                //Blocco l'incremento di velocità totale oltre i 3000
+                if (velocity_tot >= 3000)
                 {
                     velocity_tot = 3000;
                     velocity_tot_raggiunto = 1;
                 }
+                //Altrimenti aumento la velocità di y (o decremento se questa è negativa)
                 else
                 {
                     if(velocity_tot_raggiunto == 0)
@@ -145,12 +157,17 @@ namespace WindowsFormsApplication5
                 this.X += velocity.X * 1 / 500;
                 this.Y += velocity.Y * 1 / 500;
             }
-            if (followPointer)
+
+            //Se il gioco si trova in primo piano e il valore followPointer è vero, lo sprite (per noi solo la racchetta)
+            //dovrà seguire il mouse
+            if (followPointer == true)
             {
                     if(Form1.ActiveForm != null)
                         this.X = Form1.MousePosition.X - Form1.ActiveForm.Location.X - this.Width / 2 - this.Width / 16;
             }
         }
+
+        //Il collider fa un check di eventuali impatti tra sprites
         private void Collider(InputManager iManager)
         {
             foreach (Sprite s in iManager.inGameSprites)
@@ -195,10 +212,10 @@ namespace WindowsFormsApplication5
                             switch (s.Type)
                             {
                                 case SpriteType.ball:
-                                    //la pallina collide con la racchetta
+                                    //La pallina impatta con la racchetta
                                     if (s.isTouchingBottom(this))
                                     {
-                                        //la pallina tocca entro la prima metà
+                                        //La pallina impatta con la metà sinistra
                                         if ((s.X + s.Width / 2) <= (this.X + this.Width/2))
                                         {
                                             double coseno;
@@ -208,7 +225,7 @@ namespace WindowsFormsApplication5
                                             s.Y = this.Y - s.Height;
                                         }
                                             else
-                                            //Dopo metà 
+                                            //Altrimenti con la metà destra
                                             {
                                             double seno;
                                             seno = Math.Abs(Math.Sin(angolo(s.X + s.Width / 2 - this.X - this.Width / 2, this.Width / 2)));
@@ -233,13 +250,16 @@ namespace WindowsFormsApplication5
                     }
                 }
 
+                //Qui analizzo il caso in cui la pallina impatti con il limite del client (e quindi dello sprite sfondo)
+                //o che abbia superato il limite senza impattare con un lato perchè ha raggiunto una velocità troppo alta e si è mossa
+                //di molti pixel in una volta
                 switch (this.Type)
                 {
                     case SpriteType.view:
                         switch (s.Type)
                         {
                             case SpriteType.ball:
-                                //Ball.X oltre il limite  + s.velocity.X
+                                //La X della pallina è oltre il limite destro o sinistro
                                 if ((s.X + (float)s.Width) >= (float)this.Width)
                                 {
                                     s.velocity.X *= -1;
@@ -251,7 +271,7 @@ namespace WindowsFormsApplication5
                                     s.X = 0;
                                 }
 
-                                //Ball.Y oltre il limite + s.velocity.Y
+                                //La Y della pallina è oltre il limite superiore o inferiore
                                 if ((s.Y + (float)s.Height) >= (float)this.Height)
                                 {
                                     s.velocity.Y *= -1;
@@ -269,6 +289,7 @@ namespace WindowsFormsApplication5
             }
         }
                 
+        //Funzioni che restituiscono la porzione dello sprite richiesta
 
         public Rectangle toRec
         {
@@ -277,24 +298,25 @@ namespace WindowsFormsApplication5
 
         public Rectangle Top
         {
-            get { return new Rectangle((int)X, (int)Y, Width, 10); }
+            get { return new Rectangle((int)X, (int)Y, Width, 20); }
         }
 
         public Rectangle Bottom
         {
-            get { return new Rectangle((int)X, (int)Y + this.Height, Width, 10); }
+            get { return new Rectangle((int)X, (int)Y + this.Height, Width, 20); }
         }
 
         public Rectangle Left
         {
-            get { return new Rectangle((int)X, (int)Y, 10, Height); }
+            get { return new Rectangle((int)X, (int)Y, 20, Height); }
         }
 
         public Rectangle Right
         {
-            get { return new Rectangle((int)X + this.Width, (int)Y , 10, Height); }
+            get { return new Rectangle((int)X + this.Width, (int)Y , 20, Height); }
         }
 
+        //Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(this);
@@ -303,6 +325,8 @@ namespace WindowsFormsApplication5
       
     }
 
+    //Classe SpriteHelper con le varie funzioni utili per sapere quando due sprite impattano e in particolare quali sezioni di questi due
+    //si stanno intersecando
     static class SpriteHelper
     {
         public static bool isCollidingWith(this Sprite s1, Sprite s2)
@@ -352,7 +376,6 @@ namespace WindowsFormsApplication5
             else
                 return false;
         }
-
     }
 
 

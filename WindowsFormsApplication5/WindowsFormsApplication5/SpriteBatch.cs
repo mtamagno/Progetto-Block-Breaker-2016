@@ -11,7 +11,7 @@ namespace WindowsFormsApplication5
     class SpriteBatch
     {
         public Graphics Gfx;
-        public BufferedGraphics bfgfx; /* Si usa per rimuovere i "white flashes" "quello che puo' sembrare lag" */
+        public BufferedGraphics bfgfx; //Variabile per i buffered graphics
         public BufferedGraphicsContext cntxt = BufferedGraphicsManager.Current;
         
 
