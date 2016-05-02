@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace WindowsFormsApplication5
 {
@@ -16,6 +17,7 @@ namespace WindowsFormsApplication5
         Form3 Start = new Form3();
         Form1 Game = new Form1();
         Panel GamePanels = new Panel();
+        
 
         public Form2()
         {
@@ -36,7 +38,9 @@ namespace WindowsFormsApplication5
             GamePanels.Visible = true;
             GamePanels.Controls.Add(Game);
             this.Dock = DockStyle.Fill;
+            Game.AutoScaleMode = AutoScaleMode.Inherit;
             GamePanels.Dock = DockStyle.Fill;
+            GamePanels.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right; ;
             //GamePanels.Bounds = this.Bounds;
             Game.Width = GamePanels.Width;
             Game.Height = GamePanels.Height;
@@ -44,15 +48,27 @@ namespace WindowsFormsApplication5
             Game.Left = 0;
             Game.Top = 0;
             Game.FormBorderStyle = FormBorderStyle.None;
-            Game.Dock = DockStyle.Fill;
+            Game.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
+            Game.AutoScaleMode = AutoScaleMode.Inherit;
+            Thread prova = new Thread(loadContent);
+            //Game.Dock = DockStyle.Fill;
             //Game.Bounds = this.Bounds;
+
             return;
         }
 
 
         private void loadContent()
         {
+            while (this.Created)
+            {
+                GamePanels.Height = this.Height;
+                GamePanels.Width = this.Width;
+                Game.Height = this.Height;
+                Game.Width = this.Width;
 
+
+            }
 
 
         }
