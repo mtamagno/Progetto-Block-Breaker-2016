@@ -59,11 +59,12 @@ namespace WindowsFormsApplication5
         public int altezza;
         public int larghezza;
         public int proporzionealtezza;
-        public int proporzionelarghezza;   
+        public int proporzionelarghezza;
+
 
         private void loadContent()
         {
-            //salvo grandezza iniziale
+
             Lunghezza_Client_inziale = this.ClientRectangle.Width;
             Altezza_Client_iniziale = this.ClientRectangle.Height;
             //this.FormBorderStyle = FormBorderStyle.None;
