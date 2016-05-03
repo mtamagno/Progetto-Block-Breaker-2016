@@ -29,8 +29,8 @@ namespace WindowsFormsApplication5
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            lunghezza_client = this.Width;
-            altezza_client = this.Height;
+            lunghezza_client = this.ClientRectangle.Width;
+            altezza_client = this.ClientRectangle.Height;
             this.Controls.Add(GamePanels);
             Game.TopLevel = false;
             Game.AutoScroll = true;
@@ -85,8 +85,8 @@ namespace WindowsFormsApplication5
 
         private void Form2_ResizeBegin(object sender, EventArgs e)
         {
-            lunghezza_client_iniziale = this.Width;
-            altezza_client_iniziale = this.Height;
+            lunghezza_client_iniziale = this.ClientRectangle.Width;
+            altezza_client_iniziale = this.ClientRectangle.Height;
         }
     }
 }
