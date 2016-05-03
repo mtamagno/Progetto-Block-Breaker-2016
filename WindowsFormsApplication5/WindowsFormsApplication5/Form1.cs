@@ -219,28 +219,40 @@ namespace WindowsFormsApplication5
             }
         }
 
-        private void on_resize(object sender, EventArgs e)
+        public void on_resize(int l,int h/*object sender, EventArgs e*/)
         {
 
             // proporzionealtezza = ;
             //proporzionelarghezza = ;
+            Lunghezza_Client_inziale = l;
+            Altezza_Client_iniziale = h;
+            larghezza = l;
+            altezza = h;
             grid.redraw_grid(grid, this.ClientRectangle.Height,this.ClientRectangle.Width);
             Console.WriteLine(proporzionealtezza);
             foreach (Sprite s in iManager.inGameSprites)
             {
+                Console.WriteLine(Form2.ActiveForm.Height);
+                Console.WriteLine(Form2.ActiveForm.Width);
+
                 if (s.Type == Sprite.SpriteType.ball)
-                    s.redraw(s, (int)(10 * (float)this.ClientRectangle.Width / Lunghezza_Client_inziale), (int)(10 * (float)this.ClientRectangle.Height / Altezza_Client_iniziale), Properties.Resources.ball, s.X * this.ClientRectangle.Width / larghezza, s.Y * this.ClientRectangle.Height / altezza);
+                {
+                    Console.WriteLine(s.X);
+                   s.redraw(s, (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Width / Lunghezza_Client_inziale)), (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Height / Altezza_Client_iniziale)), Properties.Resources.ball, s.X * Form2.ActiveForm.ClientRectangle.Width / larghezza, s.Y * Form2.ActiveForm.ClientRectangle.Height / altezza);
+                    Console.WriteLine(s.X * Form2.ActiveForm.ClientRectangle.Width / larghezza);
+                }
                 else if (s.Type == Sprite.SpriteType.player)
-                    s.redraw(s, (int)(128 * (float)this.ClientRectangle.Width / Lunghezza_Client_inziale), (int)(24 * (float)this.ClientRectangle.Height / Altezza_Client_iniziale), Properties.Resources.New_Piskel, s.X * this.ClientRectangle.Width / larghezza, s.Y * this.ClientRectangle.Height / altezza);
+
+                    s.redraw(s, (int)(Math.Abs(128 * (float)Form2.ActiveForm.ClientRectangle.Width / Lunghezza_Client_inziale)), (int)(Math.Abs(24 * (float)Form2.ActiveForm.ClientRectangle.Height / Altezza_Client_iniziale)), Properties.Resources.New_Piskel, Math.Abs(s.X * Form2.ActiveForm.ClientRectangle.Width / larghezza), Math.Abs(s.Y * Form2.ActiveForm.ClientRectangle.Height / altezza));
                 else if (s.Type == Sprite.SpriteType.view)
-                    s.redraw(s, this.ClientRectangle.Width, this.ClientRectangle.Height, Properties.Resources.Background, 0, 0);
-                else if (s.Type == Sprite.SpriteType.block)
-                    grid.redraw_block(s, (int)(100 * (float)(this.ClientRectangle.Width / Lunghezza_Client_inziale)), (int)(50 * (float)(this.ClientRectangle.Height / Altezza_Client_iniziale)),Properties.Resources.Block,s.X * this.ClientRectangle.Width / larghezza, s.Y * this.ClientRectangle.Height / altezza);
+                    s.redraw(s, (Math.Abs(Form2.ActiveForm.ClientRectangle.Width)), Math.Abs(Form2.ActiveForm.ClientRectangle.Height), Properties.Resources.Background, 0, 0);
+              else if (s.Type == Sprite.SpriteType.block)
+                   grid.redraw_block(s, (int)(100 * (float)(Math.Abs(Form2.ActiveForm.ClientRectangle.Width / Lunghezza_Client_inziale))), (int)(Math.Abs(50 * (float)(Form2.ActiveForm.ClientRectangle.Height / Altezza_Client_iniziale))), Properties.Resources.Block, Math.Abs(s.X * Form2.ActiveForm.ClientRectangle.Width / larghezza), Math.Abs(s.Y * Form2.ActiveForm.ClientRectangle.Height / altezza));
             }
             //  ball.redraw(ball, 10 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 10 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.ball, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
             // racchetta.redraw(racchetta, 150 * this.ClientRectangle.Width / Lunghezza_Client_inziale, 25 * this.ClientRectangle.Height / Altezza_Client_iniziale, Properties.Resources.New_Piskel, this.ClientRectangle.Width / Lunghezza_Client_inziale, this.ClientRectangle.Height / Altezza_Client_iniziale);
             // background.redraw(background, this.ClientRectangle.Width, this.ClientRectangle.Height, Properties.Resources.Background, 0, 0);
-            racchetta.Y = this.ClientRectangle.Height * 9 / 10;
+            racchetta.Y = Form2.ActiveForm.ClientRectangle.Height * 9 / 10;
             spriteBatch.cntxt.MaximumBuffer = new Size(ClientSize.Width + 1, ClientSize.Height + 1);
             spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(this.CreateGraphics(), new Rectangle(Point.Empty, ClientSize));
             spriteBatch.Gfx = this.CreateGraphics();

@@ -102,7 +102,7 @@ namespace WindowsFormsApplication5
             sprite.Y = nuova_Y;
             //Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
             if (sprite.Type == Sprite.SpriteType.player)
-                    sprite.Y = (Form1.ActiveForm.Height - sprite.Height) * 9 / 10;
+                    sprite.Y = (Math.Abs(Form2.ActiveForm.Height - sprite.Height)) * 9 / 10;
             sprite.Texture = b;
         }
 
@@ -162,8 +162,8 @@ namespace WindowsFormsApplication5
             //dovrà seguire il mouse
             if (followPointer == true)
             {
-                    if(Form1.ActiveForm != null)
-                        this.X = Form1.MousePosition.X - Form1.ActiveForm.Location.X - this.Width / 2 - this.Width / 16;
+                    if(Form2.ActiveForm != null)
+                        this.X = Form2.MousePosition.X - Form2.ActiveForm.Location.X - this.Width / 2 - this.Width / 16;
             }
         }
 

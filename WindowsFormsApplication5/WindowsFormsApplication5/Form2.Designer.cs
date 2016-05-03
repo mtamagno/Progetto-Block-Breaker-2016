@@ -39,6 +39,7 @@
             this.Text = "Form2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
             this.Load += new System.EventHandler(this.Form2_Load);
+            this.ResizeBegin += new System.EventHandler(this.Form2_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.Form2_ResizeEnd);
             this.ResumeLayout(false);
 

@@ -17,6 +17,8 @@ namespace WindowsFormsApplication5
         Form3 Start = new Form3();
         Form1 Game = new Form1();
         Panel GamePanels = new Panel();
+        public int lunghezza_client_iniziale;
+        public int altezza_client_iniziale;
 
         public Form2()
         {
@@ -72,9 +74,16 @@ namespace WindowsFormsApplication5
             Game.Height = this.Height;
             Game.Width = this.Width;
             GamePanels.Top = 0;
-            GamePanels.Left = 0;           
+            GamePanels.Left = 0; 
             Game.Top = 0;
             Game.Left = 0;
+            Game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale);
+        }
+
+        private void Form2_ResizeBegin(object sender, EventArgs e)
+        {
+            lunghezza_client_iniziale = this.Width;
+            altezza_client_iniziale = this.Height;
         }
     }
 }

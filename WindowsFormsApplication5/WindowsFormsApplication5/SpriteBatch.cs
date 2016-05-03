@@ -29,6 +29,9 @@ namespace WindowsFormsApplication5
 
         public void Draw(Sprite s)
         {
+            /*Console.WriteLine(s.toRec);
+            Console.WriteLine(s.Texture);
+            Console.WriteLine(s.Type);*/
             bfgfx.Graphics.DrawImageUnscaled(s.Texture, s.toRec);
         }
 
