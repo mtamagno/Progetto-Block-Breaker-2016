@@ -19,7 +19,8 @@ namespace WindowsFormsApplication5
         Panel GamePanels = new Panel();
         public int lunghezza_client_iniziale;
         public int altezza_client_iniziale;
-
+        public int lunghezza_client;
+        public int altezza_client;
         public Form2()
         {
             InitializeComponent();
@@ -28,6 +29,8 @@ namespace WindowsFormsApplication5
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            lunghezza_client = this.Width;
+            altezza_client = this.Height;
             this.Controls.Add(GamePanels);
             Game.TopLevel = false;
             Game.AutoScroll = true;
@@ -77,7 +80,7 @@ namespace WindowsFormsApplication5
             GamePanels.Left = 0; 
             Game.Top = 0;
             Game.Left = 0;
-            Game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale);
+            Game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
         }
 
         private void Form2_ResizeBegin(object sender, EventArgs e)
