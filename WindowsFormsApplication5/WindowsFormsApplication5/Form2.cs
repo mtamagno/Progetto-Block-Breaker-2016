@@ -63,7 +63,6 @@ namespace WindowsFormsApplication5
 
             Game.Width = GamePanels.Width;
             Game.Height = GamePanels.Height;
-            Game.Show();
             Game.Left = 0;
             Game.Top = 0;
             Game.FormBorderStyle = FormBorderStyle.None;
@@ -77,13 +76,6 @@ namespace WindowsFormsApplication5
             Start.FormBorderStyle = FormBorderStyle.None;
             Start.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
             Start.AutoScaleMode = AutoScaleMode.Inherit;
-            /*          StartPanel.Dock = DockStyle.Fill;
-                      StartPanel.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right; ;*/
-
-            //  GamePanels.Bounds = this.Bounds;
-
-            //      Thread s = new Thread(gameLoop);
-            //     s.Start();
             gameLoop();
             Start.start.Click += new EventHandler(this.start_Click);
             return;
@@ -93,16 +85,26 @@ namespace WindowsFormsApplication5
         {
                 if (button_start)
                 {
+
+                Start.Enabled = false;
+
+
+                Game.Enabled = true;
                 GamePanels.Controls.Remove(Start);
                 GamePanels.Controls.Add(Game);
-                Game.Show();
+     
+                Game.Activate();
                 Start.Close();
-                Game.Enabled = true;
-                Start.Enabled = false;
-               // Start.Visible = false;
-                    /*      Game.Enabled = true;
-                          Game.Visible = true;*/
-                }
+                Game.Show();
+
+                Game.BringToFront();
+
+
+
+                // Start.Visible = false;
+                /*      Game.Enabled = true;
+                      Game.Visible = true;*/
+            }
                 else {
 
                 Start.Show();
