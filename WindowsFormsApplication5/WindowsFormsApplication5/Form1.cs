@@ -119,6 +119,7 @@ namespace WindowsFormsApplication5
             {
                 this.Invoke(new MethodInvoker(delegate
                 {
+                    if(Form2.ActiveForm != null)
                     Form2.ActiveForm.Text = "fps: " + fps.ToString() + "Ups:" + Ups.ToString();
                     MousePoint = this.PointToClient(Cursor.Position);
                 }));
