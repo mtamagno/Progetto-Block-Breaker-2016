@@ -54,7 +54,7 @@ namespace WindowsFormsApplication5
             StartPanel.Visible = true;*/
 
             GamePanels.Controls.Add(Start);
-            GamePanels.Controls.Add(Game);
+          //  GamePanels.Controls.Add(Game);
             this.Dock = DockStyle.Fill;
             Game.AutoScaleMode = AutoScaleMode.Inherit;
             GamePanels.Dock = DockStyle.Fill;
@@ -93,8 +93,11 @@ namespace WindowsFormsApplication5
         {
                 if (button_start)
                 {
-                Start.Close();
+                GamePanels.Controls.Remove(Start);
+                GamePanels.Controls.Add(Game);
                 Game.Show();
+                Start.Close();
+                Game.Enabled = true;
                 Start.Enabled = false;
                // Start.Visible = false;
                     /*      Game.Enabled = true;
@@ -112,7 +115,7 @@ namespace WindowsFormsApplication5
 
         protected void start_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            //this.Hide();
             Console.WriteLine("ciao");
             button_start = true;
             gameLoop();
