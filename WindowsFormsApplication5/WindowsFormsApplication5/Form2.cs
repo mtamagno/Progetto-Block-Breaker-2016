@@ -88,14 +88,15 @@ namespace WindowsFormsApplication5
 
                 Start.Enabled = false;
 
-
+                Start.Close();
                 Game.Enabled = true;
                 GamePanels.Controls.Remove(Start);
                 GamePanels.Controls.Add(Game);
      
                 Game.Activate();
-                Start.Close();
+
                 Game.Show();
+                Game.Focus();
 
                 Game.BringToFront();
 
