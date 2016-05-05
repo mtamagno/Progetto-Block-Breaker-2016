@@ -1,33 +1,90 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
 
 namespace WindowsFormsApplication5
 {
     public partial class Form2 : Form
     {
+        #region Public Fields
 
-        Form3 Start = new Form3();
-        Form1 Game = new Form1();
-        Panel GamePanels = new Panel();
-      //  Panel StartPanel = new Panel();
-        public int lunghezza_client_iniziale;
+        public int altezza_client;
         public int altezza_client_iniziale;
         public int lunghezza_client;
-        public int altezza_client;
-        bool button_start = false;
+        //  Panel StartPanel = new Panel();
+        public int lunghezza_client_iniziale;
+
+        #endregion Public Fields
+
+
+
+        #region Private Fields
+
+        private bool button_start = false;
+        private Form1 Game = new Form1();
+        private Panel GamePanels = new Panel();
+        private Form3 Start = new Form3();
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Form2()
         {
             InitializeComponent();
             return;
+        }
+
+        #endregion Public Constructors
+
+
+
+        #region Public Methods
+
+        public void gameLoop()
+        {
+            if (button_start)
+            {
+                Start.Enabled = false;
+                Start.Close();
+                Game.Enabled = true;
+                GamePanels.Controls.Remove(Start);
+                GamePanels.Controls.Add(Game);
+                Game.Activate();
+
+                Game.Show();
+                Game.Focus();
+
+                Game.BringToFront();
+
+                // Start.Visible = false;
+                /*      Game.Enabled = true;
+                      Game.Visible = true;*/
+            }
+            else {
+                Start.Show();
+                //Game.Show();
+            }
+        }
+
+        #endregion Public Methods
+
+
+
+        #region Protected Methods
+
+        protected void start_Click(object sender, EventArgs e)
+        {
+            button_start = true;
+            gameLoop();
+        }
+
+        #endregion Protected Methods
+
+        #region Private Methods
+
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Game.Close();
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -46,20 +103,19 @@ namespace WindowsFormsApplication5
             GamePanels.Width = 1000;
             GamePanels.Height = 500;
             //GamePanels.Visible = true;
- /*           StartPanel.Top = 0;
-            StartPanel.Left = 0;
+            /*           StartPanel.Top = 0;
+                       StartPanel.Left = 0;
 
-            StartPanel.Width = 1000;
-            StartPanel.Height = 500;
-            StartPanel.Visible = true;*/
+                       StartPanel.Width = 1000;
+                       StartPanel.Height = 500;
+                       StartPanel.Visible = true;*/
 
             GamePanels.Controls.Add(Start);
-          //  GamePanels.Controls.Add(Game);
+            //GamePanels.Controls.Add(Game);
             this.Dock = DockStyle.Fill;
             Game.AutoScaleMode = AutoScaleMode.Inherit;
             GamePanels.Dock = DockStyle.Fill;
-            GamePanels.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right; ;
-
+            GamePanels.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
 
             Game.Width = GamePanels.Width;
             Game.Height = GamePanels.Height;
@@ -81,63 +137,16 @@ namespace WindowsFormsApplication5
             return;
         }
 
-        public void gameLoop()
+        private void Form2_ResizeBegin(object sender, EventArgs e)
         {
-                if (button_start)
-                {
-
-                Start.Enabled = false;
-
-                Start.Close();
-                Game.Enabled = true;
-                GamePanels.Controls.Remove(Start);
-                GamePanels.Controls.Add(Game);
-     
-                Game.Activate();
-
-                Game.Show();
-                Game.Focus();
-
-                Game.BringToFront();
-
-
-
-                // Start.Visible = false;
-                /*      Game.Enabled = true;
-                      Game.Visible = true;*/
-            }
-                else {
-
-                Start.Show();
-                //Game.Show();
-
-            }
-            
-
-        }
-
-        protected void start_Click(object sender, EventArgs e)
-        {
-            //this.Hide();
-            Console.WriteLine("ciao");
-            button_start = true;
-            gameLoop();
-
-        }
-
-        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Game.Close();
+            lunghezza_client_iniziale = this.ClientRectangle.Width;
+            altezza_client_iniziale = this.ClientRectangle.Height;
         }
 
         private void Form2_ResizeEnd(object sender, EventArgs e)
         {
             if (Game.Enabled == true)
             {
-                Console.WriteLine(Game.Left);
-                Console.WriteLine(GamePanels.Left);
-                Console.WriteLine(Game.Height);
-                Console.WriteLine(GamePanels.Height);
                 GamePanels.Height = this.Height;
                 GamePanels.Width = this.Width;
                 Game.Height = this.Height;
@@ -150,10 +159,6 @@ namespace WindowsFormsApplication5
             }
         }
 
-        private void Form2_ResizeBegin(object sender, EventArgs e)
-        {
-            lunghezza_client_iniziale = this.ClientRectangle.Width;
-            altezza_client_iniziale = this.ClientRectangle.Height;
-        }
+        #endregion Private Methods
     }
 }
