@@ -17,20 +17,18 @@ namespace WindowsFormsApplication5
 
         public Form3()
         {
-            InitializeComponent();
-            return;
+               InitializeComponent();
         }
 
         private void Form3_Load(object sender, EventArgs e)
         {
-            this.Controls.Add(start);
-            
-            start.ForeColor = Color.Black;
-            start.BackColor = ProfessionalColors.ButtonCheckedGradientBegin;
-            start.UseVisualStyleBackColor = true;
-            start.Text = "Start";
-            start.Top = Form2.ActiveForm.ClientRectangle.Width /2;
-            start.Left = Form2.ActiveForm.ClientRectangle.Height/2;
+                this.Controls.Add(start);
+                start.ForeColor = Color.Black;
+                start.BackColor = ProfessionalColors.ButtonCheckedGradientBegin;
+                start.UseVisualStyleBackColor = true;
+                start.Text = "Start";
+                start.Top = ClientRectangle.Height / 2 - start.Height/2;
+                start.Left = ClientRectangle.Width / 2 - start.Width/2;
         }
 
     }
