@@ -79,9 +79,6 @@ namespace WindowsFormsApplication5
         public float X, Y;
 
         #endregion Public Fields
-
-
-
         #region Private Fields
 
         private static Random random = new Random();
@@ -151,17 +148,11 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Constructors
-
-
-
         #region Public Enums
 
         public enum SpriteType { player, ball, block, view };
 
         #endregion Public Enums
-
-
-
         #region Public Properties
 
         public Rectangle Bottom
@@ -190,9 +181,6 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Properties
-
-
-
         #region Public Methods
 
         //Funzione che restituisce l'angolo con cui la pallina deve essere fatta rimbalzare, a seconda del punto di impatto sulla racchetta
@@ -289,9 +277,6 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Methods
-
-
-
         #region Private Methods
 
         //Il collider fa un check di eventuali impatti tra sprites

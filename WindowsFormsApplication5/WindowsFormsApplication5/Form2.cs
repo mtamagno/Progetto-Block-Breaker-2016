@@ -14,9 +14,6 @@ namespace WindowsFormsApplication5
         public int lunghezza_client_iniziale;
 
         #endregion Public Fields
-
-
-
         #region Private Fields
 
         private bool button_start = false;
@@ -35,9 +32,6 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Constructors
-
-
-
         #region Public Methods
 
         public void gameLoop()
@@ -67,9 +61,6 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Methods
-
-
-
         #region Protected Methods
 
         protected void start_Click(object sender, EventArgs e)

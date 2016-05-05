@@ -11,9 +11,6 @@ namespace WindowsFormsApplication5
         public Button start = new Button();
 
         #endregion Public Fields
-
-
-
         #region Public Constructors
 
         public Form3()
@@ -22,9 +19,6 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Constructors
-
-
-
         #region Private Methods
 
         private void Form3_Load(object sender, EventArgs e)

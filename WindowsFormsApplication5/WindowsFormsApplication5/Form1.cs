@@ -22,9 +22,6 @@ namespace WindowsFormsApplication5
         #endregion Public Fields
 
         //Punteggio
-
-
-
         #region Private Fields
 
         private bool AllowInput;
@@ -78,9 +75,6 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Constructors
-
-
-
         #region Public Methods
 
         public void on_resize(int l, int h, int li, int hi/*object sender, EventArgs e*/)
@@ -111,9 +105,6 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Methods
-
-
-
         #region Protected Methods
 
         protected override void OnClosing(CancelEventArgs e)
@@ -131,8 +122,7 @@ namespace WindowsFormsApplication5
             }
         }
 
-        protected override void OnKeyPress(KeyPressEventArgs e)
-        {
+        protected override void OnKeyPress(KeyPressEventArgs e) {
             base.OnKeyPress(e);
             if (AllowInput)
             {
