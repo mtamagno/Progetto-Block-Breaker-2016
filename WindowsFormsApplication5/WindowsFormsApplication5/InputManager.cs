@@ -1,28 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Diagnostics;
+
 namespace WindowsFormsApplication5
 {
-    class InputManager
+    internal class InputManager
     {
-        public Point mousePoint;
-        public Keys[] keyPressed;
-        public Keys[] keyHeld;
-        public Stopwatch gameTime;
+        #region Public Fields
+
         public float deltaTime;
+        public Stopwatch gameTime;
         public List<Sprite> inGameSprites = new List<Sprite>();
+        public Keys[] keyHeld;
+        public Keys[] keyPressed;
+        public Point mousePoint;
+
+        #endregion Public Fields
+
+
+
+        #region Public Methods
+
         public void update(Point mp, Keys[] kp, Keys[] kh, Stopwatch gt, float dt)
         {
             mousePoint = mp;
             keyPressed = kp;
             keyHeld = kh;
             gameTime = gt;
-            deltaTime = dt/1000f;
+            deltaTime = dt / 1000f;
         }
+
+        #endregion Public Methods
     }
 }

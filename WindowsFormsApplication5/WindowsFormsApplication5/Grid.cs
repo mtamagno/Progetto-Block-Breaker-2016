@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Threading.Tasks;
-using System.Drawing;
-
+﻿using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-    class Grid
+    internal class Grid
     {
-        System.Windows.Forms.DataGridView grid;
+        #region Private Fields
+
+        private System.Windows.Forms.DataGridView grid;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         //Metodo grid da chiamare per creare una griglia all'interno del form
         public Grid(int x, int y, float client_height, float client_width)
         {
@@ -23,6 +23,12 @@ namespace WindowsFormsApplication5
             grid.Width = (int)client_width;
             grid.Height = (int)(client_height / 3);
         }
+
+        #endregion Public Constructors
+
+
+
+        #region Public Methods
 
         //Metodo insert_grid utilizzato per inserire nei posti giusti i blocchi grazie alle coordinate della griglia
         public void insert_grid(Bitmap Texture, InputManager iManager)
@@ -37,16 +43,17 @@ namespace WindowsFormsApplication5
             }
         }
 
+        public void redraw_block(Sprite s, int new_width, int new_height, Bitmap risorsa, float nuova_x, float nuova_y)
+        {
+            s.redraw(s, (grid.Width / grid.ColumnCount), (grid.Height / grid.RowCount), risorsa, nuova_x, nuova_y);
+        }
+
         public void redraw_grid(Grid grid, float client_height, float client_width)
         {
             grid.grid.Width = (int)client_width;
             grid.grid.Height = (int)(client_height / 3);
         }
 
-        public void redraw_block(Sprite s, int new_width, int new_height, Bitmap risorsa, float nuova_x, float nuova_y)
-        {
-            s.redraw(s, (grid.Width/grid.ColumnCount), (grid.Height/grid.RowCount), risorsa, nuova_x, nuova_y);
-        }
+        #endregion Public Methods
     }
 }
-

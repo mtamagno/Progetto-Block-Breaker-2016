@@ -1,26 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-    
-    class SpriteBatch
+    internal class SpriteBatch
     {
-        public Graphics Gfx;
-        public BufferedGraphics bfgfx; //Variabile per i buffered graphics
-        public BufferedGraphicsContext cntxt = BufferedGraphicsManager.Current;
-        
+        #region Public Fields
 
-        public SpriteBatch(Size clientSize , Graphics gfx)
+        public BufferedGraphics bfgfx;
+
+        //Variabile per i buffered graphics
+        public BufferedGraphicsContext cntxt = BufferedGraphicsManager.Current;
+
+        public Graphics Gfx;
+
+        #endregion Public Fields
+
+
+
+        #region Public Constructors
+
+        public SpriteBatch(Size clientSize, Graphics gfx)
         {
             cntxt.MaximumBuffer = new Size(clientSize.Width + 1, clientSize.Height + 1);
             bfgfx = cntxt.Allocate(gfx, new Rectangle(Point.Empty, clientSize));
             Gfx = gfx;
         }
+
+        #endregion Public Constructors
+
+
+
+        #region Public Methods
 
         public void Begin()
         {
@@ -35,9 +45,9 @@ namespace WindowsFormsApplication5
             bfgfx.Graphics.DrawImageUnscaled(s.Texture, s.toRec);
         }
 
-        public void drawImage(Bitmap b,Rectangle rec)
+        public void drawImage(Bitmap b, Rectangle rec)
         {
-            bfgfx.Graphics.DrawImageUnscaled(b,rec);
+            bfgfx.Graphics.DrawImageUnscaled(b, rec);
         }
 
         public void End()
@@ -45,6 +55,6 @@ namespace WindowsFormsApplication5
             bfgfx.Render(Gfx);
         }
 
-
+        #endregion Public Methods
     }
 }

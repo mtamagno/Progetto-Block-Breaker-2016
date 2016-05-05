@@ -1,34 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WindowsFormsApplication5
+﻿namespace WindowsFormsApplication5
 {
-    class ScreenManager
+    internal class ScreenManager
     {
-        public enum GameState { Splash, Menu , Game}
+        #region Public Constructors
 
         public ScreenManager()
         {
+        }
+
+        #endregion Public Constructors
 
 
+
+        #region Public Enums
+
+        public enum GameState { Splash, Menu, Game }
+
+        #endregion Public Enums
+
+
+
+        #region Public Methods
+
+        public void Draw(SpriteBatch sb)
+        {
         }
 
         public void LoadContent(InputManager iManager)
         {
-
         }
 
         public void Update(InputManager iManager)
         {
-
         }
 
-        public void Draw(SpriteBatch sb)
-        {
-
-        }
-            }
+        #endregion Public Methods
+    }
 }
