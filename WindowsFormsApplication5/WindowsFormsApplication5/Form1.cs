@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
+using System.Security;
 
 namespace WindowsFormsApplication5
 {
@@ -66,9 +67,13 @@ namespace WindowsFormsApplication5
 
         private Sprite[] vita = new Sprite[3];
 
-        public int vita_rimanente = 3;
+        public int vita_rimanente = 1;
 
-        private Panel Game_pause;
+        private Label Pause_label;
+
+        public Thread game;
+
+        public bool Threadon;
 
         #endregion Private Fields
 
@@ -88,8 +93,6 @@ namespace WindowsFormsApplication5
             grid.redraw_grid(grid, this.ClientRectangle.Height, this.ClientRectangle.Width);
             foreach (Sprite s in iManager.inGameSprites)
             {
-                Console.WriteLine(Form2.ActiveForm.Height);
-                Console.WriteLine(Form2.ActiveForm.Width);
 
                 if (s.Type == Sprite.SpriteType.ball)
                 {
@@ -109,6 +112,7 @@ namespace WindowsFormsApplication5
             spriteBatch.cntxt.MaximumBuffer = new Size(ClientSize.Width + 1, ClientSize.Height + 1);
             spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(this.CreateGraphics(), new Rectangle(Point.Empty, ClientSize));
             spriteBatch.Gfx = this.CreateGraphics();
+            return;
         }
 
         #endregion Public Methods
@@ -118,6 +122,7 @@ namespace WindowsFormsApplication5
         {
             base.OnClosing(e);
             System.Environment.Exit(0);
+            return;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
@@ -127,6 +132,7 @@ namespace WindowsFormsApplication5
             {
                 KeysHeld.Add(e.KeyCode);
             }
+            return;
         }
 
         protected override void OnKeyPress(KeyPressEventArgs e) {
@@ -135,12 +141,14 @@ namespace WindowsFormsApplication5
             {
                 KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
             }
+            return;
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             loadContent();
+            return;
         }
 
         #endregion Protected Methods
@@ -157,6 +165,7 @@ namespace WindowsFormsApplication5
             }
             else
                 fpsCounter++;
+            return;
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -165,7 +174,23 @@ namespace WindowsFormsApplication5
             {
                 ball.canFall = true;
                 ball.followPointer = false;
+                gamepause.Visible = false;
             }
+
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                ball.canFall = false;
+                gamepause.Visible = true;
+
+            }
+
+            if (e.KeyChar == (char)Keys.Escape)
+            {
+                Threadon = false;
+                this.Close();
+
+            }
+            return;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -184,29 +209,33 @@ namespace WindowsFormsApplication5
             gameTime.Start();
             /*Gioco in esecuzione*/
             spriteBatch = new SpriteBatch(this.ClientSize, this.CreateGraphics());
-            while (this.Created)
-            {
-                if (background.bottom_collide == 1)
+
+                while (Threadon == true)
                 {
-                    ball.canFall = false;
-                    ball.Y = racchetta.Y;
-                    ball.followPointer = true;
-                    ball.velocity.Y = 0;
-                    vita_rimanente--;
-                    background.bottom_collide = 0;
-                    for (int i = vita_rimanente; i < 3; i++)
-                        vita[i].torender = false;
+                    if (background.bottom_collide == 1)
+                    {
+                        ball.canFall = false;
+                        ball.Y = racchetta.Y;
+                        ball.followPointer = true;
+                        ball.velocity.Y = 0;
+                        vita_rimanente--;
+                        background.bottom_collide = 0;
+                        for (int i = vita_rimanente; i < 3; i++)
+                            vita[i].torender = false;
 
 
+                    }
+                    checkfps();
+                    deltaTime = gameTime.ElapsedMilliseconds - LastTime;
+                    LastTime = gameTime.ElapsedMilliseconds;
+                    input();
+                    logic();
+                    render();
                 }
-                checkfps();
-                deltaTime = gameTime.ElapsedMilliseconds - LastTime;
-                LastTime = gameTime.ElapsedMilliseconds;
-                input();
-                logic();
-                render();
 
-            }
+
+            
+            return;
         }
 
         private void input()
@@ -229,10 +258,15 @@ namespace WindowsFormsApplication5
             KeysPressed.Clear();
             KeysHeld.Clear();
             AllowInput = true;
+            return;
         }
 
         private void loadContent()
         {
+            Threadon = true;
+            gamepause.Visible = false;
+            gamepause.Top = this.ClientRectangle.Height / 2 - gamepause.Height / 2;
+            gamepause.Left = this.ClientRectangle.Width / 2 - gamepause.Width / 2;
             //this.FormBorderStyle = FormBorderStyle.None;
             //this.Bounds = Screen.PrimaryScreen.Bounds;
             //inizializzo il background
@@ -263,9 +297,11 @@ namespace WindowsFormsApplication5
                 vita[i] = new Sprite(Properties.Resources.vita, this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50 , 20, 20, Sprite.SpriteType.life);
                 iManager.inGameSprites.Add(vita[i]);
             }
-            Thread game = new Thread(gameLoop);
+            game = new Thread(gameLoop);
             ball.velocity.X = 50;
+
             game.Start();
+            return;
         }
 
         private void logic()
@@ -284,6 +320,7 @@ namespace WindowsFormsApplication5
                 uTime = gameTime.ElapsedMilliseconds;
                 uCounter++;
             }
+            return;
         }
 
         private void output()
@@ -297,14 +334,42 @@ namespace WindowsFormsApplication5
                 if (s.torender == true)
                     spriteBatch.Draw(s);
             spriteBatch.End();
+            return;
         }
 
         public void GameOver(int life)
         {
             vita_rimanente = life;
+            return;
 
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {      
+            base.OnClosing(e);
+            return;
+        }
+
+
         #endregion Private Methods
+
+        public void iwanttoclosethis()
+        {
+            Threadon = false;
+            game.Interrupt();
+            foreach (Sprite s in iManager.inGameSprites)
+                s.torender = false;
+                if (!game.IsAlive)
+                game.Join();
+            if (!game.IsAlive)
+                this.Close();
+            return;
+        }
 
         /*gestisce le eccezioni alla chiusura del programma*/
     }

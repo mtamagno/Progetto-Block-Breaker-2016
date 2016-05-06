@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace WindowsFormsApplication5
 {
@@ -20,7 +21,8 @@ namespace WindowsFormsApplication5
         private Form1 Game = new Form1();
         private Panel GamePanels = new Panel();
         private Form3 Start = new Form3();
-
+        private int sono_entrato = 1;
+        private Thread isAlive;
         #endregion Private Fields
 
         #region Public Constructors
@@ -34,7 +36,7 @@ namespace WindowsFormsApplication5
         #endregion Public Constructors
         #region Public Methods
 
-        public void gameLoop()
+        private void gameLoop()
         {
             if (button_start)
             {
@@ -47,8 +49,10 @@ namespace WindowsFormsApplication5
 
                 Game.Show();
                 Game.Focus();
-
                 Game.BringToFront();
+                
+                
+
 
                 // Start.Visible = false;
                 /*      Game.Enabled = true;
@@ -59,6 +63,30 @@ namespace WindowsFormsApplication5
                 //Game.Show();
             }
         }
+
+        private void isalive()
+        {
+            while (this.Created)
+            {
+                if (Game.vita_rimanente < 1)
+                {
+                    ciao();
+                    
+                    Start.Show();
+                }
+            }
+
+        }
+
+        public void ciao()
+        {
+            if (Game.Created && sono_entrato == 1)
+            {
+                Game.iwanttoclosethis();
+                sono_entrato = 0;
+            }
+        }
+
 
         #endregion Public Methods
         #region Protected Methods
@@ -87,7 +115,8 @@ namespace WindowsFormsApplication5
             Game.AutoScroll = true;
             Start.TopLevel = false;
             Start.AutoScroll = true;
-
+            isAlive = new Thread(isalive);
+            isAlive.Start();
             GamePanels.Top = 0;
             GamePanels.Left = 0;
 

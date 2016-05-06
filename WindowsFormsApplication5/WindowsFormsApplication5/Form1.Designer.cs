@@ -30,7 +30,19 @@
         {
             this.components = new System.ComponentModel.Container();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.gamepause = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // gamepause
+            // 
+            this.gamepause.AutoSize = true;
+            this.gamepause.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.gamepause.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gamepause.Location = new System.Drawing.Point(329, 133);
+            this.gamepause.Name = "gamepause";
+            this.gamepause.Size = new System.Drawing.Size(211, 125);
+            this.gamepause.TabIndex = 0;
+            this.gamepause.Text = "Game Paused\r\n\r\nPress space to resume\r\n\r\nPress esc to exit";
             // 
             // Form1
             // 
@@ -38,17 +50,21 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(884, 411);
+            this.Controls.Add(this.gamepause);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label gamepause;
     }
 }
 
