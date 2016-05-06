@@ -404,7 +404,6 @@ namespace WindowsFormsApplication5
                                 {
                                     s.velocity.Y *= -1;
                                     s.Y = 0;
-                                    this.bottom_collide = 1;
                                 }
                                 break;
                         }

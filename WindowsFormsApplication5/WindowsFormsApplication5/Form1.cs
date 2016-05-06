@@ -68,6 +68,8 @@ namespace WindowsFormsApplication5
 
         public int vita_rimanente = 3;
 
+        private Panel Game_pause;
+
         #endregion Private Fields
 
         #region Public Constructors
@@ -100,6 +102,8 @@ namespace WindowsFormsApplication5
                     s.redraw(s, (Math.Abs(Form2.ActiveForm.ClientRectangle.Width)), Math.Abs(Form2.ActiveForm.ClientRectangle.Height), Properties.Resources.Background, 0, 0);
                 else if (s.Type == Sprite.SpriteType.block)
                     grid.redraw_block(s, (int)(100 * (float)Form2.ActiveForm.ClientRectangle.Width / li), (int)(50 * (float)(Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.Block, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
+                else if (s.Type == Sprite.SpriteType.life)
+                    s.redraw(s, (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.vita, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
             }
             racchetta.Y = Form2.ActiveForm.ClientRectangle.Height * 9 / 10;
             spriteBatch.cntxt.MaximumBuffer = new Size(ClientSize.Width + 1, ClientSize.Height + 1);
