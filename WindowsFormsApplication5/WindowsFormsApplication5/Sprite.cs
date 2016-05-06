@@ -77,6 +77,7 @@ namespace WindowsFormsApplication5
         public int velocity_tot_raggiunto;
         public int Width, Height;
         public float X, Y;
+        public int bottom_collide = 0;
 
         #endregion Public Fields
         #region Private Fields
@@ -115,6 +116,13 @@ namespace WindowsFormsApplication5
 
             switch (thisType)
             {
+                case SpriteType.life:
+                    canFall = false;
+                    torender = true;
+                    canCollide = false;
+                    followPointer = false;
+                    break;
+
                 case SpriteType.ball:
                     canFall = true;
                     canCollide = true;
@@ -150,7 +158,7 @@ namespace WindowsFormsApplication5
         #endregion Public Constructors
         #region Public Enums
 
-        public enum SpriteType { player, ball, block, view };
+        public enum SpriteType { player, ball, block, view, life };
 
         #endregion Public Enums
         #region Public Properties
@@ -389,12 +397,14 @@ namespace WindowsFormsApplication5
                                 {
                                     s.velocity.Y *= -1;
                                     s.Y = (float)this.Height - s.Height;
+                                    this.bottom_collide = 1;
                                 }
                                 else
                                 if (s.Y < 0)
                                 {
                                     s.velocity.Y *= -1;
                                     s.Y = 0;
+                                    this.bottom_collide = 1;
                                 }
                                 break;
                         }
@@ -402,6 +412,7 @@ namespace WindowsFormsApplication5
                 }
             }
         }
+
 
         #endregion Private Methods
     }

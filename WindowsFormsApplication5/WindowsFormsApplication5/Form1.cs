@@ -64,6 +64,10 @@ namespace WindowsFormsApplication5
 
         private long uTime;
 
+        private Sprite[] vita = new Sprite[3];
+
+        public int vita_rimanente = 3;
+
         #endregion Private Fields
 
         #region Public Constructors
@@ -178,12 +182,26 @@ namespace WindowsFormsApplication5
             spriteBatch = new SpriteBatch(this.ClientSize, this.CreateGraphics());
             while (this.Created)
             {
+                if (background.bottom_collide == 1)
+                {
+                    ball.canFall = false;
+                    ball.Y = racchetta.Y;
+                    ball.followPointer = true;
+                    ball.velocity.Y = 0;
+                    vita_rimanente--;
+                    background.bottom_collide = 0;
+                    for (int i = vita_rimanente; i < 3; i++)
+                        vita[i].torender = false;
+
+
+                }
                 checkfps();
                 deltaTime = gameTime.ElapsedMilliseconds - LastTime;
                 LastTime = gameTime.ElapsedMilliseconds;
                 input();
                 logic();
                 render();
+
             }
         }
 
@@ -236,6 +254,11 @@ namespace WindowsFormsApplication5
             iManager.inGameSprites.Add(ball);
             ball.canFall = false;
             ball.followPointer = true;
+            for (int i = 0; i < 3; i++)
+            {
+                vita[i] = new Sprite(Properties.Resources.vita, this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50 , 20, 20, Sprite.SpriteType.life);
+                iManager.inGameSprites.Add(vita[i]);
+            }
             Thread game = new Thread(gameLoop);
             ball.velocity.X = 50;
             game.Start();
@@ -272,6 +295,11 @@ namespace WindowsFormsApplication5
             spriteBatch.End();
         }
 
+        public void GameOver(int life)
+        {
+            vita_rimanente = life;
+
+        }
         #endregion Private Methods
 
         /*gestisce le eccezioni alla chiusura del programma*/
