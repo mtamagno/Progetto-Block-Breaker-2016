@@ -93,9 +93,8 @@ namespace WindowsFormsApplication5
 
                 if (s.Type == Sprite.SpriteType.ball)
                 {
-                    Console.WriteLine(s.X);
+
                     s.redraw(s, (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.ball, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
-                    Console.WriteLine(s.X * Form2.ActiveForm.ClientRectangle.Width / l);
                 }
                 else if (s.Type == Sprite.SpriteType.player)
                     s.redraw(s, (int)(Math.Abs(128 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(24 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.New_Piskel, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
@@ -240,10 +239,10 @@ namespace WindowsFormsApplication5
             //grid.DataSource = query;
 
             //inizializzo racchetta
-            racchetta = new Sprite(Properties.Resources.New_Piskel, MousePoint.X - this.Location.X, 300, 128, 24, Sprite.SpriteType.player);
+            racchetta = new Sprite(Properties.Resources.New_Piskel, MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24, Sprite.SpriteType.player);
             iManager.inGameSprites.Add(racchetta);
             //inizializzo pallina
-            ball = new Sprite(Properties.Resources.ball, 300, 288, 10, 10, Sprite.SpriteType.ball);
+            ball = new Sprite(Properties.Resources.ball, 300, racchetta.Y, 10, 10, Sprite.SpriteType.ball);
             iManager.inGameSprites.Add(ball);
             ball.canFall = false;
             ball.followPointer = true;
