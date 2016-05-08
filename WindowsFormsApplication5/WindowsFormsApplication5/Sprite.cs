@@ -64,7 +64,7 @@ namespace WindowsFormsApplication5
     {
         #region Public Fields
 
-        public int Accel_y = 2;
+        public int Accel_y = 1000;
         public bool canCollide;
         public bool canFall;
         public bool followPointer;

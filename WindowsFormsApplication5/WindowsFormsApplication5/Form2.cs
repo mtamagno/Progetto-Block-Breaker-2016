@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
@@ -10,8 +11,9 @@ namespace WindowsFormsApplication5
         public int altezza_client;
         public int altezza_client_iniziale;
         public int lunghezza_client;
-        //  Panel StartPanel = new Panel();
         public int lunghezza_client_iniziale;
+        private object sender;
+        private EventArgs e;
 
         #endregion Public Fields
         #region Private Fields
@@ -20,11 +22,10 @@ namespace WindowsFormsApplication5
         private Form1 Game = new Form1();
         private Panel GamePanels = new Panel();
         private Form3 Start = new Form3();
-
+        private int primavolta = 0;
         #endregion Private Fields
 
         #region Public Constructors
-
         public Form2()
         {
             InitializeComponent();
@@ -38,25 +39,42 @@ namespace WindowsFormsApplication5
         {
             if (button_start)
             {
-                Start.Enabled = false;
-                Start.Close();
-                Game.Enabled = true;
-                GamePanels.Controls.Remove(Start);
+                Start.Hide();
                 GamePanels.Controls.Add(Game);
-                Game.Activate();
-
                 Game.Show();
                 Game.Focus();
-
                 Game.BringToFront();
-
+                Thread game_alive = new Thread(gameover_check);
+                game_alive.Start();
                 // Start.Visible = false;
                 /*      Game.Enabled = true;
                       Game.Visible = true;*/
             }
             else {
+                if(primavolta == 1)
+                {
+                    //qui dovremmo fare ciò che facciamo in form load ma se lo facciamo dice che non abbiamo i permessi ad esempio per fare
+                    //this.controls.clear();... non so cosa farci lol
+
+                    Game = new Form1();
+                    Start = new Form3();
+                    GamePanels.Controls.Add(Start);
+                }
                 Start.Show();
-                //Game.Show();
+                Start.Focus();
+                Start.BringToFront();
+            }
+            primavolta = 1;
+
+        }
+
+        public void gameover_check()
+        {
+            while (this.Created)
+            if (Game.shouldStop==true && button_start == true)
+            {
+                button_start = false;
+                gameLoop();
             }
         }
 
@@ -100,7 +118,6 @@ namespace WindowsFormsApplication5
                        StartPanel.Width = 1000;
                        StartPanel.Height = 500;
                        StartPanel.Visible = true;*/
-
             GamePanels.Controls.Add(Start);
             //GamePanels.Controls.Add(Game);
             this.Dock = DockStyle.Fill;
@@ -125,6 +142,7 @@ namespace WindowsFormsApplication5
             Start.AutoScaleMode = AutoScaleMode.Inherit;
             gameLoop();
             Start.start.Click += new EventHandler(this.start_Click);
+            primavolta = 0;
             return;
         }
 

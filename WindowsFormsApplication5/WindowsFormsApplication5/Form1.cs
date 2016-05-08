@@ -70,6 +70,8 @@ namespace WindowsFormsApplication5
 
         private Panel Game_pause;
 
+        public volatile bool shouldStop = false;
+
         #endregion Private Fields
 
         #region Public Constructors
@@ -184,7 +186,7 @@ namespace WindowsFormsApplication5
             gameTime.Start();
             /*Gioco in esecuzione*/
             spriteBatch = new SpriteBatch(this.ClientSize, this.CreateGraphics());
-            while (this.Created)
+            while (shouldStop == false)
             {
                 if (background.bottom_collide == 1)
                 {
@@ -195,9 +197,15 @@ namespace WindowsFormsApplication5
                     vita_rimanente--;
                     background.bottom_collide = 0;
                     for (int i = vita_rimanente; i < 3; i++)
-                        vita[i].torender = false;
-
-
+                    {
+                        if (vita_rimanente > 0)
+                            vita[i].torender = false;
+                        else
+                        {
+                            shouldStop = true;
+                            return;
+                        }
+                    }
                 }
                 checkfps();
                 deltaTime = gameTime.ElapsedMilliseconds - LastTime;
@@ -205,7 +213,6 @@ namespace WindowsFormsApplication5
                 input();
                 logic();
                 render();
-
             }
         }
 
