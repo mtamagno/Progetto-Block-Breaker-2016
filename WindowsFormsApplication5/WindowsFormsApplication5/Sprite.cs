@@ -153,6 +153,7 @@ namespace WindowsFormsApplication5
                     followPointer = false;
                     break;
             }
+            return;
         }
 
         #endregion Public Constructors
@@ -205,6 +206,7 @@ namespace WindowsFormsApplication5
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(this);
+            return;
         }
 
         //Funzione redraw necessaria ogni qual volta si effettua il resize dei vari sprite
@@ -230,6 +232,7 @@ namespace WindowsFormsApplication5
             if (sprite.Type == Sprite.SpriteType.player)
                 sprite.Y = (Math.Abs(Form2.ActiveForm.Height - sprite.Height)) * 9 / 10;
             sprite.Texture = b;
+            return;
         }
 
         //Funzione che aggiorna la posizione dei vari sprite utilizzando la loro velocità e posizione precedente
@@ -282,6 +285,7 @@ namespace WindowsFormsApplication5
                 if (Form2.ActiveForm != null)
                     this.X = Form2.MousePosition.X - Form2.ActiveForm.Location.X - this.Width / 2 - this.Width / 16;
             }
+            return;
         }
 
         #endregion Public Methods
@@ -395,8 +399,6 @@ namespace WindowsFormsApplication5
                                 //La Y della pallina è oltre il limite superiore o inferiore
                                 if ((s.Y + (float)s.Height) >= (float)this.Height)
                                 {
-                                    s.velocity.Y *= -1;
-                                    s.Y = (float)this.Height - s.Height;
                                     this.bottom_collide = 1;
                                 }
                                 else
@@ -410,6 +412,7 @@ namespace WindowsFormsApplication5
                         break;
                 }
             }
+            return;
         }
 
 
