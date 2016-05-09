@@ -23,6 +23,7 @@ namespace WindowsFormsApplication5
         private Panel GamePanels = new Panel();
         private Form3 Start = new Form3();
         private int primavolta = 0;
+        private Thread game;
         #endregion Private Fields
 
         #region Public Constructors
@@ -41,11 +42,13 @@ namespace WindowsFormsApplication5
             {
                 Start.Hide();
                 GamePanels.Controls.Add(Game);
+                game = new Thread(Game.gameLoop);
                 Game.Show();
                 Game.Focus();
                 Game.BringToFront();
                 Thread game_alive = new Thread(gameover_check);
                 game_alive.Start();
+                game.Start();
                 // Start.Visible = false;
                 /*      Game.Enabled = true;
                       Game.Visible = true;*/
@@ -53,15 +56,26 @@ namespace WindowsFormsApplication5
             else {
                 if(primavolta == 1)
                 {
-                    //qui dovremmo fare ciò che facciamo in form load ma se lo facciamo dice che non abbiamo i permessi ad esempio per fare
-                    //this.controls.clear();... non so cosa farci lol
+                                  //qui dovremmo fare ciò che facciamo in form load ma se lo facciamo dice che non abbiamo i permessi ad esempio per fare
+                                    //this.controls.clear();... non so cosa farci lol
+                                    Game.Invalidate();
+                                    //Game.Close();
+                                    Game = new Form1();
+                                    Start = new Form3();
 
-                    Game = new Form1();
-                    Start = new Form3();
-                    GamePanels.Controls.Add(Start);
+                                    GamePanels.Controls.Remove(Game);
+                                    Game.Hide();
+                                    /*Start.Controls.Clear();
+                                    Start.Focus();
+                                    Start.Show();
+                                    Start.Focus();
+                                    Start.BringToFront();*/
+                    //game.Abort();
+                    callonload();
+                    primavolta = 0;
                 }
                 Start.Show();
-                Start.Focus();
+
                 Start.BringToFront();
             }
             primavolta = 1;
@@ -98,14 +112,18 @@ namespace WindowsFormsApplication5
 
         private void Form2_Load(object sender, EventArgs e)
         {
+            callonload();
+        }
+
+        private void callonload()
+        {
+
             lunghezza_client = this.ClientRectangle.Width;
             altezza_client = this.ClientRectangle.Height;
+            if(!GamePanels.Created)
             this.Controls.Add(GamePanels);
             Game.TopLevel = false;
-            Game.AutoScroll = true;
             Start.TopLevel = false;
-            Start.AutoScroll = true;
-
             GamePanels.Top = 0;
             GamePanels.Left = 0;
 
@@ -118,29 +136,36 @@ namespace WindowsFormsApplication5
                        StartPanel.Width = 1000;
                        StartPanel.Height = 500;
                        StartPanel.Visible = true;*/
+            if(!Start.Created)
             GamePanels.Controls.Add(Start);
             //GamePanels.Controls.Add(Game);
             this.Dock = DockStyle.Fill;
             Game.AutoScaleMode = AutoScaleMode.Inherit;
-            GamePanels.Dock = DockStyle.Fill;
+            if (!GamePanels.Created)
+                GamePanels.Dock = DockStyle.Fill;
             GamePanels.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
-
-            Game.Width = GamePanels.Width;
-            Game.Height = GamePanels.Height;
+            if (!Game.Created)
+                Game.Width = GamePanels.Width;
+            if (!Game.Created)
+                Game.Height = GamePanels.Height;
             Game.Left = 0;
             Game.Top = 0;
-            Game.FormBorderStyle = FormBorderStyle.None;
+            if (!Game.Created)
+                Game.FormBorderStyle = FormBorderStyle.None;
             Game.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
             Game.AutoScaleMode = AutoScaleMode.Inherit;
-
-            Start.Width = GamePanels.Width;
-            Start.Height = GamePanels.Height;
+            if (!Start.Created)
+                Start.Width = GamePanels.Width;
+            if (!Start.Created)
+                Start.Height = GamePanels.Height;
             Start.Left = 0;
             Start.Top = 0;
-            Start.FormBorderStyle = FormBorderStyle.None;
+            if (!Start.Created)
+                Start.FormBorderStyle = FormBorderStyle.None;
             Start.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
             Start.AutoScaleMode = AutoScaleMode.Inherit;
             gameLoop();
+
             Start.start.Click += new EventHandler(this.start_Click);
             primavolta = 0;
             return;
@@ -156,6 +181,7 @@ namespace WindowsFormsApplication5
         {
             if (Game.Enabled == true)
             {
+       
                 GamePanels.Height = this.Height;
                 GamePanels.Width = this.Width;
                 Game.Height = this.Height;

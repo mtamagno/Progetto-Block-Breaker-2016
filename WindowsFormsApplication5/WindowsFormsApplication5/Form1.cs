@@ -167,6 +167,17 @@ namespace WindowsFormsApplication5
             {
                 ball.canFall = true;
                 ball.followPointer = false;
+                gamepause.Visible = false;
+            }
+
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                gamepause.Visible = true;
+            }
+
+            if (e.KeyChar == (char)Keys.Escape)
+            {
+                this.Close();
             }
         }
 
@@ -181,7 +192,7 @@ namespace WindowsFormsApplication5
         /*fps totali*/
         /* update per second " fps reali, dopo l utilizzo di un fps limiter" */
 
-        private void gameLoop()
+        public void gameLoop()
         {
             gameTime.Start();
             /*Gioco in esecuzione*/
@@ -203,7 +214,6 @@ namespace WindowsFormsApplication5
                         else
                         {
                             shouldStop = true;
-                            return;
                         }
                     }
                 }
@@ -214,6 +224,10 @@ namespace WindowsFormsApplication5
                 logic();
                 render();
             }
+
+            if (shouldStop == true)
+                Console.WriteLine("mi chiudo");
+            return;
         }
 
         private void input()
@@ -270,9 +284,10 @@ namespace WindowsFormsApplication5
                 vita[i] = new Sprite(Properties.Resources.vita, this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50 , 20, 20, Sprite.SpriteType.life);
                 iManager.inGameSprites.Add(vita[i]);
             }
-            Thread game = new Thread(gameLoop);
+            //Thread game = new Thread(gameLoop);
+            gamepause.Visible = false;
             ball.velocity.X = 50;
-            game.Start();
+            //game.Start();
         }
 
         private void logic()
