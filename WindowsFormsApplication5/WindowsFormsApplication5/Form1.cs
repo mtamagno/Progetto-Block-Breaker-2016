@@ -203,6 +203,7 @@ namespace WindowsFormsApplication5
                         else
                         {
                             shouldStop = true;
+                            Console.WriteLine("Mi fermo\n");
                             return;
                         }
                     }
@@ -240,6 +241,10 @@ namespace WindowsFormsApplication5
 
         private void loadContent()
         {
+            starter();
+        }
+        private void starter()
+        {
             //this.FormBorderStyle = FormBorderStyle.None;
             //this.Bounds = Screen.PrimaryScreen.Bounds;
             //inizializzo il background
@@ -267,14 +272,13 @@ namespace WindowsFormsApplication5
             ball.followPointer = true;
             for (int i = 0; i < 3; i++)
             {
-                vita[i] = new Sprite(Properties.Resources.vita, this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50 , 20, 20, Sprite.SpriteType.life);
+                vita[i] = new Sprite(Properties.Resources.vita, this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20, Sprite.SpriteType.life);
                 iManager.inGameSprites.Add(vita[i]);
             }
             Thread game = new Thread(gameLoop);
             ball.velocity.X = 50;
             game.Start();
         }
-
         private void logic()
         {
             if (gameTime.ElapsedMilliseconds - uTime > interval)
