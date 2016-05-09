@@ -44,7 +44,7 @@ namespace WindowsFormsApplication5
 
         private InputManager iManager = new InputManager();
 
-        private int interval = 1000 / 65;
+        private int interval = 1000 / 30;
 
         private List<Keys> KeysHeld = new List<Keys>();
 
@@ -168,6 +168,14 @@ namespace WindowsFormsApplication5
                 ball.canFall = true;
                 ball.followPointer = false;
             }
+
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                ball.canFall = false;
+                gamepause.Visible = true;
+            }
+            if (e.KeyChar == (char)Keys.Escape)
+                this.Close();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -248,6 +256,7 @@ namespace WindowsFormsApplication5
             //this.FormBorderStyle = FormBorderStyle.None;
             //this.Bounds = Screen.PrimaryScreen.Bounds;
             //inizializzo il background
+            gamepause.Visible = false;
             background = new Sprite(Properties.Resources.Background, this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, Sprite.SpriteType.view);
             iManager.inGameSprites.Add(background);
             //inizializzo griglia
