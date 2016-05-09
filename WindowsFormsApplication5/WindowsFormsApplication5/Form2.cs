@@ -114,8 +114,8 @@ namespace WindowsFormsApplication5
                 {
                     this.GamePanels.Controls.Clear();
                     this.Controls.Clear();
-                    Form1 Game = new Form1();
-                    Form3 Start = new Form3();
+                    this.Game = new Form1();
+                    this.Start = new Form3();
                 }
                 this.Controls.Add(GamePanels);
                 Game.TopLevel = false;

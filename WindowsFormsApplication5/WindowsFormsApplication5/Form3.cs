@@ -22,6 +22,11 @@ namespace WindowsFormsApplication5
 
         private void Form3_Load(object sender, EventArgs e)
         {
+            starter();
+        }
+
+        private void starter()
+        {
             this.Controls.Add(start);
             start.ForeColor = Color.Black;
             start.BackColor = ProfessionalColors.ButtonCheckedGradientBegin;
@@ -30,7 +35,6 @@ namespace WindowsFormsApplication5
             start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             start.Left = ClientRectangle.Width / 2 - start.Width / 2;
         }
-
         #endregion Private Methods
     }
 }
