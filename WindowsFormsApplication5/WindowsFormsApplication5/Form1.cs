@@ -44,7 +44,7 @@ namespace WindowsFormsApplication5
 
         private InputManager iManager = new InputManager();
 
-        private int interval = 1000 / 30;
+        private int interval = 1000 / 500;
 
         private List<Keys> KeysHeld = new List<Keys>();
 
@@ -221,6 +221,7 @@ namespace WindowsFormsApplication5
                 LastTime = gameTime.ElapsedMilliseconds;
                 input();
                 logic();
+                Thread.Sleep(10);
                 render();
             }
         }
