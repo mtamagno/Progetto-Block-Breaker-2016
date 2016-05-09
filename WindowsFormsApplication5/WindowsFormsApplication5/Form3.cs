@@ -9,7 +9,6 @@ namespace WindowsFormsApplication5
         #region Public Fields
 
         public Button start = new Button();
-        private Sprite ciao;
         #endregion Public Fields
         #region Public Constructors
 

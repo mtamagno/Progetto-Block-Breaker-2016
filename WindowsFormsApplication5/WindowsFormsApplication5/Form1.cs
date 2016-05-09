@@ -167,17 +167,6 @@ namespace WindowsFormsApplication5
             {
                 ball.canFall = true;
                 ball.followPointer = false;
-                gamepause.Visible = false;
-            }
-
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                gamepause.Visible = true;
-            }
-
-            if (e.KeyChar == (char)Keys.Escape)
-            {
-                this.Close();
             }
         }
 
@@ -192,7 +181,7 @@ namespace WindowsFormsApplication5
         /*fps totali*/
         /* update per second " fps reali, dopo l utilizzo di un fps limiter" */
 
-        public void gameLoop()
+        private void gameLoop()
         {
             gameTime.Start();
             /*Gioco in esecuzione*/
@@ -214,6 +203,8 @@ namespace WindowsFormsApplication5
                         else
                         {
                             shouldStop = true;
+                            Console.WriteLine("Mi fermo\n");
+                            return;
                         }
                     }
                 }
@@ -224,10 +215,6 @@ namespace WindowsFormsApplication5
                 logic();
                 render();
             }
-
-            if (shouldStop == true)
-                Console.WriteLine("mi chiudo");
-            return;
         }
 
         private void input()
@@ -253,6 +240,10 @@ namespace WindowsFormsApplication5
         }
 
         private void loadContent()
+        {
+            starter();
+        }
+        private void starter()
         {
             //this.FormBorderStyle = FormBorderStyle.None;
             //this.Bounds = Screen.PrimaryScreen.Bounds;
@@ -281,15 +272,13 @@ namespace WindowsFormsApplication5
             ball.followPointer = true;
             for (int i = 0; i < 3; i++)
             {
-                vita[i] = new Sprite(Properties.Resources.vita, this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50 , 20, 20, Sprite.SpriteType.life);
+                vita[i] = new Sprite(Properties.Resources.vita, this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20, Sprite.SpriteType.life);
                 iManager.inGameSprites.Add(vita[i]);
             }
-            //Thread game = new Thread(gameLoop);
-            gamepause.Visible = false;
+            Thread game = new Thread(gameLoop);
             ball.velocity.X = 50;
-            //game.Start();
+            game.Start();
         }
-
         private void logic()
         {
             if (gameTime.ElapsedMilliseconds - uTime > interval)
