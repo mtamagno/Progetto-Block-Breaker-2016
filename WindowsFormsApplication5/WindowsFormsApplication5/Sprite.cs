@@ -316,6 +316,8 @@ namespace WindowsFormsApplication5
                                             this.torender = false;
                                             this.canCollide = false;
                                         }
+                                        s.canCollide = false;
+                                        break;
                                     }
                                     else
                                     if (s.isTouchingLeft(this) || s.isTouchingRight(this))
@@ -328,6 +330,7 @@ namespace WindowsFormsApplication5
                                             this.canCollide = false;
                                         }
                                     }
+                                    s.canCollide = false;
                                     break;
                             }
                             break;
@@ -358,7 +361,7 @@ namespace WindowsFormsApplication5
                                             s.Y = this.Y - s.Height;
                                         }
                                     }
-
+                                    s.canCollide = false;
                                     break;
 
                                 case SpriteType.block:

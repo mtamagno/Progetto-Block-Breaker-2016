@@ -12,8 +12,6 @@ namespace WindowsFormsApplication5
         public int altezza_client_iniziale;
         public int lunghezza_client;
         public int lunghezza_client_iniziale;
-        private object sender;
-        private EventArgs e;
 
         #endregion Public Fields
         #region Private Fields

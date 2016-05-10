@@ -165,17 +165,21 @@ namespace WindowsFormsApplication5
         {
             if (e.KeyChar == (char)Keys.Space)
             {
-                ball.canFall = true;
                 ball.followPointer = false;
+                racchetta.followPointer = true;
+                gamepause.Visible = false;
+                ball.canFall = true;
             }
 
             if (e.KeyChar == (char)Keys.Enter)
             {
+                racchetta.followPointer = false;
+                ball.followPointer = false;
                 ball.canFall = false;
                 gamepause.Visible = true;
             }
             if (e.KeyChar == (char)Keys.Escape)
-                this.Close();
+                    this.Close();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -196,6 +200,7 @@ namespace WindowsFormsApplication5
             spriteBatch = new SpriteBatch(this.ClientSize, this.CreateGraphics());
             while (shouldStop == false)
             {
+                ball.canCollide = true;
                 if (background.bottom_collide == 1)
                 {
                     ball.canFall = false;
@@ -211,7 +216,6 @@ namespace WindowsFormsApplication5
                         else
                         {
                             shouldStop = true;
-                            Console.WriteLine("Mi fermo\n");
                             return;
                         }
                     }
@@ -263,15 +267,6 @@ namespace WindowsFormsApplication5
             //inizializzo griglia
             grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width);
             grid.insert_grid(Properties.Resources.Block, iManager);
-
-            // altrimenti per popolarla seleziono solo gli sprite ma poi non credo convenga perchè non sono autoinseriti credo
-
-            //var query = from Sprite in this.iManager.inGameSprites
-            //            where Sprite.remaining_bounces > 0
-            //            select Sprite;
-
-            //grid.DataSource = query;
-
             //inizializzo racchetta
             racchetta = new Sprite(Properties.Resources.New_Piskel, MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24, Sprite.SpriteType.player);
             iManager.inGameSprites.Add(racchetta);
@@ -323,7 +318,6 @@ namespace WindowsFormsApplication5
         public void GameOver(int life)
         {
             vita_rimanente = life;
-
         }
         #endregion Private Methods
 
