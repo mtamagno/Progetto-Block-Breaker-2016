@@ -26,9 +26,9 @@ namespace WindowsFormsApplication5
 
         private bool AllowInput;
 
-        private Sprite background;
+        private View background;
 
-        private Sprite ball;
+        private ball ball;
 
         private float deltaTime;
 
@@ -54,7 +54,7 @@ namespace WindowsFormsApplication5
 
         private int previousSecond;
 
-        private Sprite racchetta;
+        private paddle racchetta;
 
         private SpriteBatch spriteBatch;
 
@@ -64,7 +64,7 @@ namespace WindowsFormsApplication5
 
         private long uTime;
 
-        private Sprite[] vita = new Sprite[3];
+        private life[] vita = new life[3];
 
         public int vita_rimanente = 3;
 
@@ -90,21 +90,20 @@ namespace WindowsFormsApplication5
             grid.redraw_grid(grid, this.ClientRectangle.Height, this.ClientRectangle.Width);
             foreach (Sprite s in iManager.inGameSprites)
             {
-                Console.WriteLine(Form2.ActiveForm.Height);
-                Console.WriteLine(Form2.ActiveForm.Width);
+                
 
-                if (s.Type == Sprite.SpriteType.ball)
+                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.ball")
                 {
 
                     s.redraw(s, (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.ball, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
                 }
-                else if (s.Type == Sprite.SpriteType.player)
+                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.paddle")
                     s.redraw(s, (int)(Math.Abs(128 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(24 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.New_Piskel, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
-                else if (s.Type == Sprite.SpriteType.view)
+                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.view")
                     s.redraw(s, (Math.Abs(Form2.ActiveForm.ClientRectangle.Width)), Math.Abs(Form2.ActiveForm.ClientRectangle.Height), Properties.Resources.Background, 0, 0);
-                else if (s.Type == Sprite.SpriteType.block)
-                    grid.redraw_block(s, (int)(100 * (float)Form2.ActiveForm.ClientRectangle.Width / li), (int)(50 * (float)(Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.Block, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
-                else if (s.Type == Sprite.SpriteType.life)
+                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.block")
+                    grid.redraw_block((Block)s, (int)(100 * (float)Form2.ActiveForm.ClientRectangle.Width / li), (int)(50 * (float)(Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.Block, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
+                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.life")
                     s.redraw(s, (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.vita, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
             }
             racchetta.Y = Form2.ActiveForm.ClientRectangle.Height * 9 / 10;
@@ -262,35 +261,36 @@ namespace WindowsFormsApplication5
             //this.Bounds = Screen.PrimaryScreen.Bounds;
             //inizializzo il background
             gamepause.Visible = false;
-            background = new Sprite(Properties.Resources.Background, this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, Sprite.SpriteType.view);
+            background = new View(Properties.Resources.Background, this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height);
             iManager.inGameSprites.Add(background);
             //inizializzo griglia
             grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width);
             grid.insert_grid(Properties.Resources.Block, iManager);
             //inizializzo racchetta
-            racchetta = new Sprite(Properties.Resources.New_Piskel, MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24, Sprite.SpriteType.player);
+            racchetta = new paddle(Properties.Resources.New_Piskel, MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24);
             iManager.inGameSprites.Add(racchetta);
             //inizializzo pallina
-            ball = new Sprite(Properties.Resources.ball, 300, racchetta.Y, 10, 10, Sprite.SpriteType.ball);
+            ball = new ball(Properties.Resources.ball, 300, racchetta.Y - 10, 10, 10);
             iManager.inGameSprites.Add(ball);
             ball.canFall = false;
             ball.followPointer = true;
             for (int i = 0; i < 3; i++)
             {
-                vita[i] = new Sprite(Properties.Resources.vita, this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20, Sprite.SpriteType.life);
+                vita[i] = new life(Properties.Resources.vita, this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
                 iManager.inGameSprites.Add(vita[i]);
             }
             Thread game = new Thread(gameLoop);
             ball.velocity.X = 50;
             game.Start();
         }
+
+
         private void logic()
         {
             if (gameTime.ElapsedMilliseconds - uTime > interval)
             {
-                foreach (Sprite s in iManager.inGameSprites)
-                    if (s.torender == true)
-                        s.Update(iManager);
+                ball.Update(iManager);
+                racchetta.Update(iManager);
                 if (gameTime.Elapsed.Seconds != previousSecond)
                 {
                     previousSecond = gameTime.Elapsed.Seconds;
@@ -301,6 +301,7 @@ namespace WindowsFormsApplication5
                 uCounter++;
             }
         }
+
 
         private void output()
         {

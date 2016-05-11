@@ -34,13 +34,13 @@ namespace WindowsFormsApplication5
             {
                 for (int k = 0; k < grid.RowCount; k++)
                 {
-                    Sprite block = new Sprite(Texture, (grid.Width / grid.ColumnCount) * i + 2, (grid.Height / grid.RowCount) * k + 2, grid.Width / grid.ColumnCount, grid.Height / grid.RowCount, Sprite.SpriteType.block);
+                    Block block = new Block(Texture, (grid.Width / grid.ColumnCount) * i + 2, (grid.Height / grid.RowCount) * k + 2, grid.Width / grid.ColumnCount, grid.Height / grid.RowCount);
                     iManager.inGameSprites.Add(block);
                 }
             }
         }
 
-        public void redraw_block(Sprite s, int new_width, int new_height, Bitmap risorsa, float nuova_x, float nuova_y)
+        public void redraw_block(Block s, int new_width, int new_height, Bitmap risorsa, float nuova_x, float nuova_y)
         {
             s.redraw(s, (grid.Width / grid.ColumnCount), (grid.Height / grid.RowCount), risorsa, nuova_x, nuova_y);
         }
