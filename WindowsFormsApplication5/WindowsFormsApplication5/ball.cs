@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Drawing;
 
 namespace WindowsFormsApplication5
@@ -71,7 +68,13 @@ namespace WindowsFormsApplication5
 
             if (followPointer == true)
             {
-                this.X = Form2.MousePosition.X+50;
+                Form2.Invoke(new MethodInvoker(delegate
+                {
+                    if (Form2.ActiveForm != null)
+                        Form2.ActiveForm.Text = "fps: " + fps.ToString() + "Ups:" + Ups.ToString();
+                    MousePoint = this.PointToClient(Cursor.Position);
+                }));
+                this.X = Form2.ActiveForm.ClientRectangle.
             }
 
         }
@@ -85,7 +88,6 @@ namespace WindowsFormsApplication5
                   
                     if (this.isCollidingWith(myBlock) && myBlock.canCollide == true)
                     {
-
 
                         if (this.isTouchingTop(myBlock) || this.isTouchingBottom(myBlock))
                         {

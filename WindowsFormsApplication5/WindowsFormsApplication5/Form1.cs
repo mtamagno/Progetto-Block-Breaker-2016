@@ -167,16 +167,16 @@ namespace WindowsFormsApplication5
             if (e.KeyChar == (char)Keys.Space)
             {
                 ball.followPointer = false;
+                ball.canFall = true;
                 racchetta.followPointer = true;
                 gamepause.Visible = false;
-                ball.canFall = true;
             }
 
             if (e.KeyChar == (char)Keys.Enter)
             {
-                racchetta.followPointer = false;
                 ball.followPointer = false;
                 ball.canFall = false;
+                racchetta.followPointer = false;
                 gamepause.Visible = true;
             }
             if (e.KeyChar == (char)Keys.Escape)
@@ -282,7 +282,6 @@ namespace WindowsFormsApplication5
                 iManager.inGameSprites.Add(vita[i]);
             }
             Thread game = new Thread(gameLoop);
-            ball.velocity.X = 50;
             game.Start();
         }
 
