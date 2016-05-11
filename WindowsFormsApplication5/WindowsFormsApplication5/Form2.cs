@@ -97,7 +97,7 @@ namespace WindowsFormsApplication5
         {
             Game.Close();
         }
-
+       
         private void Form2_Load(object sender, EventArgs e)
         {
             starter();

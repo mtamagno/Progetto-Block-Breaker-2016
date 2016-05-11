@@ -44,7 +44,7 @@ namespace WindowsFormsApplication5
 
         private InputManager iManager = new InputManager();
 
-        private int interval = 1000 / 500;
+        private int interval = 9;
 
         private List<Keys> KeysHeld = new List<Keys>();
 
@@ -158,7 +158,9 @@ namespace WindowsFormsApplication5
                 fpsCounter = 0;
             }
             else
+            {
                 fpsCounter++;
+            }
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -225,7 +227,7 @@ namespace WindowsFormsApplication5
                 LastTime = gameTime.ElapsedMilliseconds;
                 input();
                 logic();
-                Thread.Sleep(10);
+                Thread.Sleep(9);
                 render();
             }
         }

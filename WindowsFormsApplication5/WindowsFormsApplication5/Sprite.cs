@@ -307,7 +307,7 @@ namespace WindowsFormsApplication5
                             switch (s.Type)
                             {
                                 case SpriteType.ball:
-                                    if (s.isTouchingTop(this) || s.isTouchingBottom(this))
+                                    if ((s.isTouchingTop(this) || s.isTouchingBottom(this)) && ((s.X+s.Width/2 < this.X + this.Width) && (s.X+s.Width/2 > this.X)))
                                     {
                                         s.velocity.Y *= -1;
                                         this.remaining_bounces--;
@@ -316,11 +316,10 @@ namespace WindowsFormsApplication5
                                             this.torender = false;
                                             this.canCollide = false;
                                         }
-                                        s.canCollide = false;
                                         break;
                                     }
                                     else
-                                    if (s.isTouchingLeft(this) || s.isTouchingRight(this))
+                                    if ((s.isTouchingLeft(this) || s.isTouchingRight(this)) && ((s.Y + s.Height / 2 < this.Y + this.Height) && (s.Y + s.Height / 2 > this.Y)))
                                     {
                                         s.velocity.X *= -1;
                                         this.remaining_bounces--;
@@ -330,7 +329,6 @@ namespace WindowsFormsApplication5
                                             this.canCollide = false;
                                         }
                                     }
-                                    s.canCollide = false;
                                     break;
                             }
                             break;
