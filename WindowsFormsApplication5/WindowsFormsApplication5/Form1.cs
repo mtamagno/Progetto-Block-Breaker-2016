@@ -18,15 +18,9 @@ namespace WindowsFormsApplication5
         public paddle racchetta;
         public life[] vita = new life[3];
         public Logica logic;
-        private Grid grid;
+        public Grid grid;
 
         #endregion Public Fields
-
-        //Punteggio
-        #region Private Fields
-
-
-        #endregion Private Fields
 
         #region Public Constructors
 
@@ -41,30 +35,7 @@ namespace WindowsFormsApplication5
 
         public void on_resize(int l, int h, int li, int hi/*object sender, EventArgs e*/)
         {
-            
-            grid.redraw_grid(grid, this.ClientRectangle.Height, this.ClientRectangle.Width);
-            foreach (Sprite s in logic.iManager.inGameSprites)
-            {
-                
-
-                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.ball")
-                {
-
-                    s.redraw(s, (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.ball, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
-                }
-                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.paddle")
-                    s.redraw(s, (int)(Math.Abs(128 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(24 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.New_Piskel, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
-                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.view")
-                    s.redraw(s, (Math.Abs(Form2.ActiveForm.ClientRectangle.Width)), Math.Abs(Form2.ActiveForm.ClientRectangle.Height), Properties.Resources.Background, 0, 0);
-                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.block")
-                    grid.redraw_block((Block)s, (int)(100 * (float)Form2.ActiveForm.ClientRectangle.Width / li), (int)(50 * (float)(Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.Block, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
-                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.life")
-                    s.redraw(s, (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.vita, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
-            }
-            racchetta.Y = Form2.ActiveForm.ClientRectangle.Height * 9 / 10;
-            logic.spriteBatch.cntxt.MaximumBuffer = new Size(ClientSize.Width + 1, ClientSize.Height + 1);
-            logic.spriteBatch.bfgfx = logic.spriteBatch.cntxt.Allocate(this.CreateGraphics(), new Rectangle(Point.Empty, ClientSize));
-            logic.spriteBatch.Gfx = this.CreateGraphics();
+            logic.resize( l, h, li, hi);
         }
 
         #endregion Public Methods
@@ -124,19 +95,6 @@ namespace WindowsFormsApplication5
                     this.Close();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-        }
-
-        /* se l utente inizia a mandare input troppo early potrebbe non verificarsi il corretto funzionamento del
-        programma quindi ci serve una booleana per dare i permessi*/
-        /* Variabile booleana per decidere quando l utente puo' immettere degli input*/
-        /* Stopwatch e' una classe che ha un set di metodi utili a misurare il tempo trascorso*/
-        /*fps totali*/
-        /* update per second " fps reali, dopo l utilizzo di un fps limiter" */
-
- 
-
         private void loadContent()
         {
             starter();
@@ -147,6 +105,7 @@ namespace WindowsFormsApplication5
             //this.Bounds = Screen.PrimaryScreen.Bounds;
             //inizializzo il background
             logic = new Logica(this);
+            logic.vita_rimanente = 3;
             gamepause.Visible = false;
             background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height);
             logic.iManager.inGameSprites.Add(background);
@@ -170,16 +129,7 @@ namespace WindowsFormsApplication5
             game.Start();
         }
 
-
-
-
-       /* public void GameOver(int life)
-        {
-            vita_rimanente = life;
-        }*/
-
         #endregion Private Methods
 
-        /*gestisce le eccezioni alla chiusura del programma*/
     }
 }

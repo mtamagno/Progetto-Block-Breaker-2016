@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-    class Block : Sprite
+    public class Block : Sprite
     {
         public int remaining_bounces;
               private static Random random = new Random();

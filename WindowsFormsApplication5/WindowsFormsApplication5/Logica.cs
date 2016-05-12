@@ -159,5 +159,33 @@ namespace WindowsFormsApplication5
                     spriteBatch.Draw(s);
             spriteBatch.End();
         }
+
+        public void resize(int l, int h, int li, int hi/*object sender, EventArgs e*/)
+        {
+
+            ThisForm.grid.redraw_grid(ThisForm.grid, ThisForm.ClientRectangle.Height, ThisForm.ClientRectangle.Width);
+            foreach (Sprite s in iManager.inGameSprites)
+            {
+
+
+                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.ball")
+                {
+
+                    s.redraw(s, (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.ball, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
+                }
+                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.paddle")
+                    s.redraw(s, (int)(Math.Abs(128 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(24 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.New_Piskel, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
+                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.view")
+                    s.redraw(s, (Math.Abs(Form2.ActiveForm.ClientRectangle.Width)), Math.Abs(Form2.ActiveForm.ClientRectangle.Height), Properties.Resources.Background, 0, 0);
+                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.block")
+                    ThisForm.grid.redraw_block((Block)s, (int)(100 * (float)Form2.ActiveForm.ClientRectangle.Width / li), (int)(50 * (float)(Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.Block, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
+                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.life")
+                    s.redraw(s, (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.vita, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
+            }
+            ThisForm.racchetta.Y = Form2.ActiveForm.ClientRectangle.Height * 9 / 10;
+            spriteBatch.cntxt.MaximumBuffer = new Size(ThisForm.ClientSize.Width + 1, ThisForm.ClientSize.Height + 1);
+            spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(ThisForm.CreateGraphics(), new Rectangle(Point.Empty, ThisForm.ClientSize));
+            spriteBatch.Gfx = ThisForm.CreateGraphics();
+        }
     }
 }

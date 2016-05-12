@@ -2,7 +2,7 @@
 
 namespace WindowsFormsApplication5
 {
-    internal class Grid
+    public class Grid
     {
         #region Private Fields
 
