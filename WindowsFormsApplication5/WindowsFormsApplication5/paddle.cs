@@ -20,7 +20,9 @@ namespace WindowsFormsApplication5
 
         public void Update(InputManager iManager)
         {
-            this.X = Form2.MousePosition.X;
+            if((Form2.MousePosition.X - Form2.ActiveForm.Location.X) >= 0 && Form2.MousePosition.X - Form2.ActiveForm.Location.X < Form2.ActiveForm.Width)
+            this.X = Form2.MousePosition.X - Form2.ActiveForm.Location.X - this.Width/2 - 10;
+
         }
 
 

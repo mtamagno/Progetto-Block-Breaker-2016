@@ -207,6 +207,8 @@ namespace WindowsFormsApplication5
                     ball.canFall = false;
                     ball.Y = racchetta.Y;
                     ball.followPointer = true;
+                    ball.velocity_tot = 0;
+                    ball.velocity.X = 0;
                     ball.velocity.Y = 0;
                     vita_rimanente--;
                     background.bottom_collide = 0;

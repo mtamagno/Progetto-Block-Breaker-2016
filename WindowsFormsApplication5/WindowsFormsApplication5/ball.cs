@@ -68,13 +68,7 @@ namespace WindowsFormsApplication5
 
             if (followPointer == true)
             {
-                Form2.Invoke(new MethodInvoker(delegate
-                {
-                    if (Form2.ActiveForm != null)
-                        Form2.ActiveForm.Text = "fps: " + fps.ToString() + "Ups:" + Ups.ToString();
-                    MousePoint = this.PointToClient(Cursor.Position);
-                }));
-                this.X = Form2.ActiveForm.ClientRectangle.
+                this.X = Form2.MousePosition.X - Form2.ActiveForm.Location.X - 15;
             }
 
         }
