@@ -10,13 +10,18 @@ namespace WindowsFormsApplication5
     class life : Sprite
     {
         public int remaining_bounces;
+        Bitmap texture;
+
         //       private static Random random = new Random();
-        public life(Bitmap texture, float x, float y, int width, int height) : base(texture, x, y, width, height)
+        public life(float x, float y, int width, int height) : base(x, y, width, height)
         {
+            texture = Properties.Resources.vita;
             canFall = false;
             torender = true;
             canCollide = false;
             followPointer = false;
+
+            this.graphics(texture, x, y, width, height);
         }
     }
 }

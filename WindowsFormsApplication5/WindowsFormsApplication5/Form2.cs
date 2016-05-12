@@ -68,15 +68,18 @@ namespace WindowsFormsApplication5
 
         public void gameover_check()
         {
-            while (this.Created)
-            if (Game.shouldStop==true && button_start == true)
+            //while (this.Created)
             {
+                if (Game.shouldStop == true && button_start == true)
+                {
+
                     Game.shouldStop = false;
                     button_start = false;
                     restart_required = true;
                     gameLoop();
-                    return; 
+                    return;
                     //termino il thread
+                }
             }
         }
 

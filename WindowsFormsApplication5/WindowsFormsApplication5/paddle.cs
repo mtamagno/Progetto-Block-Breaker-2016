@@ -3,25 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
     class paddle : Sprite
     {
+        public Bitmap texture;
         //       private static Random random = new Random();
-        public paddle(Bitmap texture, float x, float y, int width, int height) : base(texture, x, y, width, height)
+        public paddle( float x, float y, int width, int height) : base(x, y, width, height)
         {
+            texture = Properties.Resources.New_Piskel;
             canFall = false;
             canCollide = true;
             torender = true;
             followPointer = true;
+
+            this.graphics(texture, x, y, width, height);
         }
 
-        public void Update(InputManager iManager)
+        public void Update(InputManager iManager, Form thisform)
         {
-            if((Form2.MousePosition.X - Form2.ActiveForm.Location.X) >= 0 && Form2.MousePosition.X - Form2.ActiveForm.Location.X < Form2.ActiveForm.Width)
-            this.X = Form2.MousePosition.X - Form2.ActiveForm.Location.X - this.Width/2 - 10;
+            try {
+                //activeForm.Cursor.HotSpot.X;
+                if ((Cursor.Position.X - thisform.Location.X) >= 0 && Cursor.Position.X - thisform.Location.X < thisform.Width)
+                    this.X = Cursor.Position.X - thisform.Location.X -this.Width / 2 - 10;
+            }
+            catch 
+            {
+
+            }
 
         }
 

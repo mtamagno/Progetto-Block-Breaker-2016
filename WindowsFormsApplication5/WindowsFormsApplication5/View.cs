@@ -9,13 +9,17 @@ namespace WindowsFormsApplication5
 {
     class View : Sprite
     {
-        public View(Bitmap texture, float x, float y, int width, int height) : base(texture, x, y, width, height)
+        public Bitmap texture;
+
+        public View( float x, float y, int width, int height) : base(x, y, width, height)
         {
+            texture = Properties.Resources.Background;
             canFall = false;
             torender = true;
             canCollide = true;
             followPointer = false;
 
+            this.graphics(texture, x, y, width, height);
         }
 
         }

@@ -81,22 +81,20 @@ namespace WindowsFormsApplication5
         #region Public Constructors
 
         //Metodo sprite per la creazione di ogni sprite
-        public Sprite(Bitmap texture, float x, float y, int width, int height)
+        public Sprite(float x, float y, int width, int height)
+        {
+
+        }
+
+        public void graphics(Bitmap texture, float x, float y, int width, int height)
         {
             //Disegno il bitmap
             Bitmap b = new Bitmap(width, height);
-            using (Graphics g = Graphics.FromImage(b))
-            {
-                //per adesso è "thisType == spritetype.ball" ma una volta cambiati gli sprite sarà "thisType != spritetype.background"
-                if (this.GetType().ToString().ToLower() == "windowsformsapplication5.ball")
-                {
-                    Color backColor = texture.GetPixel(0, 0);
-                    texture.MakeTransparent(backColor);
-                }
-               
-
+            //using (Graphics g = Graphics.FromImage(b))
+            //{
+                Graphics g = Graphics.FromImage(b);
                 g.DrawImage(texture, 0, 0, width, height);
-            }
+            //}
 
             //Setto tipo di sprite con relativi attributi e gli assegno le coordinate x e y
             Texture = b;
@@ -107,6 +105,7 @@ namespace WindowsFormsApplication5
             Height = height;
 
             return;
+
         }
 
         #endregion Public Constructors
@@ -151,7 +150,6 @@ namespace WindowsFormsApplication5
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(this);
-            return;
         }
         
 

@@ -11,9 +11,11 @@ namespace WindowsFormsApplication5
     {
         public int remaining_bounces;
               private static Random random = new Random();
-        public Block(Bitmap texture, float x, float y, int width, int height) : base(texture, x, y, width, height)
+        public Bitmap texture;
+        public Block( float x, float y, int width, int height) : base(x, y, width, height)
         {
             //Random random = new Random();
+            texture = Properties.Resources.Block;
             remaining_bounces = random.Next(0, 4);
             canFall = false;
             canCollide = true;
@@ -23,6 +25,7 @@ namespace WindowsFormsApplication5
             if (torender != true)
                 canCollide = false;
 
+            this.graphics(texture, x, y, width, height);
         }
 
  

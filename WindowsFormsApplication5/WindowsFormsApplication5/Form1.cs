@@ -87,6 +87,7 @@ namespace WindowsFormsApplication5
 
         public void on_resize(int l, int h, int li, int hi/*object sender, EventArgs e*/)
         {
+            
             grid.redraw_grid(grid, this.ClientRectangle.Height, this.ClientRectangle.Width);
             foreach (Sprite s in iManager.inGameSprites)
             {
@@ -218,6 +219,7 @@ namespace WindowsFormsApplication5
                             vita[i].torender = false;
                         else
                         {
+                            
                             shouldStop = true;
                             return;
                         }
@@ -265,22 +267,22 @@ namespace WindowsFormsApplication5
             //this.Bounds = Screen.PrimaryScreen.Bounds;
             //inizializzo il background
             gamepause.Visible = false;
-            background = new View(Properties.Resources.Background, this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height);
+            background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height);
             iManager.inGameSprites.Add(background);
             //inizializzo griglia
             grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width);
             grid.insert_grid(Properties.Resources.Block, iManager);
             //inizializzo racchetta
-            racchetta = new paddle(Properties.Resources.New_Piskel, MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24);
+            racchetta = new paddle(MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24);
             iManager.inGameSprites.Add(racchetta);
             //inizializzo pallina
-            ball = new ball(Properties.Resources.ball, 300, racchetta.Y - 10, 10, 10);
+            ball = new ball(300, racchetta.Y - 10, 10, 10);
             iManager.inGameSprites.Add(ball);
             ball.canFall = false;
             ball.followPointer = true;
             for (int i = 0; i < 3; i++)
             {
-                vita[i] = new life(Properties.Resources.vita, this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
+                vita[i] = new life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
                 iManager.inGameSprites.Add(vita[i]);
             }
             Thread game = new Thread(gameLoop);
@@ -292,8 +294,8 @@ namespace WindowsFormsApplication5
         {
             if (gameTime.ElapsedMilliseconds - uTime > interval)
             {
-                ball.Update(iManager);
-                racchetta.Update(iManager);
+                ball.Update(iManager, this.ParentForm);
+                racchetta.Update(iManager, this.ParentForm);
                 if (gameTime.Elapsed.Seconds != previousSecond)
                 {
                     previousSecond = gameTime.Elapsed.Seconds;

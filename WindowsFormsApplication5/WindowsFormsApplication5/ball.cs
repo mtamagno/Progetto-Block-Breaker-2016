@@ -10,20 +10,29 @@ namespace WindowsFormsApplication5
         public int Accel_y = 2;
         public float velocity_tot;
         public int velocity_tot_raggiunto;
+        public Bitmap texture;
 
-        public ball(Bitmap texture, float x, float y, int width, int height) : base(texture, x, y, width, height)
+        public ball(float x, float y, int width, int height) : base(x, y, width, height)
         {
+            texture = Properties.Resources.ball;
             canFall = true;
             canCollide = true;
             followPointer = false;
             torender = true;
 
+            //per adesso è "thisType == spritetype.ball" ma una volta cambiati gli sprite sarà "thisType != spritetype.background"
+            if (this.GetType().ToString().ToLower() == "windowsformsapplication5.ball")
+            {
+                Color backColor = texture.GetPixel(0, 0);
+                texture.MakeTransparent(backColor);
+            }
+            this.graphics(texture, x, y, width, height);
         }
 
 
 
 
-        public void Update(InputManager iManager)
+        public void Update(InputManager iManager, Form thisform)
         {
             Collider(iManager);
             //Calcolo la velocità totale della pallina che non deve superare i 3000
@@ -68,7 +77,7 @@ namespace WindowsFormsApplication5
 
             if (followPointer == true)
             {
-                this.X = Form2.MousePosition.X - Form2.ActiveForm.Location.X - 15;
+                this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - 15;
             }
 
         }
