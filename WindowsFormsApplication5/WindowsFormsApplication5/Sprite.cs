@@ -60,7 +60,7 @@ namespace WindowsFormsApplication5
         #endregion Public Methods
     }
 
-    internal class Sprite
+    public class Sprite
     {
         #region Public Fields
         public bool canCollide;

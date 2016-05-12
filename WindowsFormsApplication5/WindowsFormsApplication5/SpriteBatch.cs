@@ -2,7 +2,7 @@
 
 namespace WindowsFormsApplication5
 {
-    internal class SpriteBatch
+    public class SpriteBatch
     {
         #region Public Fields
 

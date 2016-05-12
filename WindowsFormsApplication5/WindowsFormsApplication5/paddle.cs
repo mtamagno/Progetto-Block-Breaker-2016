@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-    class paddle : Sprite
+   public class paddle : Sprite
     {
         public Bitmap texture;
         //       private static Random random = new Random();

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-    class View : Sprite
+    public class View : Sprite
     {
         public Bitmap texture;
 

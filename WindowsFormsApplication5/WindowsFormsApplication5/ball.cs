@@ -4,10 +4,10 @@ using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-    class ball : Sprite
+   public class ball : Sprite
     {
         public PointF velocity;
-        public int Accel_y = 2;
+        public int Accel_y = 1000;
         public float velocity_tot;
         public int velocity_tot_raggiunto;
         public Bitmap texture;

@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-    class life : Sprite
+    public class life : Sprite
     {
         public int remaining_bounces;
         Bitmap texture;

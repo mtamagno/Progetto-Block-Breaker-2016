@@ -40,7 +40,7 @@ namespace WindowsFormsApplication5
             {
                 this.Invoke(new MethodInvoker(delegate
                 {
-                    Game.shouldStop = false;
+                    //Game.logic.shouldStop = false;
                     Start.Hide();
                     GamePanels.Controls.Add(Game);
                     Game.Show();
@@ -68,12 +68,12 @@ namespace WindowsFormsApplication5
 
         public void gameover_check()
         {
-            //while (this.Created)
+            while (this.Created)
             {
-                if (Game.shouldStop == true && button_start == true)
+                if (Game.logic.shouldStop == true && button_start == true)
                 {
 
-                    Game.shouldStop = false;
+                    Game.logic.shouldStop = false;
                     button_start = false;
                     restart_required = true;
                     gameLoop();

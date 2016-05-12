@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
-    internal class InputManager
+    public class InputManager
     {
         #region Public Fields
 

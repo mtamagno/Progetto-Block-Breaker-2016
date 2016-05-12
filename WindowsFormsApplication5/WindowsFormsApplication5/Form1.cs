@@ -12,65 +12,19 @@ namespace WindowsFormsApplication5
     {
         #region Public Fields
 
-        public float ball_x = 10;
-        public float ball_y = 10;
-        public int colonne_griglia = 10;
-        public Point MousePoint;
-        public int righe_griglia = 25;
-        public int score = 0;
+
+        public View background;
+        public ball ball;
+        public paddle racchetta;
+        public life[] vita = new life[3];
+        public Logica logic;
+        private Grid grid;
 
         #endregion Public Fields
 
         //Punteggio
         #region Private Fields
 
-        private bool AllowInput;
-
-        private View background;
-
-        private ball ball;
-
-        private float deltaTime;
-
-        private int fps;
-
-        private int fpsCounter;
-
-        private long fpsTime;
-
-        private Stopwatch gameTime = new Stopwatch();
-
-        private Grid grid;
-
-        private InputManager iManager = new InputManager();
-
-        private int interval = 9;
-
-        private List<Keys> KeysHeld = new List<Keys>();
-
-        private List<Keys> KeysPressed = new List<Keys>();
-
-        private long LastTime;
-
-        private int previousSecond;
-
-        private paddle racchetta;
-
-        private SpriteBatch spriteBatch;
-
-        private int uCounter;
-
-        private int Ups;
-
-        private long uTime;
-
-        private life[] vita = new life[3];
-
-        public int vita_rimanente = 3;
-
-        private Panel Game_pause;
-
-        public volatile bool shouldStop = false;
 
         #endregion Private Fields
 
@@ -89,7 +43,7 @@ namespace WindowsFormsApplication5
         {
             
             grid.redraw_grid(grid, this.ClientRectangle.Height, this.ClientRectangle.Width);
-            foreach (Sprite s in iManager.inGameSprites)
+            foreach (Sprite s in logic.iManager.inGameSprites)
             {
                 
 
@@ -108,9 +62,9 @@ namespace WindowsFormsApplication5
                     s.redraw(s, (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.vita, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
             }
             racchetta.Y = Form2.ActiveForm.ClientRectangle.Height * 9 / 10;
-            spriteBatch.cntxt.MaximumBuffer = new Size(ClientSize.Width + 1, ClientSize.Height + 1);
-            spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(this.CreateGraphics(), new Rectangle(Point.Empty, ClientSize));
-            spriteBatch.Gfx = this.CreateGraphics();
+            logic.spriteBatch.cntxt.MaximumBuffer = new Size(ClientSize.Width + 1, ClientSize.Height + 1);
+            logic.spriteBatch.bfgfx = logic.spriteBatch.cntxt.Allocate(this.CreateGraphics(), new Rectangle(Point.Empty, ClientSize));
+            logic.spriteBatch.Gfx = this.CreateGraphics();
         }
 
         #endregion Public Methods
@@ -125,17 +79,17 @@ namespace WindowsFormsApplication5
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if (AllowInput)
+            if (logic.AllowInput)
             {
-                KeysHeld.Add(e.KeyCode);
+                logic.KeysHeld.Add(e.KeyCode);
             }
         }
 
         protected override void OnKeyPress(KeyPressEventArgs e) {
             base.OnKeyPress(e);
-            if (AllowInput)
+            if (logic.AllowInput)
             {
-                KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
+                logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
             }
         }
 
@@ -148,20 +102,6 @@ namespace WindowsFormsApplication5
         #endregion Protected Methods
 
         #region Private Methods
-
-        private void checkfps()
-        {
-            if (gameTime.ElapsedMilliseconds - fpsTime > 1000)
-            {
-                fpsTime = gameTime.ElapsedMilliseconds;
-                fps = fpsCounter;
-                fpsCounter = 0;
-            }
-            else
-            {
-                fpsCounter++;
-            }
-        }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -195,67 +135,7 @@ namespace WindowsFormsApplication5
         /*fps totali*/
         /* update per second " fps reali, dopo l utilizzo di un fps limiter" */
 
-        private void gameLoop()
-        {
-            gameTime.Start();
-            /*Gioco in esecuzione*/
-            spriteBatch = new SpriteBatch(this.ClientSize, this.CreateGraphics());
-            while (shouldStop == false)
-            {
-                ball.canCollide = true;
-                if (background.bottom_collide == 1)
-                {
-                    ball.canFall = false;
-                    ball.Y = racchetta.Y;
-                    ball.followPointer = true;
-                    ball.velocity_tot = 0;
-                    ball.velocity.X = 0;
-                    ball.velocity.Y = 0;
-                    vita_rimanente--;
-                    background.bottom_collide = 0;
-                    for (int i = vita_rimanente; i < 3; i++)
-                    {
-                        if (vita_rimanente > 0)
-                            vita[i].torender = false;
-                        else
-                        {
-                            
-                            shouldStop = true;
-                            return;
-                        }
-                    }
-                }
-                checkfps();
-                deltaTime = gameTime.ElapsedMilliseconds - LastTime;
-                LastTime = gameTime.ElapsedMilliseconds;
-                input();
-                logic();
-                Thread.Sleep(9);
-                render();
-            }
-        }
-
-        private void input()
-        {
-            AllowInput = false;
-            try
-            {
-                this.Invoke(new MethodInvoker(delegate
-                {
-                    if (Form2.ActiveForm != null)
-                        Form2.ActiveForm.Text = "fps: " + fps.ToString() + "Ups:" + Ups.ToString();
-                    MousePoint = this.PointToClient(Cursor.Position);
-                }));
-            }
-            catch
-            {
-            }
-            /*controllo i tasti che sono stati premuti e svuoto i buffer*/
-            iManager.update(MousePoint, KeysPressed.ToArray(), KeysHeld.ToArray(), gameTime, deltaTime);
-            KeysPressed.Clear();
-            KeysHeld.Clear();
-            AllowInput = true;
-        }
+ 
 
         private void loadContent()
         {
@@ -266,65 +146,38 @@ namespace WindowsFormsApplication5
             //this.FormBorderStyle = FormBorderStyle.None;
             //this.Bounds = Screen.PrimaryScreen.Bounds;
             //inizializzo il background
+            logic = new Logica(this);
             gamepause.Visible = false;
             background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height);
-            iManager.inGameSprites.Add(background);
+            logic.iManager.inGameSprites.Add(background);
             //inizializzo griglia
             grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width);
-            grid.insert_grid(Properties.Resources.Block, iManager);
+            grid.insert_grid(Properties.Resources.Block, logic.iManager);
             //inizializzo racchetta
-            racchetta = new paddle(MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24);
-            iManager.inGameSprites.Add(racchetta);
+            racchetta = new paddle(logic.MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24);
+            logic.iManager.inGameSprites.Add(racchetta);
             //inizializzo pallina
             ball = new ball(300, racchetta.Y - 10, 10, 10);
-            iManager.inGameSprites.Add(ball);
+            logic.iManager.inGameSprites.Add(ball);
             ball.canFall = false;
             ball.followPointer = true;
             for (int i = 0; i < 3; i++)
             {
                 vita[i] = new life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
-                iManager.inGameSprites.Add(vita[i]);
+                logic.iManager.inGameSprites.Add(vita[i]);
             }
-            Thread game = new Thread(gameLoop);
+            Thread game = new Thread(logic.gameLoop);
             game.Start();
         }
 
 
-        private void logic()
-        {
-            if (gameTime.ElapsedMilliseconds - uTime > interval)
-            {
-                ball.Update(iManager, this.ParentForm);
-                racchetta.Update(iManager, this.ParentForm);
-                if (gameTime.Elapsed.Seconds != previousSecond)
-                {
-                    previousSecond = gameTime.Elapsed.Seconds;
-                    Ups = uCounter;
-                    uCounter = 0;
-                }
-                uTime = gameTime.ElapsedMilliseconds;
-                uCounter++;
-            }
-        }
 
 
-        private void output()
-        {
-        }
-
-        private void render()
-        {
-            spriteBatch.Begin();
-            foreach (Sprite s in iManager.inGameSprites)
-                if (s.torender == true)
-                    spriteBatch.Draw(s);
-            spriteBatch.End();
-        }
-
-        public void GameOver(int life)
+       /* public void GameOver(int life)
         {
             vita_rimanente = life;
-        }
+        }*/
+
         #endregion Private Methods
 
         /*gestisce le eccezioni alla chiusura del programma*/
