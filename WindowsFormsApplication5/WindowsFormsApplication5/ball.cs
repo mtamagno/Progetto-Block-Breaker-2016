@@ -7,7 +7,7 @@ namespace WindowsFormsApplication5
    public class ball : Sprite
     {
         public PointF velocity;
-        public int Accel_y = 1000;
+        public int Accel_y = 100;
         public float velocity_tot;
         public int velocity_tot_raggiunto;
         public Bitmap texture;
