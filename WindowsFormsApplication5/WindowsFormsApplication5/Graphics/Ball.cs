@@ -57,7 +57,23 @@ namespace WindowsFormsApplication5
                             if (this.X + this.Width / 2 > myBlock.X && this.X + this.Width / 2 < myBlock.X + myBlock.Width) { 
                             this.velocity.Y *= -1;
                             myBlock.remaining_bounces--;
-                            if (myBlock.remaining_bounces <= 0)
+
+                                switch (myBlock.remaining_bounces)
+                                {
+                                    case 1:
+                                        myBlock.texture = Properties.Resources.Block_1;
+                                        break;
+                                    case 2:
+                                        myBlock.texture = Properties.Resources.Block_2;
+                                        break;
+                                    case 3:
+                                        myBlock.texture = Properties.Resources.Block_3;
+                                        break;
+                                }
+
+                                myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
+
+                                if (myBlock.remaining_bounces <= 0)
                             {
                                 myBlock.torender = false;
                                 myBlock.canCollide = false;
@@ -71,6 +87,22 @@ namespace WindowsFormsApplication5
                             {
                                 this.velocity.X *= -1;
                                 myBlock.remaining_bounces--;
+
+                                switch (myBlock.remaining_bounces)
+                                {
+                                    case 1:
+                                        myBlock.texture = Properties.Resources.Block_1;
+                                        break;
+                                    case 2:
+                                        myBlock.texture = Properties.Resources.Block_2;
+                                        break;
+                                    case 3:
+                                        myBlock.texture = Properties.Resources.Block_3;
+                                        break;
+                                }
+
+                                myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
+                                
                                 if (myBlock.remaining_bounces <= 0)
                                 {
                                     myBlock.torender = false;

@@ -112,7 +112,7 @@ namespace WindowsFormsApplication5
             background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, logic);
 
             //inizializzo griglia
-            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width, Properties.Resources.Block, logic);
+            init_grid();
 
             //inizializzo racchetta
             racchetta = new Paddle(logic.MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
@@ -128,6 +128,12 @@ namespace WindowsFormsApplication5
             game.Start();
         }
 
+
+        private void init_grid()
+        {
+            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width, Properties.Resources.Block, logic);
+
+        }
 
         private void life_init()
         {
