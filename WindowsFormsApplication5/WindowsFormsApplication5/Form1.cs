@@ -13,10 +13,10 @@ namespace WindowsFormsApplication5
 
         #region Public Fields
         public View background;
-        public ball ball;
-        public paddle racchetta;
-        public life[] vita = new life[3];
-        public Logica logic;
+        public Ball ball;
+        public Paddle racchetta;
+        public Life[] vita = new Life[3];
+        public Logic logic;
         public Grid grid;
         #endregion Public Fields
 
@@ -75,9 +75,10 @@ namespace WindowsFormsApplication5
 
 
         #region Private Methods
+        //Menu di pausa
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Space)
+            if (e.KeyChar == (char)Keys.Space && gamepause.Visible == true)
             {
                 ball.followPointer = false;
                 ball.canFall = true;
@@ -85,7 +86,7 @@ namespace WindowsFormsApplication5
                 gamepause.Visible = false;
             }
 
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyChar == (char)Keys.Enter && gamepause.Visible == false)
             {
                 ball.followPointer = false;
                 ball.canFall = false;
@@ -103,30 +104,30 @@ namespace WindowsFormsApplication5
 
         private void starter()
         {
-            //this.FormBorderStyle = FormBorderStyle.None;
-            //this.Bounds = Screen.PrimaryScreen.Bounds;
-            //inizializzo il background
-            logic = new Logica(this);
-            logic.vita_rimanente = 3;
+            //inizializzo la logica
+            logic = new Logic(this);
+
+            //inizializzo la variabile della visione del menù pausa a falso in caso sia vera
             gamepause.Visible = false;
-            background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height);
-            logic.iManager.inGameSprites.Add(background);
+
+            //inizializzo il background
+            background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, logic);
+           
             //inizializzo griglia
-            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width);
-            grid.insert_grid(Properties.Resources.Block, logic.iManager);
+            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width, Properties.Resources.Block, logic);
+            
             //inizializzo racchetta
-            racchetta = new paddle(logic.MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24);
-            logic.iManager.inGameSprites.Add(racchetta);
+            racchetta = new Paddle(logic.MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
+            
             //inizializzo pallina
-            ball = new ball(300, racchetta.Y - 10, 10, 10);
-            logic.iManager.inGameSprites.Add(ball);
-            ball.canFall = false;
-            ball.followPointer = true;
+            ball = new Ball(300, racchetta.Y - 10, 10, 10, logic);
+            //inizializzo le vite
             for (int i = 0; i < logic.vita_rimanente; i++)
             {
-                vita[i] = new life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
+                vita[i] = new Life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
                 logic.iManager.inGameSprites.Add(vita[i]);
             }
+            //creo e inizializzo il thread del gioco
             Thread game = new Thread(logic.gameLoop);
             game.Start();
         }

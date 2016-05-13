@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-   public class ball : Sprite
+   public class Ball : Sprite
     {
         public PointF velocity;
         public int Accel_y = 100;
@@ -12,12 +12,12 @@ namespace WindowsFormsApplication5
         public int velocity_tot_raggiunto;
         public Bitmap texture;
 
-        public ball(float x, float y, int width, int height) : base(x, y, width, height)
+        public Ball(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
         {
             texture = Properties.Resources.ball;
-            canFall = true;
+            canFall = false;
             canCollide = true;
-            followPointer = false;
+            followPointer = true;
             torender = true;
 
             //per adesso è "thisType == spritetype.ball" ma una volta cambiati gli sprite sarà "thisType != spritetype.background"
@@ -27,6 +27,9 @@ namespace WindowsFormsApplication5
                 texture.MakeTransparent(backColor);
             }
             this.graphics(texture, x, y, width, height);
+
+            Ball ball = this;
+            logic.iManager.inGameSprites.Add(ball);
         }
 
 
@@ -121,7 +124,7 @@ namespace WindowsFormsApplication5
 
                 if (s.GetType().ToString().ToLower() == "windowsformsapplication5.paddle")
                 {
-                    paddle mypaddle = (paddle)s;
+                    Paddle mypaddle = (Paddle)s;
                     if (mypaddle.isCollidingWith(this))
                     {
                         //La pallina impatta con la racchetta

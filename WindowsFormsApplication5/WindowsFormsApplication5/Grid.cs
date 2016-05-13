@@ -13,7 +13,7 @@ namespace WindowsFormsApplication5
         #region Public Constructors
 
         //Metodo grid da chiamare per creare una griglia all'interno del form
-        public Grid(int x, int y, float client_height, float client_width)
+        public Grid(int x, int y, float client_height, float client_width, Bitmap Texture, Logic logic)
         {
             grid = new System.Windows.Forms.DataGridView();
             grid.ColumnCount = (int)client_width / 100;
@@ -22,6 +22,7 @@ namespace WindowsFormsApplication5
             grid.Top = y;
             grid.Width = (int)client_width;
             grid.Height = (int)(client_height / 3);
+            this.insert_grid(Texture, logic.iManager);
         }
 
         #endregion Public Constructors

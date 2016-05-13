@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
-   public class Logica
+   public class Logic
     {
 
 
@@ -48,9 +48,10 @@ namespace WindowsFormsApplication5
         Form1 ThisForm;
 
 
-        public Logica(Form1 form)
+        public Logic(Form1 form)
         {
             ThisForm = form;
+            this.vita_rimanente = 3;
         }
 
         private void checkfps()

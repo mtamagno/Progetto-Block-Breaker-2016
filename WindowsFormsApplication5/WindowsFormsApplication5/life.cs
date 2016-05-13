@@ -7,13 +7,13 @@ using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-    public class life : Sprite
+    public class Life : Sprite
     {
         public int remaining_bounces;
         Bitmap texture;
 
         //       private static Random random = new Random();
-        public life(float x, float y, int width, int height) : base(x, y, width, height)
+        public Life(float x, float y, int width, int height) : base(x, y, width, height)
         {
             texture = Properties.Resources.vita;
             canFall = false;

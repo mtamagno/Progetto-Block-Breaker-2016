@@ -8,11 +8,11 @@ using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-   public class paddle : Sprite
+   public class Paddle : Sprite
     {
         public Bitmap texture;
         //       private static Random random = new Random();
-        public paddle( float x, float y, int width, int height) : base(x, y, width, height)
+        public Paddle( float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
         {
             texture = Properties.Resources.New_Piskel;
             canFall = false;
@@ -21,6 +21,9 @@ namespace WindowsFormsApplication5
             followPointer = true;
 
             this.graphics(texture, x, y, width, height);
+            Paddle racchetta = this;
+            logic.iManager.inGameSprites.Add(racchetta);
+
         }
 
         public void Update(InputManager iManager, Form thisform)

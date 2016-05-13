@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ball.cs" />
+    <Compile Include="Ball.cs" />
     <Compile Include="Block.cs" />
     <Compile Include="Form2.cs">
       <SubType>Form</SubType>
@@ -61,9 +61,9 @@
       <DependentUpon>Form3.cs</DependentUpon>
     </Compile>
     <Compile Include="Grid.cs" />
-    <Compile Include="life.cs" />
-    <Compile Include="Logica.cs" />
-    <Compile Include="paddle.cs" />
+    <Compile Include="Life.cs" />
+    <Compile Include="Logic.cs" />
+    <Compile Include="Paddle.cs" />
     <Compile Include="ScreenManager.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Form1.cs">

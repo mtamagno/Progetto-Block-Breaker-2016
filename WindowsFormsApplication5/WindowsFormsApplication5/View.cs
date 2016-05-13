@@ -11,7 +11,7 @@ namespace WindowsFormsApplication5
     {
         public Bitmap texture;
 
-        public View( float x, float y, int width, int height) : base(x, y, width, height)
+        public View( float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
         {
             texture = Properties.Resources.Background;
             canFall = false;
@@ -20,8 +20,10 @@ namespace WindowsFormsApplication5
             followPointer = false;
 
             this.graphics(texture, x, y, width, height);
+            View background = this;
+            logic.iManager.inGameSprites.Add(background);
         }
 
-        }
+    }
     }
 
