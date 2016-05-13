@@ -1,17 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
     public class View : Sprite
     {
+        #region Public Fields
+
         public Bitmap texture;
 
-        public View( float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
+        #endregion Public Fields
+
+        #region Public Constructors
+
+        public View(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
         {
             texture = Properties.Resources.Background;
             canFall = false;
@@ -24,6 +25,6 @@ namespace WindowsFormsApplication5
             logic.iManager.inGameSprites.Add(background);
         }
 
+        #endregion Public Constructors
     }
-    }
-
+}

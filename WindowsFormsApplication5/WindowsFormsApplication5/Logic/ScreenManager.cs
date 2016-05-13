@@ -9,11 +9,13 @@
         }
 
         #endregion Public Constructors
+
         #region Public Enums
 
         public enum GameState { Splash, Menu, Game }
 
         #endregion Public Enums
+
         #region Public Methods
 
         public void Draw(SpriteBatch sb)

@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
     public class Life : Sprite
     {
+        #region Public Fields
+
         public int remaining_bounces;
-        Bitmap texture;
+
+        #endregion Public Fields
+
+        #region Private Fields
+
+        private Bitmap texture;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         //       private static Random random = new Random();
         public Life(float x, float y, int width, int height) : base(x, y, width, height)
@@ -23,5 +29,7 @@ namespace WindowsFormsApplication5
 
             this.graphics(texture, x, y, width, height);
         }
+
+        #endregion Public Constructors
     }
 }

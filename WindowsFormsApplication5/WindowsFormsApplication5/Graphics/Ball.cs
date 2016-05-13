@@ -1,16 +1,22 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
-   public class Ball : Sprite
+    public class Ball : Sprite
     {
-        public PointF velocity;
+        #region Public Fields
+
         public int Accel_y = 100;
+        public Bitmap texture;
+        public PointF velocity;
         public float velocity_tot;
         public int velocity_tot_raggiunto;
-        public Bitmap texture;
+
+        #endregion Public Fields
+
+        #region Public Constructors
 
         public Ball(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
         {
@@ -32,8 +38,108 @@ namespace WindowsFormsApplication5
             logic.iManager.inGameSprites.Add(ball);
         }
 
+        #endregion Public Constructors
 
+        #region Public Methods
 
+        public void Collider(InputManager iManager)
+        {
+            foreach (Sprite s in iManager.inGameSprites)
+            {
+                if (s.GetType().Name == "Block")
+                {
+                    Block myBlock = (Block)s;
+
+                    if (this.isCollidingWith(myBlock) && myBlock.canCollide == true)
+                    {
+                        if (this.isTouchingTop(myBlock) || this.isTouchingBottom(myBlock))
+                        {
+                            this.velocity.Y *= -1;
+                            myBlock.remaining_bounces--;
+                            if (myBlock.remaining_bounces <= 0)
+                            {
+                                myBlock.torender = false;
+                                myBlock.canCollide = false;
+                            }
+                        }
+                        else
+                        if (myBlock.isTouchingLeft(this) || myBlock.isTouchingRight(this))
+                        {
+                            this.velocity.X *= -1;
+                            myBlock.remaining_bounces--;
+                            if (myBlock.remaining_bounces <= 0)
+                            {
+                                myBlock.torender = false;
+                                myBlock.canCollide = false;
+                            }
+                        }
+                    }
+                }
+
+                if (s.GetType().Name == "Paddle")
+                {
+                    Paddle mypaddle = (Paddle)s;
+                    if (mypaddle.isCollidingWith(this))
+                    {
+                        //La pallina impatta con la racchetta
+                        if (this.isTouchingBottom(mypaddle))
+                        {
+                            //La pallina impatta con la metà sinistra
+                            if ((this.X + this.Width / 2) <= (mypaddle.X + mypaddle.Width / 2))
+                            {
+                                double coseno;
+                                coseno = Math.Abs(Math.Cos(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
+                                this.velocity.X = -this.velocity_tot * (float)coseno;
+                                this.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.velocity_tot * this.velocity_tot) - (this.velocity.X * this.velocity.X))));
+                                this.Y = mypaddle.Y - this.Height;
+                            }
+                            else
+                            //Altrimenti con la metà destra
+                            {
+                                double seno;
+                                seno = Math.Abs(Math.Sin(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X - mypaddle.Width / 2, mypaddle.Width / 2)));
+                                this.velocity.X = this.velocity_tot * (float)seno;
+                                this.velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((this.velocity_tot * this.velocity_tot) - (this.velocity.X * this.velocity.X))));
+                                this.Y = mypaddle.Y - this.Height;
+                            }
+                        }
+                        // s.canCollide = false;
+                    }
+                }
+
+                if (s.GetType().Name == "View")
+                {
+                    View myview = (View)s;
+                    if (myview.isCollidingWith(this))
+                    {
+                        //La X della pallina è oltre il limite destro o sinistro
+                        if ((this.X + (float)this.Width) >= (float)myview.Width)
+                        {
+                            this.velocity.X *= -1;
+                            this.X = (float)myview.Width - this.Width;
+                        }
+                        else
+                        if (this.X < 0)
+                        {
+                            this.velocity.X *= -1;
+                            this.X = 0;
+                        }
+
+                        //La Y della pallina è oltre il limite superiore o inferiore
+                        if ((this.Y + (float)this.Height) >= (float)myview.Height)
+                        {
+                            myview.bottom_collide = 1;
+                        }
+                        else
+                        if (this.Y < 0)
+                        {
+                            this.velocity.Y *= -1;
+                            this.Y = 0;
+                        }
+                    }
+                }
+            }
+        }
 
         public void Update(InputManager iManager, Form thisform)
         {
@@ -82,113 +188,8 @@ namespace WindowsFormsApplication5
             {
                 this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - 15;
             }
-
         }
 
-        public void Collider(InputManager iManager)
-        {
-            foreach (Sprite s in iManager.inGameSprites) { 
-                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.block")
-                {
-                    Block myBlock = (Block)s;
-                  
-                    if (this.isCollidingWith(myBlock) && myBlock.canCollide == true)
-                    {
-
-                        if (this.isTouchingTop(myBlock) || this.isTouchingBottom(myBlock))
-                        {
-                            this.velocity.Y *= -1;
-                            myBlock.remaining_bounces--;
-                            if (myBlock.remaining_bounces <= 0)
-                            {
-                                myBlock.torender = false;
-                                myBlock.canCollide = false;
-                            }
-
-                        }
-                        else
-                        if (myBlock.isTouchingLeft(this) || myBlock.isTouchingRight(this))
-                        {
-                            this.velocity.X *= -1;
-                            myBlock.remaining_bounces--;
-                            if (myBlock.remaining_bounces <= 0)
-                            {
-                                myBlock.torender = false;
-                                myBlock.canCollide = false;
-                            }
-                        }
-                       
-
-                    }
-                }
-
-                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.paddle")
-                {
-                    Paddle mypaddle = (Paddle)s;
-                    if (mypaddle.isCollidingWith(this))
-                    {
-                        //La pallina impatta con la racchetta
-                        if (this.isTouchingBottom(mypaddle))
-                        {
-                            //La pallina impatta con la metà sinistra
-                            if ((this.X + this.Width / 2) <= (mypaddle.X + mypaddle.Width / 2))
-                            {
-                                double coseno;
-                                coseno = Math.Abs(Math.Cos(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
-                                this.velocity.X = -this.velocity_tot * (float)coseno;
-                                this.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.velocity_tot * this.velocity_tot) - (this.velocity.X * this.velocity.X))));
-                                this.Y = mypaddle.Y - this.Height;
-                            }
-                            else
-                            //Altrimenti con la metà destra
-                            {
-                                double seno;
-                                seno = Math.Abs(Math.Sin(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X - mypaddle.Width / 2, mypaddle.Width / 2)));
-                                this.velocity.X = this.velocity_tot * (float)seno;
-                                this.velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((this.velocity_tot * this.velocity_tot) - (this.velocity.X * this.velocity.X))));
-                                this.Y = mypaddle.Y - this.Height;
-                            }
-                        }
-                        // s.canCollide = false;
-
-
-                    }
-                }
-
-                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.view")
-                {
-                    View myview = (View)s;
-                    if (myview.isCollidingWith(this))
-                    {
-                        //La X della pallina è oltre il limite destro o sinistro
-                        if ((this.X + (float)this.Width) >= (float)myview.Width)
-                        {
-                            this.velocity.X *= -1;
-                            this.X = (float)myview.Width - this.Width;
-                        }
-                        else
-                        if (this.X < 0)
-                        {
-                            this.velocity.X *= -1;
-                            this.X = 0;
-                        }
-
-                        //La Y della pallina è oltre il limite superiore o inferiore
-                        if ((this.Y + (float)this.Height) >= (float)myview.Height)
-                        {
-                            myview.bottom_collide = 1;
-                        }
-                        else
-                        if (this.Y < 0)
-                        {
-                            this.velocity.Y *= -1;
-                            this.Y = 0;
-                        }
-
-                    }
-                }
-            }
-        }
-
+        #endregion Public Methods
     }
 }

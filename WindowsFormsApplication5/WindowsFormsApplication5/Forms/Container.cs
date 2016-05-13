@@ -14,17 +14,20 @@ namespace WindowsFormsApplication5
         public int lunghezza_client_iniziale;
 
         #endregion Public Fields
+
         #region Private Fields
 
         private bool button_start = false;
-        private bool restart_required = false;
         private Form1 Game = new Form1();
         private Panel GamePanels = new Panel();
-        private Form3 Start = new Form3();
         private int primavolta = 0;
+        private bool restart_required = false;
+        private Form3 Start = new Form3();
+
         #endregion Private Fields
 
         #region Public Constructors
+
         public Form2()
         {
             InitializeComponent();
@@ -32,6 +35,7 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Constructors
+
         #region Public Methods
 
         public void gameLoop()
@@ -51,7 +55,7 @@ namespace WindowsFormsApplication5
                 }));
             }
             else {
-                if(primavolta == 1 && restart_required == true)
+                if (primavolta == 1 && restart_required == true)
                 {
                     restart_required = false;
                     starter();
@@ -72,7 +76,6 @@ namespace WindowsFormsApplication5
             {
                 if (Game.logic.shouldStop == true && button_start == true)
                 {
-
                     Game.logic.shouldStop = false;
                     button_start = false;
                     restart_required = true;
@@ -85,6 +88,7 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Methods
+
         #region Protected Methods
 
         protected void start_Click(object sender, EventArgs e)
@@ -101,18 +105,41 @@ namespace WindowsFormsApplication5
         {
             Game.Close();
         }
-       
+
         private void Form2_Load(object sender, EventArgs e)
         {
             starter();
         }
+
+        private void Form2_ResizeBegin(object sender, EventArgs e)
+        {
+            lunghezza_client_iniziale = this.ClientRectangle.Width;
+            altezza_client_iniziale = this.ClientRectangle.Height;
+        }
+
+        private void Form2_ResizeEnd(object sender, EventArgs e)
+        {
+            if (Game.Enabled == true)
+            {
+                GamePanels.Height = this.Height;
+                GamePanels.Width = this.Width;
+                Game.Height = this.Height;
+                Game.Width = this.Width;
+                GamePanels.Top = 0;
+                GamePanels.Left = 0;
+                Game.Top = 0;
+                Game.Left = 0;
+                Game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
+            }
+        }
+
         private void starter()
         {
             lunghezza_client = this.ClientRectangle.Width;
             altezza_client = this.ClientRectangle.Height;
             this.Invoke(new MethodInvoker(delegate
             {
-                if(primavolta == 1)
+                if (primavolta == 1)
                 {
                     this.GamePanels.Controls.Clear();
                     this.Controls.Clear();
@@ -166,27 +193,6 @@ namespace WindowsFormsApplication5
             return;
         }
 
-        private void Form2_ResizeBegin(object sender, EventArgs e)
-        {
-            lunghezza_client_iniziale = this.ClientRectangle.Width;
-            altezza_client_iniziale = this.ClientRectangle.Height;
-        }
-
-        private void Form2_ResizeEnd(object sender, EventArgs e)
-        {
-            if (Game.Enabled == true)
-            {
-                GamePanels.Height = this.Height;
-                GamePanels.Width = this.Width;
-                Game.Height = this.Height;
-                Game.Width = this.Width;
-                GamePanels.Top = 0;
-                GamePanels.Left = 0;
-                Game.Top = 0;
-                Game.Left = 0;
-                Game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
-            }
-        }
         #endregion Private Methods
     }
 }

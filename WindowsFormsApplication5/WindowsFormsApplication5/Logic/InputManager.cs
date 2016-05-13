@@ -17,6 +17,7 @@ namespace WindowsFormsApplication5
         public Point mousePoint;
 
         #endregion Public Fields
+
         #region Public Methods
 
         public void update(Point mp, Keys[] kp, Keys[] kh, Stopwatch gt, float dt)

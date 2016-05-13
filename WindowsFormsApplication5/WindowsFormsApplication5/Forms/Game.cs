@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -10,38 +7,38 @@ namespace WindowsFormsApplication5
 {
     public partial class Form1 : Form
     {
-
         #region Public Fields
+
         public View background;
         public Ball ball;
+        public Grid grid;
+        public Logic logic;
         public Paddle racchetta;
         public Life[] vita = new Life[3];
-        public Logic logic;
-        public Grid grid;
+
         #endregion Public Fields
 
-
-
         #region Public Constructors
+
         public Form1()
         {
             InitializeComponent();
             return;
         }
-        #endregion Public Constructors
-        
 
+        #endregion Public Constructors
 
         #region Public Methods
+
         public void on_resize(int l, int h, int li, int hi/*object sender, EventArgs e*/)
         {
-            logic.resize( l, h, li, hi);
+            logic.resize(l, h, li, hi);
         }
+
         #endregion Public Methods
-        
-        
-        
+
         #region Protected Methods
+
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
@@ -57,7 +54,8 @@ namespace WindowsFormsApplication5
             }
         }
 
-        protected override void OnKeyPress(KeyPressEventArgs e) {
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
             base.OnKeyPress(e);
             if (logic.AllowInput)
             {
@@ -70,15 +68,15 @@ namespace WindowsFormsApplication5
             base.OnLoad(e);
             loadContent();
         }
+
         #endregion Protected Methods
 
-
-
         #region Private Methods
+
         //Menu di pausa
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Space && gamepause.Visible == true)
+            if (e.KeyChar == (char)Keys.Space)
             {
                 ball.followPointer = false;
                 ball.canFall = true;
@@ -94,7 +92,7 @@ namespace WindowsFormsApplication5
                 gamepause.Visible = true;
             }
             if (e.KeyChar == (char)Keys.Escape)
-                    this.Close();
+                this.Close();
         }
 
         private void loadContent()
@@ -112,13 +110,13 @@ namespace WindowsFormsApplication5
 
             //inizializzo il background
             background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, logic);
-           
+
             //inizializzo griglia
             grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width, Properties.Resources.Block, logic);
-            
+
             //inizializzo racchetta
             racchetta = new Paddle(logic.MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
-            
+
             //inizializzo pallina
             ball = new Ball(300, racchetta.Y - 10, 10, 10, logic);
             //inizializzo le vite
@@ -131,7 +129,7 @@ namespace WindowsFormsApplication5
             Thread game = new Thread(logic.gameLoop);
             game.Start();
         }
-        #endregion Private Methods
 
+        #endregion Private Methods
     }
 }

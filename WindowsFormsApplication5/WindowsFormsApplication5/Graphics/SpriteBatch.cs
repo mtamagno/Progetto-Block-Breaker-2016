@@ -14,6 +14,7 @@ namespace WindowsFormsApplication5
         public Graphics Gfx;
 
         #endregion Public Fields
+
         #region Public Constructors
 
         public SpriteBatch(Size clientSize, Graphics gfx)
@@ -24,6 +25,7 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Constructors
+
         #region Public Methods
 
         public void Begin()

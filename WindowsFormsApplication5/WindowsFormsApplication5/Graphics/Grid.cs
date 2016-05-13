@@ -26,6 +26,7 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Public Constructors
+
         #region Public Methods
 
         //Metodo insert_grid utilizzato per inserire nei posti giusti i blocchi grazie alle coordinate della griglia

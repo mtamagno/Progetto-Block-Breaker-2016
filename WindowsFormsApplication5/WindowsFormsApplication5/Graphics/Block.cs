@@ -1,19 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
     public class Block : Sprite
     {
-        public int remaining_bounces;
-        private static Random random = new Random();
+        #region Public Fields
+
         public int block_life;
+        public int remaining_bounces;
         public Bitmap texture;
-        public Block( float x, float y, int width, int height) : base(x, y, width, height)
+
+        #endregion Public Fields
+
+        #region Private Fields
+
+        private static Random random = new Random();
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
+        public Block(float x, float y, int width, int height) : base(x, y, width, height)
         {
             //Random random = new Random();
             texture = Properties.Resources.Block;
@@ -21,7 +29,7 @@ namespace WindowsFormsApplication5
             block_life = remaining_bounces;
             canFall = false;
             canCollide = true;
-            if (remaining_bounces > 0) 
+            if (remaining_bounces > 0)
                 torender = true;
             followPointer = false;
             if (torender != true)
@@ -30,7 +38,6 @@ namespace WindowsFormsApplication5
             this.graphics(texture, x, y, width, height);
         }
 
- 
+        #endregion Public Constructors
     }
 }
-

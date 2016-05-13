@@ -1,18 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
-   public class Paddle : Sprite
+    public class Paddle : Sprite
     {
+        #region Public Fields
+
         public Bitmap texture;
+
+        #endregion Public Fields
+
+
+        #region Public Constructors
+
         //       private static Random random = new Random();
-        public Paddle( float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
+        public Paddle(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
         {
             texture = Properties.Resources.New_Piskel;
             canFall = false;
@@ -23,23 +27,11 @@ namespace WindowsFormsApplication5
             this.graphics(texture, x, y, width, height);
             Paddle racchetta = this;
             logic.iManager.inGameSprites.Add(racchetta);
-
         }
 
-        public void Update(InputManager iManager, Form thisform)
-        {
-            try {
-                //activeForm.Cursor.HotSpot.X;
-                if ((Cursor.Position.X - thisform.Location.X) >= 0 && Cursor.Position.X - thisform.Location.X < thisform.Width)
-                    this.X = Cursor.Position.X - thisform.Location.X -this.Width / 2 - 10;
-            }
-            catch 
-            {
+        #endregion Public Constructors
 
-            }
-
-        }
-
+        #region Public Methods
 
         //Funzione che restituisce l'angolo con cui la pallina deve essere fatta rimbalzare, a seconda del punto di impatto sulla racchetta
         public double angolo(float posizione_attuale, float posizione_massima)
@@ -50,5 +42,19 @@ namespace WindowsFormsApplication5
             return calcolo;
         }
 
+        public void Update(InputManager iManager, Form thisform)
+        {
+            try
+            {
+                if (followPointer)
+                    if ((Cursor.Position.X - thisform.Location.X) >= 0 && Cursor.Position.X - thisform.Location.X < thisform.Width)
+                        this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - 10;
+            }
+            catch
+            {
+            }
+        }
+
+        #endregion Public Methods
     }
 }
