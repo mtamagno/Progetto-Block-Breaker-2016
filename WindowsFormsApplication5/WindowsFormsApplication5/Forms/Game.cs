@@ -119,15 +119,23 @@ namespace WindowsFormsApplication5
 
             //inizializzo pallina
             ball = new Ball(300, racchetta.Y - 10, 10, 10, logic);
+
             //inizializzo le vite
+            life_init();
+
+            //creo e inizializzo il thread del gioco
+            Thread game = new Thread(logic.gameLoop);
+            game.Start();
+        }
+
+
+        private void life_init()
+        {
             for (int i = 0; i < logic.vita_rimanente; i++)
             {
                 vita[i] = new Life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
                 logic.iManager.inGameSprites.Add(vita[i]);
             }
-            //creo e inizializzo il thread del gioco
-            Thread game = new Thread(logic.gameLoop);
-            game.Start();
         }
 
         #endregion Private Methods

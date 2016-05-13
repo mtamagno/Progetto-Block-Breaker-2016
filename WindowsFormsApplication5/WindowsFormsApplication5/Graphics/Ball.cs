@@ -54,6 +54,7 @@ namespace WindowsFormsApplication5
                     {
                         if (this.isTouchingTop(myBlock) || this.isTouchingBottom(myBlock))
                         {
+                            if (this.X + this.Width / 2 > myBlock.X && this.X + this.Width / 2 < myBlock.X + myBlock.Width) { 
                             this.velocity.Y *= -1;
                             myBlock.remaining_bounces--;
                             if (myBlock.remaining_bounces <= 0)
@@ -62,15 +63,19 @@ namespace WindowsFormsApplication5
                                 myBlock.canCollide = false;
                             }
                         }
+                        }
                         else
                         if (myBlock.isTouchingLeft(this) || myBlock.isTouchingRight(this))
                         {
-                            this.velocity.X *= -1;
-                            myBlock.remaining_bounces--;
-                            if (myBlock.remaining_bounces <= 0)
+                            if (this.Y + this.Height / 2 > myBlock.Y && this.Y + this.Height / 2 < myBlock.Y + myBlock.Height)
                             {
-                                myBlock.torender = false;
-                                myBlock.canCollide = false;
+                                this.velocity.X *= -1;
+                                myBlock.remaining_bounces--;
+                                if (myBlock.remaining_bounces <= 0)
+                                {
+                                    myBlock.torender = false;
+                                    myBlock.canCollide = false;
+                                }
                             }
                         }
                     }

@@ -24,7 +24,6 @@ namespace WindowsFormsApplication5
         public Block(float x, float y, int width, int height) : base(x, y, width, height)
         {
             //Random random = new Random();
-            texture = Properties.Resources.Block;
             remaining_bounces = random.Next(0, 4);
             block_life = remaining_bounces;
             canFall = false;
@@ -34,6 +33,24 @@ namespace WindowsFormsApplication5
             followPointer = false;
             if (torender != true)
                 canCollide = false;
+
+            switch(block_life){
+                case 0:
+                    texture = Properties.Resources.Block;
+                    break;
+                case 1:
+                    texture = Properties.Resources.Block;
+                    break;
+                case 2:
+                    texture = Properties.Resources.Block;
+                    break;
+                case 3:
+                    texture = Properties.Resources.Block;
+                    break;
+                case 4:
+                    texture = Properties.Resources.Block;
+                    break;
+            }
 
             this.graphics(texture, x, y, width, height);
         }

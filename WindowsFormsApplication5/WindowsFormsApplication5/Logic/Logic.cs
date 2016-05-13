@@ -43,6 +43,7 @@ namespace WindowsFormsApplication5
 
         #region Private Fields
 
+        private int activeBlock;
         private Form1 ThisForm;
 
         #endregion Private Fields
@@ -90,8 +91,10 @@ namespace WindowsFormsApplication5
                         }
                     }
                 }
-                if (gameTime.ElapsedMilliseconds % 1000 != 0)
+                if (gameTime.ElapsedMilliseconds % 1000 != 0) {
                     checkscore();
+                    checkActiveBlock();
+                   }
                 checkfps();
                 deltaTime = gameTime.ElapsedMilliseconds - LastTime;
                 LastTime = gameTime.ElapsedMilliseconds;
@@ -144,9 +147,18 @@ namespace WindowsFormsApplication5
             }
         }
 
+        private void checkActiveBlock()
+        {
+            if (activeBlock == 0)
+            {
+                ThisForm.grid.insert_grid(Properties.Resources.Block,this.iManager);
+            }
+        }
+
         private void checkscore()
         {
             previous_scoure = score;
+            activeBlock = 0;
             foreach (Sprite s in iManager.inGameSprites)
             {
                 if (s.GetType().Name == "Block")
@@ -157,7 +169,12 @@ namespace WindowsFormsApplication5
                         score += myBlock.block_life;
                         myBlock.remaining_bounces = -1;
                     }
+                    if(myBlock.remaining_bounces > 0)
+                    {
+                        activeBlock++;
+                    }
                 }
+
             }
             if (previous_scoure < score)
                 Console.WriteLine(score);
