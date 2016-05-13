@@ -10,37 +10,38 @@ namespace WindowsFormsApplication5
 {
     public partial class Form1 : Form
     {
+
         #region Public Fields
-
-
         public View background;
         public ball ball;
         public paddle racchetta;
         public life[] vita = new life[3];
         public Logica logic;
         public Grid grid;
-
         #endregion Public Fields
 
-        #region Public Constructors
 
+
+        #region Public Constructors
         public Form1()
         {
             InitializeComponent();
             return;
         }
-
         #endregion Public Constructors
-        #region Public Methods
+        
 
+
+        #region Public Methods
         public void on_resize(int l, int h, int li, int hi/*object sender, EventArgs e*/)
         {
             logic.resize( l, h, li, hi);
         }
-
         #endregion Public Methods
+        
+        
+        
         #region Protected Methods
-
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
@@ -69,11 +70,11 @@ namespace WindowsFormsApplication5
             base.OnLoad(e);
             loadContent();
         }
-
         #endregion Protected Methods
 
-        #region Private Methods
 
+
+        #region Private Methods
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Space)
@@ -99,6 +100,7 @@ namespace WindowsFormsApplication5
         {
             starter();
         }
+
         private void starter()
         {
             //this.FormBorderStyle = FormBorderStyle.None;
@@ -120,7 +122,7 @@ namespace WindowsFormsApplication5
             logic.iManager.inGameSprites.Add(ball);
             ball.canFall = false;
             ball.followPointer = true;
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < logic.vita_rimanente; i++)
             {
                 vita[i] = new life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
                 logic.iManager.inGameSprites.Add(vita[i]);
@@ -128,7 +130,6 @@ namespace WindowsFormsApplication5
             Thread game = new Thread(logic.gameLoop);
             game.Start();
         }
-
         #endregion Private Methods
 
     }

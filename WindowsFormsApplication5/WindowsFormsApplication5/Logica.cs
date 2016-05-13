@@ -11,28 +11,17 @@ namespace WindowsFormsApplication5
    public class Logica
     {
 
-        public bool shouldStop = false;
+
 
         public Point MousePoint;
-
         public float ball_x = 10;
         public float ball_y = 10;
 
+        public int previous_scoure = 0;
         public int colonne_griglia = 10;
         public int righe_griglia = 25;
         public int score = 0;
         public int vita_rimanente = 3;
-
-        public bool AllowInput;
-
-        public Stopwatch gameTime = new Stopwatch();
-        public InputManager iManager = new InputManager();
-        public List<Keys> KeysHeld = new List<Keys>();
-        public List<Keys> KeysPressed = new List<Keys>();
-        public SpriteBatch spriteBatch;
-
-        public float deltaTime;
-
         public int fps;
         public int fpsCounter;
         public int interval = 1000 / 70;
@@ -40,9 +29,22 @@ namespace WindowsFormsApplication5
         public int uCounter;
         public int Ups;
 
+        public bool shouldStop = false;
+        public bool AllowInput;
+
+        public Stopwatch gameTime = new Stopwatch();
+        public InputManager iManager = new InputManager();
+        public List<Keys> KeysHeld = new List<Keys>();
+        public List<Keys> KeysPressed = new List<Keys>();
+        public SpriteBatch spriteBatch;
+        public float deltaTime;
+
+
+
         public long fpsTime;
         public long LastTime;
         public long uTime;
+
         Form1 ThisForm;
 
 
@@ -91,12 +93,13 @@ namespace WindowsFormsApplication5
                             ThisForm.vita[i].torender = false;
                         else
                         {
-
                             shouldStop = true;
                             return;
                         }
                     }
                 }
+                if(gameTime.ElapsedMilliseconds%1000 != 0)
+                checkscore();
                 checkfps();
                 deltaTime = gameTime.ElapsedMilliseconds - LastTime;
                 LastTime = gameTime.ElapsedMilliseconds;
@@ -105,6 +108,25 @@ namespace WindowsFormsApplication5
                 //Thread.Sleep(9);
                 render();
             }
+        }
+
+        private void checkscore()
+        {
+            previous_scoure = score;
+            foreach (Sprite s in iManager.inGameSprites)
+            {
+                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.block")
+                {
+                    Block myBlock = (Block)s;
+                    if (myBlock.remaining_bounces == 0)
+                    {
+                        score += myBlock.block_life;
+                        myBlock.remaining_bounces = -1;
+                    }
+                }
+            }
+            if(previous_scoure < score)
+            Console.WriteLine(score);
         }
 
         private void input()

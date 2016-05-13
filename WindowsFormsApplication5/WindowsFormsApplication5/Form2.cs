@@ -80,6 +80,7 @@ namespace WindowsFormsApplication5
                     return;
                     //termino il thread
                 }
+                Thread.Sleep(2000);
             }
         }
 
