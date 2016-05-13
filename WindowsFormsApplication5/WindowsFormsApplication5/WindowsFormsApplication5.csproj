@@ -63,7 +63,7 @@
     <Compile Include="Grid.cs" />
     <Compile Include="Life.cs" />
     <Compile Include="Logica.cs" />
-    <Compile Include="paddle.cs" />
+    <Compile Include="Paddle.cs" />
     <Compile Include="ScreenManager.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="Form1.cs">

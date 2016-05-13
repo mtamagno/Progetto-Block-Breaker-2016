@@ -14,7 +14,7 @@ namespace WindowsFormsApplication5
         #region Public Fields
         public View background;
         public Ball ball;
-        public paddle racchetta;
+        public Paddle racchetta;
         public Life[] vita = new Life[3];
         public Logica logic;
         public Grid grid;
@@ -115,7 +115,7 @@ namespace WindowsFormsApplication5
             grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width);
             grid.insert_grid(Properties.Resources.Block, logic.iManager);
             //inizializzo racchetta
-            racchetta = new paddle(logic.MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24);
+            racchetta = new Paddle(logic.MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24);
             logic.iManager.inGameSprites.Add(racchetta);
             //inizializzo pallina
             ball = new Ball(300, racchetta.Y - 10, 10, 10);

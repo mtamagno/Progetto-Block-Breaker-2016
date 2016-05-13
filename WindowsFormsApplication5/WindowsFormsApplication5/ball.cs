@@ -121,7 +121,7 @@ namespace WindowsFormsApplication5
 
                 if (s.GetType().Name == "Paddle")
                 {
-                    paddle mypaddle = (paddle)s;
+                    Paddle mypaddle = (Paddle)s;
                     if (mypaddle.isCollidingWith(this))
                     {
                         //La pallina impatta con la racchetta
