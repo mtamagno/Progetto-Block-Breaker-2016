@@ -46,44 +46,44 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\Container.cs">
+    <Compile Include="Graphics\Forms\Container.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Container.Designer.cs">
+    <Compile Include="Graphics\Forms\Container.Designer.cs">
       <DependentUpon>Container.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Game.cs">
+    <Compile Include="Graphics\Forms\Game.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Game.Designer.cs">
+    <Compile Include="Graphics\Forms\Game.Designer.cs">
       <DependentUpon>Game.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Menu.cs">
+    <Compile Include="Graphics\Forms\Menu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Menu.Designer.cs">
+    <Compile Include="Graphics\Forms\Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Graphics\Ball.cs" />
-    <Compile Include="Graphics\Block.cs" />
-    <Compile Include="Graphics\Grid.cs" />
-    <Compile Include="Graphics\Life.cs" />
-    <Compile Include="Graphics\Paddle.cs" />
-    <Compile Include="Graphics\Sprite.cs" />
-    <Compile Include="Graphics\SpriteBatch.cs" />
-    <Compile Include="Graphics\View.cs" />
+    <Compile Include="Graphics\Sprite\Ball.cs" />
+    <Compile Include="Graphics\Sprite\Block.cs" />
+    <Compile Include="Graphics\Sprite\Grid.cs" />
+    <Compile Include="Graphics\Sprite\Life.cs" />
+    <Compile Include="Graphics\Sprite\Paddle.cs" />
+    <Compile Include="Graphics\Sprite\Sprite.cs" />
+    <Compile Include="Graphics\Sprite\SpriteBatch.cs" />
+    <Compile Include="Graphics\Sprite\View.cs" />
     <Compile Include="Logic\InputManager.cs" />
     <Compile Include="Logic\Logic.cs" />
     <Compile Include="Logic\Program.cs" />
     <Compile Include="Logic\ScreenManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\Container.resx">
+    <EmbeddedResource Include="Graphics\Forms\Container.resx">
       <DependentUpon>Container.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Game.resx">
+    <EmbeddedResource Include="Graphics\Forms\Game.resx">
       <DependentUpon>Game.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Menu.resx">
+    <EmbeddedResource Include="Graphics\Forms\Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
