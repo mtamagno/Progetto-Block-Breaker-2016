@@ -16,7 +16,7 @@ namespace WindowsFormsApplication5
         public Grid(int x, int y, float client_height, float client_width, Bitmap Texture, Logic logic)
         {
             grid = new System.Windows.Forms.DataGridView();
-            grid.ColumnCount = (int)client_width / 100;
+            grid.ColumnCount = (int)client_width / 70;
             grid.RowCount = (int)client_height / 50;
             grid.Left = x;
             grid.Top = y;
