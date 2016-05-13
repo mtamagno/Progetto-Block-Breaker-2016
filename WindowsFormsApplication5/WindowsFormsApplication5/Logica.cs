@@ -105,7 +105,7 @@ namespace WindowsFormsApplication5
                 LastTime = gameTime.ElapsedMilliseconds;
                 input();
                 logic();
-                //Thread.Sleep(9);
+                Thread.Sleep(9);
                 render();
             }
         }
@@ -115,7 +115,7 @@ namespace WindowsFormsApplication5
             previous_scoure = score;
             foreach (Sprite s in iManager.inGameSprites)
             {
-                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.block")
+                if (s.GetType().Name == "Block")
                 {
                     Block myBlock = (Block)s;
                     if (myBlock.remaining_bounces == 0)
@@ -190,18 +190,18 @@ namespace WindowsFormsApplication5
             {
 
 
-                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.ball")
+                if (s.GetType().Name == "Ball")
                 {
 
                     s.redraw(s, (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.ball, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
                 }
-                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.paddle")
+                else if (s.GetType().Name == "Paddle")
                     s.redraw(s, (int)(Math.Abs(128 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(24 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.New_Piskel, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
-                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.view")
+                else if (s.GetType().Name == "View")
                     s.redraw(s, (Math.Abs(Form2.ActiveForm.ClientRectangle.Width)), Math.Abs(Form2.ActiveForm.ClientRectangle.Height), Properties.Resources.Background, 0, 0);
-                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.block")
+                else if (s.GetType().Name == "Block")
                     ThisForm.grid.redraw_block((Block)s, (int)(100 * (float)Form2.ActiveForm.ClientRectangle.Width / li), (int)(50 * (float)(Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.Block, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
-                else if (s.GetType().ToString().ToLower() == "windowsformsapplication5.life")
+                else if (s.GetType().Name == "Life")
                     s.redraw(s, (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.vita, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
             }
             ThisForm.racchetta.Y = Form2.ActiveForm.ClientRectangle.Height * 9 / 10;

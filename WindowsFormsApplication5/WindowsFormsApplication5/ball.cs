@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-   public class ball : Sprite
+   public class Ball : Sprite
     {
         public PointF velocity;
         public int Accel_y = 100;
@@ -12,7 +12,7 @@ namespace WindowsFormsApplication5
         public int velocity_tot_raggiunto;
         public Bitmap texture;
 
-        public ball(float x, float y, int width, int height) : base(x, y, width, height)
+        public Ball(float x, float y, int width, int height) : base(x, y, width, height)
         {
             texture = Properties.Resources.ball;
             canFall = true;
@@ -85,7 +85,7 @@ namespace WindowsFormsApplication5
         public void Collider(InputManager iManager)
         {
             foreach (Sprite s in iManager.inGameSprites) { 
-                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.block")
+                if (s.GetType().Name == "Block")
                 {
                     Block myBlock = (Block)s;
                   
@@ -119,7 +119,7 @@ namespace WindowsFormsApplication5
                     }
                 }
 
-                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.paddle")
+                if (s.GetType().Name == "Paddle")
                 {
                     paddle mypaddle = (paddle)s;
                     if (mypaddle.isCollidingWith(this))
@@ -152,7 +152,7 @@ namespace WindowsFormsApplication5
                     }
                 }
 
-                if (s.GetType().ToString().ToLower() == "windowsformsapplication5.view")
+                if (s.GetType().Name == "View")
                 {
                     View myview = (View)s;
                     if (myview.isCollidingWith(this))

@@ -13,9 +13,9 @@ namespace WindowsFormsApplication5
 
         #region Public Fields
         public View background;
-        public ball ball;
+        public Ball ball;
         public paddle racchetta;
-        public life[] vita = new life[3];
+        public Life[] vita = new Life[3];
         public Logica logic;
         public Grid grid;
         #endregion Public Fields
@@ -118,13 +118,13 @@ namespace WindowsFormsApplication5
             racchetta = new paddle(logic.MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24);
             logic.iManager.inGameSprites.Add(racchetta);
             //inizializzo pallina
-            ball = new ball(300, racchetta.Y - 10, 10, 10);
+            ball = new Ball(300, racchetta.Y - 10, 10, 10);
             logic.iManager.inGameSprites.Add(ball);
             ball.canFall = false;
             ball.followPointer = true;
             for (int i = 0; i < logic.vita_rimanente; i++)
             {
-                vita[i] = new life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
+                vita[i] = new Life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
                 logic.iManager.inGameSprites.Add(vita[i]);
             }
             Thread game = new Thread(logic.gameLoop);

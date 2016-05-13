@@ -163,7 +163,7 @@ namespace WindowsFormsApplication5
             using (Graphics g = Graphics.FromImage(b))
             {
                 //per adesso è "sprite.Type == Spritetype.ball" ma una volta cambiati gli sprite sarà "sprite.Type != Spritetype.background"
-                if (sprite.GetType().ToString().ToLower() == "windowsformsapplication5.ball")
+                if (sprite.GetType().Name == "Ball")
                 {
                     Color backColor = risorsa.GetPixel(0, 0);
                     risorsa.MakeTransparent(backColor);
@@ -173,7 +173,7 @@ namespace WindowsFormsApplication5
             sprite.X = nuova_X;
             sprite.Y = nuova_Y;
             //Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
-            if (sprite.GetType().ToString().ToLower() == "windowsformsapplication5.paddle")
+            if (sprite.GetType().Name == "Paddle")
                 sprite.Y = (Math.Abs(Form2.ActiveForm.Height - sprite.Height)) * 9 / 10;
             sprite.Texture = b;
             return;
