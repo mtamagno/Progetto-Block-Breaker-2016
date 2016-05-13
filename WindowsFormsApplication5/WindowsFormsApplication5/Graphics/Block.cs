@@ -39,13 +39,13 @@ namespace WindowsFormsApplication5
                     texture = Properties.Resources.Block;
                     break;
                 case 1:
-                    texture = Properties.Resources.Block;
+                    texture = Properties.Resources.Block_1;
                     break;
                 case 2:
-                    texture = Properties.Resources.Block;
+                    texture = Properties.Resources.Block_2;
                     break;
                 case 3:
-                    texture = Properties.Resources.Block;
+                    texture = Properties.Resources.Block_3;
                     break;
                 case 4:
                     texture = Properties.Resources.Block;
