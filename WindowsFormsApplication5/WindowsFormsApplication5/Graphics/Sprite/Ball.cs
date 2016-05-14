@@ -80,8 +80,7 @@ namespace WindowsFormsApplication5
                             }
                         }
                         }
-                        else
-                        if (myBlock.isTouchingLeft(this) || myBlock.isTouchingRight(this))
+                        if (this.isTouchingLeft(myBlock) || this.isTouchingRight(myBlock))
                         {
                             if (this.Y + this.Height / 2 > myBlock.Y && this.Y + this.Height / 2 < myBlock.Y + myBlock.Height)
                             {
