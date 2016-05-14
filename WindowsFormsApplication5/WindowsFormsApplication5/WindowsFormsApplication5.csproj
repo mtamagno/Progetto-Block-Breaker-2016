@@ -72,6 +72,7 @@
     <Compile Include="Graphics\Sprite\Sprite.cs" />
     <Compile Include="Graphics\Sprite\SpriteBatch.cs" />
     <Compile Include="Graphics\Sprite\View.cs" />
+    <Compile Include="HighScore.cs" />
     <Compile Include="Logic\InputManager.cs" />
     <Compile Include="Logic\Logic.cs" />
     <Compile Include="Logic\Program.cs" />
@@ -131,6 +132,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Block_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

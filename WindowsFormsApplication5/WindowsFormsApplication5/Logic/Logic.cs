@@ -36,6 +36,8 @@ namespace WindowsFormsApplication5
         public int Ups;
         public long uTime;
         public int vita_rimanente = 3;
+        public HighScore highscore = new HighScore();
+        public HighScoreCollection highscorecollection = new HighScoreCollection();
 
         #endregion Public Fields
 
@@ -87,6 +89,9 @@ namespace WindowsFormsApplication5
                         else
                         {
                             shouldStop = true;
+                            highscore.Name = "Marco";
+                            highscore.Score = 4000;
+                            highscorecollection.SaveToXml("Hiscores.xml");
                             return;
                         }
                     }
