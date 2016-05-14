@@ -22,14 +22,13 @@ namespace WindowsFormsApplication5
         public PowerUp(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
         {
             texture = Properties.Resources.New_Piskel;
-            canFall = false;
-            canCollide = true;
+            canFall = true;
+            canCollide = false;
             torender = true;
-            followPointer = true;
+            followPointer = false;
 
             this.graphics(texture, x, y, width, height);
-            PowerUp racchetta = this;
-            logic.iManager.inGameSprites.Add(racchetta);
+            logic.iManager.inGameSprites.Add(this);
         }
         #endregion Public Constructors
     }
