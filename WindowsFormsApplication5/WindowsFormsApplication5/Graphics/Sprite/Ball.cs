@@ -33,9 +33,7 @@ namespace WindowsFormsApplication5
                 texture.MakeTransparent(backColor);
             }
             this.graphics(texture, x, y, width, height);
-
-            Ball ball = this;
-            logic.iManager.inGameSprites.Add(ball);
+            logic.iManager.inGameSprites.Add(this);
         }
 
         #endregion Public Constructors

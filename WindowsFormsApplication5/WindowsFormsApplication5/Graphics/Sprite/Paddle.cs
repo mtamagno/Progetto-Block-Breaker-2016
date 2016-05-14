@@ -25,8 +25,7 @@ namespace WindowsFormsApplication5
             followPointer = true;
 
             this.graphics(texture, x, y, width, height);
-            Paddle racchetta = this;
-            logic.iManager.inGameSprites.Add(racchetta);
+            logic.iManager.inGameSprites.Add(this);
         }
 
         #endregion Public Constructors

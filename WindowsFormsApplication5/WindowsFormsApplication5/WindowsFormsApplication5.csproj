@@ -76,6 +76,7 @@
     <Compile Include="Logic\Logic.cs" />
     <Compile Include="Logic\Program.cs" />
     <Compile Include="Logic\ScreenManager.cs" />
+    <Compile Include="PowerUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Graphics\Forms\Container.resx">
       <DependentUpon>Container.cs</DependentUpon>

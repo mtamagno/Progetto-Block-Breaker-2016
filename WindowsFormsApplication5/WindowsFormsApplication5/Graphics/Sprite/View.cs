@@ -21,8 +21,7 @@ namespace WindowsFormsApplication5
             followPointer = false;
 
             this.graphics(texture, x, y, width, height);
-            View background = this;
-            logic.iManager.inGameSprites.Add(background);
+            logic.iManager.inGameSprites.Add(this);
         }
 
         #endregion Public Constructors
