@@ -45,8 +45,11 @@ namespace WindowsFormsApplication5
 
         #region Private Fields
 
+
+        private CheckLife checkLife = new CheckLife();
         private int activeBlock;
         private Form1 ThisForm;
+        private FPS_checker Fps = new FPS_checker();
 
         #endregion Private Fields
 
@@ -72,39 +75,22 @@ namespace WindowsFormsApplication5
             while (shouldStop == false)
             {
                 ThisForm.ball.canCollide = true;
-                if (ThisForm.background.bottom_collide == 1)
-                {
-                    ThisForm.ball.canFall = false;
-                    ThisForm.ball.Y = ThisForm.racchetta.Y;
-                    ThisForm.ball.followPointer = true;
-                    ThisForm.ball.velocity_tot = 0;
-                    ThisForm.ball.velocity.X = 0;
-                    ThisForm.ball.velocity.Y = 0;
-                    vita_rimanente--;
-                    ThisForm.background.bottom_collide = 0;
-                    for (int i = vita_rimanente; i < 3; i++)
+                vita_rimanente = checkLife.check(ThisForm,vita_rimanente);
+                if(vita_rimanente <= 0)
                     {
-                        if (vita_rimanente > 0)
-                            ThisForm.vita[i].torender = false;
-                        else
-                        {
-                            shouldStop = true;
-                            highscore.Name = "Marco";
-                            highscore.Score = 4000;
-                            highscorecollection.SaveToXml("Hiscores.xml");
-                            return;
-                        }
+                    shouldStop = true;
+                    return;
                     }
-                }
                 if (gameTime.ElapsedMilliseconds % 1000 != 0) {
                     checkscore();
                     checkActiveBlock();
                    }
+
                 checkfps();
-                deltaTime = gameTime.ElapsedMilliseconds - LastTime;
-                LastTime = gameTime.ElapsedMilliseconds;
+                //Fps.checkfps();
                 input();
                 logic();
+                //Fps.logic(ThisForm, this.iManager);
                 render();
             }
         }

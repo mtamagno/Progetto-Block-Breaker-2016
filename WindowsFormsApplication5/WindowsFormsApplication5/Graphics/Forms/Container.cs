@@ -119,7 +119,7 @@ namespace WindowsFormsApplication5
 
         private void Form2_ResizeEnd(object sender, EventArgs e)
         {
-            if (Game.Enabled == true)
+            if (Game.Visible == true)
             {
                 GamePanels.Height = this.Height;
                 GamePanels.Width = this.Width;
