@@ -24,7 +24,7 @@ namespace WindowsFormsApplication5
         public Block(float x, float y, int width, int height) : base(x, y, width, height)
         {
             //Random random = new Random();
-            remaining_bounces = random.Next(0, 4);
+            remaining_bounces = random.Next(0, 5);
             block_life = remaining_bounces;
             canFall = false;
             canCollide = true;
