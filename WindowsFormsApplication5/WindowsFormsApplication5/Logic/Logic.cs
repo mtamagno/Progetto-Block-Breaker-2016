@@ -100,7 +100,6 @@ namespace WindowsFormsApplication5
                 LastTime = gameTime.ElapsedMilliseconds;
                 input();
                 logic();
-                Thread.Sleep(9);
                 render();
             }
         }
