@@ -9,7 +9,7 @@ namespace WindowsFormsApplication5
 {
     class FPS_checker
     {
-        private int fps;
+        public int fps;
         private int fpsCounter;
         private long fpsTime;
         public int interval = 1000 / 70;
@@ -17,12 +17,13 @@ namespace WindowsFormsApplication5
         public int uCounter;
         public int Ups;
         public long uTime;
-        public Stopwatch gameTime = new Stopwatch();
+        public Stopwatch gameTime;
         public int previousSecond;
         public float deltaTime;
 
-        public FPS_checker()
+        public FPS_checker(Stopwatch timer)
         {
+            this.gameTime = timer;
 
         }
         public void checkfps()
@@ -41,7 +42,7 @@ namespace WindowsFormsApplication5
             LastTime = gameTime.ElapsedMilliseconds;
         }
 
-        public void logic(Form1 ThisForm,InputManager iManager)
+        public void logic(Form1 ThisForm, InputManager iManager)
         {
             if (gameTime.ElapsedMilliseconds - uTime > interval)
             {

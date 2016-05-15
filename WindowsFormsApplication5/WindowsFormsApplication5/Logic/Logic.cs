@@ -16,25 +16,17 @@ namespace WindowsFormsApplication5
         public float ball_y = 10;
         public int colonne_griglia = 10;
         public float deltaTime;
-        public int fps;
-        public int fpsCounter;
-        public long fpsTime;
         public Stopwatch gameTime = new Stopwatch();
         public InputManager iManager = new InputManager();
         public int interval = 1000 / 70;
         public List<Keys> KeysHeld = new List<Keys>();
         public List<Keys> KeysPressed = new List<Keys>();
-        public long LastTime;
         public Point MousePoint;
         public int previous_scoure = 0;
-        public int previousSecond;
         public int righe_griglia = 25;
         public int score = 0;
         public bool shouldStop = false;
         public SpriteBatch spriteBatch;
-        public int uCounter;
-        public int Ups;
-        public long uTime;
         public int vita_rimanente = 3;
         public HighScore highscore = new HighScore();
         public HighScoreCollection highscorecollection = new HighScoreCollection();
@@ -49,7 +41,7 @@ namespace WindowsFormsApplication5
         private CheckLife checkLife = new CheckLife();
         private int activeBlock;
         private Form1 ThisForm;
-        private FPS_checker Fps = new FPS_checker();
+        private FPS_checker Fps;
 
         #endregion Private Fields
 
@@ -57,8 +49,9 @@ namespace WindowsFormsApplication5
 
         public Logic(Form1 form)
         {
-            ThisForm = form;
+            this.ThisForm = form;
             this.vita_rimanente = 3;
+            this.Fps = new FPS_checker(this.gameTime);
         }
 
         #endregion Public Constructors
@@ -85,12 +78,9 @@ namespace WindowsFormsApplication5
                     checkscore();
                     checkActiveBlock();
                    }
-
-                checkfps();
-                //Fps.checkfps();
+               Fps.checkfps();
                 input();
-                logic();
-                //Fps.logic(ThisForm, this.iManager);
+                Fps.logic(this.ThisForm, this.iManager);
                 render();
             }
         }
@@ -123,19 +113,6 @@ namespace WindowsFormsApplication5
 
         #region Private Methods
 
-        private void checkfps()
-        {
-            if (gameTime.ElapsedMilliseconds - fpsTime > 1000)
-            {
-                fpsTime = gameTime.ElapsedMilliseconds;
-                fps = fpsCounter;
-                fpsCounter = 0;
-            }
-            else
-            {
-                fpsCounter++;
-            }
-        }
 
         private void checkActiveBlock()
         {
@@ -178,7 +155,7 @@ namespace WindowsFormsApplication5
                 ThisForm.Invoke(new MethodInvoker(delegate
                 {
                     if (Form2.ActiveForm != null)
-                        Form2.ActiveForm.Text = "fps: " + fps.ToString() + "Ups:" + Ups.ToString();
+                        Form2.ActiveForm.Text = "fps: " + Fps.fps.ToString() + "Ups:" + Fps.Ups.ToString();
                 }));
             }
             catch
@@ -191,22 +168,6 @@ namespace WindowsFormsApplication5
             AllowInput = true;
         }
 
-        private void logic()
-        {
-            if (gameTime.ElapsedMilliseconds - uTime > interval)
-            {
-                ThisForm.ball.Update(iManager, ThisForm.ParentForm);
-                ThisForm.racchetta.Update(iManager, ThisForm.ParentForm);
-                if (gameTime.Elapsed.Seconds != previousSecond)
-                {
-                    previousSecond = gameTime.Elapsed.Seconds;
-                    Ups = uCounter;
-                    uCounter = 0;
-                }
-                uTime = gameTime.ElapsedMilliseconds;
-                uCounter++;
-            }
-        }
 
         private void output()
         {
