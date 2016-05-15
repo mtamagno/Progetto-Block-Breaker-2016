@@ -165,9 +165,8 @@ namespace WindowsFormsApplication5
 
                 GamePanels.Top = 0;
                 GamePanels.Left = 0;
-
-                GamePanels.Width = 1000;
-                GamePanels.Height = 500;
+                GamePanels.Width = this.Width;
+                GamePanels.Height = this.Height;
                 GamePanels.Visible = true;
                 /*           StartPanel.Top = 0;
                            StartPanel.Left = 0;
