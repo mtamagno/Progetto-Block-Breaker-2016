@@ -12,17 +12,13 @@ namespace WindowsFormsApplication5
         #region Public Fields
 
         public bool AllowInput;
-        public float ball_x = 10;
-        public float ball_y = 10;
-        public int colonne_griglia = 10;
         public float deltaTime;
         public Stopwatch gameTime = new Stopwatch();
         public InputManager iManager = new InputManager();
-        public int interval = 1000 / 70;
         public List<Keys> KeysHeld = new List<Keys>();
         public List<Keys> KeysPressed = new List<Keys>();
         public Point MousePoint;
-        public int previous_scoure = 0;
+        public int previous_score = 0;
         public int righe_griglia = 25;
         public int score = 0;
         public bool shouldStop = false;
@@ -124,7 +120,7 @@ namespace WindowsFormsApplication5
 
         private void checkscore()
         {
-            previous_scoure = score;
+            previous_score = score;
             activeBlock = 0;
             foreach (Sprite s in iManager.inGameSprites)
             {
@@ -143,7 +139,7 @@ namespace WindowsFormsApplication5
                 }
 
             }
-            if (previous_scoure < score)
+            if (previous_score < score)
                 Console.WriteLine(score);
         }
 

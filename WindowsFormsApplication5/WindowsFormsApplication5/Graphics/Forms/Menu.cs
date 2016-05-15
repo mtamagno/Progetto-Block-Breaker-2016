@@ -58,13 +58,13 @@ namespace WindowsFormsApplication5
 
         #endregion Private Methods
 
-        public void on_resize(int l, int h)
+       public void on_resize(int l, int h)
         {
             //this.Width = l;
             //this.Height = h;
             //this.Size = new Size(l, h);
-            //this.BackgroundImageLayout = ImageLayout.Stretch;
-            this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
+           this.BackgroundImageLayout = ImageLayout.Stretch;
+           this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
             this.start.Size = new Size(this.ClientSize.Width/10,this.ClientSize.Height/10);
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
