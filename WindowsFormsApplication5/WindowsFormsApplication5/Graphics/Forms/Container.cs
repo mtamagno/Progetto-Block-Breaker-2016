@@ -168,14 +168,7 @@ namespace WindowsFormsApplication5
                 GamePanels.Width = this.Width;
                 GamePanels.Height = this.Height;
                 GamePanels.Visible = true;
-                /*           StartPanel.Top = 0;
-                           StartPanel.Left = 0;
-
-                           StartPanel.Width = 1000;
-                           StartPanel.Height = 500;
-                           StartPanel.Visible = true;*/
                 GamePanels.Controls.Add(Start);
-                //GamePanels.Controls.Add(Game);
                 this.Dock = DockStyle.Fill;
                 Game.AutoScaleMode = AutoScaleMode.Inherit;
                 GamePanels.Dock = DockStyle.Fill;
