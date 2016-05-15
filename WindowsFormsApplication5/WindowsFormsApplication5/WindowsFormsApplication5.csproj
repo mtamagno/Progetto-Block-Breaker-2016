@@ -61,6 +61,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CheckLife.cs" />
+    <Compile Include="FPS_checker.cs" />
     <Compile Include="Graphics\Forms\Container.cs">
       <SubType>Form</SubType>
     </Compile>

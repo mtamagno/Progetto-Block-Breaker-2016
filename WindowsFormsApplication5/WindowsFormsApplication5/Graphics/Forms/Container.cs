@@ -121,14 +121,14 @@ namespace WindowsFormsApplication5
         {
             GamePanels.Height = this.ClientRectangle.Height;
             GamePanels.Width = this.ClientRectangle.Width;
-            GamePanels.Top = 0;
-            GamePanels.Left = 0;
+                GamePanels.Top = 0;
+                GamePanels.Left = 0;
             Game.Width = GamePanels.Width;
             Game.Height = GamePanels.Height;
             lunghezza_client = this.ClientRectangle.Width;
             altezza_client = this.ClientRectangle.Height;
-            Game.Top = 0;
-            Game.Left = 0;
+                Game.Top = 0;
+                Game.Left = 0;
             Start.Width = GamePanels.Width;
             Start.Height = GamePanels.Height;
             Start.Top = 0;
