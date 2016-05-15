@@ -109,25 +109,25 @@ namespace WindowsFormsApplication5
             }
         }
 
-        public void resize(int l, int h, int li, int hi/*object sender, EventArgs e*/)
+        public void resize(int li, int hi, int l, int h)
         {
             ThisForm.grid.redraw_grid(ThisForm.grid, ThisForm.ClientRectangle.Height, ThisForm.ClientRectangle.Width);
             foreach (Sprite s in iManager.inGameSprites)
             {
                 if (s.GetType().Name == "Ball")
                 {
-                    s.redraw(s, (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(10 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.ball, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
+                    s.redraw(s, (int)(Math.Abs(10 * l / li)), (10 * h / hi), Properties.Resources.ball, s.X * l / li, s.Y * h / hi);
                 }
                 else if (s.GetType().Name == "Paddle")
-                    s.redraw(s, (int)(Math.Abs(128 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(24 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.New_Piskel, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
+                    s.redraw(s, (int)(Math.Abs(128 * l / li)), (24 * h / hi), Properties.Resources.New_Piskel, s.X * l / li, s.Y * h / hi);
                 else if (s.GetType().Name == "View")
-                    s.redraw(s, (Math.Abs(Form2.ActiveForm.ClientRectangle.Width)), Math.Abs(Form2.ActiveForm.ClientRectangle.Height), Properties.Resources.Background, 0, 0);
+                    s.redraw(s, l, h, Properties.Resources.Background, 0, 0);
                 else if (s.GetType().Name == "Block")
-                    ThisForm.grid.redraw_block((Block)s, (int)(100 * (float)Form2.ActiveForm.ClientRectangle.Width / li), (int)(50 * (float)(Form2.ActiveForm.ClientRectangle.Height / hi)), s.Texture, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
+                    ThisForm.grid.redraw_block((Block)s, (100 * l / li), (50 * (h / hi)), s.Texture, s.X * l / li, s.Y * h / hi);
                 else if (s.GetType().Name == "Life")
-                    s.redraw(s, (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Width / li)), (int)(Math.Abs(20 * (float)Form2.ActiveForm.ClientRectangle.Height / hi)), Properties.Resources.vita, s.X * Form2.ActiveForm.ClientRectangle.Width / l, s.Y * Form2.ActiveForm.ClientRectangle.Height / h);
+                    s.redraw(s, (20 * l / li), (20 * h / hi), Properties.Resources.vita, s.X * l / li, s.Y * h / hi);
             }
-            ThisForm.racchetta.Y = Form2.ActiveForm.ClientRectangle.Height * 9 / 10;
+            ThisForm.racchetta.Y = h * 9 / 10;
             spriteBatch.cntxt.MaximumBuffer = new Size(ThisForm.ClientSize.Width + 1, ThisForm.ClientSize.Height + 1);
             spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(ThisForm.CreateGraphics(), new Rectangle(Point.Empty, ThisForm.ClientSize));
             spriteBatch.Gfx = ThisForm.CreateGraphics();

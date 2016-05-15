@@ -30,9 +30,9 @@ namespace WindowsFormsApplication5
 
         #region Public Methods
 
-        public void on_resize(int l, int h, int li, int hi/*object sender, EventArgs e*/)
+        public void on_resize(int li, int hi, int l, int h)
         {
-            logic.resize(l, h, li, hi);
+            logic.resize(li, hi, l, h);
         }
 
         #endregion Public Methods
