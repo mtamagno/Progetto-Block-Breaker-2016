@@ -32,7 +32,8 @@ namespace WindowsFormsApplication5
         {
             this.start.FlatStyle = FlatStyle.Flat;
             this.start.MouseEnter += Start_MouseEnter;
-            this.start.MouseLeave += Start_MouseLeave; 
+            this.start.MouseLeave += Start_MouseLeave;
+            this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
             this.start.BackgroundImage = start_button_image;
             this.start.BackgroundImageLayout = ImageLayout.Stretch;
@@ -41,7 +42,8 @@ namespace WindowsFormsApplication5
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
             this.Controls.Add(start);
-            this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
+            var backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
+            this.BackgroundImage = backgroundimage;
         }
 
         private void Start_MouseLeave(object sender, EventArgs e)
@@ -55,5 +57,18 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Private Methods
+
+        public void on_resize(int l, int h)
+        {
+            //this.Width = l;
+            //this.Height = h;
+            //this.Size = new Size(l, h);
+            //this.BackgroundImageLayout = ImageLayout.Stretch;
+            this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
+            this.start.Size = new Size(this.ClientSize.Width/10,this.ClientSize.Height/10);
+            this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
+            this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
+            Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
+        }
     }
 }

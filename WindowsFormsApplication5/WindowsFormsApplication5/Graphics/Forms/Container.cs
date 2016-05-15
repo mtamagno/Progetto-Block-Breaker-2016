@@ -119,17 +119,28 @@ namespace WindowsFormsApplication5
 
         private void Form2_ResizeEnd(object sender, EventArgs e)
         {
-            if (Game.Visible == true)
-            {
-                GamePanels.Height = this.Height;
-                GamePanels.Width = this.Width;
-                Game.Height = this.Height;
-                Game.Width = this.Width;
+            GamePanels.Height = this.ClientRectangle.Height;
+            GamePanels.Width = this.ClientRectangle.Width;
                 GamePanels.Top = 0;
                 GamePanels.Left = 0;
+            Game.Width = GamePanels.Width;
+            Game.Height = GamePanels.Height;
+            lunghezza_client = this.ClientRectangle.Width;
+            altezza_client = this.ClientRectangle.Height;
                 Game.Top = 0;
                 Game.Left = 0;
+            Start.Width = GamePanels.Width;
+            Start.Height = GamePanels.Height;
+            Start.Top = 0;
+            Start.Left = 0;
+
+            if (Game.Visible == true)
+            {
                 Game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
+            }
+            if(Start.Visible == true)
+            {
+                Start.on_resize(this.Width,this.Height);
             }
         }
 
@@ -154,18 +165,10 @@ namespace WindowsFormsApplication5
 
                 GamePanels.Top = 0;
                 GamePanels.Left = 0;
-
-                GamePanels.Width = 1000;
-                GamePanels.Height = 500;
+                GamePanels.Width = this.Width;
+                GamePanels.Height = this.Height;
                 GamePanels.Visible = true;
-                /*           StartPanel.Top = 0;
-                           StartPanel.Left = 0;
-
-                           StartPanel.Width = 1000;
-                           StartPanel.Height = 500;
-                           StartPanel.Visible = true;*/
                 GamePanels.Controls.Add(Start);
-                //GamePanels.Controls.Add(Game);
                 this.Dock = DockStyle.Fill;
                 Game.AutoScaleMode = AutoScaleMode.Inherit;
                 GamePanels.Dock = DockStyle.Fill;
