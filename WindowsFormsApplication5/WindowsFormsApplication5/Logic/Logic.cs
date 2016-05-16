@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
@@ -29,10 +28,7 @@ namespace WindowsFormsApplication5
 
         #endregion Public Fields
 
-
-
         #region Private Fields
-
 
         private CheckLife checkLife = new CheckLife();
         private int activeBlock;
@@ -52,8 +48,6 @@ namespace WindowsFormsApplication5
 
         #endregion Public Constructors
 
-
-
         #region Public Methods
 
         public void gameLoop()
@@ -64,17 +58,18 @@ namespace WindowsFormsApplication5
             while (shouldStop == false)
             {
                 ThisForm.ball.canCollide = true;
-                vita_rimanente = checkLife.check(ThisForm,vita_rimanente);
-                if(vita_rimanente <= 0)
-                    {
+                vita_rimanente = checkLife.check(ThisForm, vita_rimanente);
+                if (vita_rimanente <= 0)
+                {
                     shouldStop = true;
                     return;
-                    }
-                if (gameTime.ElapsedMilliseconds % 1000 != 0) {
+                }
+                if (gameTime.ElapsedMilliseconds % 1000 != 0)
+                {
                     checkscore();
                     checkActiveBlock();
-                   }
-               Fps.checkfps();
+                }
+                Fps.checkfps();
                 input();
                 Fps.logic(this.ThisForm, this.iManager);
                 render();
@@ -109,12 +104,11 @@ namespace WindowsFormsApplication5
 
         #region Private Methods
 
-
         private void checkActiveBlock()
         {
             if (activeBlock == 0)
             {
-                ThisForm.grid.insert_grid(Properties.Resources.Block,this.iManager);
+                ThisForm.grid.insert_grid(Properties.Resources.Block_4, this.iManager);
             }
         }
 
@@ -127,17 +121,16 @@ namespace WindowsFormsApplication5
                 if (s.GetType().Name == "Block")
                 {
                     Block myBlock = (Block)s;
-                    if (myBlock.remaining_bounces == 0)
+                    if (myBlock.block_life == 0)
                     {
                         score += myBlock.block_life;
-                        myBlock.remaining_bounces = -1;
+                        myBlock.block_life = -1;
                     }
-                    if(myBlock.remaining_bounces > 0)
+                    if (myBlock.block_life > 0)
                     {
                         activeBlock++;
                     }
                 }
-
             }
             if (previous_score < score)
                 Console.WriteLine(score);
@@ -151,7 +144,7 @@ namespace WindowsFormsApplication5
                 ThisForm.Invoke(new MethodInvoker(delegate
                 {
                     if (Form2.ActiveForm != null)
-                        Form2.ActiveForm.Text = "fps: " + Fps.fps.ToString() + "Ups:" + Fps.Ups.ToString();
+                        Form2.ActiveForm.Text = "fps: " + Fps.fps.ToString() + "ups:" + Fps.ups.ToString();
                 }));
             }
             catch
@@ -162,11 +155,6 @@ namespace WindowsFormsApplication5
             KeysPressed.Clear();
             KeysHeld.Clear();
             AllowInput = true;
-        }
-
-
-        private void output()
-        {
         }
 
         private void render()

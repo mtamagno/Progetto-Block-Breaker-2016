@@ -29,11 +29,8 @@ namespace WindowsFormsApplication5
         {
             //Disegno il bitmap
             Bitmap b = new Bitmap(width, height);
-            //using (Graphics g = Graphics.FromImage(b))
-            //{
             Graphics g = Graphics.FromImage(b);
             g.DrawImage(texture, 0, 0, width, height);
-            //}
 
             //Setto tipo di sprite con relativi attributi e gli assegno le coordinate x e y
             Texture = b;
@@ -85,7 +82,6 @@ namespace WindowsFormsApplication5
 
         #region Public Methods
 
-        //Funzioni che restituiscono la porzione dello sprite richiesta
         //Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
         public void Draw(SpriteBatch sb)
         {
@@ -97,11 +93,10 @@ namespace WindowsFormsApplication5
         {
             sprite.Width = new_Width;
             sprite.Height = new_Heigth;
-            Console.WriteLine(sprite.Width);
             Bitmap b = new Bitmap(sprite.Width, sprite.Height);
             using (Graphics g = Graphics.FromImage(b))
             {
-                //per adesso è "sprite.Type == Spritetype.ball" ma una volta cambiati gli sprite sarà "sprite.Type != Spritetype.background"
+                //setto a transparent lo sfondo dello sprite della pallina
                 if (sprite.GetType().Name == "Ball")
                 {
                     Color backColor = risorsa.GetPixel(0, 0);
@@ -111,14 +106,15 @@ namespace WindowsFormsApplication5
             }
             sprite.X = nuova_X;
             sprite.Y = nuova_Y;
+
             //Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
             if (sprite.GetType().Name == "Paddle")
                 sprite.Y = (Math.Abs(Form2.ActiveForm.Height - sprite.Height)) * 9 / 10;
+
+            //setto la texture dello sprite
             sprite.Texture = b;
             return;
         }
-
-        //Funzione che aggiorna la posizione dei vari sprite utilizzando la loro velocità e posizione precedente
 
         #endregion Public Methods
 
@@ -129,8 +125,10 @@ namespace WindowsFormsApplication5
         #endregion Private Methods
     }
 
-    //Classe SpriteHelper con le varie funzioni utili per sapere quando due sprite impattano e in particolare quali sezioni di questi due
-    //si stanno intersecando
+    /// <summary>
+    /// Classe SpriteHelper con le varie funzioni utili per sapere quando due sprite impattano
+    /// e in particolare quali sezioni di questi due si stanno intersecando
+    /// </summary>
     internal static class SpriteHelper
     {
         #region Public Methods

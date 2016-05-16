@@ -156,6 +156,7 @@
   <ItemGroup>
     <None Include="Resources\BackGround_Image.jpg" />
     <None Include="Resources\BlueRoundedButton.png" />
+    <None Include="Resources\Block1.png" />
     <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>

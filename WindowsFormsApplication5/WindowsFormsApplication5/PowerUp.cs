@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
-    class PowerUp : Sprite
+    internal class PowerUp : Sprite
     {
         #region Public Fields
 
         public Bitmap texture;
 
         #endregion Public Fields
-
 
         #region Public Constructors
 
@@ -30,6 +24,7 @@ namespace WindowsFormsApplication5
             this.graphics(texture, x, y, width, height);
             logic.iManager.inGameSprites.Add(this);
         }
+
         #endregion Public Constructors
     }
 }

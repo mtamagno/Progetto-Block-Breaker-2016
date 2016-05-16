@@ -12,7 +12,6 @@ namespace WindowsFormsApplication5
 
         #endregion Public Fields
 
-
         #region Public Constructors
 
         //       private static Random random = new Random();

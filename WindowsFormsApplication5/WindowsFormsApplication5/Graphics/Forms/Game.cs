@@ -128,11 +128,9 @@ namespace WindowsFormsApplication5
             game.Start();
         }
 
-
         private void init_grid()
         {
-            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width, Properties.Resources.Block, logic);
-
+            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width, Properties.Resources.Block_4, logic);
         }
 
         private void life_init()

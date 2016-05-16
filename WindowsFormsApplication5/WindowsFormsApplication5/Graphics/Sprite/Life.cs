@@ -4,12 +4,6 @@ namespace WindowsFormsApplication5
 {
     public class Life : Sprite
     {
-        #region Public Fields
-
-        public int remaining_bounces;
-
-        #endregion Public Fields
-
         #region Private Fields
 
         private Bitmap texture;
@@ -18,15 +12,16 @@ namespace WindowsFormsApplication5
 
         #region Public Constructors
 
-        //       private static Random random = new Random();
         public Life(float x, float y, int width, int height) : base(x, y, width, height)
         {
+            //setto le variabili standard della vita alla creazione
             texture = Properties.Resources.vita;
             canFall = false;
             torender = true;
             canCollide = false;
             followPointer = false;
 
+            //disegno la vita
             this.graphics(texture, x, y, width, height);
         }
 

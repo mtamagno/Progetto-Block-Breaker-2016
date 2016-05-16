@@ -44,7 +44,6 @@ namespace WindowsFormsApplication5
             {
                 this.Invoke(new MethodInvoker(delegate
                 {
-                    //Game.logic.shouldStop = false;
                     Start.Hide();
                     GamePanels.Controls.Add(Game);
                     Game.Show();
@@ -81,6 +80,7 @@ namespace WindowsFormsApplication5
                     restart_required = true;
                     gameLoop();
                     return;
+
                     //termino il thread
                 }
                 Thread.Sleep(2000);
@@ -121,14 +121,14 @@ namespace WindowsFormsApplication5
         {
             GamePanels.Height = this.ClientRectangle.Height;
             GamePanels.Width = this.ClientRectangle.Width;
-                GamePanels.Top = 0;
-                GamePanels.Left = 0;
+            GamePanels.Top = 0;
+            GamePanels.Left = 0;
             Game.Width = GamePanels.Width;
             Game.Height = GamePanels.Height;
             lunghezza_client = this.ClientRectangle.Width;
             altezza_client = this.ClientRectangle.Height;
-                Game.Top = 0;
-                Game.Left = 0;
+            Game.Top = 0;
+            Game.Left = 0;
             Start.Width = GamePanels.Width;
             Start.Height = GamePanels.Height;
             Start.Top = 0;
@@ -138,9 +138,9 @@ namespace WindowsFormsApplication5
             {
                 Game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
             }
-            if(Start.Visible == true)
+            if (Start.Visible == true)
             {
-                Start.on_resize(this.Width,this.Height);
+                Start.on_resize(this.Width, this.Height);
             }
         }
 

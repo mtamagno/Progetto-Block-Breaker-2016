@@ -8,7 +8,9 @@ namespace WindowsFormsApplication5
     {
         #region Public Fields
 
-        public int Accel_y = 100;
+        //variabili per accelerazione y, texture, velocità totale e attuale, spia che notifica la raggiunta della velocità massima
+        public int Accel_y = 50;
+
         public Bitmap texture;
         public PointF velocity;
         public float velocity_tot;
@@ -20,19 +22,24 @@ namespace WindowsFormsApplication5
 
         public Ball(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
         {
+            //setto le proprietà della pallina
             texture = Properties.Resources.ball;
             canFall = false;
             canCollide = true;
             followPointer = true;
             torender = true;
 
-            //per adesso è "thisType == spritetype.ball" ma una volta cambiati gli sprite sarà "thisType != spritetype.background"
+            //rendo invisibile lo sfondo dello sprite della pallina
             if (this.GetType().ToString().ToLower() == "windowsformsapplication5.ball")
             {
                 Color backColor = texture.GetPixel(0, 0);
                 texture.MakeTransparent(backColor);
             }
+
+            //disegno la pallina
             this.graphics(texture, x, y, width, height);
+
+            //aggiungo la pallina all'inputmanager che tiene conto di tutti gli sprite presenti nel gioco
             logic.iManager.inGameSprites.Add(this);
         }
 
@@ -40,8 +47,13 @@ namespace WindowsFormsApplication5
 
         #region Public Methods
 
+        /// <summary>
+        /// Metodo collider che calcola le azioni da svolgere in caso di impatto
+        /// </summary>
+        /// <param name="iManager"></param>
         public void Collider(InputManager iManager)
         {
+            //per ogni sprite presente nella lista contenuta dell'imanager
             foreach (Sprite s in iManager.inGameSprites)
             {
                 if (s.GetType().Name == "Block")
@@ -50,57 +62,66 @@ namespace WindowsFormsApplication5
 
                     if (this.isCollidingWith(myBlock) && myBlock.canCollide == true)
                     {
+                        //se un blocco viene toccato dalla pallina gli tolgo una vita e cambio la texture
                         if (this.isTouchingTop(myBlock) || this.isTouchingBottom(myBlock))
                         {
-                            if (this.X + this.Width / 2 > myBlock.X && this.X + this.Width / 2 < myBlock.X + myBlock.Width) { 
-                            this.velocity.Y *= -1;
-                            myBlock.remaining_bounces--;
+                            if (this.X + this.Width / 2 > myBlock.X && this.X + this.Width / 2 < myBlock.X + myBlock.Width)
+                            {
+                                this.velocity.Y *= -1;
+                                myBlock.block_life--;
 
-                                switch (myBlock.remaining_bounces)
+                                switch (myBlock.block_life)
                                 {
                                     case 1:
                                         myBlock.texture = Properties.Resources.Block_1;
                                         break;
+
                                     case 2:
                                         myBlock.texture = Properties.Resources.Block_2;
                                         break;
+
                                     case 3:
                                         myBlock.texture = Properties.Resources.Block_3;
                                         break;
                                 }
 
-                                myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
+                                if (myBlock.block_life <= 0)
+                                {
+                                    myBlock.torender = false;
+                                    myBlock.canCollide = false;
+                                }
+                                else
 
-                                if (myBlock.remaining_bounces <= 0)
-                            {
-                                myBlock.torender = false;
-                                myBlock.canCollide = false;
+                                    //ridisegno il blocco
+                                    myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
                             }
                         }
-                        }
+                        else
                         if (this.isTouchingLeft(myBlock) || this.isTouchingRight(myBlock))
                         {
                             if (this.Y + this.Height / 2 > myBlock.Y && this.Y + this.Height / 2 < myBlock.Y + myBlock.Height)
                             {
                                 this.velocity.X *= -1;
-                                myBlock.remaining_bounces--;
+                                myBlock.block_life--;
 
-                                switch (myBlock.remaining_bounces)
+                                switch (myBlock.block_life)
                                 {
                                     case 1:
                                         myBlock.texture = Properties.Resources.Block_1;
                                         break;
+
                                     case 2:
                                         myBlock.texture = Properties.Resources.Block_2;
                                         break;
+
                                     case 3:
                                         myBlock.texture = Properties.Resources.Block_3;
                                         break;
                                 }
 
                                 myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
-                                
-                                if (myBlock.remaining_bounces <= 0)
+
+                                if (myBlock.block_life <= 0)
                                 {
                                     myBlock.torender = false;
                                     myBlock.canCollide = false;
@@ -128,6 +149,7 @@ namespace WindowsFormsApplication5
                                 this.Y = mypaddle.Y - this.Height;
                             }
                             else
+
                             //Altrimenti con la metà destra
                             {
                                 double seno;
@@ -137,10 +159,12 @@ namespace WindowsFormsApplication5
                                 this.Y = mypaddle.Y - this.Height;
                             }
                         }
-                        // s.canCollide = false;
                     }
                 }
 
+                ///<summary>
+                ///faccio rimanere la pallina all'interno dello schermo e scalo una vita se la y della pallina arriva all'altezza di view.heigth
+                /// </summary>
                 if (s.GetType().Name == "View")
                 {
                     View myview = (View)s;
@@ -178,6 +202,7 @@ namespace WindowsFormsApplication5
         public void Update(InputManager iManager, Form thisform)
         {
             Collider(iManager);
+
             //Calcolo la velocità totale della pallina che non deve superare i 3000
             velocity_tot = (float)Math.Sqrt((double)((velocity.X * velocity.X) + (velocity.Y * velocity.Y)));
 
@@ -185,11 +210,8 @@ namespace WindowsFormsApplication5
             if (velocity_tot < 3000)
                 velocity_tot_raggiunto = 0;
 
-            //Controllo che non ci siano impatti, in caso inverto prima x o y a seconda di cosa succede, poi aggiorno le posizioni
-            /*if (canCollide == true)
-                this.Collider(iManager);*/
-
-            //Se il valore canFall è vero e quindi si tratta della pallina, in caso la velocità massima non sia arrivata a 3000
+            //Se il valore canFall è vero e quindi si tratta della pallina,
+            //in caso la velocità massima non sia arrivata a 3000
             //incremento la velocità y, altrimenti no
             if (canFall == true)
             {
@@ -199,6 +221,7 @@ namespace WindowsFormsApplication5
                     this.velocity_tot = 3000;
                     this.velocity_tot_raggiunto = 1;
                 }
+
                 //Altrimenti aumento la velocità di y (o decremento se questa è negativa)
                 else
                 {
@@ -218,9 +241,10 @@ namespace WindowsFormsApplication5
                 this.Y += this.velocity.Y * 1 / 500;
             }
 
+            //se deve seguire il mouse faccio in modo che lo faccia
             if (followPointer == true)
             {
-                if ((Cursor.Position.X - thisform.Location.X - this.Width*2) >= 0 && Cursor.Position.X - thisform.Location.X < thisform.Width)
+                if ((Cursor.Position.X - thisform.Location.X - this.Width * 2) >= 0 && Cursor.Position.X - thisform.Location.X < thisform.Width)
                     this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - 15;
             }
         }

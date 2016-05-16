@@ -12,6 +12,8 @@ namespace WindowsFormsApplication5
 
         #endregion Public Fields
 
+
+
         #region Public Constructors
 
         public Form3()
@@ -21,15 +23,13 @@ namespace WindowsFormsApplication5
 
         #endregion Public Constructors
 
+
+
         #region Private Methods
 
-        private void Form3_Load(object sender, EventArgs e)
+        public void starter()
         {
-            this.starter();
-        }
-
-        private void starter()
-        {
+            //Direttive che vanno eseguite in ogni caso
             this.start.FlatStyle = FlatStyle.Flat;
             this.start.MouseEnter += Start_MouseEnter;
             this.start.MouseLeave += Start_MouseLeave;
@@ -38,17 +38,27 @@ namespace WindowsFormsApplication5
             this.start.BackgroundImage = start_button_image;
             this.start.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.BackColor = Color.Black;
-            this.start.Text = "Start";
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
             this.Controls.Add(start);
             var backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
             this.BackgroundImage = backgroundimage;
+
+            //testo che cambia se si tratta del primo start oppure no
+            //if(primavolta == 0)
+            //{
+            this.start.Text = "Start";
+
+            //}
+            //else
+            //{
+            //this.start.Text = "Replay";
+            //}
         }
 
-        private void Start_MouseLeave(object sender, EventArgs e)
+        private void Form3_Load(object sender, EventArgs e)
         {
-            this.start.FlatStyle = FlatStyle.Flat;
+            this.starter();
         }
 
         private void Start_MouseEnter(object sender, EventArgs e)
@@ -56,16 +66,18 @@ namespace WindowsFormsApplication5
             this.start.FlatStyle = FlatStyle.Standard;
         }
 
+        private void Start_MouseLeave(object sender, EventArgs e)
+        {
+            this.start.FlatStyle = FlatStyle.Flat;
+        }
+
         #endregion Private Methods
 
-       public void on_resize(int l, int h)
+        public void on_resize(int l, int h)
         {
-            //this.Width = l;
-            //this.Height = h;
-            //this.Size = new Size(l, h);
-           this.BackgroundImageLayout = ImageLayout.Stretch;
-           this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
-            this.start.Size = new Size(this.ClientSize.Width/10,this.ClientSize.Height/10);
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+            this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
+            this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
             Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);

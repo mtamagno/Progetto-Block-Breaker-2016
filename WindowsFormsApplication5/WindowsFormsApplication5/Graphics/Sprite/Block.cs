@@ -7,14 +7,16 @@ namespace WindowsFormsApplication5
     {
         #region Public Fields
 
+        //variabili per vita e texture
         public int block_life;
-        public int remaining_bounces;
+
         public Bitmap texture;
 
         #endregion Public Fields
 
         #region Private Fields
 
+        //creo il random che mi servirà a calcolare vite in modo casuale
         private static Random random = new Random();
 
         #endregion Private Fields
@@ -23,35 +25,47 @@ namespace WindowsFormsApplication5
 
         public Block(float x, float y, int width, int height) : base(x, y, width, height)
         {
-            //Random random = new Random();
-            remaining_bounces = random.Next(0, 5);
-            block_life = remaining_bounces;
+            //Alla creazione genero un nuomero casuale di vita
+            block_life = random.Next(0, 5);
+
+            //setto le proprietà dello sprite
             canFall = false;
             canCollide = true;
-            if (remaining_bounces > 0)
+
+            //setto il render a true in caso abbia più di 0 vite
+            if (block_life >= 1 && block_life <= 4)
                 torender = true;
             followPointer = false;
+
+            //se non bisogna renderizzarlo non deve poter collidere
             if (torender != true)
                 canCollide = false;
 
-            switch(block_life){
+            //assegno texture diverse, a seconda della vita
+            switch (block_life)
+            {
                 case 0:
-                    texture = Properties.Resources.Block;
+                    texture = Properties.Resources.Block_1;
                     break;
+
                 case 1:
                     texture = Properties.Resources.Block_1;
                     break;
+
                 case 2:
                     texture = Properties.Resources.Block_2;
                     break;
+
                 case 3:
                     texture = Properties.Resources.Block_3;
                     break;
+
                 case 4:
-                    texture = Properties.Resources.Block;
+                    texture = Properties.Resources.Block_4;
                     break;
             }
 
+            //renderizzo il blocco
             this.graphics(texture, x, y, width, height);
         }
 

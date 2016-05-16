@@ -93,16 +93,6 @@ namespace WindowsFormsApplication5.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Block {
-            get {
-                object obj = ResourceManager.GetObject("Block", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Block_1 {
             get {
                 object obj = ResourceManager.GetObject("Block_1", resourceCulture);
@@ -126,6 +116,16 @@ namespace WindowsFormsApplication5.Properties {
         internal static System.Drawing.Bitmap Block_3 {
             get {
                 object obj = ResourceManager.GetObject("Block_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Block_4 {
+            get {
+                object obj = ResourceManager.GetObject("Block_4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WindowsFormsApplication5
+﻿namespace WindowsFormsApplication5
 {
-    class CheckLife
+    internal class CheckLife
     {
         public CheckLife()
         {
-
         }
 
-        public int check(Form1 ThisForm,int lifes)
+        public int check(Form1 ThisForm, int lifes)
         {
             if (ThisForm.background.bottom_collide == 1)
             {
