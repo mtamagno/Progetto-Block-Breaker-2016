@@ -14,7 +14,7 @@ namespace WindowsFormsApplication5
 
         public Life(float x, float y, int width, int height) : base(x, y, width, height)
         {
-            //setto le variabili standard della vita alla creazione
+            //imposto le variabili standard della vita alla creazione
             texture = Properties.Resources.vita;
             canFall = false;
             torender = true;

@@ -32,7 +32,7 @@ namespace WindowsFormsApplication5
             Graphics g = Graphics.FromImage(b);
             g.DrawImage(texture, 0, 0, width, height);
 
-            //Setto tipo di sprite con relativi attributi e gli assegno le coordinate x e y
+            //imposto tipo di sprite con relativi attributi e gli assegno le coordinate x e y
             Texture = b;
             X = x;
             Y = y;
@@ -96,7 +96,7 @@ namespace WindowsFormsApplication5
             Bitmap b = new Bitmap(sprite.Width, sprite.Height);
             using (Graphics g = Graphics.FromImage(b))
             {
-                //setto a transparent lo sfondo dello sprite della pallina
+                //imposto a transparent lo sfondo dello sprite della pallina
                 if (sprite.GetType().Name == "Ball")
                 {
                     Color backColor = risorsa.GetPixel(0, 0);
@@ -111,7 +111,7 @@ namespace WindowsFormsApplication5
             if (sprite.GetType().Name == "Paddle")
                 sprite.Y = (Math.Abs(Form2.ActiveForm.Height - sprite.Height)) * 9 / 10;
 
-            //setto la texture dello sprite
+            //imposto la texture dello sprite
             sprite.Texture = b;
             return;
         }

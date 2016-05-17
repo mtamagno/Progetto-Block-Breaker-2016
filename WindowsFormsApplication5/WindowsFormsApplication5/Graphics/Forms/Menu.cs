@@ -43,17 +43,6 @@ namespace WindowsFormsApplication5
             this.Controls.Add(start);
             var backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
             this.BackgroundImage = backgroundimage;
-
-            //testo che cambia se si tratta del primo start oppure no
-            //if(primavolta == 0)
-            //{
-            this.start.Text = "Start";
-
-            //}
-            //else
-            //{
-            //this.start.Text = "Replay";
-            //}
         }
 
         private void Form3_Load(object sender, EventArgs e)
@@ -81,6 +70,10 @@ namespace WindowsFormsApplication5
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
             Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
+        }
+
+        public void writer(string testo) {
+            this.start.Text = testo;
         }
     }
 }
