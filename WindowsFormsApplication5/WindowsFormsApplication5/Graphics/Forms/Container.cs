@@ -24,6 +24,9 @@ namespace WindowsFormsApplication5
         private bool restart_required = false;
         private Form3 Start = new Form3();
         private HighScore highscore;
+        public TextBox textBox = new TextBox();
+        private Button Salva = new Button();
+
 
         #endregion Private Fields
 
@@ -163,11 +166,9 @@ namespace WindowsFormsApplication5
                     this.Game = new Form1();
                     this.Start = new Form3();
                     this.Start.writer("Replay");
-                    TextBox textBox = new TextBox();
                     this.Controls.Add(textBox);
                     Button Salva = new Button();
                     Salva.Text = "Salva";
-                    this.highscore.Name = textBox.Text;
                     Salva.Click += Salva_Click;
                     Start.Controls.Add(Salva);
                     Salva.Top = Start.start.Top + Start.start.Height;
@@ -190,8 +191,14 @@ namespace WindowsFormsApplication5
         private void Salva_Click(object sender, EventArgs e)
         {
             HighScoreCollection functioncaller = new HighScoreCollection();
+            this.highscore.Name = textBox.Text;
             functioncaller.SaveToXml(highscore);
-            return;
+            this.Invoke(new MethodInvoker(delegate
+            {
+                this.Start.Controls.Remove(Salva);
+                this.Controls.Remove(textBox);
+            }));
+                return;
         }
 
         /// <summary>

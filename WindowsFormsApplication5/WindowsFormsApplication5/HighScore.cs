@@ -1,23 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
-using System.Xml.Serialization;
 
 namespace WindowsFormsApplication5
 {
     public class HighScore
     {
-        public int Score
-        {
-            get;
-            set;
-        }
-
-        public string Name
-        {
-            get;
-            set;
-        }
+        public int Score { get; set; }
+        public string Name { get; set; }
     }
 
     public class HighScoreCollection : List<HighScore>
@@ -27,36 +17,35 @@ namespace WindowsFormsApplication5
             XmlDocument Hiscore = new XmlDocument();
             try
             {
-                Hiscore.Load("Hiscore.xml");
+                Hiscore.LoadXml("Hiscore.xml");
 
-                //XmlNode root = doc.DocumentElement;
+                var numero_punteggi = Hiscore.DocumentElement.ChildNodes.Count;
 
-                ////Create a new node.
-                //XmlElement elem = doc.CreateElement("price");
-                //elem.InnerText = "19.95";
-
-                ////Add the node to the document.
-                //root.AppendChild(elem)
-                //    writer.WriteStartElement("HighScore:\t");
-                //writer.WriteValue(CurrentHighScore.Score + "\n");
-                //writer.WriteString("Name:\t");
-                //writer.WriteString(CurrentHighScore.Name + "\n");
-                //writer.Flush();
-                //writer.Close();
-                Hiscore.Save(Console.Out);
-
+                // Crea un nuovo elemento
+                XmlElement elem = Hiscore.CreateElement("HighScore-" + (numero_punteggi++));
+                elem.InnerText = CurrentHighScore.Name;
+                elem.Value = CurrentHighScore.Score.ToString();
+                //Aggiunge il nodo al documento
+                Hiscore.DocumentElement.AppendChild(elem);
+                Hiscore.Save("Hiscore.xml");
+                Console.Out.Write(Hiscore);
             }
             catch
             {
                 using (XmlWriter writer = XmlWriter.Create("Hiscore.xml"))
                 {
                     writer.WriteStartDocument(true);
-                    writer.WriteStartElement("HighScore:\t");
-                    writer.WriteValue(CurrentHighScore.Score + "\n");
-                    writer.WriteString("Name:\t");
-                    writer.WriteString(CurrentHighScore.Name + "\n");
-                    writer.Flush();
-                    writer.Close();
+
+                    // Crea un nuovo nodo
+                    XmlElement elem = Hiscore.CreateElement("HighScore-1");
+                    XmlElement elem2 = Hiscore.CreateElement("Score");
+                    elem.InnerText = CurrentHighScore.Name;
+
+                    elem2.InnerText = CurrentHighScore.Score.ToString();
+                    //Aggiunge il nodo al documento
+                    Hiscore.AppendChild(elem);
+                    XmlNode root = Hiscore.DocumentElement;
+                    root.AppendChild(elem2);
                     Console.Out.Write(Hiscore);
                 }
             }
