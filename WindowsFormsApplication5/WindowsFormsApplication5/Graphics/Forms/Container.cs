@@ -68,6 +68,8 @@ namespace WindowsFormsApplication5
                     Start.BringToFront();
                 }));
             }
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
             primavolta = 1;
         }
 
@@ -81,6 +83,8 @@ namespace WindowsFormsApplication5
                     button_start = false;
                     restart_required = true;
                     gameLoop();
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
                     return;
 
                     //termino il thread
@@ -160,6 +164,8 @@ namespace WindowsFormsApplication5
                     this.Controls.Clear();
                     this.Game = new Form1();
                     this.Start = new Form3();
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
 
                 }
                 this.Controls.Add(GamePanels);
@@ -200,8 +206,7 @@ namespace WindowsFormsApplication5
                         gameLoop();
                 
                 primavolta = 0;
-                GC.Collect();
-                
+                GC.Collect();                
                 GC.WaitForPendingFinalizers();
 
             }));
