@@ -26,7 +26,7 @@ namespace WindowsFormsApplication5
 
         public Ball(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
         {
-            //setto le proprietà della pallina
+            //imposto le proprietà della pallina
             texture = Properties.Resources.ball;
             canFall = false;
             canCollide = true;
@@ -220,7 +220,7 @@ namespace WindowsFormsApplication5
             //Calcolo la velocità totale della pallina che non deve superare i 3000
             velocity_tot = (float)Math.Sqrt((double)((velocity.X * velocity.X) + (velocity.Y * velocity.Y)));
 
-            //Se la velocità totale non è ancora a 3000, setto la spia a 0 così da continuare a farla aumentare
+            //Se la velocità totale non è ancora a 3000, imposto la spia a 0 così da continuare a farla aumentare
             if (velocity_tot < 3000)
                 velocity_tot_raggiunto = 0;
 

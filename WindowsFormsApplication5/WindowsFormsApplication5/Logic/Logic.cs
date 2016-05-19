@@ -62,6 +62,7 @@ namespace WindowsFormsApplication5
                 if (vita_rimanente <= 0)
                 {
                     shouldStop = true;
+                    this.highscore.Score = score;
                     ThisForm.backgroundMusic.Stop();
                     return;
                 }
@@ -124,7 +125,7 @@ namespace WindowsFormsApplication5
                     Block myBlock = (Block)s;
                     if (myBlock.block_life == 0)
                     {
-                        score += myBlock.block_life;
+                        score += myBlock.initial_life;
                         myBlock.block_life = -1;
                     }
                     if (myBlock.block_life > 0)
