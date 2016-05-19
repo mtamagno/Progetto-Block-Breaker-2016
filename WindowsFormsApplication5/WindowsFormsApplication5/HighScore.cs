@@ -17,10 +17,8 @@ namespace WindowsFormsApplication5
             XmlDocument Hiscore = new XmlDocument();
             try
             {
-                Hiscore.LoadXml("Hiscore.xml");
-
+                Hiscore.Load("Hiscore.xml");
                 var numero_punteggi = Hiscore.DocumentElement.ChildNodes.Count;
-
                 // Crea un nuovo elemento
                 XmlElement elem = Hiscore.CreateElement("HighScore-" + (numero_punteggi++));
                 elem.InnerText = CurrentHighScore.Name;
@@ -32,20 +30,17 @@ namespace WindowsFormsApplication5
             }
             catch
             {
-                using (XmlWriter writer = XmlWriter.Create("Hiscore.xml"))
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                using (XmlWriter writer = XmlWriter.Create("Hiscore.xml", settings))
                 {
                     writer.WriteStartDocument(true);
 
                     // Crea un nuovo nodo
-                    XmlElement elem = Hiscore.CreateElement("HighScore-1");
-                    XmlElement elem2 = Hiscore.CreateElement("Score");
-                    elem.InnerText = CurrentHighScore.Name;
-
-                    elem2.InnerText = CurrentHighScore.Score.ToString();
-                    //Aggiunge il nodo al documento
-                    Hiscore.AppendChild(elem);
-                    XmlNode root = Hiscore.DocumentElement;
-                    root.AppendChild(elem2);
+                    writer.WriteElementString(CurrentHighScore.Name, CurrentHighScore.Score.ToString());
+                    writer.Flush();
+                    writer.Close();
+                    writer.Dispose();
                     Console.Out.Write(Hiscore);
                 }
             }

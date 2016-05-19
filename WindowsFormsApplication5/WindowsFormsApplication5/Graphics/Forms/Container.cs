@@ -81,7 +81,7 @@ namespace WindowsFormsApplication5
         {
             while (this.Created)
             {
-                if (Game.logic.shouldStop == true && button_start == true)
+                if (Game.logic.shouldStop != false && button_start == true)
                 {
                     this.highscore = this.Game.logic.highscore;
                     Game.logic.shouldStop = false;
@@ -263,8 +263,6 @@ namespace WindowsFormsApplication5
             Start.start.Click += new EventHandler(this.start_Click);
                 GC.Collect();                
                 GC.WaitForPendingFinalizers();
-
-            }));
             return;
         }
         #endregion Private Methods

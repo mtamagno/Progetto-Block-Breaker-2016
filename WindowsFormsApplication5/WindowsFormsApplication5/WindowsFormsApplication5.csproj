@@ -67,7 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CheckLife.cs" />
-    <Compile Include="ContentImporter1.cs" />
     <Compile Include="FPS_checker.cs" />
     <Compile Include="Graphics\Forms\Container.cs">
       <SubType>Form</SubType>
@@ -164,7 +163,6 @@
     <None Include="Resources\BlueRoundedButton.png" />
     <None Include="Resources\Block1.png" />
     <None Include="Resources\Background_Music.wav" />
-    <None Include="Music.xnb" />
     <Content Include="content\collide.wav" />
     <Content Include="content\Music.mp3" />
     <Content Include="Music.wav">
