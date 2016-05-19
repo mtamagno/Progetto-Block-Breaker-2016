@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace WindowsFormsApplication5
 {
@@ -44,14 +45,14 @@ namespace WindowsFormsApplication5
             {
                 this.Invoke(new MethodInvoker(delegate
                 {
-                    Start.Hide();
-                    Start.Dispose();
-                    GamePanels.Controls.Add(Game);
-                    Game.Show();
-                    Game.Focus();
-                    Game.BringToFront();
-                    Thread game_alive = new Thread(gameover_check);
-                    game_alive.Start();
+                Start.Hide();
+                Start.Dispose();
+                GamePanels.Controls.Add(Game);
+                Game.Show();
+                Game.Focus();
+                Game.BringToFront();
+                Thread game_alive = new Thread(gameover_check);
+                game_alive.Start();
                 }));
             }
             else {
@@ -154,6 +155,7 @@ namespace WindowsFormsApplication5
                 if (primavolta == 1)
                 {
                     this.Game.Dispose();
+                    this.Start.Dispose();
                     this.GamePanels.Controls.Clear();
                     this.Controls.Clear();
                     this.Game = new Form1();
