@@ -50,7 +50,7 @@ namespace WindowsFormsApplication5
                 this.Invoke(new MethodInvoker(delegate
                 {
                     Start.Hide();
-                Start.Dispose();
+                    Start.Dispose();
                     GamePanels.Controls.Add(Game);
                     Game.Show();
                     Game.Focus();
@@ -79,9 +79,9 @@ namespace WindowsFormsApplication5
 
         public void gameover_check()
         {
-            while (this.Created)
+            while (Game.Visible)
             {
-                if (Game.logic.shouldStop != false && button_start == true)
+                if (Game.logic.shouldStop == true && button_start == true)
                 {
                     this.highscore = this.Game.logic.highscore;
                     Game.logic.shouldStop = false;

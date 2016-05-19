@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 
 namespace WindowsFormsApplication5
@@ -30,18 +31,19 @@ namespace WindowsFormsApplication5
             }
             catch
             {
+                MemoryStream strm = new MemoryStream();
                 XmlWriterSettings settings = new XmlWriterSettings();
                 settings.Indent = true;
-                using (XmlWriter writer = XmlWriter.Create("Hiscore.xml", settings))
+                using (XmlWriter writer = XmlWriter.Create(strm, settings))
                 {
-                    writer.WriteStartDocument(true);
+                    writer.WriteStartDocument();
 
                     // Crea un nuovo nodo
                     writer.WriteElementString(CurrentHighScore.Name, CurrentHighScore.Score.ToString());
                     writer.Flush();
                     writer.Close();
                     writer.Dispose();
-                    Console.Out.Write(Hiscore);
+                    Console.Out.Write(strm);
                 }
             }
         }
