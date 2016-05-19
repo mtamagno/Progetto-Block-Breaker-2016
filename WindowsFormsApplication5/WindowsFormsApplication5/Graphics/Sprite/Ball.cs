@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 
 namespace WindowsFormsApplication5
 {
@@ -10,12 +14,12 @@ namespace WindowsFormsApplication5
 
         //variabili per accelerazione y, texture, velocità totale e attuale, spia che notifica la raggiunta della velocità massima
         public int Accel_y = 50;
-
+        public Stream stream;
         public Bitmap texture;
         public PointF velocity;
         public float velocity_tot;
         public int velocity_tot_raggiunto;
-
+        private SoundEffect Music;
         #endregion Public Fields
 
         #region Public Constructors
@@ -29,10 +33,13 @@ namespace WindowsFormsApplication5
             followPointer = true;
             torender = true;
 
+            stream = TitleContainer.OpenStream("Music.wav");
+            Music = SoundEffect.FromStream(stream);
+
             //rendo invisibile lo sfondo dello sprite della pallina
             if (this.GetType().ToString().ToLower() == "windowsformsapplication5.ball")
             {
-                Color backColor = texture.GetPixel(0, 0);
+                System.Drawing.Color backColor = texture.GetPixel(0, 0);
                 texture.MakeTransparent(backColor);
             }
 
@@ -51,6 +58,13 @@ namespace WindowsFormsApplication5
         /// Metodo collider che calcola le azioni da svolgere in caso di impatto
         /// </summary>
         /// <param name="iManager"></param>
+        /// 
+        public void PlaySound()
+        {
+            FrameworkDispatcher.Update();
+            Music.Play();
+        }
+
         public void Collider(InputManager iManager)
         {
             //per ogni sprite presente nella lista contenuta dell'imanager
@@ -69,7 +83,7 @@ namespace WindowsFormsApplication5
                             {
                                 this.velocity.Y *= -1;
                                 myBlock.block_life--;
-
+                                PlaySound();
                                 switch (myBlock.block_life)
                                 {
                                     case 1:
@@ -103,7 +117,7 @@ namespace WindowsFormsApplication5
                             {
                                 this.velocity.X *= -1;
                                 myBlock.block_life--;
-
+                                PlaySound();
                                 switch (myBlock.block_life)
                                 {
                                     case 1:

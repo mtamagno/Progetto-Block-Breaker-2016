@@ -109,7 +109,7 @@ namespace WindowsFormsApplication5
 
             //Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
             if (sprite.GetType().Name == "Paddle")
-                sprite.Y = (Math.Abs(Form2.ActiveForm.Height - sprite.Height)) * 9 / 10;
+                sprite.Y = (Math.Abs(Container.ActiveForm.Height - sprite.Height)) * 9 / 10;
 
             //imposto la texture dello sprite
             sprite.Texture = b;
