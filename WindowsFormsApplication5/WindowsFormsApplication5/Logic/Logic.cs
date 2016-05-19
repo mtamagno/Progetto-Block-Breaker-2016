@@ -62,6 +62,7 @@ namespace WindowsFormsApplication5
                 if (vita_rimanente <= 0)
                 {
                     shouldStop = true;
+                    ThisForm.backgroundMusic.Stop();
                     return;
                 }
                 if (gameTime.ElapsedMilliseconds % 1000 != 0)
@@ -143,8 +144,8 @@ namespace WindowsFormsApplication5
             {
                 ThisForm.Invoke(new MethodInvoker(delegate
                 {
-                    if (Form2.ActiveForm != null)
-                        Form2.ActiveForm.Text = "fps: " + Fps.fps.ToString() + "ups:" + Fps.ups.ToString();
+                    if (Container.ActiveForm != null)
+                        Container.ActiveForm.Text = "fps: " + Fps.fps.ToString() + "ups:" + Fps.ups.ToString();
                 }));
             }
             catch

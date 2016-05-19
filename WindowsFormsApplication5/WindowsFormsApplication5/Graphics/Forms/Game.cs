@@ -119,7 +119,7 @@ namespace WindowsFormsApplication5
             init_grid();
 
             //inizializzo racchetta
-            racchetta = new Paddle(logic.MousePoint.X - this.Location.X, Form2.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
+            racchetta = new Paddle(logic.MousePoint.X - this.Location.X, WindowsFormsApplication5.Container.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
 
             //inizializzo pallina
             ball = new Ball(300, racchetta.Y - 10, 10, 10, logic);
