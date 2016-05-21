@@ -26,8 +26,10 @@ namespace WindowsFormsApplication5
                 lastrow.AddAfterSelf(
                 new XElement("HighScore",
                 new XElement("Name", CurrentHighScore.Name),
-                new XAttribute("Score", CurrentHighScore.Score)));
-                rows = rows.OrderByDescending(e => e.Attribute("Score").Value);
+                new XElement("Score", CurrentHighScore.Score)));
+                //Crea la lista giusta ma non riesco a salvarla
+                var ciao = xDocument.Descendants("HighScore").OrderByDescending(e => (int.Parse(e.Element("Score").Value)));
+                root.ReplaceAll(ciao);
                 xDocument.Save("HighScores.xml");
             }
             else
