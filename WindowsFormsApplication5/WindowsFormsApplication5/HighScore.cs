@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace WindowsFormsApplication5
 {
@@ -15,35 +16,38 @@ namespace WindowsFormsApplication5
     {
         public void SaveToXml(HighScore CurrentHighScore)
         {
-            XmlDocument Hiscore = new XmlDocument();
-            try
+            if (File.Exists("HighScores.xml"))
             {
-                Hiscore.Load("Hiscore.xml");
-                var numero_punteggi = Hiscore.DocumentElement.ChildNodes.Count;
-                // Crea un nuovo elemento
-                XmlElement elem = Hiscore.CreateElement("HighScore-" + (numero_punteggi++));
-                elem.InnerText = CurrentHighScore.Name;
-                elem.Value = CurrentHighScore.Score.ToString();
-                //Aggiunge il nodo al documento
-                Hiscore.DocumentElement.AppendChild(elem);
-                Hiscore.Save("Hiscore.xml");
-                Console.Out.Write(Hiscore);
+                XDocument xDocument = XDocument.Load("HighScores.xml");
+                IEnumerable<XElement> rows;
+                XElement root = xDocument.Element("HighScores");
+                rows = root.Descendants("HighScore");
+                XElement lastrow = rows.Last();
+                lastrow.AddAfterSelf(
+                new XElement("HighScore",
+                new XElement("Name", CurrentHighScore.Name),
+                new XAttribute("Score", CurrentHighScore.Score)));
+                rows = rows.OrderByDescending(e => e.Attribute("Score").Value);
+                xDocument.Save("HighScores.xml");
             }
-            catch
+            else
             {
-                MemoryStream strm = new MemoryStream();
                 XmlWriterSettings settings = new XmlWriterSettings();
                 settings.Indent = true;
-                using (XmlWriter writer = XmlWriter.Create(strm, settings))
+                settings.NewLineOnAttributes = true;
+                using (XmlWriter writer = XmlWriter.Create("HighScores.xml", settings))
                 {
                     writer.WriteStartDocument();
-
+                    writer.WriteStartElement("HighScores");
+                    writer.WriteStartElement("HighScore");
                     // Crea un nuovo nodo
-                    writer.WriteElementString(CurrentHighScore.Name, CurrentHighScore.Score.ToString());
+                    writer.WriteElementString("Name", CurrentHighScore.Name);
+                    writer.WriteElementString("Score", CurrentHighScore.Score.ToString());
+                    writer.WriteEndElement();
+                    writer.WriteEndDocument();
                     writer.Flush();
                     writer.Close();
                     writer.Dispose();
-                    Console.Out.Write(strm);
                 }
             }
         }
