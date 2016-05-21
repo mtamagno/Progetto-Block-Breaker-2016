@@ -30,18 +30,19 @@ namespace WindowsFormsApplication5
         public void starter()
         {
             //Direttive che vanno eseguite in ogni caso
-            this.start.FlatStyle = FlatStyle.Flat;
+           /* this.start.FlatStyle = FlatStyle.Flat;
             this.start.MouseEnter += Start_MouseEnter;
-            this.start.MouseLeave += Start_MouseLeave;
+            this.start.MouseLeave += Start_MouseLeave;*/
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
             this.start.BackgroundImage = start_button_image;
-            this.start.BackgroundImageLayout = ImageLayout.Stretch;
+            //this.start.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.BackColor = Color.Black;
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
             this.Controls.Add(start);
-            var backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
+            Bitmap backgroundimage = new Bitmap(Properties.Resources.BackGround_Image,this.Size);
+                IntPtr handle = backgroundimage.GetHbitmap();
             this.BackgroundImage = backgroundimage;
         }
 
@@ -52,12 +53,12 @@ namespace WindowsFormsApplication5
 
         private void Start_MouseEnter(object sender, EventArgs e)
         {
-            this.start.FlatStyle = FlatStyle.Standard;
+           this.start.FlatStyle = FlatStyle.Standard;
         }
 
         private void Start_MouseLeave(object sender, EventArgs e)
         {
-            this.start.FlatStyle = FlatStyle.Flat;
+           this.start.FlatStyle = FlatStyle.Flat;
         }
 
         #endregion Private Methods

@@ -88,12 +88,12 @@ namespace WindowsFormsApplication5
                     button_start = false;
                     restart_required = true;
                     gameLoop();
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
                     return;
 
                     //termino il thread
                 }
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
                 Thread.Sleep(2000);
             }
         }
