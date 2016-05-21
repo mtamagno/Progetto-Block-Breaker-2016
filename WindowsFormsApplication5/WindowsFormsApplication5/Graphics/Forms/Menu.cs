@@ -12,8 +12,6 @@ namespace WindowsFormsApplication5
 
         #endregion Public Fields
 
-
-
         #region Public Constructors
 
         public Form3()
@@ -23,26 +21,25 @@ namespace WindowsFormsApplication5
 
         #endregion Public Constructors
 
-
-
         #region Private Methods
 
         public void starter()
         {
             //Direttive che vanno eseguite in ogni caso
-           /* this.start.FlatStyle = FlatStyle.Flat;
-            this.start.MouseEnter += Start_MouseEnter;
-            this.start.MouseLeave += Start_MouseLeave;*/
+            /* this.start.FlatStyle = FlatStyle.Flat;
+             this.start.MouseEnter += Start_MouseEnter;
+             this.start.MouseLeave += Start_MouseLeave;*/
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
             this.start.BackgroundImage = start_button_image;
+
             //this.start.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.BackColor = Color.Black;
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
             this.Controls.Add(start);
-            Bitmap backgroundimage = new Bitmap(Properties.Resources.BackGround_Image,this.Size);
-                IntPtr handle = backgroundimage.GetHbitmap();
+            Bitmap backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
+            IntPtr handle = backgroundimage.GetHbitmap();
             this.BackgroundImage = backgroundimage;
         }
 
@@ -53,12 +50,12 @@ namespace WindowsFormsApplication5
 
         private void Start_MouseEnter(object sender, EventArgs e)
         {
-           this.start.FlatStyle = FlatStyle.Standard;
+            this.start.FlatStyle = FlatStyle.Standard;
         }
 
         private void Start_MouseLeave(object sender, EventArgs e)
         {
-           this.start.FlatStyle = FlatStyle.Flat;
+            this.start.FlatStyle = FlatStyle.Flat;
         }
 
         #endregion Private Methods
@@ -73,7 +70,8 @@ namespace WindowsFormsApplication5
             Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
         }
 
-        public void writer(string testo) {
+        public void writer(string testo)
+        {
             this.start.Text = testo;
         }
     }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.IO;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
+using System;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
@@ -14,12 +13,14 @@ namespace WindowsFormsApplication5
 
         //variabili per accelerazione y, texture, velocità totale e attuale, spia che notifica la raggiunta della velocità massima
         public int Accel_y = 50;
+
         public Stream stream;
         public Bitmap texture;
         public PointF velocity;
         public float velocity_tot;
         public int velocity_tot_raggiunto;
         private SoundEffect Music;
+
         #endregion Public Fields
 
         #region Public Constructors
@@ -58,7 +59,7 @@ namespace WindowsFormsApplication5
         /// Metodo collider che calcola le azioni da svolgere in caso di impatto
         /// </summary>
         /// <param name="iManager"></param>
-        /// 
+        ///
         public void PlaySound()
         {
             FrameworkDispatcher.Update();

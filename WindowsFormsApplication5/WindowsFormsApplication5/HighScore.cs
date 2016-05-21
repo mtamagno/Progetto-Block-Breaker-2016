@@ -9,6 +9,7 @@ namespace WindowsFormsApplication5
     public class HighScore
     {
         public int Score { get; set; }
+
         public string Name { get; set; }
     }
 
@@ -27,10 +28,13 @@ namespace WindowsFormsApplication5
                 new XElement("HighScore",
                 new XElement("Name", CurrentHighScore.Name),
                 new XElement("Score", CurrentHighScore.Score)));
-                //Crea la lista giusta ma non riesco a salvarla
+
+                // Crea la lista giusta e salvo
                 var ciao = xDocument.Descendants("HighScore").OrderByDescending(e => (int.Parse(e.Element("Score").Value)));
                 root.ReplaceAll(ciao);
                 xDocument.Save("HighScores.xml");
+
+                // Da creare un pulsante "Apri HighScores"
             }
             else
             {
@@ -42,6 +46,7 @@ namespace WindowsFormsApplication5
                     writer.WriteStartDocument();
                     writer.WriteStartElement("HighScores");
                     writer.WriteStartElement("HighScore");
+
                     // Crea un nuovo nodo
                     writer.WriteElementString("Name", CurrentHighScore.Name);
                     writer.WriteElementString("Score", CurrentHighScore.Score.ToString());

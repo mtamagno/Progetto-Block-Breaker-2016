@@ -9,6 +9,7 @@ namespace WindowsFormsApplication5
 
         //variabili per vita e texture
         public int initial_life;
+
         public int block_life;
 
         public Bitmap texture;

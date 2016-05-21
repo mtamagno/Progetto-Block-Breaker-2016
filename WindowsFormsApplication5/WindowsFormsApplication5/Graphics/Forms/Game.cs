@@ -1,14 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Media;
 using System.Threading;
 using System.Windows.Forms;
-using System.Media;
 
 namespace WindowsFormsApplication5
 {
     public partial class Form1 : Form
     {
         #region Public Fields
+
         public SoundPlayer backgroundMusic;
         public View background;
         public Ball ball;
@@ -16,6 +17,7 @@ namespace WindowsFormsApplication5
         public Logic logic;
         public Paddle racchetta;
         public Life[] vita = new Life[3];
+
         #endregion Public Fields
 
         #region Public Constructors
@@ -104,7 +106,6 @@ namespace WindowsFormsApplication5
         {
             //inizializzo la logica
             logic = new Logic(this);
-            
 
             //inizializzo la variabile della visione del menù pausa a falso in caso sia vera
             gamepause.Visible = false;
@@ -112,6 +113,7 @@ namespace WindowsFormsApplication5
             //inizializzo il suono
             backgroundMusic = new SoundPlayer(Properties.Resources.Background_Music);
             backgroundMusic.PlayLooping();
+
             //inizializzo il background
             background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, logic);
 
