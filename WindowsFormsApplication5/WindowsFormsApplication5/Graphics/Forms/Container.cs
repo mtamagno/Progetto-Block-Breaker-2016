@@ -17,6 +17,7 @@ namespace WindowsFormsApplication5
 
         #region Private Fields
 
+        private bool gameover = false;
         private bool button_start = false;
         private Form1 Game = new Form1();
         private Panel GamePanels = new Panel();
@@ -26,6 +27,7 @@ namespace WindowsFormsApplication5
         private HighScore highscore;
         public TextBox textBox = new TextBox();
         private Button Salva = new Button();
+        private GameOver Gameover = new GameOver();
 
         #endregion Private Fields
 
@@ -65,6 +67,8 @@ namespace WindowsFormsApplication5
                 }
                 this.Invoke(new MethodInvoker(delegate
                 {
+                    GamePanels.Controls.Remove(Gameover);
+                    Gameover.Dispose();
                     Start.Show();
                     Start.Focus();
                     Start.BringToFront();
@@ -85,7 +89,10 @@ namespace WindowsFormsApplication5
                     Game.logic.shouldStop = false;
                     button_start = false;
                     restart_required = true;
-                    gameLoop();
+                    gameover = true;
+                    starter();
+                    gameover_call();
+                    //gameLoop();
                     return;
 
                     //termino il thread
@@ -166,23 +173,23 @@ namespace WindowsFormsApplication5
                 {
                     this.Game.Dispose();
                     this.Start.Dispose();
+                    this.Gameover.Dispose();
                     this.GamePanels.Controls.Clear();
                     this.Controls.Clear();
                     this.Game = new Form1();
                     this.Start = new Form3();
+                    this.Gameover = new GameOver();
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
 
                     this.Start.writer("Replay");
-                    this.Controls.Add(textBox);
-                    Button Salva = new Button();
+                    /*Button Salva = new Button();
                     Salva.Text = "Salva";
-                    Salva.Click += Salva_Click;
-                    Start.Controls.Add(Salva);
-                    Salva.Top = Start.start.Top + Start.start.Height;
+                    Start.Controls.Add(Salva);*/
+                    /*Salva.Top = Start.start.Top + Start.start.Height;
                     Salva.Left = Start.start.Left;
                     Salva.Height = Start.start.Height;
-                    Salva.Width = Start.start.Width;
+                    Salva.Width = Start.start.Width;*/
                 }
                 else
                 {
@@ -191,7 +198,17 @@ namespace WindowsFormsApplication5
                 }
 
                 //chiamo la funzione standardStarter()
-                standardStarter();
+                if(gameover == false)
+                    standardStarter();
+                if (gameover == true)
+                {
+                    this.Controls.Add(textBox);
+                    GameOverStarter();
+                    textBox.Top = ClientRectangle.Height / 7 * 6 - textBox.Height / 2;
+                    textBox.Left = ClientRectangle.Width / 2 - textBox.Width / 2;
+                    Gameover.Continue.Click += Salva_Click;
+                    gameover = false;
+                }
             }));
             return;
         }
@@ -206,6 +223,7 @@ namespace WindowsFormsApplication5
                 this.Start.Controls.Remove(Salva);
                 this.Controls.Remove(textBox);
             }));
+            gameLoop();
             return;
         }
 
@@ -220,6 +238,8 @@ namespace WindowsFormsApplication5
             Game.AutoScroll = true;
             Start.TopLevel = false;
             Start.AutoScroll = true;
+            Gameover.TopLevel = false;
+            Gameover.AutoScroll = true;
 
             //imposto i gamepanels e aggiungo start
             GamePanels.Top = 0;
@@ -243,6 +263,15 @@ namespace WindowsFormsApplication5
             Game.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
             Game.AutoScaleMode = AutoScaleMode.Inherit;
 
+            //impost Gameover a seconda di come e' il gamepanels
+            Gameover.Width = GamePanels.Width;
+            Gameover.Height = GamePanels.Height;
+            Gameover.Left = 0;
+            Gameover.Top = 0;
+            Gameover.FormBorderStyle = FormBorderStyle.None;
+            Gameover.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
+            Gameover.AutoScaleMode = AutoScaleMode.Inherit;
+
             //imposto start a seconda di come è impostato gamepanels
             Start.Width = GamePanels.Width;
             Start.Height = GamePanels.Height;
@@ -252,6 +281,7 @@ namespace WindowsFormsApplication5
             Start.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
             Start.AutoScaleMode = AutoScaleMode.Inherit;
             Start.start.Click += new EventHandler(this.start_Click);
+
             if (primavolta == 0)
                 gameLoop();
 
@@ -261,6 +291,75 @@ namespace WindowsFormsApplication5
             GC.Collect();
             GC.WaitForPendingFinalizers();
             return;
+        }
+
+        private void GameOverStarter()
+        {
+            //direttive da eseguire in ogni caso
+            this.Controls.Add(GamePanels);
+            Game.TopLevel = false;
+            Game.AutoScroll = true;
+            Start.TopLevel = false;
+            Start.AutoScroll = true;
+            Gameover.TopLevel = false;
+            Gameover.AutoScroll = true;
+
+            //imposto i gamepanels e aggiungo start
+            GamePanels.Top = 0;
+            GamePanels.Left = 0;
+            GamePanels.Width = this.Width;
+            GamePanels.Height = this.Height;
+            GamePanels.Visible = true;
+            GamePanels.Controls.Remove(Gameover);
+            GamePanels.Controls.Add(Gameover);
+            this.Dock = DockStyle.Fill;
+            Game.AutoScaleMode = AutoScaleMode.Inherit;
+            GamePanels.Dock = DockStyle.Fill;
+            GamePanels.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
+
+            //imposto game a seconda di come è impostato gamepanels
+            Game.Width = GamePanels.Width;
+            Game.Height = GamePanels.Height;
+            Game.Left = 0;
+            Game.Top = 0;
+            Game.FormBorderStyle = FormBorderStyle.None;
+            Game.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
+            Game.AutoScaleMode = AutoScaleMode.Inherit;
+
+            //impost Gameover a seconda di come e' il gamepanels
+            Gameover.Width = GamePanels.Width;
+            Gameover.Height = GamePanels.Height;
+            Gameover.Left = 0;
+            Gameover.Top = 0;
+            Gameover.FormBorderStyle = FormBorderStyle.None;
+            Gameover.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
+            Gameover.AutoScaleMode = AutoScaleMode.Inherit;
+
+            //imposto start a seconda di come è impostato gamepanels
+            Start.Width = GamePanels.Width;
+            Start.Height = GamePanels.Height;
+            Start.Left = 0;
+            Start.Top = 0;
+            Start.FormBorderStyle = FormBorderStyle.None;
+            Start.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
+            Start.AutoScaleMode = AutoScaleMode.Inherit;
+            Start.start.Click += new EventHandler(this.start_Click);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            return;
+        }
+
+        private void gameover_call()
+        {
+
+            this.Invoke(new MethodInvoker(delegate
+            {
+                Gameover.Show();
+                Gameover.Focus();
+                Gameover.BringToFront();
+            }));
+
         }
 
         #endregion Private Methods
