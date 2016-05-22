@@ -66,8 +66,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CheckLife.cs" />
-    <Compile Include="FPS_checker.cs" />
+    <Compile Include="GameOver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GameOver.Designer.cs">
+      <DependentUpon>GameOver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Logic\CheckLife.cs" />
+    <Compile Include="Logic\FPS_checker.cs" />
     <Compile Include="Graphics\Forms\Container.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,13 +100,15 @@
     <Compile Include="Graphics\Sprite\Sprite.cs" />
     <Compile Include="Graphics\Sprite\SpriteBatch.cs" />
     <Compile Include="Graphics\Sprite\View.cs" />
-    <Compile Include="HighScore.cs" />
+    <Compile Include="Logic\HighScore.cs" />
     <Compile Include="Logic\InputManager.cs" />
     <Compile Include="Logic\Logic.cs" />
     <Compile Include="Logic\Program.cs" />
     <Compile Include="Logic\ScreenManager.cs" />
-    <Compile Include="PowerUp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="GameOver.resx">
+      <DependentUpon>GameOver.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Graphics\Forms\Container.resx">
       <DependentUpon>Container.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -168,6 +176,7 @@
     <Content Include="Music.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\maxresdefault.jpg" />
     <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
