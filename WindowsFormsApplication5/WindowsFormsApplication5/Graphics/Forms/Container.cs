@@ -68,8 +68,8 @@ namespace WindowsFormsApplication5
                 }
                 this.Invoke(new MethodInvoker(delegate
                 {
-                    GamePanels.Controls.Remove(Gameover);
-                    Gameover.Dispose();
+                   /*amePanels.Controls.Remove(Gameover);
+                    Gameover.Dispose();*/
                     Start.Show();
                     Start.Focus();
                     Start.BringToFront();
@@ -166,6 +166,7 @@ namespace WindowsFormsApplication5
         /// </summary>
         private void starter()
         {
+            
             lunghezza_client = this.ClientRectangle.Width;
             altezza_client = this.ClientRectangle.Height;
             this.Invoke(new MethodInvoker(delegate
@@ -201,7 +202,6 @@ namespace WindowsFormsApplication5
                     textBox.Top = ClientRectangle.Height / 7 * 6 - textBox.Height / 2;
                     textBox.Left = ClientRectangle.Width / 2 - textBox.Width / 2;
                     Gameover.Continue.Click += Salva_Click;
-                    gameover = false;
                 }
             }));
             return;
@@ -221,9 +221,6 @@ namespace WindowsFormsApplication5
             return;
         }
 
-        /// <summary>
-        /// Funzione che esegue le istruzioni che devono essere sempre eseguite al caricamento di questo form
-        /// </summary>
         private void standardStarter()
         {
             //direttive da eseguire in ogni caso
@@ -329,12 +326,14 @@ namespace WindowsFormsApplication5
         
         private void gameover_call()
         {
-
             this.Invoke(new MethodInvoker(delegate
             {
+                Start.Hide();
+                Start.Dispose();
                 Gameover.Show();
                 Gameover.Focus();
                 Gameover.BringToFront();
+                gameover = false;
             }));
 
         }
