@@ -226,7 +226,6 @@ namespace WindowsFormsApplication5
             //direttive da eseguire in ogni caso
             this.Controls.Add(GamePanels);
             Start.TopLevel = false;
-            Start.AutoScroll = true;
 
             //imposto i gamepanels e aggiungo start
             GamePanels.Top = 0;
@@ -255,10 +254,9 @@ namespace WindowsFormsApplication5
         {
            //direttive da eseguire in ogni caso
             this.Controls.Add(GamePanels);
-
-
+            //perchè falso se invece lo stiamo aggiungendo per vederlo?
             Gameover.TopLevel = false;
-            Gameover.AutoScroll = true;
+            //perchè autoscroll?
             GamePanels.Controls.Add(Gameover);
 
             //impost Gameover a seconda di come e' il gamepanels
@@ -268,8 +266,8 @@ namespace WindowsFormsApplication5
             Gameover.Top = 0;
             Gameover.FormBorderStyle = FormBorderStyle.None;
             Gameover.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
+            // a cosa serve autoscale?
             Gameover.AutoScaleMode = AutoScaleMode.Inherit;
-
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -280,8 +278,8 @@ namespace WindowsFormsApplication5
         {
             this.Controls.Add(GamePanels);
 
+            //A  cosa servono di nuovo?
             Game.TopLevel = false;
-            Game.AutoScroll = true;
 
             Game.AutoScaleMode = AutoScaleMode.Inherit;
             GamePanels.Dock = DockStyle.Fill;
@@ -306,7 +304,6 @@ namespace WindowsFormsApplication5
         {
             GamePanels.Controls.Add(Start);
             Start.TopLevel = false;
-            Start.AutoScroll = true;
             GamePanels.Controls.Add(Start);
 
             //imposto start a seconda di come è impostato gamepanels

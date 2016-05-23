@@ -26,14 +26,11 @@ namespace WindowsFormsApplication5
         public void starter()
         {
             //Direttive che vanno eseguite in ogni caso
-            this.start.FlatStyle = FlatStyle.Flat;
-            this.start.MouseEnter += Start_MouseEnter;
-            this.start.MouseLeave += Start_MouseLeave;
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
             this.start.BackgroundImage = start_button_image;
 
-            //this.start.BackgroundImageLayout = ImageLayout.Stretch;
+            this.start.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.BackColor = Color.Black;
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
