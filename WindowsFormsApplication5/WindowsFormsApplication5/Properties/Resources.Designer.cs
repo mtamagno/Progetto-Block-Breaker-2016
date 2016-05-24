@@ -71,12 +71,30 @@ namespace WindowsFormsApplication5.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Background_GameOver {
+            get {
+                return ResourceManager.GetStream("Background_GameOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap BackGround_Image {
             get {
                 object obj = ResourceManager.GetObject("BackGround_Image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream Background_Menu {
+            get {
+                return ResourceManager.GetStream("Background_Menu", resourceCulture);
             }
         }
         

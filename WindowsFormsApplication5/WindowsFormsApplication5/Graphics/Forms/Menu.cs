@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Media;
 
 namespace WindowsFormsApplication5
 {
     public partial class Start : Form
     {
         #region Public Fields
-
+        private SoundPlayer backgroundMusic;
         public Button start = new Button();
 
         #endregion Public Fields
@@ -29,7 +30,8 @@ namespace WindowsFormsApplication5
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
             this.start.BackgroundImage = start_button_image;
-
+            this.backgroundMusic = new SoundPlayer(Properties.Resources.Background_Menu);
+            this.backgroundMusic.PlayLooping();
             this.start.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.BackColor = Color.Black;
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;

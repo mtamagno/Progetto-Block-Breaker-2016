@@ -53,7 +53,7 @@
             this.Controls.Add(this.gamepause);
             this.Name = "Game";
             this.Text = "Game";
-           // this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.Game_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();
