@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication5
 {
-    partial class Form1
+    partial class Game
     {
         /// <summary>
         /// Variabile di progettazione necessaria.
@@ -42,17 +42,17 @@
             this.gamepause.Name = "gamepause";
             this.gamepause.Size = new System.Drawing.Size(211, 125);
             this.gamepause.TabIndex = 0;
-            this.gamepause.Text = "Game Paused\r\n\r\nPress space to resume\r\n\r\nPress esc to exit";
+            this.gamepause.Text = "game Paused\r\n\r\nPress space to resume\r\n\r\nPress esc to exit";
             // 
-            // Form1
+            // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(884, 411);
             this.Controls.Add(this.gamepause);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "Game";
+            this.Text = "Game";
            // this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);

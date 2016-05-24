@@ -12,7 +12,7 @@
 
         #region Public Enums
 
-        public enum GameState { Splash, Menu, Game }
+        public enum GameState { Splash, Menu, game }
 
         #endregion Public Enums
 

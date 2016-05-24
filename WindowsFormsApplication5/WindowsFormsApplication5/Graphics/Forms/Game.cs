@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
-    public partial class Form1 : Form
+    public partial class Game : Form
     {
         #region Public Fields
 
@@ -22,7 +22,7 @@ namespace WindowsFormsApplication5
 
         #region Public Constructors
 
-        public Form1()
+        public Game()
         {
             InitializeComponent();
             return;
@@ -47,21 +47,28 @@ namespace WindowsFormsApplication5
             System.Environment.Exit(0);
         }
 
-        protected override void OnKeyDown(KeyEventArgs e)
+        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            base.OnKeyDown(e);
             if (logic.AllowInput)
             {
-                logic.KeysHeld.Add(e.KeyCode);
-            }
-        }
-
-        protected override void OnKeyPress(KeyPressEventArgs e)
-        {
-            base.OnKeyPress(e);
-            if (logic.AllowInput)
-            {
-                logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
+                if (e.KeyChar == (char)Keys.Space)
+                {
+                    ball.followPointer = false;
+                    ball.canFall = true;
+                    racchetta.followPointer = true;
+                    gamepause.Visible = false;
+                    logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
+                }
+                if (e.KeyChar == (char)Keys.Enter && gamepause.Visible == false)
+                {
+                    ball.followPointer = false;
+                    ball.canFall = false;
+                    racchetta.followPointer = false;
+                    gamepause.Visible = true;
+                    logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
+                }
+                if (e.KeyChar == (char)Keys.Escape)
+                    this.Close();
             }
         }
 
@@ -74,28 +81,6 @@ namespace WindowsFormsApplication5
         #endregion Protected Methods
 
         #region Private Methods
-
-        //Menu di pausa
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Space)
-            {
-                ball.followPointer = false;
-                ball.canFall = true;
-                racchetta.followPointer = true;
-                gamepause.Visible = false;
-            }
-
-            if (e.KeyChar == (char)Keys.Enter && gamepause.Visible == false)
-            {
-                ball.followPointer = false;
-                ball.canFall = false;
-                racchetta.followPointer = false;
-                gamepause.Visible = true;
-            }
-            if (e.KeyChar == (char)Keys.Escape)
-                this.Close();
-        }
 
         private void loadContent()
         {
@@ -129,9 +114,9 @@ namespace WindowsFormsApplication5
             //inizializzo le vite
             life_init();
 
-            //creo e inizializzo il thread del gioco
-            Thread game = new Thread(logic.gameLoop);
-            game.Start();
+            //inizializzo il thread del gioco
+            Thread gameThread = new Thread(logic.gameLoop);
+            gameThread.Start();
         }
 
         private void init_grid()

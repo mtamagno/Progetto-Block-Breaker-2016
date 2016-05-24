@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
-    public partial class Form3 : Form
+    public partial class Start : Form
     {
         #region Public Fields
 
@@ -14,7 +14,7 @@ namespace WindowsFormsApplication5
 
         #region Public Constructors
 
-        public Form3()
+        public Start()
         {
             this.InitializeComponent();
         }

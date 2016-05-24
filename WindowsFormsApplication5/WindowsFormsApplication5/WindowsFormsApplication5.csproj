@@ -73,7 +73,7 @@
       <DependentUpon>GameOver.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic\CheckLife.cs" />
-    <Compile Include="Logic\FPS_checker.cs" />
+    <Compile Include="Logic\FPSChecker.cs" />
     <Compile Include="Graphics\Forms\Container.cs">
       <SubType>Form</SubType>
     </Compile>

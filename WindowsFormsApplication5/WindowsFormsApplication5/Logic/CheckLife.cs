@@ -6,7 +6,7 @@
         {
         }
 
-        public int check(Form1 ThisForm, int lifes)
+        public int check(Game ThisForm, int lifes)
         {
             if (ThisForm.background.bottomCollide == 1)
             {
