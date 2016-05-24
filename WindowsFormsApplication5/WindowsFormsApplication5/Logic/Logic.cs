@@ -123,12 +123,12 @@ namespace WindowsFormsApplication5
                 if (s.GetType().Name == "Block")
                 {
                     Block myBlock = (Block)s;
-                    if (myBlock.block_life == 0)
+                    if (myBlock.blockLife == 0)
                     {
-                        score += myBlock.initial_life;
-                        myBlock.block_life = -1;
+                        score += myBlock.initialLife;
+                        myBlock.blockLife = -1;
                     }
-                    if (myBlock.block_life > 0)
+                    if (myBlock.blockLife > 0)
                     {
                         activeBlock++;
                     }

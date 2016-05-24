@@ -8,10 +8,8 @@ namespace WindowsFormsApplication5
         #region Public Fields
 
         //variabili per vita e texture
-        public int initial_life;
-
-        public int block_life;
-
+        public int initialLife;
+        public int blockLife;
         public Bitmap texture;
 
         #endregion Public Fields
@@ -28,15 +26,15 @@ namespace WindowsFormsApplication5
         public Block(float x, float y, int width, int height) : base(x, y, width, height)
         {
             //Alla creazione genero un nuomero casuale di vita
-            block_life = random.Next(0, 5);
-            initial_life = block_life;
+            blockLife = random.Next(0, 5);
+            initialLife = blockLife;
 
             //imposto le proprietà dello sprite
             canFall = false;
             canCollide = true;
 
             //imposto il render a true in caso abbia più di 0 vite
-            if (block_life >= 1 && block_life <= 4)
+            if (blockLife >= 1 && blockLife <= 4)
                 torender = true;
             followPointer = false;
 
@@ -45,7 +43,7 @@ namespace WindowsFormsApplication5
                 canCollide = false;
 
             //assegno texture diverse, a seconda della vita
-            switch (block_life)
+            switch (blockLife)
             {
                 case 0:
                     texture = Properties.Resources.Block_1;

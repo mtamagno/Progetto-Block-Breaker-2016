@@ -7,7 +7,7 @@ namespace WindowsFormsApplication5
     {
         #region Public Fields
 
-        public int bottom_collide = 0;
+        public int bottomCollide = 0;
         public bool canCollide;
         public bool canFall;
         public bool followPointer;
@@ -89,10 +89,10 @@ namespace WindowsFormsApplication5
         }
 
         //Funzione redraw necessaria ogni qual volta si effettua il resize dei vari sprite
-        public void redraw(Sprite sprite, int new_Width, int new_Heigth, Bitmap risorsa, float nuova_X, float nuova_Y)
+        public void redraw(Sprite sprite, int newWidth, int newHeigth, Bitmap risorsa, float nuova_X, float nuova_Y)
         {
-            sprite.Width = new_Width;
-            sprite.Height = new_Heigth;
+            sprite.Width = newWidth;
+            sprite.Height = newHeigth;
             Bitmap b = new Bitmap(sprite.Width, sprite.Height);
             using (Graphics g = Graphics.FromImage(b))
             {

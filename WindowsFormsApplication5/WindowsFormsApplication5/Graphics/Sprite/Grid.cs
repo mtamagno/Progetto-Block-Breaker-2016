@@ -42,7 +42,7 @@ namespace WindowsFormsApplication5
             }
         }
 
-        public void redraw_block(Block s, int new_width, int new_height, Bitmap risorsa, float nuova_x, float nuova_y)
+        public void redraw_block(Block s, int newWidth, int new_height, Bitmap risorsa, float nuova_x, float nuova_y)
         {
             s.redraw(s, (grid.Width / grid.ColumnCount), (grid.Height / grid.RowCount), risorsa, nuova_x, nuova_y);
         }

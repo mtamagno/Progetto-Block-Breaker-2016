@@ -154,6 +154,7 @@ namespace WindowsFormsApplication5
             if (Game.Visible == true)
             {
                 Game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
+                Game.ball.totalVelocityReset(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
             }
             if (Start.Visible == true)
             {
@@ -254,9 +255,9 @@ namespace WindowsFormsApplication5
         {
            //direttive da eseguire in ogni caso
             this.Controls.Add(GamePanels);
+
             //perchè falso se invece lo stiamo aggiungendo per vederlo?
             Gameover.TopLevel = false;
-            //perchè autoscroll?
             GamePanels.Controls.Add(Gameover);
 
             //impost Gameover a seconda di come e' il gamepanels
@@ -266,6 +267,7 @@ namespace WindowsFormsApplication5
             Gameover.Top = 0;
             Gameover.FormBorderStyle = FormBorderStyle.None;
             Gameover.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
+
             // a cosa serve autoscale?
             Gameover.AutoScaleMode = AutoScaleMode.Inherit;
 
