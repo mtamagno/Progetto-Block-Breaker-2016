@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Media;
 
 namespace WindowsFormsApplication5
 {
     public partial class Start : Form
     {
         #region Public Fields
-        private SoundPlayer backgroundMusic;
         public Button start = new Button();
-
+        public Bitmap backgroundimage;
         #endregion Public Fields
 
         #region Public Constructors
@@ -30,21 +28,23 @@ namespace WindowsFormsApplication5
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
             this.start.BackgroundImage = start_button_image;
-            this.backgroundMusic = new SoundPlayer(Properties.Resources.Background_Menu);
-            this.backgroundMusic.PlayLooping();
             this.start.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.BackColor = Color.Black;
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
             this.Controls.Add(start);
-            Bitmap backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
+            backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
             IntPtr handle = backgroundimage.GetHbitmap();
             this.BackgroundImage = backgroundimage;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private void Form3_Load(object sender, EventArgs e)
         {
             this.starter();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private void Start_MouseEnter(object sender, EventArgs e)
@@ -72,6 +72,8 @@ namespace WindowsFormsApplication5
         public void writer(string testo)
         {
             this.start.Text = testo;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
     }
 }

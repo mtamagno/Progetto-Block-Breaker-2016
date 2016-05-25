@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Media;
 
 namespace WindowsFormsApplication5
 {
@@ -9,7 +8,6 @@ namespace WindowsFormsApplication5
     {
 
         public Button Continue = new Button();
-        private SoundPlayer backgroundMusic;
 
         public GameOver()
         {
@@ -26,9 +24,7 @@ namespace WindowsFormsApplication5
             this.Continue.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.Continue.Size);
             this.Continue.BackgroundImage = start_button_image;
-            this.backgroundMusic = new SoundPlayer(Properties.Resources.Background_GameOver);
-            this.backgroundMusic.PlayLooping();
-            //this.start.BackgroundImageLayout = ImageLayout.Stretch;
+            this.Continue.BackgroundImageLayout = ImageLayout.Stretch;
             this.Continue.Text = "Continue";
             this.Continue.BackColor = Color.Black;
             this.Continue.Top = ClientRectangle.Height / 8 * 6 - Continue.Height / 2;
@@ -37,6 +33,8 @@ namespace WindowsFormsApplication5
             Bitmap backgroundimage = new Bitmap(Properties.Resources.GameOver, this.Size);
             IntPtr handle = backgroundimage.GetHbitmap();
             this.BackgroundImage = backgroundimage;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
     }
 }

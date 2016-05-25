@@ -28,6 +28,9 @@ namespace WindowsFormsApplication5
         private bool gameover = false;
         private bool restart_required = false;
         private bool button_start = false;
+        private bool entra;
+        Thread game_alive;
+        private Music music;
 
         #endregion Private Fields
 
@@ -35,6 +38,8 @@ namespace WindowsFormsApplication5
 
         public Container()
         {
+            music = new Music();
+            entra = false;
             InitializeComponent();
             return;
         }
@@ -47,38 +52,51 @@ namespace WindowsFormsApplication5
         {
             if (button_start == true)
             {
+                if(entra == false)
                 this.Invoke(new MethodInvoker(delegate
                 {
+                    entra = true;
+                    start.Close();
                     start.Hide();
                     start.Dispose();
                     Game_starter();
+                    GamePanels.Controls.Remove(start);
+                    GamePanels.Controls.Clear();
                     GamePanels.Controls.Add(game);
                     game.Show();
                     game.Focus();
                     game.BringToFront();
-                    Thread game_alive = new Thread(gameover_check);
+                    game_alive = new Thread(gameover_check);
                     game_alive.Start();
                 }));
             }
             else {
                 if (primavolta == 1 && restart_required == true)
                 {
+                    this.music.Dispose_Music();
                     restart_required = false;
                     starter();
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
                 }
                 this.Invoke(new MethodInvoker(delegate
                 {
-                   /*amePanels.Controls.Remove(Gameover);
-                    Gameover.Dispose();*/
+                    Gameover.Close();
+                    Gameover.Dispose();
+                    GamePanels.Controls.Remove(Gameover);
+                    GamePanels.Controls.Clear();
+                    menu_starter();
+                    Gameover.Dispose();
                     start.Show();
                     start.Focus();
                     start.BringToFront();
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
                 }));
             }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
             primavolta = 1;
         }
+
 
         public void gameover_check()
         {
@@ -93,6 +111,7 @@ namespace WindowsFormsApplication5
                     gameover = true;
                     starter();
                     gameover_call();
+                    entra = false; 
                     //gameLoop();
                     return;
 
@@ -121,6 +140,8 @@ namespace WindowsFormsApplication5
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
             game.Close();
+            base.OnClosing(e);
+            System.Environment.Exit(0);
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -167,50 +188,56 @@ namespace WindowsFormsApplication5
         /// </summary>
         private void starter()
         {
-            
             lunghezza_client = this.ClientRectangle.Width;
             altezza_client = this.ClientRectangle.Height;
-            this.Invoke(new MethodInvoker(delegate
-            {
-                if (primavolta == 1)
+                this.Invoke(new MethodInvoker(delegate
                 {
-                    this.game.Dispose();
-                    this.start.Dispose();
-                    this.Gameover.Dispose();
-                    this.GamePanels.Controls.Clear();
-                    this.Controls.Clear();
-                    this.game = new Game();
-                    this.start = new Start();
-                    this.Gameover = new GameOver();
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
+                    if (primavolta == 1)
+                    {
+                        this.game.Dispose();
+                        this.start.Dispose();
+                        this.Gameover.Dispose();
+                        this.GamePanels.Controls.Clear();
+                        this.Controls.Remove(GamePanels);
+                        this.Controls.Clear();
+                        this.game = new Game();
+                        this.start = new Start();
+                        this.Gameover = new GameOver();
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
+                        GC.Collect();
+                        this.start.writer("Replay");
+                    }
 
-                    this.start.writer("Replay");
-                }
-                else
-                {
+                    else
+                    {
                     //altrimenti scrivo start
                     start.writer("Start");
-                }
+                    }
 
                 //chiamo la funzione standardStarter()
-                if(gameover == false)
-                    standardStarter();
-                if (gameover == true)
-                {
-                    this.Controls.Add(textBox);
-                    GameOverStarter();
-                    textBox.Top = ClientRectangle.Height / 7 * 6 - textBox.Height / 2;
-                    textBox.Left = ClientRectangle.Width / 2 - textBox.Width / 2;
-                    Gameover.Continue.Click += Salva_Click;
-                }
-            }));
+                if (gameover == false)
+                        standardStarter();
+                    if (gameover == true)
+                    {
+                        this.Controls.Add(textBox);
+                        GameOverStarter();
+                        textBox.Top = ClientRectangle.Height / 7 * 6 - textBox.Height / 2;
+                        textBox.Left = ClientRectangle.Width / 2 - textBox.Width / 2;
+                        Gameover.Continue.Click += Salva_Click;
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
+                        GC.Collect();
+                    }
+                }));
+
             return;
         }
 
         private void Salva_Click(object sender, EventArgs e)
         {
             HighScoreCollection functioncaller = new HighScoreCollection();
+
             this.highscore.Name = textBox.Text;
             functioncaller.SaveToXml(highscore);
             this.Invoke(new MethodInvoker(delegate
@@ -218,6 +245,8 @@ namespace WindowsFormsApplication5
                 this.start.Controls.Remove(Salva);
                 this.Controls.Remove(textBox);
             }));
+            this.Controls.Clear();
+            this.GamePanels.Controls.Clear();
             gameLoop();
             return;
         }
@@ -225,7 +254,6 @@ namespace WindowsFormsApplication5
         private void standardStarter()
         {
             //direttive da eseguire in ogni caso
-            this.Controls.Add(GamePanels);
             start.TopLevel = false;
 
             //imposto i gamepanels e aggiungo start
@@ -244,16 +272,17 @@ namespace WindowsFormsApplication5
                 gameLoop();
 
             primavolta = 0;
-            gameLoop();
             start.start.Click += new EventHandler(this.start_Click);
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
             return;
         }
 
         private void GameOverStarter()
         {
-           //direttive da eseguire in ogni caso
+            //direttive da eseguire in ogni caso
+                this.music.Dispose_Music();
+                music.GameOver();
+            this.Controls.Clear();
+            this.Controls.Remove(GamePanels);
             this.Controls.Add(GamePanels);
 
             //perchè falso se invece lo stiamo aggiungendo per vederlo?
@@ -270,23 +299,21 @@ namespace WindowsFormsApplication5
 
             // a cosa serve autoscale?
             Gameover.AutoScaleMode = AutoScaleMode.Inherit;
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
             return;
         }
 
         private void Game_starter()
         {
-            this.Controls.Add(GamePanels);
-
+              this.music.Dispose_Music();
             //A  cosa servono di nuovo?
+              music.Game();
+            this.Controls.Clear();
+            this.Controls.Remove(GamePanels);
+            this.Controls.Add(GamePanels);
             game.TopLevel = false;
-
             game.AutoScaleMode = AutoScaleMode.Inherit;
             GamePanels.Dock = DockStyle.Fill;
             GamePanels.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
-
             //imposto game a seconda di come è impostato gamepanels
             game.Width = GamePanels.Width;
             game.Height = GamePanels.Height;
@@ -295,20 +322,19 @@ namespace WindowsFormsApplication5
             game.FormBorderStyle = FormBorderStyle.None;
             game.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
             game.AutoScaleMode = AutoScaleMode.Inherit;
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
             return;
         }
 
         private void menu_starter()
         {
+            music.Menu();
             GamePanels.Controls.Add(start);
             start.TopLevel = false;
-            GamePanels.Controls.Add(start);
 
             //imposto start a seconda di come è impostato gamepanels
+            this.Controls.Clear();
+            this.Controls.Remove(GamePanels);
+            this.Controls.Add(GamePanels);
             start.Width = GamePanels.Width;
             start.Height = GamePanels.Height;
             start.Left = 0;
@@ -317,22 +343,25 @@ namespace WindowsFormsApplication5
             start.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
             start.AutoScaleMode = AutoScaleMode.Inherit;
             start.start.Click += new EventHandler(this.start_Click);
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-
         }
         
         private void gameover_call()
         {
+
             this.Invoke(new MethodInvoker(delegate
             {
+                game.Close();
+                game.Dispose();
+                GamePanels.Controls.Remove(game);
+                start.Close();
                 start.Hide();
                 start.Dispose();
                 Gameover.Show();
                 Gameover.Focus();
                 Gameover.BringToFront();
                 gameover = false;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
             }));
 
         }

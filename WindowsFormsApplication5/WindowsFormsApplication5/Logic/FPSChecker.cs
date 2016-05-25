@@ -65,14 +65,15 @@ namespace WindowsFormsApplication5
             {
                 controller.Invoke(new MethodInvoker(delegate
                 {
-                    if (Container.ActiveForm != null)
-                        Container.ActiveForm.Text = "fps: " + this.fps.ToString() + "ups:" + this.ups.ToString();
+                    if (controller.ParentForm != null)
+                        controller.ParentForm.Text = "fps: " + this.fps.ToString() + "ups:" + this.ups.ToString();
                 }));
             }
             catch
             {
                 // Gestisce l'errore in caso si arrivi qui ma non si possa invocare il form attivo perchè è stato chiuso
             }
+
         }
     }
 }

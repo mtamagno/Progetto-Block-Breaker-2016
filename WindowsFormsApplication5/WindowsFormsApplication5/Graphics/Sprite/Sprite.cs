@@ -40,6 +40,8 @@ namespace WindowsFormsApplication5
             Width = width;
             Height = height;
 
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
             return;
         }
 

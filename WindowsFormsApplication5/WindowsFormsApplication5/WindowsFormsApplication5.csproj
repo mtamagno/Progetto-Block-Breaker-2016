@@ -105,6 +105,7 @@
     <Compile Include="Logic\Logic.cs" />
     <Compile Include="Logic\Program.cs" />
     <Compile Include="Logic\ScreenManager.cs" />
+    <Compile Include="Graphics\Audio\Music.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Graphics\Forms\GameOver.resx">
       <DependentUpon>GameOver.cs</DependentUpon>
