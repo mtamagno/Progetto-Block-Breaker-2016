@@ -102,7 +102,14 @@ namespace WindowsFormsApplication5
                     Color backColor = risorsa.GetPixel(0, 0);
                     risorsa.MakeTransparent(backColor);
                 }
-                g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
+                try
+                {
+                    g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
+                }
+                catch
+                {
+                    // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ridisegno
+                }
             }
             sprite.X = nuova_X;
             sprite.Y = nuova_Y;

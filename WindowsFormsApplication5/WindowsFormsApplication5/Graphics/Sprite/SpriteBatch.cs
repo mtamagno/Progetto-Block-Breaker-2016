@@ -38,7 +38,14 @@ namespace WindowsFormsApplication5
             /*Console.WriteLine(s.toRec);
             Console.WriteLine(s.Texture);
             Console.WriteLine(s.Type);*/
-            bfgfx.Graphics.DrawImageUnscaled(s.Texture, s.toRec);
+            try
+            {
+                bfgfx.Graphics.DrawImageUnscaled(s.Texture, s.toRec);
+            }
+            catch
+            {
+
+            }
         }
 
         public void drawImage(Bitmap b, Rectangle rec)
