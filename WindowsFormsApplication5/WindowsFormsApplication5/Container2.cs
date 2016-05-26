@@ -172,10 +172,13 @@ namespace WindowsFormsApplication5
                     initializeGameOver();
                     return;
                 }
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
+               /* GC.Collect();
+                GC.WaitForPendingFinalizers();*/
                 //eseguo questo controllo ogni 2 secondi
                 Thread.Sleep(2000);
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.WaitForFullGCComplete();
             }
         }
 
