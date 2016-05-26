@@ -50,9 +50,17 @@ namespace WindowsFormsApplication5
             bfgfx.Graphics.DrawImageUnscaled(b, rec);
         }
 
+        
         public void End()
         {
-            bfgfx.Render(Gfx);
+            try
+            {
+                bfgfx.Render(Gfx);
+            }
+            catch (System.ArgumentException)
+            {
+                // Errore che può essere generato dalla chiusura tramite il tasto x del form container
+            }
         }
 
         #endregion Methods

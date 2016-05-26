@@ -44,6 +44,9 @@ namespace WindowsFormsApplication5
             this.Continue.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             this.Continue.Top = ClientRectangle.Height / 8 * 6 - Continue.Height / 2;
             this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
+            this.textBox.Top = this.Continue.Top + this.Continue.Height;
+            this.textBox.Size = this.Continue.Size;
+            this.textBox.Left = this.Continue.Left;
             this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.Continue.Size);
         }
 

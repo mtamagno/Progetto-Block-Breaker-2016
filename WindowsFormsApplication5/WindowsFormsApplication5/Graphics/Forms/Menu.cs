@@ -58,7 +58,7 @@ namespace WindowsFormsApplication5
             this.Controls.Add(start);
             this.backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
 
-            //  this.handle = backgroundimage.GetHbitmap();
+            // this.handle = backgroundimage.GetHbitmap();
             this.BackgroundImage = backgroundimage;
             GC.Collect();
             GC.WaitForPendingFinalizers();
