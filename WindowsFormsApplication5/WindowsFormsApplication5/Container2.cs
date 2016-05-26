@@ -195,5 +195,14 @@ namespace WindowsFormsApplication5
                 GC.WaitForPendingFinalizers();
             }));
         }
+
+        private void Container2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(game != null)
+            game.logic.vita_rimanente = 0;
+            DisposeAll();
+            base.OnClosing(e);
+            System.Environment.Exit(0);
+        }
     }
 }

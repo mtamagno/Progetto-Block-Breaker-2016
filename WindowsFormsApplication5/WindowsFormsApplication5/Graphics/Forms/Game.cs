@@ -42,7 +42,8 @@ namespace WindowsFormsApplication5
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            logic.vita_rimanente = 0;
+            this.Close();
+            gameThread = null;
             base.OnClosing(e);
             System.Environment.Exit(0);
         }

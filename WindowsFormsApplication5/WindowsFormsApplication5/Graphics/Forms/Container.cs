@@ -140,6 +140,7 @@ namespace WindowsFormsApplication5
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
             game.Close();
+            this.Dispose();
             base.OnClosing(e);
             System.Environment.Exit(0);
         }
