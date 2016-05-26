@@ -63,13 +63,14 @@ namespace WindowsFormsApplication5
             //setto il Dock del pannello per far riempire ai Form figli del pannello tutto lo spazio del pannello
             gamePanels.Dock = DockStyle.Fill;
             gamePanels.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
+            //mostro il pannello
+            gamePanels.Show();
             //aggiungo il pannello al form
             this.Invoke(new MethodInvoker(delegate
             {
                 this.Controls.Add(gamePanels);
             }));
-            //mostro il pannello
-            gamePanels.Show();
+
 
         }
 
