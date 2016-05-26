@@ -8,11 +8,11 @@ namespace WindowsFormsApplication5
     {
         #region Fields
 
-        public bool again;
-        public int altezza_client;
-        public int altezza_client_iniziale;
-        public int lunghezza_client;
-        public int lunghezza_client_iniziale;
+        private bool again;
+        private int altezza_client;
+        private int altezza_client_iniziale;
+        private int lunghezza_client;
+        private int lunghezza_client_iniziale;
 
         private TextBox textBox = new TextBox();
         private Game game;
