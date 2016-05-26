@@ -263,5 +263,39 @@ namespace WindowsFormsApplication5
             base.OnClosing(e);
             System.Environment.Exit(0);
         }
+
+        // FUnzione chiamata quando viene ridimensionata la finestra
+        private void OnResizeEnd(object sender, EventArgs e)
+        {
+            //Setto i nuovi valori del gamePanel
+            gamePanels.Height = this.ClientRectangle.Height;
+            gamePanels.Width = this.ClientRectangle.Width;
+            gamePanels.Top = 0;
+            gamePanels.Left = 0;
+
+            //Salvo le dimensioni del client
+            lunghezza_client = this.ClientRectangle.Width;
+            altezza_client = this.ClientRectangle.Height;
+
+            if (game != null)
+            {
+                initializeForm(game);
+                game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
+                game.ball.totalVelocityReset(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
+            }
+            if (menu != null)
+            {
+                initializeForm(menu);
+                menu.on_resize(this.Width, this.Height);
+            }
+        }
+
+        //Funzione chiamata quando si sta ridimensionando la finestra
+        private void Container2_ResizeBegin(object sender, EventArgs e)
+        {
+            //Salvo le dimensioni del client prima del ridimensionamento per poter calcolare la proporzione
+            lunghezza_client_iniziale = this.ClientRectangle.Width;
+            altezza_client_iniziale = this.ClientRectangle.Height;
+        }
     }
 }
