@@ -103,7 +103,7 @@ namespace WindowsFormsApplication5
 
             //inizializzo racchetta
             if(this.Visible)
-            racchetta = new Paddle(logic.MousePoint.X - this.Location.X, WindowsFormsApplication5.Container.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
+            racchetta = new Paddle(logic.MousePoint.X - this.Location.X, this.ParentForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
 
             //inizializzo pallina
             ball = new Ball(300, racchetta.Y - 10, 10, 10, logic);

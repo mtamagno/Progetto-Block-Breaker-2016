@@ -66,6 +66,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Container2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Container2.Designer.cs">
+      <DependentUpon>Container2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Graphics\Forms\GameOver.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     <Compile Include="Logic\ScreenManager.cs" />
     <Compile Include="Graphics\Audio\Music.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Container2.resx">
+      <DependentUpon>Container2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Graphics\Forms\GameOver.resx">
       <DependentUpon>GameOver.cs</DependentUpon>
     </EmbeddedResource>
