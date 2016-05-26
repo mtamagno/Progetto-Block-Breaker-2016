@@ -4,13 +4,13 @@ namespace WindowsFormsApplication5
 {
     public class View : Sprite
     {
-        #region Public Fields
+        #region Fields
 
         public Bitmap texture;
 
-        #endregion Public Fields
+        #endregion Fields
 
-        #region Public Constructors
+        #region Constructors
 
         public View(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
         {
@@ -24,6 +24,6 @@ namespace WindowsFormsApplication5
             logic.iManager.inGameSprites.Add(this);
         }
 
-        #endregion Public Constructors
+        #endregion Constructors
     }
 }

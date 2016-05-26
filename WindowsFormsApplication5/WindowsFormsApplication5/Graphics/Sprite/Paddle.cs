@@ -6,13 +6,13 @@ namespace WindowsFormsApplication5
 {
     public class Paddle : Sprite
     {
-        #region Public Fields
+        #region Fields
 
         public Bitmap texture;
 
-        #endregion Public Fields
+        #endregion Fields
 
-        #region Public Constructors
+        #region Constructors
 
         //       private static Random random = new Random();
         public Paddle(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
@@ -27,9 +27,9 @@ namespace WindowsFormsApplication5
             logic.iManager.inGameSprites.Add(this);
         }
 
-        #endregion Public Constructors
+        #endregion Constructors
 
-        #region Public Methods
+        #region Methods
 
         //Funzione che restituisce l'angolo con cui la pallina deve essere fatta rimbalzare, a seconda del punto di impatto sulla racchetta
         public double angolo(float posizione_attuale, float posizione_massima)
@@ -55,6 +55,6 @@ namespace WindowsFormsApplication5
             }
         }
 
-        #endregion Public Methods
+        #endregion Methods
     }
 }

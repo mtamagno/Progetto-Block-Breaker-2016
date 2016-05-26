@@ -5,7 +5,7 @@ namespace WindowsFormsApplication5
 {
     public class Sprite
     {
-        #region Public Fields
+        #region Fields
 
         public int bottomCollide = 0;
         public bool canCollide;
@@ -16,38 +16,18 @@ namespace WindowsFormsApplication5
         public int Width, Height;
         public float X, Y;
 
-        #endregion Public Fields
+        #endregion Fields
 
-        #region Public Constructors
+        #region Constructors
 
         //Metodo sprite per la creazione di ogni sprite
         public Sprite(float x, float y, int width, int height)
         {
         }
 
-        public void graphics(Bitmap texture, float x, float y, int width, int height)
-        {
-            //Disegno il bitmap
-            Bitmap b = new Bitmap(width, height);
-            Graphics g = Graphics.FromImage(b);
-            g.DrawImage(texture, 0, 0, width, height);
+        #endregion Constructors
 
-            //imposto tipo di sprite con relativi attributi e gli assegno le coordinate x e y
-            Texture = b;
-            X = x;
-            Y = y;
-
-            Width = width;
-            Height = height;
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            return;
-        }
-
-        #endregion Public Constructors
-
-        #region Public Properties
+        #region Properties
 
         public Rectangle Bottom
         {
@@ -74,14 +54,34 @@ namespace WindowsFormsApplication5
             get { return new Rectangle((int)X, (int)Y, Width, Height); }
         }
 
-        #endregion Public Properties
+        #endregion Properties
 
-        #region Public Methods
+        #region Methods
 
         //Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(this);
+        }
+
+        public void graphics(Bitmap texture, float x, float y, int width, int height)
+        {
+            // Disegna il bitmap
+            Bitmap b = new Bitmap(width, height);
+            Graphics g = Graphics.FromImage(b);
+            g.DrawImage(texture, 0, 0, width, height);
+
+            // Imposta tipo di sprite con relativi attributi e gli assegno le coordinate x e y
+            Texture = b;
+            X = x;
+            Y = y;
+
+            Width = width;
+            Height = height;
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            return;
         }
 
         //Funzione redraw necessaria ogni qual volta si effettua il resize dei vari sprite
@@ -92,7 +92,7 @@ namespace WindowsFormsApplication5
             Bitmap b = new Bitmap(sprite.Width, sprite.Height);
             using (Graphics g = Graphics.FromImage(b))
             {
-                //imposto a transparent lo sfondo dello sprite della pallina
+                // Imposta a transparent lo sfondo dello sprite della pallina
                 if (sprite.GetType().Name == "Ball")
                 {
                     Color backColor = risorsa.GetPixel(0, 0);
@@ -105,7 +105,8 @@ namespace WindowsFormsApplication5
                 catch
                 {
                     g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
-                    // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ridisegno
+
+                    // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ri Disegna
                 }
             }
             sprite.X = nuova_X;
@@ -117,23 +118,19 @@ namespace WindowsFormsApplication5
                 if (sprite.GetType().Name == "Paddle")
                     sprite.Y = (Math.Abs(Container.ActiveForm.ClientRectangle.Height - sprite.Height)) * 9 / 10;
             }
-            catch 
+            catch
             {
                 // Errore gestito nel caso in cui si stia ridimensionando il form e venga variata di conseguenza l'altezza della racchetta
             }
 
-            //imposto la texture dello sprite
+            // Imposta la texture dello sprite
             sprite.Texture = b;
             return;
         }
 
-        #endregion Public Methods
-
-        #region Private Methods
+        #endregion Methods
 
         //Il collider fa un check di eventuali impatti tra sprites
-
-        #endregion Private Methods
     }
 
     /// <summary>
@@ -142,7 +139,7 @@ namespace WindowsFormsApplication5
     /// </summary>
     internal static class SpriteHelper
     {
-        #region Public Methods
+        #region Methods
 
         public static bool isCollidingWith(this Sprite s1, Sprite s2)
         {
@@ -192,6 +189,6 @@ namespace WindowsFormsApplication5
                 return false;
         }
 
-        #endregion Public Methods
+        #endregion Methods
     }
 }

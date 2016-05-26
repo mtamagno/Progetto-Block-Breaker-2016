@@ -13,8 +13,8 @@ namespace WindowsFormsApplication5
         public SpriteBatch spriteBatch;
         public Stopwatch gameTime = new Stopwatch();
         public InputManager iManager = new InputManager();
-        public HighScore highscore = new HighScore();
-        public HighScoreCollection highscorecollection = new HighScoreCollection(); public List<Keys> KeysHeld = new List<Keys>();
+        public HighScore highScore = new HighScore();
+        public List<Keys> KeysHeld = new List<Keys>();
         public List<Keys> KeysPressed = new List<Keys>();
         public Point MousePoint;
         public float deltaTime;
@@ -49,6 +49,7 @@ namespace WindowsFormsApplication5
         #endregion Public Constructors
 
         #region Public Methods
+
         /// <summary>
         /// Loop che costituisce il gioco vero e proprio
         /// </summary>
@@ -61,7 +62,6 @@ namespace WindowsFormsApplication5
             gameTime.Start();
 
             // Crea il buffer
-            
 
             // Finchè non si deve fermare continua ad eseguire
             while (shouldStop == false)
@@ -78,7 +78,7 @@ namespace WindowsFormsApplication5
                     shouldStop = true;
 
                     // Salva lo score
-                    this.highscore.Score = score;
+                    this.highScore.Score = score;
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                     GC.Collect();
@@ -94,7 +94,7 @@ namespace WindowsFormsApplication5
 
                 // Controlla gli fps contandoli e vede se è il caso di stamparli
                 fpsChecker.checkfps(controller);
-                
+
                 //
                 this.updater(this.controller, this.iManager, fpsChecker);
                 render();
@@ -181,6 +181,7 @@ namespace WindowsFormsApplication5
         private void input()
         {
             AllowInput = false;
+
             // Controlla i tasti che sono stati premuti e svuoto i buffer
             iManager.update(MousePoint, KeysPressed.ToArray(), KeysHeld.ToArray(), gameTime, deltaTime);
             KeysPressed.Clear();
@@ -221,5 +222,5 @@ namespace WindowsFormsApplication5
         }
     }
 
-        #endregion Private Methods
-    }
+    #endregion Private Methods
+}

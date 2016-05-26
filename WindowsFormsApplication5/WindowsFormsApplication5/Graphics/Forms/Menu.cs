@@ -6,23 +6,44 @@ namespace WindowsFormsApplication5
 {
     public partial class Start : Form
     {
-        #region Public Fields
+        #region Fields
+
         public Button start = new Button();
         private Bitmap backgroundimage;
+        //private IntPtr handle;
         private Bitmap start_button_image;
-        private IntPtr handle;
-        #endregion Public Fields
 
-        #region Public Constructors
+        #endregion Fields
+
+        #region Constructors
 
         public Start()
         {
             this.InitializeComponent();
         }
 
-        #endregion Public Constructors
+        #endregion Constructors
 
-        #region Private Methods
+        #region Methods
+
+        public void cleaner()
+        {
+            this.BackgroundImage.Dispose();
+            this.backgroundimage.Dispose();
+            GC.Collect();
+            GC.WaitForFullGCComplete();
+        }
+
+        public void on_resize(int l, int h)
+        {
+            this.cleaner();
+            this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+            this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
+            this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
+            this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
+            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
+        }
 
         public void starter()
         {
@@ -36,8 +57,16 @@ namespace WindowsFormsApplication5
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
             this.Controls.Add(start);
             this.backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
-          //  this.handle = backgroundimage.GetHbitmap();
+
+            //  this.handle = backgroundimage.GetHbitmap();
             this.BackgroundImage = backgroundimage;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        public void writer(string testo)
+        {
+            this.start.Text = testo;
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -59,32 +88,6 @@ namespace WindowsFormsApplication5
             this.start.FlatStyle = FlatStyle.Flat;
         }
 
-        #endregion Private Methods
-
-        public void on_resize(int l, int h)
-        {
-            this.cleaner();
-            this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
-            this.BackgroundImageLayout = ImageLayout.Stretch;
-            this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-            this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
-            this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
-            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
-        }
-
-        public void writer(string testo)
-        {
-            this.start.Text = testo;
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
-
-        public void cleaner()
-        {
-            this.BackgroundImage.Dispose();
-            this.backgroundimage.Dispose();
-            GC.Collect();
-            GC.WaitForFullGCComplete();
-        }
+        #endregion Methods
     }
 }

@@ -2,9 +2,15 @@
 {
     internal class CheckLife
     {
+        #region Constructors
+
         public CheckLife()
         {
         }
+
+        #endregion Constructors
+
+        #region Methods
 
         public int check(Game ThisForm, int lifes)
         {
@@ -26,5 +32,7 @@
             }
             return (lifes);
         }
+
+        #endregion Methods
     }
 }
