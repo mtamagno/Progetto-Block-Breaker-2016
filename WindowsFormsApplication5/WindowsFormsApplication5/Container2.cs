@@ -118,7 +118,7 @@ namespace WindowsFormsApplication5
 
         public void gameoverCheck()
         {
-            while (game.Visible)
+            while (game != null)
             {
                 if (game.logic.shouldStop == true)
                 {
