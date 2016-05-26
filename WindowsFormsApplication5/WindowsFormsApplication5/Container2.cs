@@ -40,6 +40,7 @@ namespace WindowsFormsApplication5
 
         private void Container2_Load(object sender, EventArgs e)
         {
+            music = new Music();
             //setto again a false per dire che il gioco e' stato avviato per la prima volta
             again = false;
             //inizializzo il pannello che conterra' i form dell'applicazione
@@ -81,6 +82,8 @@ namespace WindowsFormsApplication5
             initializeForm(game);
             //inizializzo il thread per controllare lo stato del gioco
             initializeThread(gameAlive);
+            //faccio partire la musica di gioco
+            music.Game();
         }
 
         private void initializeMenu()
@@ -96,6 +99,8 @@ namespace WindowsFormsApplication5
               menu.start.Text = "Play";
             //Assegno al pulsante del menu un evento         
             menu.start.Click += new EventHandler(this.StartGame);
+            //Faccio partire la musica del menu
+            music.Menu();
         }
 
         private void initializeGameOver()
@@ -108,6 +113,8 @@ namespace WindowsFormsApplication5
             gameover.Continue.Text = "Continue";
             //Assegno un evento al pusalnte del gameover
             gameover.Continue.Click += new EventHandler(this.ContinueToMenu);
+            //Faccio partire la musica del gameover
+            music.GameOver();
         }
 
         private void initializeForm(Form form)
