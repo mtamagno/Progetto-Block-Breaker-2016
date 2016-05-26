@@ -42,6 +42,15 @@ namespace WindowsFormsApplication5
             if (torender != true)
                 canCollide = false;
 
+            this.textureSwitcher();
+            //renderizzo il blocco
+            this.graphics(texture, x, y, width, height);
+        }
+
+        #endregion Public Constructors
+        
+        public void textureSwitcher()
+        {
             //assegno texture diverse, a seconda della vita
             switch (blockLife)
             {
@@ -65,11 +74,6 @@ namespace WindowsFormsApplication5
                     texture = Properties.Resources.Block_4;
                     break;
             }
-
-            //renderizzo il blocco
-            this.graphics(texture, x, y, width, height);
         }
-
-        #endregion Public Constructors
     }
 }

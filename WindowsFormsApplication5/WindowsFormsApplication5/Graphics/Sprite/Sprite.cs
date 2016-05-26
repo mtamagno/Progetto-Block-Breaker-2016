@@ -45,12 +45,6 @@ namespace WindowsFormsApplication5
 
         #endregion Public Constructors
 
-        #region Public Enums
-
-        // public enum SpriteType { player, ball, block, view, life };
-
-        #endregion Public Enums
-
         #region Public Properties
 
         public Rectangle Bottom
@@ -108,15 +102,23 @@ namespace WindowsFormsApplication5
                 }
                 catch
                 {
+                    g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
                     // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ridisegno
                 }
             }
             sprite.X = nuova_X;
             sprite.Y = nuova_Y;
 
-            //Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
-            if (sprite.GetType().Name == "Paddle")
-                sprite.Y = (Math.Abs(Container.ActiveForm.Height - sprite.Height)) * 9 / 10;
+            try
+            {
+                // Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
+                if (sprite.GetType().Name == "Paddle")
+                    sprite.Y = (Math.Abs(Container.ActiveForm.ClientRectangle.Height - sprite.Height)) * 9 / 10;
+            }
+            catch 
+            {
+                // Errore gestito nel caso in cui si stia ridimensionando il form e venga variata di conseguenza l'altezza della racchetta
+            }
 
             //imposto la texture dello sprite
             sprite.Texture = b;

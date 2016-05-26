@@ -56,15 +56,15 @@ namespace WindowsFormsApplication5
                     ball.followPointer = false;
                     ball.canFall = true;
                     racchetta.followPointer = true;
-                    gamepause.Visible = false;
+                    Gamepause.Visible = false;
                     logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
-                if (e.KeyChar == (char)Keys.Enter && gamepause.Visible == false)
+                if (e.KeyChar == (char)Keys.Enter && Gamepause.Visible == false)
                 {
                     ball.followPointer = false;
                     ball.canFall = false;
                     racchetta.followPointer = false;
-                    gamepause.Visible = true;
+                    Gamepause.Visible = true;
                     logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
                 if (e.KeyChar == (char)Keys.Escape)
@@ -93,7 +93,7 @@ namespace WindowsFormsApplication5
             logic = new Logic(this);
 
             //inizializzo la variabile della visione del menù pausa a falso in caso sia vera
-            gamepause.Visible = false;
+            Gamepause.Visible = false;
 
             //inizializzo il suono
             backgroundMusic = new SoundPlayer(Properties.Resources.Background_Music);

@@ -88,20 +88,7 @@ namespace WindowsFormsApplication5
                                 this.velocity.Y *= -1;
                                 myBlock.blockLife--;
                                 PlaySound();
-                                switch (myBlock.blockLife)
-                                {
-                                    case 1:
-                                        myBlock.texture = Properties.Resources.Block_1;
-                                        break;
-
-                                    case 2:
-                                        myBlock.texture = Properties.Resources.Block_2;
-                                        break;
-
-                                    case 3:
-                                        myBlock.texture = Properties.Resources.Block_3;
-                                        break;
-                                }
+                                myBlock.textureSwitcher();
 
                                 if (myBlock.blockLife <= 0)
                                 {
@@ -184,32 +171,29 @@ namespace WindowsFormsApplication5
                 if (s.GetType().Name == "View")
                 {
                     View myview = (View)s;
-                    if (myview.isCollidingWith(this))
+                    //La X della pallina è oltre il limite destro o sinistro
+                    if ((this.X + (float)this.Width) >= (float)myview.Width)
                     {
-                        //La X della pallina è oltre il limite destro o sinistro
-                        if ((this.X + (float)this.Width) >= (float)myview.Width)
-                        {
-                            this.velocity.X *= -1;
-                            this.X = (float)myview.Width - this.Width;
-                        }
-                        else
-                        if (this.X < 0)
-                        {
-                            this.velocity.X *= -1;
-                            this.X = 0;
-                        }
+                        this.velocity.X *= -1;
+                        this.X = (float)myview.Width - this.Width;
+                    }
+                    else
+                    if (this.X < 0)
+                    {
+                        this.velocity.X *= -1;
+                        this.X = 0;
+                    }
 
-                        //La Y della pallina è oltre il limite superiore o inferiore
-                        if ((this.Y + (float)this.Height) >= (float)myview.Height)
-                        {
-                            myview.bottomCollide = 1;
-                        }
-                        else
-                        if (this.Y < 0)
-                        {
-                            this.velocity.Y *= -1;
-                            this.Y = 0;
-                        }
+                    //La Y della pallina è oltre il limite superiore o inferiore
+                    if ((this.Y + (float)this.Height) >= (float)myview.Height)
+                    {
+                        myview.bottomCollide = 1;
+                    }
+                    else
+                    if (this.Y < 0)
+                    {
+                        this.velocity.Y *= -1;
+                        this.Y = 0;
                     }
                 }
             }
@@ -274,10 +258,10 @@ namespace WindowsFormsApplication5
             this.velocity.X = this.velocity.X * lunghezza_client / lunghezza_client_iniziale;
             //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
             this.velocityTot = (float)Math.Sqrt((double)((this.velocity.X * this.velocity.X) + (this.velocity.Y * this.velocity.Y)));
-            if(this.velocityTotRaggiunto == 1)
-            this.velocityTotLimit = this.velocityTot;
+            if (this.velocityTotRaggiunto == 1)
+                this.velocityTotLimit = this.velocityTot;
         }
-        
+
 
         #endregion Public Methods
     }

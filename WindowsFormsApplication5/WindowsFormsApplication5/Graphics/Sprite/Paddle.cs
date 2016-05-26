@@ -50,6 +50,8 @@ namespace WindowsFormsApplication5
             }
             catch
             {
+                // Errore gestito nel caso in cui followpointer non sia ancora stato impostato a false,
+                // ma l'utente abbia chiuso il form container o lo abbia minimizzato
             }
         }
 

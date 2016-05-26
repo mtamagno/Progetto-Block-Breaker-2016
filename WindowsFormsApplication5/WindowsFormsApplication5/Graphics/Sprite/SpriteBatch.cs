@@ -35,16 +35,13 @@ namespace WindowsFormsApplication5
 
         public void Draw(Sprite s)
         {
-            /*Console.WriteLine(s.toRec);
-            Console.WriteLine(s.Texture);
-            Console.WriteLine(s.Type);*/
             try
             {
                 bfgfx.Graphics.DrawImageUnscaled(s.Texture, s.toRec);
             }
             catch
             {
-
+                // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ridisegno
             }
         }
 

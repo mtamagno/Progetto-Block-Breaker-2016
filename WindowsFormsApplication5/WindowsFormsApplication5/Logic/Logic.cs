@@ -110,13 +110,21 @@ namespace WindowsFormsApplication5
                     s.redraw(s, (int)(Math.Abs(10 * l / li)), (10 * h / hi), Properties.Resources.ball, s.X * l / li, s.Y * h / hi);
                 }
                 else if (s.GetType().Name == "Paddle")
+                {
                     s.redraw(s, (int)(Math.Abs(128 * l / li)), (24 * h / hi), Properties.Resources.New_Piskel, s.X * l / li, s.Y * h / hi);
+                }
                 else if (s.GetType().Name == "View")
+                {
                     s.redraw(s, l, h, Properties.Resources.Background, 0, 0);
+                }
                 else if (s.GetType().Name == "Block")
-                    controller.grid.redraw_block((Block)s, (100 * l / li), (50 * (h / hi)), s.Texture, s.X * l / li, s.Y * h / hi);
+                {
+                    controller.grid.redraw_block((Block)s, (100 * l / li), (50 * (h / hi)), s.X * l / li, s.Y * h / hi);
+                }
                 else if (s.GetType().Name == "Life")
-                    s.redraw(s, (20 * l / li), (20 * h / hi), Properties.Resources.vita, s.X * l / li, s.Y * h / hi);
+                {
+                    s.redraw(s, (int)(Math.Abs(20 * l / li)), (int)(Math.Abs(20 * h / hi)), Properties.Resources.vita, s.X * l / li, s.Y * h / hi);
+                }
             }
             controller.racchetta.Y = h * 9 / 10;
             spriteBatch.cntxt.MaximumBuffer = new Size(controller.ClientSize.Width + 1, controller.ClientSize.Height + 1);
