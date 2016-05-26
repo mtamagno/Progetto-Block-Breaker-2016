@@ -15,7 +15,7 @@ namespace WindowsFormsApplication5
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Container());
+            Application.Run(new Container2());
         }
 
         #endregion Private Methods

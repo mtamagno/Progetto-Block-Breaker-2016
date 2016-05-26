@@ -43,6 +43,7 @@ namespace WindowsFormsApplication5
             this.controller = form;
             this.vita_rimanente = 3;
             this.fpsChecker = new FPSChecker(this.gameTime);
+            spriteBatch = new SpriteBatch(controller.ClientSize, controller.CreateGraphics());
         }
 
         #endregion Public Constructors
@@ -60,7 +61,7 @@ namespace WindowsFormsApplication5
             gameTime.Start();
 
             // Crea il buffer
-            spriteBatch = new SpriteBatch(controller.ClientSize, controller.CreateGraphics());
+            
 
             // Finchè non si deve fermare continua ad eseguire
             while (shouldStop == false)
@@ -78,9 +79,9 @@ namespace WindowsFormsApplication5
 
                     // Salva lo score
                     this.highscore.Score = score;
-
-                    // Ferma la musica e termina il thread
-                    controller.backgroundMusic.Stop();
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
                     return;
                 }
 
@@ -98,6 +99,9 @@ namespace WindowsFormsApplication5
                 this.updater(this.controller, this.iManager, fpsChecker);
                 render();
             }
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         public void resize(int li, int hi, int l, int h)
@@ -130,6 +134,9 @@ namespace WindowsFormsApplication5
             spriteBatch.cntxt.MaximumBuffer = new Size(controller.ClientSize.Width + 1, controller.ClientSize.Height + 1);
             spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(controller.CreateGraphics(), new Rectangle(Point.Empty, controller.ClientSize));
             spriteBatch.Gfx = controller.CreateGraphics();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
 
         #endregion Public Methods

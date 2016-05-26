@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Media;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -10,13 +9,13 @@ namespace WindowsFormsApplication5
     {
         #region Public Fields
 
-        public SoundPlayer backgroundMusic;
         public View background;
         public Ball ball;
         public Grid grid;
         public Logic logic;
         public Paddle racchetta;
         public Life[] vita = new Life[3];
+        private Thread gameThread;
 
         #endregion Public Fields
 
@@ -43,6 +42,8 @@ namespace WindowsFormsApplication5
 
         protected override void OnClosing(CancelEventArgs e)
         {
+            this.Close();
+            gameThread = null;
             base.OnClosing(e);
             System.Environment.Exit(0);
         }
@@ -95,10 +96,6 @@ namespace WindowsFormsApplication5
             //inizializzo la variabile della visione del menù pausa a falso in caso sia vera
             Gamepause.Visible = false;
 
-            //inizializzo il suono
-            backgroundMusic = new SoundPlayer(Properties.Resources.Background_Music);
-            backgroundMusic.PlayLooping();
-
             //inizializzo il background
             background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, logic);
 
@@ -106,7 +103,8 @@ namespace WindowsFormsApplication5
             init_grid();
 
             //inizializzo racchetta
-            racchetta = new Paddle(logic.MousePoint.X - this.Location.X, WindowsFormsApplication5.Container.ActiveForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
+            if(this.Visible)
+            racchetta = new Paddle(logic.MousePoint.X - this.Location.X, this.ParentForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
 
             //inizializzo pallina
             ball = new Ball(300, racchetta.Y - 10, 10, 10, logic);
@@ -115,13 +113,17 @@ namespace WindowsFormsApplication5
             life_init();
 
             //inizializzo il thread del gioco
-            Thread gameThread = new Thread(logic.gameLoop);
+            gameThread = new Thread(logic.gameLoop);
             gameThread.Start();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private void init_grid()
         {
             grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width, Properties.Resources.Block_4, logic);
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private void life_init()
@@ -131,8 +133,15 @@ namespace WindowsFormsApplication5
                 vita[i] = new Life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
                 logic.iManager.inGameSprites.Add(vita[i]);
             }
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         #endregion Private Methods
+
+        private void Game_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
