@@ -66,6 +66,7 @@ namespace WindowsFormsApplication5
                     ball.canFall = false;
                     racchetta.followPointer = false;
                     Gamepause.Visible = true;
+                    Gamepause.BorderStyle = BorderStyle.Fixed3D;
                     Gamepause.Left = this.ClientRectangle.Width / 2 - Gamepause.Width / 2;
                     Gamepause.Top = this.ClientRectangle.Height / 2 - Gamepause.Height / 2;
                     logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);

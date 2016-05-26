@@ -36,5 +36,15 @@ namespace WindowsFormsApplication5
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
+
+        public void on_resize(int l, int h)
+        {
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+            this.BackgroundImage = new Bitmap(Properties.Resources.GameOver, this.ClientSize);
+            this.Continue.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
+            this.Continue.Top = ClientRectangle.Height / 2 - Continue.Height / 2;
+            this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
+            Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.Continue.Size);
+        }
     }
 }

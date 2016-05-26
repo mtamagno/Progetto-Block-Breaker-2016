@@ -288,6 +288,11 @@ namespace WindowsFormsApplication5
                 initializeForm(menu);
                 menu.on_resize(this.Width, this.Height);
             }
+            if(gameover != null)
+            {
+                initializeForm(gameover);
+                gameover.on_resize(this.Width, this.Height);
+            }
         }
 
         //Funzione chiamata quando si sta ridimensionando la finestra
