@@ -191,6 +191,7 @@ namespace WindowsFormsApplication5
             GC.Collect();
             //Aspetto che il garbage collecor abbia finito di svuotare
             GC.WaitForPendingFinalizers();
+            GC.WaitForFullGCComplete();
         }
 
         public void ContinueToMenu(object sender, EventArgs e)
@@ -207,6 +208,7 @@ namespace WindowsFormsApplication5
             GC.Collect();
             //Aspetto che il garbage collecor abbia finito di svuotare
             GC.WaitForPendingFinalizers();
+            GC.WaitForFullGCComplete();
         }
 
         public void DisposeAll()
@@ -257,6 +259,7 @@ namespace WindowsFormsApplication5
                 //Pulisco il garbage collector
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
+                GC.WaitForFullGCComplete();
             }));
         }
 
