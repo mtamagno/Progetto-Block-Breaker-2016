@@ -23,15 +23,13 @@ namespace WindowsFormsApplication5
 
         #endregion Public Fields
 
-        MethodInvoker Invoker;
         private Game game;
         private Start menu;
         private GameOver gameover;
         private Panel gamePanels;
         private HighScore highscore;
         public TextBox textBox = new TextBox();
-        private bool lose = false;
-        private bool start;
+        public bool again;
         Thread gameAlive;
         private Music music;
 
@@ -42,7 +40,7 @@ namespace WindowsFormsApplication5
 
         private void Container2_Load(object sender, EventArgs e)
         {
-            start = false;
+            again = false;
             initializeGamePanel();
             initializeMenu();
         }
@@ -75,8 +73,10 @@ namespace WindowsFormsApplication5
         {
             menu = new Start();
             initializeForm(menu);
-            if(menu.start.Text == null)
-            menu.start.Text = "Start";
+            if (again)
+                menu.start.Text = "Play Again";
+            else
+              menu.start.Text = "Start";         
             menu.start.Click += new EventHandler(this.StartGame);
         }
 
@@ -124,7 +124,6 @@ namespace WindowsFormsApplication5
                 {
                     this.highscore = this.game.logic.highscore;
                     game.logic.shouldStop = false;
-                    lose = true;
                     DisposeAll();
                     initializeGamePanel();
                     initializeGameOver();
@@ -147,6 +146,7 @@ namespace WindowsFormsApplication5
 
         public void ContinueToMenu(object sender, EventArgs e)
         {
+            again = true;
             DisposeAll();
             initializeGamePanel();
             initializeMenu();
