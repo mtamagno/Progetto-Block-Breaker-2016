@@ -33,7 +33,7 @@ namespace WindowsFormsApplication5
             this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
             this.Controls.Add(Continue);
             this.backgroundimage = new Bitmap(Properties.Resources.GameOver, this.Size);
-            IntPtr handle = backgroundimage.GetHbitmap();
+           // IntPtr handle = backgroundimage.GetHbitmap();
             this.BackgroundImage = backgroundimage;
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -50,7 +50,7 @@ namespace WindowsFormsApplication5
             this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.Continue.Size);
         }
 
-        private void cleaner()
+        public void cleaner()
         {
             this.BackgroundImage.Dispose();
             this.backgroundimage.Dispose();

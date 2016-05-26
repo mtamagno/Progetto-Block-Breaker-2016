@@ -10,6 +10,7 @@ namespace WindowsFormsApplication5
         public Button start = new Button();
         private Bitmap backgroundimage;
         private Bitmap start_button_image;
+        private IntPtr handle;
         #endregion Public Fields
 
         #region Public Constructors
@@ -27,15 +28,15 @@ namespace WindowsFormsApplication5
         {
             //Direttive che vanno eseguite in ogni caso
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-            Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
+            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
             this.start.BackgroundImage = start_button_image;
             this.start.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.BackColor = Color.Black;
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
             this.Controls.Add(start);
-            backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
-            IntPtr handle = backgroundimage.GetHbitmap();
+            this.backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
+          //  this.handle = backgroundimage.GetHbitmap();
             this.BackgroundImage = backgroundimage;
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -68,7 +69,7 @@ namespace WindowsFormsApplication5
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
-             this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
+            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
         }
 
         public void writer(string testo)
@@ -78,7 +79,7 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
-        private void cleaner()
+        public void cleaner()
         {
             this.BackgroundImage.Dispose();
             this.backgroundimage.Dispose();

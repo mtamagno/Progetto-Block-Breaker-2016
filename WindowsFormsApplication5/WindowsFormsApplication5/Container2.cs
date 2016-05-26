@@ -237,6 +237,8 @@ namespace WindowsFormsApplication5
                 //pulisco il menu
                 if (menu != null)
                 {
+                    menu.start.Dispose();
+                    menu.cleaner();
                     menu.Controls.Clear();
                     menu.Close();
                     menu.Dispose();
@@ -246,6 +248,8 @@ namespace WindowsFormsApplication5
                 //pulisco il gameover
                 if (gameover != null)
                 {
+                    gameover.Continue.Dispose();
+                    gameover.cleaner();
                     gameover.Controls.Clear();
                     gameover.Close();
                     gameover.Dispose();
