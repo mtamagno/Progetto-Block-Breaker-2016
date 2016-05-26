@@ -40,6 +40,7 @@ namespace WindowsFormsApplication5
 
         private void Container2_Load(object sender, EventArgs e)
         {
+            music = new Music();
             //setto again a false per dire che il gioco e' stato avviato per la prima volta
             again = false;
             //inizializzo il pannello che conterra' i form dell'applicazione
@@ -81,6 +82,8 @@ namespace WindowsFormsApplication5
             initializeForm(game);
             //inizializzo il thread per controllare lo stato del gioco
             initializeThread(gameAlive);
+            //faccio partire la musica di gioco
+            music.Game();
         }
 
         private void initializeMenu()
@@ -96,6 +99,8 @@ namespace WindowsFormsApplication5
               menu.start.Text = "Play";
             //Assegno al pulsante del menu un evento         
             menu.start.Click += new EventHandler(this.StartGame);
+            //Faccio partire la musica del menu
+            music.Menu();
         }
 
         private void initializeGameOver()
@@ -108,6 +113,8 @@ namespace WindowsFormsApplication5
             gameover.Continue.Text = "Continue";
             //Assegno un evento al pusalnte del gameover
             gameover.Continue.Click += new EventHandler(this.ContinueToMenu);
+            //Faccio partire la musica del gameover
+            music.GameOver();
         }
 
         private void initializeForm(Form form)
@@ -184,6 +191,7 @@ namespace WindowsFormsApplication5
             GC.Collect();
             //Aspetto che il garbage collecor abbia finito di svuotare
             GC.WaitForPendingFinalizers();
+            GC.WaitForFullGCComplete();
         }
 
         public void ContinueToMenu(object sender, EventArgs e)
@@ -200,6 +208,7 @@ namespace WindowsFormsApplication5
             GC.Collect();
             //Aspetto che il garbage collecor abbia finito di svuotare
             GC.WaitForPendingFinalizers();
+            GC.WaitForFullGCComplete();
         }
 
         public void DisposeAll()
@@ -228,6 +237,8 @@ namespace WindowsFormsApplication5
                 //pulisco il menu
                 if (menu != null)
                 {
+                    menu.start.Dispose();
+                    menu.cleaner();
                     menu.Controls.Clear();
                     menu.Close();
                     menu.Dispose();
@@ -237,6 +248,8 @@ namespace WindowsFormsApplication5
                 //pulisco il gameover
                 if (gameover != null)
                 {
+                    gameover.Continue.Dispose();
+                    gameover.cleaner();
                     gameover.Controls.Clear();
                     gameover.Close();
                     gameover.Dispose();
@@ -250,6 +263,7 @@ namespace WindowsFormsApplication5
                 //Pulisco il garbage collector
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
+                GC.WaitForFullGCComplete();
             }));
         }
 
@@ -262,6 +276,45 @@ namespace WindowsFormsApplication5
             DisposeAll();
             base.OnClosing(e);
             System.Environment.Exit(0);
+        }
+
+        // FUnzione chiamata quando viene ridimensionata la finestra
+        private void OnResizeEnd(object sender, EventArgs e)
+        {
+            //Setto i nuovi valori del gamePanel
+            gamePanels.Height = this.ClientRectangle.Height;
+            gamePanels.Width = this.ClientRectangle.Width;
+            gamePanels.Top = 0;
+            gamePanels.Left = 0;
+
+            //Salvo le dimensioni del client
+            lunghezza_client = this.ClientRectangle.Width;
+            altezza_client = this.ClientRectangle.Height;
+
+            if (game != null)
+            {
+                initializeForm(game);
+                game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
+                game.ball.totalVelocityReset(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
+            }
+            if (menu != null)
+            {
+                initializeForm(menu);
+                menu.on_resize(this.Width, this.Height);
+            }
+            if(gameover != null)
+            {
+                initializeForm(gameover);
+                gameover.on_resize(this.Width, this.Height);
+            }
+        }
+
+        //Funzione chiamata quando si sta ridimensionando la finestra
+        private void Container2_ResizeBegin(object sender, EventArgs e)
+        {
+            //Salvo le dimensioni del client prima del ridimensionamento per poter calcolare la proporzione
+            lunghezza_client_iniziale = this.ClientRectangle.Width;
+            altezza_client_iniziale = this.ClientRectangle.Height;
         }
     }
 }

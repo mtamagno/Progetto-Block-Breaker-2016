@@ -8,7 +8,9 @@ namespace WindowsFormsApplication5
     {
         #region Public Fields
         public Button start = new Button();
-        public Bitmap backgroundimage;
+        private Bitmap backgroundimage;
+        private Bitmap start_button_image;
+        private IntPtr handle;
         #endregion Public Fields
 
         #region Public Constructors
@@ -26,15 +28,15 @@ namespace WindowsFormsApplication5
         {
             //Direttive che vanno eseguite in ogni caso
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-            Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
+            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
             this.start.BackgroundImage = start_button_image;
             this.start.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.BackColor = Color.Black;
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
             this.Controls.Add(start);
-            backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
-            IntPtr handle = backgroundimage.GetHbitmap();
+            this.backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
+          //  this.handle = backgroundimage.GetHbitmap();
             this.BackgroundImage = backgroundimage;
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -61,12 +63,13 @@ namespace WindowsFormsApplication5
 
         public void on_resize(int l, int h)
         {
-            this.BackgroundImageLayout = ImageLayout.Stretch;
+            this.cleaner();
             this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
+            this.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
-            Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
+            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
         }
 
         public void writer(string testo)
@@ -74,6 +77,14 @@ namespace WindowsFormsApplication5
             this.start.Text = testo;
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
+
+        public void cleaner()
+        {
+            this.BackgroundImage.Dispose();
+            this.backgroundimage.Dispose();
+            GC.Collect();
+            GC.WaitForFullGCComplete();
         }
     }
 }

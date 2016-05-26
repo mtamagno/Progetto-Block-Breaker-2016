@@ -39,6 +39,8 @@
             this.Text = "Container2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Container2_FormClosing);
             this.Load += new System.EventHandler(this.Container2_Load);
+            this.ResizeBegin += new System.EventHandler(this.Container2_ResizeBegin);
+            this.ResizeEnd += new System.EventHandler(this.OnResizeEnd);
             this.ResumeLayout(false);
 
         }
