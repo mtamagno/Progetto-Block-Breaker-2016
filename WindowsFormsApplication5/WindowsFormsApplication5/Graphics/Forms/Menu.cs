@@ -8,7 +8,8 @@ namespace WindowsFormsApplication5
     {
         #region Public Fields
         public Button start = new Button();
-        public Bitmap backgroundimage;
+        private Bitmap backgroundimage;
+        private Bitmap start_button_image;
         #endregion Public Fields
 
         #region Public Constructors
@@ -67,7 +68,7 @@ namespace WindowsFormsApplication5
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
-            Bitmap start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
+             this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
         }
 
         public void writer(string testo)
