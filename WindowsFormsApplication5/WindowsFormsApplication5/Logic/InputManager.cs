@@ -7,7 +7,7 @@ namespace WindowsFormsApplication5
 {
     public class InputManager
     {
-        #region Public Fields
+        #region Fields
 
         public float deltaTime;
         public Stopwatch gameTime;
@@ -16,9 +16,9 @@ namespace WindowsFormsApplication5
         public Keys[] keyPressed;
         public Point mousePoint;
 
-        #endregion Public Fields
+        #endregion Fields
 
-        #region Public Methods
+        #region Methods
 
         public void update(Point mp, Keys[] kp, Keys[] kh, Stopwatch gt, float dt)
         {
@@ -29,6 +29,6 @@ namespace WindowsFormsApplication5
             deltaTime = dt / 1000f;
         }
 
-        #endregion Public Methods
+        #endregion Methods
     }
 }

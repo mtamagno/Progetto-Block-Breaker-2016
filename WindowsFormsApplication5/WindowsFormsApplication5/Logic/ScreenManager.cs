@@ -2,21 +2,21 @@
 {
     internal class ScreenManager
     {
-        #region Public Constructors
+        #region Constructors
 
         public ScreenManager()
         {
         }
 
-        #endregion Public Constructors
+        #endregion Constructors
 
-        #region Public Enums
+        #region Enums
 
         public enum GameState { Splash, Menu, game }
 
-        #endregion Public Enums
+        #endregion Enums
 
-        #region Public Methods
+        #region Methods
 
         public void Draw(SpriteBatch sb)
         {
@@ -30,6 +30,6 @@
         {
         }
 
-        #endregion Public Methods
+        #endregion Methods
     }
 }

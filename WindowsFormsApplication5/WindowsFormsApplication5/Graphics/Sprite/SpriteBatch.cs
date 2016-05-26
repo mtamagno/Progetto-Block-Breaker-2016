@@ -4,7 +4,7 @@ namespace WindowsFormsApplication5
 {
     public class SpriteBatch
     {
-        #region Public Fields
+        #region Fields
 
         public BufferedGraphics bfgfx;
 
@@ -13,9 +13,9 @@ namespace WindowsFormsApplication5
 
         public Graphics Gfx;
 
-        #endregion Public Fields
+        #endregion Fields
 
-        #region Public Constructors
+        #region Constructors
 
         public SpriteBatch(Size clientSize, Graphics gfx)
         {
@@ -24,9 +24,9 @@ namespace WindowsFormsApplication5
             Gfx = gfx;
         }
 
-        #endregion Public Constructors
+        #endregion Constructors
 
-        #region Public Methods
+        #region Methods
 
         public void Begin()
         {
@@ -41,7 +41,7 @@ namespace WindowsFormsApplication5
             }
             catch
             {
-                // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ridisegno
+                // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ri Disegna
             }
         }
 
@@ -55,6 +55,6 @@ namespace WindowsFormsApplication5
             bfgfx.Render(Gfx);
         }
 
-        #endregion Public Methods
+        #endregion Methods
     }
 }

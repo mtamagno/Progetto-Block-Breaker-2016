@@ -5,23 +5,21 @@ namespace WindowsFormsApplication5
 {
     public class Block : Sprite
     {
-        #region Public Fields
+        #region Fields
+
+        public int blockLife;
 
         //variabili per vita e texture
         public int initialLife;
-        public int blockLife;
+
         public Bitmap texture;
-
-        #endregion Public Fields
-
-        #region Private Fields
 
         //creo il random che mi servirà a calcolare vite in modo casuale
         private static Random random = new Random();
 
-        #endregion Private Fields
+        #endregion Fields
 
-        #region Public Constructors
+        #region Constructors
 
         public Block(float x, float y, int width, int height) : base(x, y, width, height)
         {
@@ -29,11 +27,11 @@ namespace WindowsFormsApplication5
             blockLife = random.Next(0, 5);
             initialLife = blockLife;
 
-            //imposto le proprietà dello sprite
+            // Imposta le proprietà dello sprite
             canFall = false;
             canCollide = true;
 
-            //imposto il render a true in caso abbia più di 0 vite
+            // Imposta il render a true in caso abbia più di 0 vite
             if (blockLife >= 1 && blockLife <= 4)
                 torender = true;
             followPointer = false;
@@ -43,12 +41,15 @@ namespace WindowsFormsApplication5
                 canCollide = false;
 
             this.textureSwitcher();
+
             //renderizzo il blocco
             this.graphics(texture, x, y, width, height);
         }
 
-        #endregion Public Constructors
-        
+        #endregion Constructors
+
+        #region Methods
+
         public void textureSwitcher()
         {
             //assegno texture diverse, a seconda della vita
@@ -75,5 +76,7 @@ namespace WindowsFormsApplication5
                     break;
             }
         }
+
+        #endregion Methods
     }
 }

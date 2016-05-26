@@ -9,7 +9,7 @@ namespace WindowsFormsApplication5
 {
     public class Ball : Sprite
     {
-        #region Public Fields
+        #region Fields
 
         //variabili per accelerazione y, texture, velocità totale e attuale, spia che notifica la raggiunta della velocità massima
         public int Accel_y = 50;
@@ -22,13 +22,13 @@ namespace WindowsFormsApplication5
         public int velocityTotRaggiunto;
         private SoundEffect Music;
 
-        #endregion Public Fields
+        #endregion Fields
 
-        #region Public Constructors
+        #region Constructors
 
         public Ball(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
         {
-            //imposto le proprietà della pallina
+            // Imposta le proprietà della pallina
             texture = Properties.Resources.ball;
             canFall = false;
             canCollide = true;
@@ -45,26 +45,16 @@ namespace WindowsFormsApplication5
                 texture.MakeTransparent(backColor);
             }
 
-            //disegno la pallina
+            // Disegna la pallina
             this.graphics(texture, x, y, width, height);
 
-            //aggiungo la pallina all'inputmanager che tiene conto di tutti gli sprite presenti nel gioco
+            // aggiungo la pallina all'inputmanager che tiene conto di tutti gli sprite presenti nel gioco
             logic.iManager.inGameSprites.Add(this);
         }
 
-        #endregion Public Constructors
+        #endregion Constructors
 
-        #region Public Methods
-
-
-        /// <summary>
-        /// Metodo playsound che riproduce il suono
-        /// </summary>
-        public void PlaySound()
-        {
-            FrameworkDispatcher.Update();
-            Music.Play();
-        }
+        #region Methods
 
         /// <summary>
         /// Metodo collider che calcola le azioni da svolgere in caso di impatto
@@ -97,7 +87,7 @@ namespace WindowsFormsApplication5
                                 }
                                 else
 
-                                    //ridisegno il blocco
+                                    //ri Disegna il blocco
                                     myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
                             }
                         }
@@ -171,6 +161,7 @@ namespace WindowsFormsApplication5
                 if (s.GetType().Name == "View")
                 {
                     View myview = (View)s;
+
                     //La X della pallina è oltre il limite destro o sinistro
                     if ((this.X + (float)this.Width) >= (float)myview.Width)
                     {
@@ -200,6 +191,26 @@ namespace WindowsFormsApplication5
         }
 
         /// <summary>
+        /// Metodo playsound che riproduce il suono
+        /// </summary>
+        public void PlaySound()
+        {
+            FrameworkDispatcher.Update();
+            Music.Play();
+        }
+
+        public void totalVelocityReset(int lunghezza_client_iniziale, int altezza_client_iniziale, int lunghezza_client, int altezza_client)
+        {
+            this.velocity.Y = this.velocity.Y * altezza_client / altezza_client_iniziale;
+            this.velocity.X = this.velocity.X * lunghezza_client / lunghezza_client_iniziale;
+
+            //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
+            this.velocityTot = (float)Math.Sqrt((double)((this.velocity.X * this.velocity.X) + (this.velocity.Y * this.velocity.Y)));
+            if (this.velocityTotRaggiunto == 1)
+                this.velocityTotLimit = this.velocityTot;
+        }
+
+        /// <summary>
         /// Funzione che dopo aver chiamato il collider, si occupa dello spostamento vero e proprio di pallina e racchetta
         /// </summary>
         public void Update(InputManager iManager, Form thisform)
@@ -209,7 +220,7 @@ namespace WindowsFormsApplication5
             //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
             velocityTot = (float)Math.Sqrt((double)((velocity.X * velocity.X) + (velocity.Y * velocity.Y)));
 
-            //Se la velocità totale non è ancora a velocityTotLimit, imposto la spia a 0 così da continuare a farla aumentare
+            //Se la velocità totale non è ancora a velocityTotLimit, Imposta la spia a 0 così da continuare a farla aumentare
             if (velocityTot < velocityTotLimit)
                 velocityTotRaggiunto = 0;
 
@@ -252,17 +263,6 @@ namespace WindowsFormsApplication5
             }
         }
 
-        public void totalVelocityReset(int lunghezza_client_iniziale, int altezza_client_iniziale, int lunghezza_client, int altezza_client)
-        {
-            this.velocity.Y = this.velocity.Y * altezza_client / altezza_client_iniziale;
-            this.velocity.X = this.velocity.X * lunghezza_client / lunghezza_client_iniziale;
-            //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
-            this.velocityTot = (float)Math.Sqrt((double)((this.velocity.X * this.velocity.X) + (this.velocity.Y * this.velocity.Y)));
-            if (this.velocityTotRaggiunto == 1)
-                this.velocityTotLimit = this.velocityTot;
-        }
-
-
-        #endregion Public Methods
+        #endregion Methods
     }
 }

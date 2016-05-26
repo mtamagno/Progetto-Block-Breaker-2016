@@ -4,27 +4,27 @@ namespace WindowsFormsApplication5
 {
     public class Life : Sprite
     {
-        #region Private Fields
+        #region Fields
 
         private Bitmap texture;
 
-        #endregion Private Fields
+        #endregion Fields
 
-        #region Public Constructors
+        #region Constructors
 
         public Life(float x, float y, int width, int height) : base(x, y, width, height)
         {
-            //imposto le variabili standard della vita alla creazione
+            // Imposta le variabili standard della vita alla creazione
             texture = Properties.Resources.vita;
             canFall = false;
             torender = true;
             canCollide = false;
             followPointer = false;
 
-            //disegno la vita
+            // Disegna la vita
             this.graphics(texture, x, y, width, height);
         }
 
-        #endregion Public Constructors
+        #endregion Constructors
     }
 }

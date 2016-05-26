@@ -8,14 +8,20 @@ namespace WindowsFormsApplication5
 {
     public class HighScore
     {
-        public int Score { get; set; }
+        #region Properties
 
         public string Name { get; set; }
+
+        public int Score { get; set; }
+
+        #endregion Properties
     }
 
-    public class HighScoreCollection : List<HighScore>
+    public class HighScoreSaver
     {
-        public void SaveToXml(HighScore CurrentHighScore)
+        #region Methods
+
+        public void ModifyOrCreateXML(HighScore CurrentHighScore)
         {
             if (File.Exists("HighScores.xml"))
             {
@@ -58,5 +64,7 @@ namespace WindowsFormsApplication5
                 }
             }
         }
+
+        #endregion Methods
     }
 }

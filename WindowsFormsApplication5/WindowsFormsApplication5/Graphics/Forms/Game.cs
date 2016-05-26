@@ -7,7 +7,7 @@ namespace WindowsFormsApplication5
 {
     public partial class Game : Form
     {
-        #region Public Fields
+        #region Fields
 
         public View background;
         public Ball ball;
@@ -17,9 +17,9 @@ namespace WindowsFormsApplication5
         public Life[] vita = new Life[3];
         private Thread gameThread;
 
-        #endregion Public Fields
+        #endregion Fields
 
-        #region Public Constructors
+        #region Constructors
 
         public Game()
         {
@@ -27,18 +27,14 @@ namespace WindowsFormsApplication5
             return;
         }
 
-        #endregion Public Constructors
+        #endregion Constructors
 
-        #region Public Methods
+        #region Methods
 
         public void on_resize(int li, int hi, int l, int h)
         {
             logic.resize(li, hi, l, h);
         }
-
-        #endregion Public Methods
-
-        #region Protected Methods
 
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -46,6 +42,12 @@ namespace WindowsFormsApplication5
             gameThread = null;
             base.OnClosing(e);
             System.Environment.Exit(0);
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            loadContent();
         }
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
@@ -76,15 +78,23 @@ namespace WindowsFormsApplication5
             }
         }
 
-        protected override void OnLoad(EventArgs e)
+        private void init_grid()
         {
-            base.OnLoad(e);
-            loadContent();
+            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width, Properties.Resources.Block_4, logic);
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
-        #endregion Protected Methods
-
-        #region Private Methods
+        private void life_init()
+        {
+            for (int i = 0; i < logic.vita_rimanente; i++)
+            {
+                vita[i] = new Life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
+                logic.iManager.inGameSprites.Add(vita[i]);
+            }
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
 
         private void loadContent()
         {
@@ -106,8 +116,8 @@ namespace WindowsFormsApplication5
             init_grid();
 
             //inizializzo racchetta
-            if(this.Visible)
-            racchetta = new Paddle(logic.MousePoint.X - this.Location.X, this.ParentForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
+            if (this.Visible)
+                racchetta = new Paddle(logic.MousePoint.X - this.Location.X, this.ParentForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
 
             //inizializzo pallina
             ball = new Ball(300, racchetta.Y - 10, 10, 10, logic);
@@ -122,29 +132,6 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
-        private void init_grid()
-        {
-            grid = new Grid(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Height, this.ClientRectangle.Width, Properties.Resources.Block_4, logic);
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
-
-        private void life_init()
-        {
-            for (int i = 0; i < logic.vita_rimanente; i++)
-            {
-                vita[i] = new Life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
-                logic.iManager.inGameSprites.Add(vita[i]);
-            }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
-
-        #endregion Private Methods
-
-        private void Game_Load(object sender, EventArgs e)
-        {
-
-        }
+        #endregion Methods
     }
 }

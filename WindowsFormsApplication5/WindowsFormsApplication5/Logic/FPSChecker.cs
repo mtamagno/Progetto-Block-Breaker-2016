@@ -5,24 +5,32 @@ namespace WindowsFormsApplication5
 {
     internal class FPSChecker
     {
+        #region Fields
+
+        public float deltaTime;
+
         //variabili per fps
         public int fps;
 
-        private int fpsCounter;
-        private long fpsTime;
-        public long lastTime;
+        public Stopwatch gameTime;
 
         //variabile per limitare gli fps
         public int interval = 1000 / 70;
 
+        public long lastTime;
+        public int previousSecond;
+        public int ups;
+
         //vairbili per ups
         public int ups_tmp;
 
-        public int ups;
         public long upsTime;
-        public Stopwatch gameTime;
-        public int previousSecond;
-        public float deltaTime;
+        private int fpsCounter;
+        private long fpsTime;
+
+        #endregion Fields
+
+        #region Constructors
 
         /// <summary>
         /// Funzione che avvia il timer
@@ -33,6 +41,9 @@ namespace WindowsFormsApplication5
             this.gameTime = timer;
         }
 
+        #endregion Constructors
+
+        #region Methods
 
         /// <summary>
         /// Funzione per il check degli fps, li conta per poi resettare il totale e restituire il risultato ogni secondo
@@ -73,7 +84,8 @@ namespace WindowsFormsApplication5
             {
                 // Gestisce l'errore in caso si arrivi qui ma non si possa invocare il form attivo perchè è stato chiuso
             }
-
         }
+
+        #endregion Methods
     }
 }

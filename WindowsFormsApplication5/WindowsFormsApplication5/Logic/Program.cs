@@ -5,7 +5,7 @@ namespace WindowsFormsApplication5
 {
     internal static class Program
     {
-        #region Private Methods
+        #region Methods
 
         /// <summary>
         /// Punto di ingresso principale dell'applicazione.
@@ -18,6 +18,6 @@ namespace WindowsFormsApplication5
             Application.Run(new Container2());
         }
 
-        #endregion Private Methods
+        #endregion Methods
     }
 }

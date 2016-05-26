@@ -6,35 +6,31 @@ namespace WindowsFormsApplication5
 {
     public partial class Container : Form
     {
-        #region Public Fields
+        #region Fields
 
         public int altezza_client;
         public int altezza_client_iniziale;
         public int lunghezza_client;
         public int lunghezza_client_iniziale;
 
-        #endregion Public Fields
-
-        #region Private Fields
-
+        public TextBox textBox = new TextBox();
+        private bool button_start = false;
+        private bool entra;
         private Game game = new Game();
-        private Start start = new Start();
+        private Thread game_alive;
+        private bool gameover = false;
         private GameOver Gameover = new GameOver();
         private Panel GamePanels = new Panel();
         private HighScore highscore;
-        public TextBox textBox = new TextBox();
-        private Button Salva = new Button();
-        private int primavolta = 0;
-        private bool gameover = false;
-        private bool restart_required = false;
-        private bool button_start = false;
-        private bool entra;
-        Thread game_alive;
         private Music music;
+        private int primavolta = 0;
+        private bool restart_required = false;
+        private Button Salva = new Button();
+        private Start start = new Start();
 
-        #endregion Private Fields
+        #endregion Fields
 
-        #region Public Constructors
+        #region Constructors
 
         public Container()
         {
@@ -44,31 +40,31 @@ namespace WindowsFormsApplication5
             return;
         }
 
-        #endregion Public Constructors
+        #endregion Constructors
 
-        #region Public Methods
+        #region Methods
 
         public void gameLoop()
         {
             if (button_start == true)
             {
-                if(entra == false)
-                this.Invoke(new MethodInvoker(delegate
-                {
-                    entra = true;
-                    start.Close();
-                    start.Hide();
-                    start.Dispose();
-                    Game_starter();
-                    GamePanels.Controls.Remove(start);
-                    GamePanels.Controls.Clear();
-                    GamePanels.Controls.Add(game);
-                    game.Show();
-                    game.Focus();
-                    game.BringToFront();
-                    game_alive = new Thread(gameover_check);
-                    game_alive.Start();
-                }));
+                if (entra == false)
+                    this.Invoke(new MethodInvoker(delegate
+                    {
+                        entra = true;
+                        start.Close();
+                        start.Hide();
+                        start.Dispose();
+                        Game_starter();
+                        GamePanels.Controls.Remove(start);
+                        GamePanels.Controls.Clear();
+                        GamePanels.Controls.Add(game);
+                        game.Show();
+                        game.Focus();
+                        game.BringToFront();
+                        game_alive = new Thread(gameover_check);
+                        game_alive.Start();
+                    }));
             }
             else {
                 if (primavolta == 1 && restart_required == true)
@@ -97,21 +93,21 @@ namespace WindowsFormsApplication5
             primavolta = 1;
         }
 
-
         public void gameover_check()
         {
             while (game.Visible)
             {
                 if (game.logic.shouldStop == true && button_start == true)
                 {
-                    this.highscore = this.game.logic.highscore;
+                    this.highscore = this.game.logic.highScore;
                     game.logic.shouldStop = false;
                     button_start = false;
                     restart_required = true;
                     gameover = true;
                     starter();
                     gameover_call();
-                    entra = false; 
+                    entra = false;
+
                     //gameLoop();
                     return;
 
@@ -123,19 +119,11 @@ namespace WindowsFormsApplication5
             }
         }
 
-        #endregion Public Methods
-
-        #region Protected Methods
-
         protected void start_Click(object sender, EventArgs e)
         {
             button_start = true;
             gameLoop();
         }
-
-        #endregion Protected Methods
-
-        #region Private Methods
 
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -184,104 +172,55 @@ namespace WindowsFormsApplication5
             }
         }
 
-        /// <summary>
-        /// Funzione che esegue le istruzioni a seconda che sia la prima volta che si apre il form o meno
-        /// </summary>
-        private void starter()
+        private void Game_starter()
         {
-            lunghezza_client = this.ClientRectangle.Width;
-            altezza_client = this.ClientRectangle.Height;
-                this.Invoke(new MethodInvoker(delegate
-                {
-                    if (primavolta == 1)
-                    {
-                        this.game.Dispose();
-                        this.start.Dispose();
-                        this.Gameover.Dispose();
-                        this.GamePanels.Controls.Clear();
-                        this.Controls.Remove(GamePanels);
-                        this.Controls.Clear();
-                        this.game = new Game();
-                        this.start = new Start();
-                        this.Gameover = new GameOver();
-                        GC.Collect();
-                        GC.WaitForPendingFinalizers();
-                        GC.Collect();
-                        this.start.writer("Replay");
-                    }
+            this.music.Dispose_Music();
 
-                    else
-                    {
-                    //altrimenti scrivo start
-                    start.writer("Start");
-                    }
+            //A  cosa servono di nuovo?
+            music.Game();
+            this.Controls.Clear();
+            this.Controls.Remove(GamePanels);
+            this.Controls.Add(GamePanels);
+            game.TopLevel = false;
+            game.AutoScaleMode = AutoScaleMode.Inherit;
+            GamePanels.Dock = DockStyle.Fill;
+            GamePanels.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
 
-                //chiamo la funzione standardStarter()
-                if (gameover == false)
-                        standardStarter();
-                    if (gameover == true)
-                    {
-                        this.Controls.Add(textBox);
-                        GameOverStarter();
-                        textBox.Top = ClientRectangle.Height / 7 * 6 - textBox.Height / 2;
-                        textBox.Left = ClientRectangle.Width / 2 - textBox.Width / 2;
-                        Gameover.Continue.Click += Salva_Click;
-                        GC.Collect();
-                        GC.WaitForPendingFinalizers();
-                        GC.Collect();
-                    }
-                }));
-
+            // Imposta game a seconda di come è impostato gamepanels
+            game.Width = GamePanels.Width;
+            game.Height = GamePanels.Height;
+            game.Left = 0;
+            game.Top = 0;
+            game.FormBorderStyle = FormBorderStyle.None;
+            game.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
+            game.AutoScaleMode = AutoScaleMode.Inherit;
             return;
         }
 
-        private void Salva_Click(object sender, EventArgs e)
+        private void gameover_call()
         {
-            HighScoreCollection functioncaller = new HighScoreCollection();
-
-            this.highscore.Name = textBox.Text;
-            functioncaller.SaveToXml(highscore);
             this.Invoke(new MethodInvoker(delegate
             {
-                this.start.Controls.Remove(Salva);
-                this.Controls.Remove(textBox);
+                game.Close();
+                game.Dispose();
+                GamePanels.Controls.Remove(game);
+                start.Close();
+                start.Hide();
+                start.Dispose();
+                Gameover.Show();
+                Gameover.Focus();
+                Gameover.BringToFront();
+                gameover = false;
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
             }));
-            this.Controls.Clear();
-            this.GamePanels.Controls.Clear();
-            gameLoop();
-            return;
-        }
-
-        private void standardStarter()
-        {
-            //direttive da eseguire in ogni caso
-            start.TopLevel = false;
-
-            //imposto i gamepanels e aggiungo start
-            GamePanels.Top = 0;
-            GamePanels.Left = 0;
-            GamePanels.Width = this.Width;
-            GamePanels.Height = this.Height;
-            GamePanels.Visible = true;
-            GamePanels.Controls.Remove(start);
-            this.Dock = DockStyle.Fill;
-
-            //imposto start a seconda di come è impostato gamepanels
-            menu_starter();
-
-            if (primavolta == 0)
-                gameLoop();
-
-            primavolta = 0;
-            start.start.Click += new EventHandler(this.start_Click);
-            return;
         }
 
         private void GameOverStarter()
         {
             //direttive da eseguire in ogni caso
-                this.music.Dispose_Music();
-                music.GameOver();
+            this.music.Dispose_Music();
+            music.GameOver();
             this.Controls.Clear();
             this.Controls.Remove(GamePanels);
             this.Controls.Add(GamePanels);
@@ -303,36 +242,13 @@ namespace WindowsFormsApplication5
             return;
         }
 
-        private void Game_starter()
-        {
-              this.music.Dispose_Music();
-            //A  cosa servono di nuovo?
-              music.Game();
-            this.Controls.Clear();
-            this.Controls.Remove(GamePanels);
-            this.Controls.Add(GamePanels);
-            game.TopLevel = false;
-            game.AutoScaleMode = AutoScaleMode.Inherit;
-            GamePanels.Dock = DockStyle.Fill;
-            GamePanels.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
-            //imposto game a seconda di come è impostato gamepanels
-            game.Width = GamePanels.Width;
-            game.Height = GamePanels.Height;
-            game.Left = 0;
-            game.Top = 0;
-            game.FormBorderStyle = FormBorderStyle.None;
-            game.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
-            game.AutoScaleMode = AutoScaleMode.Inherit;
-            return;
-        }
-
         private void menu_starter()
         {
             music.Menu();
             GamePanels.Controls.Add(start);
             start.TopLevel = false;
 
-            //imposto start a seconda di come è impostato gamepanels
+            // Imposta start a seconda di come è impostato gamepanels
             this.Controls.Clear();
             this.Controls.Remove(GamePanels);
             this.Controls.Add(GamePanels);
@@ -345,28 +261,99 @@ namespace WindowsFormsApplication5
             start.AutoScaleMode = AutoScaleMode.Inherit;
             start.start.Click += new EventHandler(this.start_Click);
         }
-        
-        private void gameover_call()
-        {
 
+        private void Salva_Click(object sender, EventArgs e)
+        {
+            HighScoreSaver functioncaller = new HighScoreSaver();
+
+            this.highscore.Name = textBox.Text;
+            functioncaller.ModifyOrCreateXML(highscore);
             this.Invoke(new MethodInvoker(delegate
             {
-                game.Close();
-                game.Dispose();
-                GamePanels.Controls.Remove(game);
-                start.Close();
-                start.Hide();
-                start.Dispose();
-                Gameover.Show();
-                Gameover.Focus();
-                Gameover.BringToFront();
-                gameover = false;
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
+                this.start.Controls.Remove(Salva);
+                this.Controls.Remove(textBox);
             }));
-
+            this.Controls.Clear();
+            this.GamePanels.Controls.Clear();
+            gameLoop();
+            return;
         }
 
-        #endregion Private Methods
+        private void standardStarter()
+        {
+            //direttive da eseguire in ogni caso
+            start.TopLevel = false;
+
+            // Imposta i gamepanels e aggiungo start
+            GamePanels.Top = 0;
+            GamePanels.Left = 0;
+            GamePanels.Width = this.Width;
+            GamePanels.Height = this.Height;
+            GamePanels.Visible = true;
+            GamePanels.Controls.Remove(start);
+            this.Dock = DockStyle.Fill;
+
+            // Imposta start a seconda di come è impostato gamepanels
+            menu_starter();
+
+            if (primavolta == 0)
+                gameLoop();
+
+            primavolta = 0;
+            start.start.Click += new EventHandler(this.start_Click);
+            return;
+        }
+
+        /// <summary>
+        /// Funzione che esegue le istruzioni a seconda che sia la prima volta che si apre il form o meno
+        /// </summary>
+        private void starter()
+        {
+            lunghezza_client = this.ClientRectangle.Width;
+            altezza_client = this.ClientRectangle.Height;
+            this.Invoke(new MethodInvoker(delegate
+            {
+                if (primavolta == 1)
+                {
+                    this.game.Dispose();
+                    this.start.Dispose();
+                    this.Gameover.Dispose();
+                    this.GamePanels.Controls.Clear();
+                    this.Controls.Remove(GamePanels);
+                    this.Controls.Clear();
+                    this.game = new Game();
+                    this.start = new Start();
+                    this.Gameover = new GameOver();
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                    this.start.writer("Replay");
+                }
+                else
+                {
+                        //altrimenti scrivo start
+                        start.writer("Start");
+                }
+
+                    //chiamo la funzione standardStarter()
+                    if (gameover == false)
+                    standardStarter();
+                if (gameover == true)
+                {
+                    this.Controls.Add(textBox);
+                    GameOverStarter();
+                    textBox.Top = ClientRectangle.Height / 7 * 6 - textBox.Height / 2;
+                    textBox.Left = ClientRectangle.Width / 2 - textBox.Width / 2;
+                    Gameover.Continue.Click += Salva_Click;
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                }
+            }));
+
+            return;
+        }
+
+        #endregion Methods
     }
 }

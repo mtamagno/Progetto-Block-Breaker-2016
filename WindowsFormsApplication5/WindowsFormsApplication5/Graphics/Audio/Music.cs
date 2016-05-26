@@ -2,25 +2,38 @@
 
 namespace WindowsFormsApplication5
 {
-    class Music
+    internal class Music
     {
+        #region Fields
 
         private SoundPlayer backgroundMusic;
 
+        #endregion Fields
+
+        #region Constructors
+
         public Music()
         {
-
         }
 
-        public void GameOver()
+        #endregion Constructors
+
+        #region Methods
+
+        public void Dispose_Music()
         {
-            backgroundMusic = new SoundPlayer(Properties.Resources.Background_GameOver);
-            backgroundMusic.PlayLooping();
+            backgroundMusic.Dispose();
         }
 
         public void Game()
         {
             backgroundMusic = new SoundPlayer(Properties.Resources.Background_Music);
+            backgroundMusic.PlayLooping();
+        }
+
+        public void GameOver()
+        {
+            backgroundMusic = new SoundPlayer(Properties.Resources.Background_GameOver);
             backgroundMusic.PlayLooping();
         }
 
@@ -30,10 +43,6 @@ namespace WindowsFormsApplication5
             backgroundMusic.PlayLooping();
         }
 
-        public void Dispose_Music()
-        {
-            backgroundMusic.Dispose();
-
-        }
+        #endregion Methods
     }
 }

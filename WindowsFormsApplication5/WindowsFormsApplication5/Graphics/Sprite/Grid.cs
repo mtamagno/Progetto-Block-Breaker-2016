@@ -4,13 +4,13 @@ namespace WindowsFormsApplication5
 {
     public class Grid
     {
-        #region Private Fields
+        #region Fields
 
         private System.Windows.Forms.DataGridView grid;
 
-        #endregion Private Fields
+        #endregion Fields
 
-        #region Public Constructors
+        #region Constructors
 
         //Metodo grid da chiamare per creare una griglia all'interno del form
         public Grid(int x, int y, float client_height, float client_width, Bitmap Texture, Logic logic)
@@ -25,9 +25,9 @@ namespace WindowsFormsApplication5
             this.insert_grid(Texture, logic.iManager);
         }
 
-        #endregion Public Constructors
+        #endregion Constructors
 
-        #region Public Methods
+        #region Methods
 
         //Metodo insert_grid utilizzato per inserire nei posti giusti i blocchi grazie alle coordinate della griglia
         public void insert_grid(Bitmap Texture, InputManager iManager)
@@ -54,6 +54,6 @@ namespace WindowsFormsApplication5
             grid.grid.Height = (int)(client_height / 3);
         }
 
-        #endregion Public Methods
+        #endregion Methods
     }
 }
