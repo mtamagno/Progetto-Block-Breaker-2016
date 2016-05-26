@@ -138,10 +138,5 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Private Methods
-
-        private void Game_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
