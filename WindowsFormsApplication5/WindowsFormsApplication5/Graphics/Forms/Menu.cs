@@ -61,8 +61,9 @@ namespace WindowsFormsApplication5
 
         public void on_resize(int l, int h)
         {
-            this.BackgroundImageLayout = ImageLayout.Stretch;
+            this.cleaner();
             this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
+            this.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
@@ -74,6 +75,14 @@ namespace WindowsFormsApplication5
             this.start.Text = testo;
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
+
+        private void cleaner()
+        {
+            this.BackgroundImage.Dispose();
+            this.backgroundimage.Dispose();
+            GC.Collect();
+            GC.WaitForFullGCComplete();
         }
     }
 }
