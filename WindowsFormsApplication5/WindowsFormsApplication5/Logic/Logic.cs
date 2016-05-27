@@ -116,11 +116,11 @@ namespace WindowsFormsApplication5
             {
                 if (s.GetType().Name == "Ball")
                 {
-                    s.redraw(s, (int)(Math.Abs(10 * l / li)), (10 * h / hi), Properties.Resources.ball, s.X * l / li, s.Y * h / hi);
+                    s.redraw(s, (int)(Math.Abs((float)1/50 * Math.Min(l,h))), (int)(Math.Abs((float)1/50 * Math.Min(l,h))), Properties.Resources.ball, s.X * l / li, s.Y * h / hi);
                 }
                 else if (s.GetType().Name == "Paddle")
                 {
-                    s.redraw(s, (int)(Math.Abs(128 * l / li)), (24 * h / hi), Properties.Resources.New_Piskel, s.X * l / li, s.Y * h / hi);
+                    s.redraw(s, (int)(Math.Abs((float)1/8 * l)), (int)(Math.Abs((float)1/22 * h)), Properties.Resources.New_Piskel, s.X * l / li, s.Y * h / hi);
                 }
                 else if (s.GetType().Name == "View")
                 {

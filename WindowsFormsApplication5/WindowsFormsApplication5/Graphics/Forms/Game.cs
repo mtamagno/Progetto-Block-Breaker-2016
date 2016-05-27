@@ -117,10 +117,18 @@ namespace WindowsFormsApplication5
 
             //inizializzo racchetta
             if (this.Visible)
-                racchetta = new Paddle(logic.MousePoint.X - this.Location.X, this.ParentForm.ClientRectangle.Height * 9 / 10, 128, 24, logic);
+                racchetta = new Paddle(logic.MousePoint.X - this.Location.X,
+                    this.ParentForm.ClientRectangle.Height * 9 / 10,
+                    (int)(Math.Abs((float)1 / 8 * this.ParentForm.ClientRectangle.Width)),
+                    (int)(Math.Abs((float)1 / 22 * this.ParentForm.ClientRectangle.Height)),
+                    logic);
 
             //inizializzo pallina
-            ball = new Ball(300, racchetta.Y - 10, 10, 10, logic);
+            ball = new Ball(300,
+                racchetta.Y - 100,
+                (int)(Math.Abs((float)1 / 50 * Math.Min(this.ParentForm.ClientRectangle.Width, this.ParentForm.ClientRectangle.Height))),
+                (int)(Math.Abs((float)1 / 50 * Math.Min(this.ParentForm.ClientRectangle.Width, this.ParentForm.ClientRectangle.Height))),
+                logic);
 
             //inizializzo le vite
             life_init();
