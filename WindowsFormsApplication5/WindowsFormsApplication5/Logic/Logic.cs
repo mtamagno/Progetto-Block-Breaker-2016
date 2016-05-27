@@ -24,6 +24,7 @@ namespace WindowsFormsApplication5
         public int vita_rimanente = 3;
         public bool AllowInput;
         public bool shouldStop = false;
+        public volatile bool waitResize;
 
         #endregion Public Fields
 
@@ -66,38 +67,42 @@ namespace WindowsFormsApplication5
             // Finchè non si deve fermare continua ad eseguire
             while (shouldStop == false)
             {
-                // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
-                controller.ball.canCollide = true;
-
-                // Controlla le vite che rimangono al giocatore
-                vita_rimanente = checkLife.check(controller, vita_rimanente);
-
-                // Se non ne rimangono segnala con la variabile shouldStop che si deve visualizzare la schermata GameOver
-                if (vita_rimanente <= 0)
+                if (waitResize == false)
                 {
-                    shouldStop = true;
 
-                    // Salva lo score
-                    this.highScore.Score = score;
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-                    GC.Collect();
-                    return;
+                    // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
+                    controller.ball.canCollide = true;
+
+                    // Controlla le vite che rimangono al giocatore
+                    vita_rimanente = checkLife.check(controller, vita_rimanente);
+
+                    // Se non ne rimangono segnala con la variabile shouldStop che si deve visualizzare la schermata GameOver
+                    if (vita_rimanente <= 0)
+                    {
+                        shouldStop = true;
+
+                        // Salva lo score
+                        this.highScore.Score = score;
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
+                        GC.Collect();
+                        return;
+                    }
+
+                    // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
+                    if (gameTime.ElapsedMilliseconds % 1000 != 0)
+                    {
+                        checkscore();
+                        checkActiveBlock();
+                    }
+
+                    // Controlla gli fps contandoli e vede se è il caso di stamparli
+                    fpsChecker.checkfps(controller);
+
+                    //
+                    this.updater(this.controller, this.iManager, fpsChecker);
+                    render();
                 }
-
-                // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
-                if (gameTime.ElapsedMilliseconds % 1000 != 0)
-                {
-                    checkscore();
-                    checkActiveBlock();
-                }
-
-                // Controlla gli fps contandoli e vede se è il caso di stamparli
-                fpsChecker.checkfps(controller);
-
-                //
-                this.updater(this.controller, this.iManager, fpsChecker);
-                render();
             }
 
             GC.Collect();

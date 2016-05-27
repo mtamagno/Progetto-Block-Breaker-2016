@@ -38,6 +38,7 @@ namespace WindowsFormsApplication5
 
         private void Container2_Load(object sender, EventArgs e)
         {
+            this.MinimumSize = new System.Drawing.Size(400,400);
             music = new Music();
 
             // Imposta again a false per dire che il gioco e' stato avviato per la prima volta
@@ -45,6 +46,7 @@ namespace WindowsFormsApplication5
 
             //inizializzo il pannello che conterra' i form dell'applicazione
             initializeGamePanel();
+            gamePanels.AutoSizeMode = AutoSizeMode;
 
             //inizializzo il menu come primo form che apparira' nel gioco
             initializeMenu();
@@ -184,6 +186,7 @@ namespace WindowsFormsApplication5
         // FUnzione chiamata quando viene ridimensionata la finestra
         private void OnResizeEnd(object sender, EventArgs e)
         {
+            game.logic.waitResize = true;
             // Imposta i nuovi valori del gamePanel
             gamePanels.Height = this.ClientRectangle.Height;
             gamePanels.Width = this.ClientRectangle.Width;
@@ -210,6 +213,7 @@ namespace WindowsFormsApplication5
                 initializeForm(gameover);
                 gameover.on_resize(this.Width, this.Height);
             }
+            game.logic.waitResize = false;
         }
 
         private void DisposeAll()
@@ -305,7 +309,7 @@ namespace WindowsFormsApplication5
             while (game != null)
             {
                 //se il game e' ancora attivo controllo se l utente ha finito il gioco
-                if (game.logic.shouldStop == true)
+                if (game.logic.shouldStop == true && game.logic.waitResize == false)
                 {
                     //se l'utente ha finito il gioco salvo l highScore ottenuto
                     this.highScore = this.game.logic.highScore;

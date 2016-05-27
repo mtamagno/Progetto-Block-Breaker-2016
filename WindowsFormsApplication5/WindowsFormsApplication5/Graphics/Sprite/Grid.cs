@@ -16,8 +16,8 @@ namespace WindowsFormsApplication5
         public Grid(int x, int y, float client_height, float client_width, Bitmap Texture, Logic logic)
         {
             grid = new System.Windows.Forms.DataGridView();
-            grid.ColumnCount = (int)client_width / 70;
-            grid.RowCount = (int)client_height / 50;
+            grid.ColumnCount = 18;
+            grid.RowCount = 8;
             grid.Left = x;
             grid.Top = y;
             grid.Width = (int)client_width;
@@ -36,7 +36,7 @@ namespace WindowsFormsApplication5
             {
                 for (int k = 0; k < grid.RowCount; k++)
                 {
-                    Block block = new Block((grid.Width / grid.ColumnCount) * i + 2, (grid.Height / grid.RowCount) * k + 2, grid.Width / grid.ColumnCount, grid.Height / grid.RowCount);
+                    Block block = new Block((grid.Width / grid.ColumnCount) * i + 6, (grid.Height / grid.RowCount) * k + 2, grid.Width / grid.ColumnCount, grid.Height / grid.RowCount);
                     iManager.inGameSprites.Add(block);
                 }
             }

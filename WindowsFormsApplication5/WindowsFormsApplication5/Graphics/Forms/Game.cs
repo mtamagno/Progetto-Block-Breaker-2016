@@ -15,7 +15,7 @@ namespace WindowsFormsApplication5
         public Logic logic;
         public Paddle racchetta;
         public Life[] vita = new Life[3];
-        private Thread gameThread;
+        public Thread gameThread;
 
         #endregion Fields
 
