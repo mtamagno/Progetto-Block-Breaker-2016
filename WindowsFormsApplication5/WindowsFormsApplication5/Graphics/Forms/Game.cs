@@ -134,7 +134,7 @@ namespace WindowsFormsApplication5
 
             // Inizializza pallina
             ball = new Ball(300,
-                racchetta.Y - 100,
+                racchetta.Y - 10,
                 (int)(Math.Abs((float)1 / 50 * Math.Min(this.ParentForm.ClientRectangle.Width, this.ParentForm.ClientRectangle.Height))),
                 (int)(Math.Abs((float)1 / 50 * Math.Min(this.ParentForm.ClientRectangle.Width, this.ParentForm.ClientRectangle.Height))),
                 logic);
