@@ -116,23 +116,43 @@ namespace WindowsFormsApplication5
             {
                 if (s.GetType().Name == "Ball")
                 {
-                    s.redraw(s, (int)(Math.Abs((float)1/50 * Math.Min(l,h))), (int)(Math.Abs((float)1/50 * Math.Min(l,h))), Properties.Resources.ball, s.X * l / li, s.Y * h / hi);
+                    s.redraw(s,
+                        (int)(Math.Abs((float)1/50 * Math.Min(l,h))),
+                        (int)(Math.Abs((float)1/50 * Math.Min(l,h))),
+                        Properties.Resources.ball,
+                        s.X * l / li, s.Y * h / hi);
                 }
                 else if (s.GetType().Name == "Paddle")
                 {
-                    s.redraw(s, (int)(Math.Abs((float)1/8 * l)), (int)(Math.Abs((float)1/22 * h)), Properties.Resources.New_Piskel, s.X * l / li, s.Y * h / hi);
+                    s.redraw(s, (int)(Math.Abs((float)1/8 * l)),
+                        (int)(Math.Abs((float)1/22 * h)),
+                        Properties.Resources.New_Piskel,
+                        s.X * l / li,
+                        s.Y * h / hi);
                 }
                 else if (s.GetType().Name == "View")
                 {
-                    s.redraw(s, l, h, Properties.Resources.Background, 0, 0);
+                    s.redraw(s,
+                        l,
+                        h,
+                        Properties.Resources.Background,
+                        0,
+                        0);
                 }
                 else if (s.GetType().Name == "Block")
                 {
-                    controller.grid.redraw_block((Block)s, (100 * l / li), (50 * (h / hi)), s.X * l / li, s.Y * h / hi);
+                    controller.grid.redraw_block((Block)s,
+                        (100 * l / li),
+                        (50 * (h / hi)),
+                        s.X * l / li,
+                        s.Y * h / hi);
                 }
                 else if (s.GetType().Name == "Life")
                 {
-                    s.redraw(s, (int)(Math.Abs(20 * l / li)), (int)(Math.Abs(20 * h / hi)), Properties.Resources.vita, s.X * l / li, s.Y * h / hi);
+                    s.redraw(s,
+                        (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
+                        (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
+                        Properties.Resources.vita, s.X * l / li, s.Y * h / hi);
                 }
             }
             controller.racchetta.Y = h * 9 / 10;

@@ -137,9 +137,14 @@ namespace WindowsFormsApplication5
                             //La pallina impatta con la metà sinistra
                             if ((this.X + this.Width / 2) <= (mypaddle.X + mypaddle.Width / 2))
                             {
+                                //double coseno; DA PROVARE COSì
+                                //coseno = Math.Abs(Math.Cos(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
+                                //this.velocity.X = -(float)Math.Min(Math.Abs(this.velocityTot * (float)coseno), Math.Abs(8 / 10 * velocityTot));
+                                //this.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.velocityTot * this.velocityTot) - (this.velocity.X * this.velocity.X))));
+                                //this.Y = mypaddle.Y - this.Height;
                                 double coseno;
                                 coseno = Math.Abs(Math.Cos(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
-                                this.velocity.X = -this.velocityTot * (float)coseno;
+                                this.velocity.X = z-this.velocityTot * (float)coseno;
                                 this.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.velocityTot * this.velocityTot) - (this.velocity.X * this.velocity.X))));
                                 this.Y = mypaddle.Y - this.Height;
                             }
