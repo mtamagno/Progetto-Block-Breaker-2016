@@ -186,7 +186,7 @@ namespace WindowsFormsApplication5
         // FUnzione chiamata quando viene ridimensionata la finestra
         private void OnResizeEnd(object sender, EventArgs e)
         {
-            game.logic.waitResize = true;
+            
             // Imposta i nuovi valori del gamePanel
             gamePanels.Height = this.ClientRectangle.Height;
             gamePanels.Width = this.ClientRectangle.Width;
@@ -199,9 +199,11 @@ namespace WindowsFormsApplication5
 
             if (game != null)
             {
+                game.logic.waitResize = true;
                 initializeForm(game);
                 game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
                 game.ball.totalVelocityReset(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
+                game.logic.waitResize = false;
             }
             if (menu != null)
             {
@@ -213,7 +215,6 @@ namespace WindowsFormsApplication5
                 initializeForm(gameover);
                 gameover.on_resize(this.Width, this.Height);
             }
-            game.logic.waitResize = false;
         }
 
         private void DisposeAll()

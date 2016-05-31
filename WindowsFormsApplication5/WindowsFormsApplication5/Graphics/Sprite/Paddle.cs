@@ -35,7 +35,9 @@ namespace WindowsFormsApplication5
         public double angolo(float posizione_attuale, float posizione_massima)
         {
             double calcolo = 0;
-            calcolo = (posizione_attuale / posizione_massima) * 90;
+            double angoloMassimo;
+            angoloMassimo = 80;
+            calcolo = (posizione_attuale / posizione_massima) * angoloMassimo;
             calcolo = calcolo * Math.PI / 180;
             return calcolo;
         }
