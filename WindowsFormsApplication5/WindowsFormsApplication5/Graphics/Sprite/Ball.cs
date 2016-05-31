@@ -61,7 +61,7 @@ namespace WindowsFormsApplication5
         /// </summary>
         public void Collider(InputManager iManager)
         {
-            //per ogni sprite presente nella lista contenuta dell'imanager
+            // Per ogni sprite presente nella lista contenuta dell'imanager
             foreach (Sprite s in iManager.inGameSprites)
             {
                 if (s.GetType().Name == "Block")
@@ -70,12 +70,18 @@ namespace WindowsFormsApplication5
 
                     if (this.isCollidingWith(myBlock) && myBlock.canCollide == true)
                     {
-                        //se un blocco viene toccato dalla pallina gli tolgo una vita e cambio la texture
+                        // Se un blocco viene toccato dalla pallina gli tolgo una vita e cambio la texture
                         if (this.isTouchingTop(myBlock) || this.isTouchingBottom(myBlock))
                         {
                             if (this.X + this.Width / 2 > myBlock.X && this.X + this.Width / 2 < myBlock.X + myBlock.Width)
                             {
                                 this.velocity.Y *= -1;
+                                // Sposto la pallina in modo che tocchi una volta sola 
+                                //if (this.Y > myBlock.Y)
+                                //    this.Y = myBlock.Y + myBlock.Height + 1;
+                                //else
+                                //    this.Y = myBlock.Y - this.Height - 1;
+
                                 myBlock.blockLife--;
                                 PlaySound();
                                 myBlock.textureSwitcher();
@@ -86,17 +92,23 @@ namespace WindowsFormsApplication5
                                     myBlock.canCollide = false;
                                 }
                                 else
-
-                                    //ri Disegna il blocco
+                                // Disegna il blocco
+                                {
                                     myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
+                                }
                             }
                         }
-                        else
                         if (this.isTouchingLeft(myBlock) || this.isTouchingRight(myBlock))
                         {
                             if (this.Y + this.Height / 2 > myBlock.Y && this.Y + this.Height / 2 < myBlock.Y + myBlock.Height)
                             {
                                 this.velocity.X *= -1;
+                                // Sposto la pallina in modo che tocchi una volta sola 
+                                //if (this.X > myBlock.X)
+                                //    this.X = myBlock.X + myBlock.Width + 1;
+                                //else
+                                //    this.X = myBlock.X - this.Width - 1;
+
                                 myBlock.blockLife--;
                                 PlaySound();
                                 switch (myBlock.blockLife)
@@ -137,14 +149,9 @@ namespace WindowsFormsApplication5
                             //La pallina impatta con la metà sinistra
                             if ((this.X + this.Width / 2) <= (mypaddle.X + mypaddle.Width / 2))
                             {
-                                //double coseno; DA PROVARE COSì
-                                //coseno = Math.Abs(Math.Cos(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
-                                //this.velocity.X = -(float)Math.Min(Math.Abs(this.velocityTot * (float)coseno), Math.Abs(8 / 10 * velocityTot));
-                                //this.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.velocityTot * this.velocityTot) - (this.velocity.X * this.velocity.X))));
-                                //this.Y = mypaddle.Y - this.Height;
                                 double coseno;
                                 coseno = Math.Abs(Math.Cos(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
-                                this.velocity.X = z-this.velocityTot * (float)coseno;
+                                this.velocity.X = -this.velocityTot * (float)coseno;
                                 this.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.velocityTot * this.velocityTot) - (this.velocity.X * this.velocity.X))));
                                 this.Y = mypaddle.Y - this.Height;
                             }
