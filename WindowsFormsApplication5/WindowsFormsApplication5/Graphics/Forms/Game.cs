@@ -33,15 +33,19 @@ namespace WindowsFormsApplication5
 
         public void on_resize(int li, int hi, int l, int h)
         {
+            // Richiama logic.resize
             logic.resize(li, hi, l, h);
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            this.Close();
-            gameThread = null;
+            // Termino il thread
+            gameThread.Abort();
+            
+            // Chiudo Game 
             base.OnClosing(e);
             System.Environment.Exit(0);
+            this.Close();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -85,11 +89,16 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
-        private void life_init()
+        public void life_init()
         {
             for (int i = 0; i < logic.vita_rimanente; i++)
             {
-                vita[i] = new Life(this.ClientRectangle.Width - 20 - 30 * (i + 1), this.ClientRectangle.Height - 50, 20, 20);
+                vita[i] = new Life(this.ClientRectangle.Width - (float)1 / 50 * this.ClientRectangle.Width 
+                        - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width,this.ClientRectangle.Height))) * (i + 1), 
+                    this.ClientRectangle.Height - (float)1/50 * this.ClientRectangle.Height 
+                        - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))),
+                    (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))),
+                    (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))));
                 logic.iManager.inGameSprites.Add(vita[i]);
             }
             GC.Collect();
@@ -103,19 +112,19 @@ namespace WindowsFormsApplication5
 
         private void starter()
         {
-            //inizializzo la logica
+            // Inizializza la logica
             logic = new Logic(this);
 
-            //inizializzo la variabile della visione del menù pausa a falso in caso sia vera
+            // Inizializza la variabile della visione del menù pausa a falso in caso sia vera
             Gamepause.Visible = false;
 
-            //inizializzo il background
+            // Inizializza il background
             background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, logic);
 
-            //inizializzo griglia
+            // Inizializza griglia
             init_grid();
 
-            //inizializzo racchetta
+            // Inizializza racchetta
             if (this.Visible)
                 racchetta = new Paddle(logic.MousePoint.X - this.Location.X,
                     this.ParentForm.ClientRectangle.Height * 9 / 10,
@@ -123,19 +132,21 @@ namespace WindowsFormsApplication5
                     (int)(Math.Abs((float)1 / 22 * this.ParentForm.ClientRectangle.Height)),
                     logic);
 
-            //inizializzo pallina
+            // Inizializza pallina
             ball = new Ball(300,
                 racchetta.Y - 10,
                 (int)(Math.Abs((float)1 / 50 * Math.Min(this.ParentForm.ClientRectangle.Width, this.ParentForm.ClientRectangle.Height))),
                 (int)(Math.Abs((float)1 / 50 * Math.Min(this.ParentForm.ClientRectangle.Width, this.ParentForm.ClientRectangle.Height))),
                 logic);
 
-            //inizializzo le vite
+            // Inizializza le vite
             life_init();
 
-            //inizializzo il thread del gioco
+            // Inizializza il thread del gioco
             gameThread = new Thread(logic.gameLoop);
             gameThread.Start();
+
+            // Aspetta il Garbage Collector
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }

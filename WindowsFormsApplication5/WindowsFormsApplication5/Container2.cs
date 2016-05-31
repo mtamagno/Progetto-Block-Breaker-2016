@@ -44,11 +44,11 @@ namespace WindowsFormsApplication5
             // Imposta again a false per dire che il gioco e' stato avviato per la prima volta
             again = false;
 
-            //inizializzo il pannello che conterra' i form dell'applicazione
+            // Inizializza il pannello che conterra' i form dell'applicazione
             initializeGamePanel();
             gamePanels.AutoSizeMode = AutoSizeMode;
 
-            //inizializzo il menu come primo form che apparira' nel gioco
+            // Inizializza il menu come primo form che apparira' nel gioco
             initializeMenu();
         }
 
@@ -86,10 +86,10 @@ namespace WindowsFormsApplication5
         {   //assegno al gioco un nuovo gioco
             game = new Game();
 
-            //inizializzo il gioco
+            // Inizializza il gioco
             initializeForm(game);
 
-            //inizializzo il thread per controllare lo stato del gioco
+            // Inizializza il thread per controllare lo stato del gioco
             initializeThread(gameAlive);
 
             //faccio partire la musica di gioco
@@ -101,7 +101,7 @@ namespace WindowsFormsApplication5
             //assegno al gameover un nuovo gameover
             gameover = new GameOver();
 
-            //inizializzo il gameover
+            // Inizializza il gameover
             initializeForm(gameover);
 
             //Assegno un testo al pulsante del form gameover
@@ -119,7 +119,7 @@ namespace WindowsFormsApplication5
             //assegno al menu un nuovo menu
             menu = new Start();
 
-            //inizializzo il menu
+            // Inizializza il menu
             initializeForm(menu);
 
             //Controllo se e' la prima partita dell utente
@@ -171,7 +171,7 @@ namespace WindowsFormsApplication5
         {   //assegno al thread una funzione
             gameAlive = new Thread(gameoverCheck);
 
-            //inizializzo il thread
+            // Inizializza il thread
             gameAlive.Start();
         }
 
@@ -186,7 +186,8 @@ namespace WindowsFormsApplication5
         // FUnzione chiamata quando viene ridimensionata la finestra
         private void OnResizeEnd(object sender, EventArgs e)
         {
-            
+            if(game != null)
+            game.logic.waitResize = true;
             // Imposta i nuovi valori del gamePanel
             gamePanels.Height = this.ClientRectangle.Height;
             gamePanels.Width = this.ClientRectangle.Width;
@@ -199,11 +200,9 @@ namespace WindowsFormsApplication5
 
             if (game != null)
             {
-                game.logic.waitResize = true;
                 initializeForm(game);
                 game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
                 game.ball.totalVelocityReset(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
-                game.logic.waitResize = false;
             }
             if (menu != null)
             {
@@ -215,6 +214,8 @@ namespace WindowsFormsApplication5
                 initializeForm(gameover);
                 gameover.on_resize(this.Width, this.Height);
             }
+            if(game!=null)
+            game.logic.waitResize = false;
         }
 
         private void DisposeAll()
@@ -321,10 +322,10 @@ namespace WindowsFormsApplication5
                     //pulisco tutto
                     DisposeAll();
 
-                    //inizializzo di nuovo il gamePanel
+                    // Inizializza di nuovo il gamePanel
                     initializeGamePanel();
 
-                    //inizializzo il GameOver
+                    // Inizializza il GameOver
                     initializeGameOver();
                     return;
                 }
