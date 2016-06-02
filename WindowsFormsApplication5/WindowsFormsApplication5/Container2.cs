@@ -130,7 +130,7 @@ namespace WindowsFormsApplication5
 
             //Assegno al pulsante del menu un evento
             menu.start.Click += new EventHandler(this.StartGame);
-
+            
             //Faccio partire la musica del menu
             music.Menu();
         }
@@ -165,6 +165,7 @@ namespace WindowsFormsApplication5
                 form.Focus();
                 form.BringToFront();
             }));
+           
         }
 
         private void initializeThread(Thread thread)
@@ -369,5 +370,7 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Methods
+
+     
     }
 }

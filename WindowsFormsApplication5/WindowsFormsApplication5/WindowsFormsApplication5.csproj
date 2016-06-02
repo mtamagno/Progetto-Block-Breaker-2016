@@ -72,11 +72,17 @@
     <Compile Include="Container2.Designer.cs">
       <DependentUpon>Container2.cs</DependentUpon>
     </Compile>
+    <Compile Include="GamePause.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Graphics\Forms\GameOver.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Graphics\Forms\GameOver.Designer.cs">
       <DependentUpon>GameOver.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Instruction.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Logic\CheckLife.cs" />
     <Compile Include="Logic\FPSChecker.cs" />
@@ -198,6 +204,7 @@
     <Content Include="Relazione\Immagini\relazioni.jpg" />
     <Content Include="Relazione\Immagini\Utente - Attore.jpg" />
     <None Include="Resources\gamepause.jpg" />
+    <None Include="Resources\instruction.jpg" />
     <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>

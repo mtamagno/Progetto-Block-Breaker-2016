@@ -10,8 +10,8 @@ namespace WindowsFormsApplication5
 
         public Button start = new Button();
         private Bitmap backgroundimage;
-        private Button Help = new Button();
-        //private IntPtr handle;
+        public Button Help = new Button();
+        public Instruction instruction;
         private Bitmap start_button_image;
 
         #endregion Fields
@@ -66,9 +66,11 @@ namespace WindowsFormsApplication5
             this.Help.Left = ClientRectangle.Width / 2 - Help.Width / 2;
             this.Help.Text = "Help";
             this.Controls.Add(Help);
-
-            // this.handle = backgroundimage.GetHbitmap();
+            this.instruction = new Instruction(0, 0, 1000, 500);
+            this.instruction.Visible = false;
+            this.Controls.Add(instruction);
             this.BackgroundImage = backgroundimage;
+            this.Help.Click += new EventHandler(this.Commands);
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -97,6 +99,12 @@ namespace WindowsFormsApplication5
             this.start.FlatStyle = FlatStyle.Flat;
         }
 
+        private void Commands(object sender, EventArgs e)
+        {
+            this.start.Visible = false;
+            this.Help.Visible = false;
+            this.instruction.Visible = true;
+        }
         #endregion Methods
     }
 }

@@ -38,7 +38,7 @@
             this.ClientSize = new System.Drawing.Size(934, 411);
             this.Name = "Start";
             this.Text = "Start";
-            this.Load += new System.EventHandler(this.Form3_Load);
+            this.Load += new System.EventHandler(this.Form3_Load);          
             this.ResumeLayout(false);
 
         }

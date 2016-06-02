@@ -16,7 +16,7 @@ namespace WindowsFormsApplication5
         public Paddle racchetta;
         public Life[] vita = new Life[3];
         public Thread gameThread;
-
+        private GamePause gamePause;
         #endregion Fields
 
         #region Constructors
@@ -63,18 +63,15 @@ namespace WindowsFormsApplication5
                     ball.followPointer = false;
                     ball.canFall = true;
                     racchetta.followPointer = true;
-                    Gamepause.Visible = false;
+                    gamePause.Visible = false;
                     logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
-                if (e.KeyChar == (char)Keys.Enter && Gamepause.Visible == false)
+                if (e.KeyChar == (char)Keys.Enter && gamePause.Visible == false)
                 {
                     ball.followPointer = false;
                     ball.canFall = false;
                     racchetta.followPointer = false;
-                    Gamepause.Visible = true;
-                    Gamepause.BorderStyle = BorderStyle.Fixed3D;
-                    Gamepause.Left = this.ClientRectangle.Width / 2 - Gamepause.Width / 2;
-                    Gamepause.Top = this.ClientRectangle.Height / 2 - Gamepause.Height / 2;
+                    gamePause.Visible = true;
                     logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
                 if (e.KeyChar == (char)Keys.Escape)
@@ -116,9 +113,9 @@ namespace WindowsFormsApplication5
             logic = new Logic(this);
 
             // Inizializza la variabile della visione del menù pausa a falso in caso sia vera
-            Gamepause.Visible = false;
-            // Inizializzo l'immagine di sfondo della pausa
-            Gamepause.Image = Properties.Resources.gamepause;
+            gamePause = new GamePause(0, 0, 1000, 500);
+            gamePause.Visible = false;
+            this.Controls.Add(gamePause);
 
             // Inizializza il background
             background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, logic);
