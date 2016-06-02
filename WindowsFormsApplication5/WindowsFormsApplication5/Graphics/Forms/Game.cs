@@ -38,10 +38,7 @@ namespace WindowsFormsApplication5
         }
 
         protected override void OnClosing(CancelEventArgs e)
-        {
-            // Termino il thread
-            gameThread.Abort();
-            
+        {           
             // Chiudo Game 
             base.OnClosing(e);
             System.Environment.Exit(0);
@@ -75,7 +72,10 @@ namespace WindowsFormsApplication5
                     logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
                 if (e.KeyChar == (char)Keys.Escape)
+                {
+                    this.logic.vita_rimanente = 0;
                     this.Close();
+                }
             }
         }
 
