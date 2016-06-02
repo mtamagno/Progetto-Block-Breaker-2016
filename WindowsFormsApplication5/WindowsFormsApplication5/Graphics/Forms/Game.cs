@@ -117,6 +117,8 @@ namespace WindowsFormsApplication5
 
             // Inizializza la variabile della visione del menù pausa a falso in caso sia vera
             Gamepause.Visible = false;
+            // Inizializzo l'immagine di sfondo della pausa
+            Gamepause.Image = Properties.Resources.gamepause;
 
             // Inizializza il background
             background = new View(this.ClientRectangle.X, this.ClientRectangle.Y, this.ClientRectangle.Width, this.ClientRectangle.Height, logic);

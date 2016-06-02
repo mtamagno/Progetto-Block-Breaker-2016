@@ -10,6 +10,7 @@ namespace WindowsFormsApplication5
 
         public Button start = new Button();
         private Bitmap backgroundimage;
+        private Button Help = new Button();
         //private IntPtr handle;
         private Bitmap start_button_image;
 
@@ -57,6 +58,14 @@ namespace WindowsFormsApplication5
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
             this.Controls.Add(start);
             this.backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
+            this.Help.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
+            this.Help.BackgroundImage = start_button_image;
+            this.Help.BackgroundImageLayout = ImageLayout.Stretch;
+            this.Help.BackColor = Color.Black;
+            this.Help.Top = ClientRectangle.Height / 2 + Help.Height / 2;
+            this.Help.Left = ClientRectangle.Width / 2 - Help.Width / 2;
+            this.Help.Text = "Help";
+            this.Controls.Add(Help);
 
             // this.handle = backgroundimage.GetHbitmap();
             this.BackgroundImage = backgroundimage;

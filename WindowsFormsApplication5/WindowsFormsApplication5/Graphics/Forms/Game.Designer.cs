@@ -33,29 +33,28 @@
             this.Gamepause = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
+            // Gamepause
+            // 
+            this.Gamepause.BackColor = System.Drawing.Color.Black;
+            this.Gamepause.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Gamepause.Location = new System.Drawing.Point(0, 0);
+            this.Gamepause.Name = "Gamepause";
+            this.Gamepause.Size = new System.Drawing.Size(1000, 500);
+            this.Gamepause.TabIndex = 0;
+            this.Gamepause.Text = "Game Paused\r\n\r\nPress Space to Resume\r\n\r\nPress ESC to Exit";
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(800,500);
+            this.ClientSize = new System.Drawing.Size(800, 500);
             this.Controls.Add(this.Gamepause);
             this.Name = "Game";
             this.Text = "Game";
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);
-            this.PerformLayout();
-            // 
-            // Gamepause
-            // 
-            this.Gamepause.Size = new System.Drawing.Size(this.Size.Width / 5, this.Size.Height / 5);
-            this.Gamepause.AutoSize = true;
-            this.Gamepause.BackColor = System.Drawing.Color.Aqua;
-            this.Gamepause.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Gamepause.Name = "Gamepause";
-            this.Gamepause.TabIndex = 0;
-            this.Gamepause.Text = "Game Paused\r\n\r\nPress Space to Resume\r\n\r\nPress ESC to Exit";
-            this.Gamepause.Location = new System.Drawing.Point(this.ClientRectangle.Width / 2 - this.Gamepause.Width / 2, this.ClientRectangle.Height / 2 - this.Gamepause.Width / 2);
+
         }
 
         #endregion
