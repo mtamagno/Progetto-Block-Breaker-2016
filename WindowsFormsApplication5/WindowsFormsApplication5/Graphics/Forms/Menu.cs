@@ -71,8 +71,20 @@ namespace WindowsFormsApplication5
             this.Controls.Add(instruction);
             this.BackgroundImage = backgroundimage;
             this.Help.Click += new EventHandler(this.Commands);
+            this.Help.KeyPress += Help_KeyPress; ;
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
+
+        private void Help_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == (char)Keys.Escape)
+            {
+                this.start.Visible = true;
+                this.Help.Visible = true;
+                this.instruction.Visible = false;
+            }
+            
         }
 
         public void writer(string testo)

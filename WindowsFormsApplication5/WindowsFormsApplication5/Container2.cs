@@ -165,7 +165,6 @@ namespace WindowsFormsApplication5
                 form.Focus();
                 form.BringToFront();
             }));
-           
         }
 
         private void initializeThread(Thread thread)
