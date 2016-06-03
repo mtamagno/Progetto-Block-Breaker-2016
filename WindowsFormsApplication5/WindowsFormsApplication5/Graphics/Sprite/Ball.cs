@@ -73,7 +73,7 @@ namespace WindowsFormsApplication5
                         // Se un blocco viene toccato dalla pallina gli tolgo una vita e cambio la texture
                         if (this.isTouchingTop(myBlock) || this.isTouchingBottom(myBlock))
                         {
-                            if (this.X + this.Width / 2 > myBlock.X && this.X + this.Width / 2 < myBlock.X + myBlock.Width)
+                            if (this.X + this.Width / 2 > myBlock.X + 1 && this.X + this.Width / 2 < myBlock.X + myBlock.Width - 1)
                             {
                                 this.velocity.Y *= -1;
                                 // Sposto la pallina in modo che tocchi una volta sola 
@@ -100,7 +100,7 @@ namespace WindowsFormsApplication5
                         }
                         if (this.isTouchingLeft(myBlock) || this.isTouchingRight(myBlock))
                         {
-                            if (this.Y + this.Height / 2 > myBlock.Y && this.Y + this.Height / 2 < myBlock.Y + myBlock.Height)
+                            if (this.Y + this.Height / 2 > myBlock.Y + 1 && this.Y + this.Height / 2 < myBlock.Y + myBlock.Height - 1)
                             {
                                 this.velocity.X *= -1;
                                 // Sposto la pallina in modo che tocchi una volta sola 
