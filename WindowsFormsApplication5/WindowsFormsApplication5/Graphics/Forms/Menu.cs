@@ -75,7 +75,7 @@ namespace WindowsFormsApplication5
         private void riempiPanel()
         {
             // Imposta le dimensioni e la posizione del pannello panel che conterrà start e help
-            this.MenuPanel.Size = new Size(this.ClientRectangle.Width / 5, this.ClientRectangle.Height / 5);
+            this.MenuPanel.Size = new Size(this.ClientRectangle.Width / 3, this.ClientRectangle.Height / 3);
             this.MenuPanel.Top =  ClientRectangle.Height / 2 - this.MenuPanel.Size.Height/2;
             this.MenuPanel.Left = ClientRectangle.Width / 2 - this.MenuPanel.Size.Width/2;
 
@@ -85,16 +85,16 @@ namespace WindowsFormsApplication5
             this.start.BackgroundImage = start_button_image;
             this.start.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.BackColor = Color.Black;
-            this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
-            this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
+            this.start.Top = this.MenuPanel.Height / 3 - start.Height/3*2;
+            this.start.Left = this.MenuPanel.Width / 2 - start.Width / 2;
 
             // Imposta le dimensioni e la posizione di help
             this.Help.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             this.Help.BackgroundImage = start_button_image;
             this.Help.BackgroundImageLayout = ImageLayout.Stretch;
             this.Help.BackColor = Color.Black;
-            this.Help.Top = ClientRectangle.Height / 2 + Help.Height / 2;
-            this.Help.Left = ClientRectangle.Width / 2 - Help.Width / 2;
+            this.Help.Top = this.MenuPanel.Height / 3 + Help.Height/3*2;
+            this.Help.Left = this.MenuPanel.Width / 2 - Help.Width / 2;
             this.Help.Text = "Help";
             
             // Aggiunge i bottoni a panel
@@ -104,8 +104,6 @@ namespace WindowsFormsApplication5
             // Aggiunge i panel e istruzioni ai controlli
             this.Controls.Add(instruction);
             this.Controls.Add(MenuPanel);
-            this.Controls.Add(start);
-            this.Controls.Add(Help);
 
             // Eventhandler
             this.Help.Click += new EventHandler(this.Commands);
