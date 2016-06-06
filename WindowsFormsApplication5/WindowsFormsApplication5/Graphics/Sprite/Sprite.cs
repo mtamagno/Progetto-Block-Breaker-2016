@@ -75,7 +75,6 @@ namespace WindowsFormsApplication5
             Texture = b;
             X = x;
             Y = y;
-
             Width = width;
             Height = height;
 
