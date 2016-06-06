@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
-    public class Instruction:Label
+    public class Instruction : Panel
     {
         public Instruction(int Left, int Top, int Width, int Height)
         {
