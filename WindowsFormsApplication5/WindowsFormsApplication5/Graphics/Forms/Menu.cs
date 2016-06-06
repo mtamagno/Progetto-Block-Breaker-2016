@@ -11,6 +11,7 @@ namespace WindowsFormsApplication5
         public Button start = new Button();
         private Bitmap backgroundimage;
         public Button Help = new Button();
+        public Panel MenuPanel = new Panel();
         public Instruction instruction;
         private Bitmap start_button_image;
 
@@ -46,9 +47,39 @@ namespace WindowsFormsApplication5
             this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
         }
 
+        /// <summary>
+        /// Direttive che vanno eseguite in ogni caso
+        /// </summary>
         public void starter()
         {
-            //Direttive che vanno eseguite in ogni caso
+            // Background
+            this.backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
+            this.BackgroundImage = backgroundimage;
+
+            // Crea e riempie il panel centrale
+            this.riempiPanel();
+
+            // Instructions
+            this.instruction = new Instruction(0, 0, 1000, 500);
+            this.instruction.Visible = false;
+
+            // Aspetta il Garbage collector
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
+        /// <summary>
+        /// Dimensiona il panel a seconda della grandezza della grandezza del 
+        /// client e lo riempie con i pulsanti start e help
+        /// </summary>
+        private void riempiPanel()
+        {
+            // Imposta le dimensioni e la posizione del pannello panel che conterrà start e help
+            this.MenuPanel.Size = new Size(this.ClientRectangle.Width / 5, this.ClientRectangle.Height / 5);
+            this.MenuPanel.Top =  ClientRectangle.Height / 2 - this.MenuPanel.Size.Height/2;
+            this.MenuPanel.Left = ClientRectangle.Width / 2 - this.MenuPanel.Size.Width/2;
+
+            // Imposta le dimensioni e la posizione di start
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
             this.start.BackgroundImage = start_button_image;
@@ -56,8 +87,8 @@ namespace WindowsFormsApplication5
             this.start.BackColor = Color.Black;
             this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
             this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
-            this.Controls.Add(start);
-            this.backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
+
+            // Imposta le dimensioni e la posizione di help
             this.Help.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             this.Help.BackgroundImage = start_button_image;
             this.Help.BackgroundImageLayout = ImageLayout.Stretch;
@@ -65,15 +96,20 @@ namespace WindowsFormsApplication5
             this.Help.Top = ClientRectangle.Height / 2 + Help.Height / 2;
             this.Help.Left = ClientRectangle.Width / 2 - Help.Width / 2;
             this.Help.Text = "Help";
-            this.Controls.Add(Help);
-            this.instruction = new Instruction(0, 0, 1000, 500);
-            this.instruction.Visible = false;
+            
+            // Aggiunge i bottoni a panel
+            this.MenuPanel.Controls.Add(start);
+            this.MenuPanel.Controls.Add(Help);
+
+            // Aggiunge i panel e istruzioni ai controlli
             this.Controls.Add(instruction);
-            this.BackgroundImage = backgroundimage;
+            this.Controls.Add(MenuPanel);
+            this.Controls.Add(start);
+            this.Controls.Add(Help);
+
+            // Eventhandler
             this.Help.Click += new EventHandler(this.Commands);
-            this.Help.KeyPress += Help_KeyPress; ;
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+            this.Help.KeyPress += Help_KeyPress;
         }
 
         private void Help_KeyPress(object sender, KeyPressEventArgs e)
@@ -84,7 +120,6 @@ namespace WindowsFormsApplication5
                 this.Help.Visible = true;
                 this.instruction.Visible = false;
             }
-            
         }
 
         public void writer(string testo)
