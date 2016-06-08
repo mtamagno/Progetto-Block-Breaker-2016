@@ -13,6 +13,7 @@ namespace WindowsFormsApplication5
         public Button Help = new Button();
         public Panel MenuPanel = new Panel();
         public Instruction instruction;
+        public Button Highscores = new Button();
         private Bitmap start_button_image;
 
         #endregion Fields
@@ -75,9 +76,11 @@ namespace WindowsFormsApplication5
         private void riempiPanel()
         {
             // Imposta le dimensioni e la posizione del pannello panel che conterrà start e help
-            this.MenuPanel.Size = new Size(this.ClientRectangle.Width / 3, this.ClientRectangle.Height / 3);
-            this.MenuPanel.Top =  ClientRectangle.Height / 2 - this.MenuPanel.Size.Height/2;
+            this.MenuPanel.Size = new Size(this.ClientRectangle.Width / 5, this.ClientRectangle.Height / 2);
+            this.MenuPanel.Top =  ClientRectangle.Height / 2 - this.MenuPanel.Size.Height/15*2;
             this.MenuPanel.Left = ClientRectangle.Width / 2 - this.MenuPanel.Size.Width/2;
+            this.MenuPanel.BackColor = Color.Transparent;
+            this.MenuPanel.BorderStyle = BorderStyle.Fixed3D;
 
             // Imposta le dimensioni e la posizione di start
             this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
@@ -85,7 +88,7 @@ namespace WindowsFormsApplication5
             this.start.BackgroundImage = start_button_image;
             this.start.BackgroundImageLayout = ImageLayout.Stretch;
             this.start.BackColor = Color.Black;
-            this.start.Top = this.MenuPanel.Height / 3 - start.Height/3*2;
+            this.start.Top = this.MenuPanel.Height / 4 - start.Height/5*2;
             this.start.Left = this.MenuPanel.Width / 2 - start.Width / 2;
 
             // Imposta le dimensioni e la posizione di help
@@ -93,13 +96,24 @@ namespace WindowsFormsApplication5
             this.Help.BackgroundImage = start_button_image;
             this.Help.BackgroundImageLayout = ImageLayout.Stretch;
             this.Help.BackColor = Color.Black;
-            this.Help.Top = this.MenuPanel.Height / 3 + Help.Height/3*2;
+            this.Help.Top = this.MenuPanel.Height / 3 + Help.Height/5*2;
             this.Help.Left = this.MenuPanel.Width / 2 - Help.Width / 2;
             this.Help.Text = "Help";
-            
+
+            // Imposta le dimensioni e la posizione di Highscore
+            this.Highscores.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
+            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
+            this.Highscores.BackgroundImage = start_button_image;
+            this.Highscores.BackgroundImageLayout = ImageLayout.Stretch;
+            this.Highscores.BackColor = Color.Black;
+            this.Highscores.Top = this.MenuPanel.Height / 4  + Highscores.Height*2 ;
+            this.Highscores.Left = this.MenuPanel.Width / 2 - Highscores.Width / 2;
+            this.Highscores.Text = "Highscores";
+
             // Aggiunge i bottoni a panel
             this.MenuPanel.Controls.Add(start);
             this.MenuPanel.Controls.Add(Help);
+            this.MenuPanel.Controls.Add(Highscores);
 
             // Aggiunge i panel e istruzioni ai controlli
             this.Controls.Add(instruction);
