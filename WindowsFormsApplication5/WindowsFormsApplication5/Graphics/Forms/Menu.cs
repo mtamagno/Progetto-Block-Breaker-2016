@@ -10,6 +10,7 @@ namespace WindowsFormsApplication5
 
         public Button start = new Button();
         private Bitmap backgroundimage;
+        private PictureBox logo;
         public Button Help = new Button();
         public Panel MenuPanel = new Panel();
         public Instruction instruction;
@@ -64,6 +65,15 @@ namespace WindowsFormsApplication5
             this.instruction = new Instruction(0, 0, 1000, 500);
             this.instruction.Visible = false;
 
+            //Logo
+            logo = new PictureBox();
+            logo.Width = 800;
+            logo.Height = 300;
+            logo.BackColor = Color.Transparent;
+            logo.Image = Properties.Resources.logo1;
+            logo.Top = 0;
+            logo.Left = this.ClientRectangle.Width / 2 - this.logo.Width / 2;
+            this.Controls.Add(logo);
             // Aspetta il Garbage collector
             GC.Collect();
             GC.WaitForPendingFinalizers();

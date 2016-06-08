@@ -205,6 +205,8 @@
     <Content Include="Relazione\Immagini\Utente - Attore.jpg" />
     <None Include="Resources\gamepause.jpg" />
     <None Include="Resources\instruction.jpg" />
+    <None Include="Resources\Logo.jpg" />
+    <None Include="Resources\logo.png" />
     <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
