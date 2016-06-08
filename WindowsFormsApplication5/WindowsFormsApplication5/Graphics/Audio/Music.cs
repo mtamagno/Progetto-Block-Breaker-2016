@@ -12,10 +12,6 @@ namespace WindowsFormsApplication5
 
         #region Constructors
 
-        public Music()
-        {
-        }
-
         #endregion Constructors
 
         #region Methods
@@ -27,19 +23,19 @@ namespace WindowsFormsApplication5
 
         public void Game()
         {
-            backgroundMusic = new SoundPlayer(Properties.Resources.Background_Music);
+            backgroundMusic = new SoundPlayer(Properties.Resources.Game_Music);
             backgroundMusic.PlayLooping();
         }
 
         public void GameOver()
         {
-            backgroundMusic = new SoundPlayer(Properties.Resources.Background_GameOver);
+            backgroundMusic = new SoundPlayer(Properties.Resources.GameOver_Music);
             backgroundMusic.PlayLooping();
         }
 
         public void Menu()
         {
-            backgroundMusic = new SoundPlayer(Properties.Resources.Background_Menu);
+            backgroundMusic = new SoundPlayer(Properties.Resources.Menu_Music);
             backgroundMusic.PlayLooping();
         }
 

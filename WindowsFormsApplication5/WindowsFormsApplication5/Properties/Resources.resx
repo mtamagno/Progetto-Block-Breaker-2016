@@ -148,17 +148,8 @@
   <data name="Block_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Block1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Background_Music" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Background_Music.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="GameOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\maxresdefault.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Background_GameOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Misty-Bog.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Background_Menu" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Piano-melody.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="gamepause" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gamepause.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -171,5 +162,14 @@
   </data>
   <data name="logo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GameOver_Music" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GameOver_Music.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Game_Music" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Game_Music.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Menu_Music" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Menu_Music.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

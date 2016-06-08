@@ -207,6 +207,9 @@
     <None Include="Resources\instruction.jpg" />
     <None Include="Resources\Logo.jpg" />
     <None Include="Resources\logo.png" />
+    <None Include="Resources\Menu_Music.wav" />
+    <None Include="Resources\Game_Music.wav" />
+    <None Include="Resources\GameOver_Music.wav" />
     <Content Include="XMLFile1.xml" />
   </ItemGroup>
   <ItemGroup>
