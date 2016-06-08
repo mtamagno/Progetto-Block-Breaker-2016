@@ -26,7 +26,7 @@ namespace WindowsFormsApplication5
 
         #region Constructors
 
-        public Ball(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
+        public Ball(float x, float y, int width, int height, Logic logic)
         {
             // Imposta le proprietà della pallina
             texture = Properties.Resources.ball;

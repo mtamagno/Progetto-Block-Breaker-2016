@@ -20,10 +20,7 @@ namespace WindowsFormsApplication5
 
         #region Constructors
 
-        //Metodo sprite per la creazione di ogni sprite
-        public Sprite(float x, float y, int width, int height)
-        {
-        }
+
 
         #endregion Constructors
 

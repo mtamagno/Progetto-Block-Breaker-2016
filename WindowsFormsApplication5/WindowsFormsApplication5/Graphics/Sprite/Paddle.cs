@@ -15,7 +15,7 @@ namespace WindowsFormsApplication5
         #region Constructors
 
         //       private static Random random = new Random();
-        public Paddle(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
+        public Paddle(float x, float y, int width, int height, Logic logic)
         {
             texture = Properties.Resources.New_Piskel;
             canFall = false;

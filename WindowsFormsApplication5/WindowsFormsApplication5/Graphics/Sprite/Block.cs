@@ -21,7 +21,7 @@ namespace WindowsFormsApplication5
 
         #region Constructors
 
-        public Block(float x, float y, int width, int height) : base(x, y, width, height)
+        public Block(float x, float y, int width, int height)
         {
             //Alla creazione genero un nuomero casuale di vita
             blockLife = random.Next(0, 5);

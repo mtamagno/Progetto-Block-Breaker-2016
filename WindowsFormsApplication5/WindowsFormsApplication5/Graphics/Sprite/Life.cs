@@ -12,7 +12,7 @@ namespace WindowsFormsApplication5
 
         #region Constructors
 
-        public Life(float x, float y, int width, int height) : base(x, y, width, height)
+        public Life(float x, float y, int width, int height)
         {
             // Imposta le variabili standard della vita alla creazione
             texture = Properties.Resources.vita;

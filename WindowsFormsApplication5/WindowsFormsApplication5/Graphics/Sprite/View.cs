@@ -12,7 +12,7 @@ namespace WindowsFormsApplication5
 
         #region Constructors
 
-        public View(float x, float y, int width, int height, Logic logic) : base(x, y, width, height)
+        public View(float x, float y, int width, int height, Logic logic)
         {
             texture = Properties.Resources.Background;
             canFall = false;
