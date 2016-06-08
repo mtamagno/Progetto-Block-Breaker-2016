@@ -21,7 +21,7 @@ namespace WindowsFormsApplication5
         public float velocityTotLimit = 3000;
         public int velocityTotRaggiunto;
         private SoundEffect Music;
-
+        private bool block_hit = false;
         #endregion Fields
 
         #region Constructors
@@ -29,7 +29,7 @@ namespace WindowsFormsApplication5
         public Ball(float x, float y, int width, int height, Logic logic)
         {
             // Imposta le proprietà della pallina
-            texture = Properties.Resources.ball;
+            texture = Properties.Resources.Ball;
             canFall = false;
             canCollide = true;
             followPointer = true;
@@ -39,11 +39,8 @@ namespace WindowsFormsApplication5
             Music = SoundEffect.FromStream(stream);
 
             //rendo invisibile lo sfondo dello sprite della pallina
-            if (this.GetType().ToString().ToLower() == "windowsformsapplication5.ball")
-            {
-                System.Drawing.Color backColor = texture.GetPixel(0, 0);
-                texture.MakeTransparent(backColor);
-            }
+            System.Drawing.Color backColor = texture.GetPixel(0, 0);
+            texture.MakeTransparent(backColor);
 
             // Disegna la pallina
             this.graphics(texture, x, y, width, height);
@@ -67,21 +64,22 @@ namespace WindowsFormsApplication5
                 if (s.GetType().Name == "Block")
                 {
                     Block myBlock = (Block)s;
+                    block_hit = false;
 
                     if (this.isCollidingWith(myBlock) && myBlock.canCollide == true)
                     {
                         // Se un blocco viene toccato dalla pallina gli tolgo una vita e cambio la texture
                         if (this.isTouchingTop(myBlock) || this.isTouchingBottom(myBlock))
                         {
-                            if (this.X + this.Width / 2 > myBlock.X + 1 && this.X + this.Width / 2 < myBlock.X + myBlock.Width - 1)
+                            if (this.X + this.Width / 2 > myBlock.X && this.X + this.Width / 2 < myBlock.X + myBlock.Width)
                             {
+                                // Setta block_hit a true
+                                block_hit = true;
+                                
+                                //Inverte la Velocità Y della pallina
                                 this.velocity.Y *= -1;
-                                // Sposto la pallina in modo che tocchi una volta sola 
-                                //if (this.Y > myBlock.Y)
-                                //    this.Y = myBlock.Y + myBlock.Height + 1;
-                                //else
-                                //    this.Y = myBlock.Y - this.Height - 1;
 
+                                //Scala la vita del blocco di uno, riproduce il suono ed esegue la funzione textureSwitcher
                                 myBlock.blockLife--;
                                 PlaySound();
                                 myBlock.textureSwitcher();
@@ -100,38 +98,29 @@ namespace WindowsFormsApplication5
                         }
                         if (this.isTouchingLeft(myBlock) || this.isTouchingRight(myBlock))
                         {
-                            if (this.Y + this.Height / 2 > myBlock.Y + 1 && this.Y + this.Height / 2 < myBlock.Y + myBlock.Height - 1)
+                            if (this.Y + this.Height / 2 > myBlock.Y && this.Y + this.Height / 2 < myBlock.Y + myBlock.Height)
                             {
+                                //Inverte la Velocità X della pallina
                                 this.velocity.X *= -1;
-                                // Sposto la pallina in modo che tocchi una volta sola 
-                                //if (this.X > myBlock.X)
-                                //    this.X = myBlock.X + myBlock.Width + 1;
-                                //else
-                                //    this.X = myBlock.X - this.Width - 1;
 
-                                myBlock.blockLife--;
-                                PlaySound();
-                                switch (myBlock.blockLife)
+                                //Scala la vita del blocco di uno, riproduce il suono ed esegue la 
+                                //funzione textureSwitcher se block hit non è già a 1
+                                if (!block_hit)
                                 {
-                                    case 1:
-                                        myBlock.texture = Properties.Resources.Block_1;
-                                        break;
+                                    myBlock.blockLife--;
+                                    PlaySound();
+                                    myBlock.textureSwitcher();
 
-                                    case 2:
-                                        myBlock.texture = Properties.Resources.Block_2;
-                                        break;
-
-                                    case 3:
-                                        myBlock.texture = Properties.Resources.Block_3;
-                                        break;
-                                }
-
-                                myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
-
-                                if (myBlock.blockLife <= 0)
-                                {
-                                    myBlock.torender = false;
-                                    myBlock.canCollide = false;
+                                    if (myBlock.blockLife <= 0)
+                                    {
+                                        myBlock.torender = false;
+                                        myBlock.canCollide = false;
+                                    }
+                                    else
+                                    // Disegna il blocco
+                                    {
+                                        myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
+                                    }
                                 }
                             }
                         }

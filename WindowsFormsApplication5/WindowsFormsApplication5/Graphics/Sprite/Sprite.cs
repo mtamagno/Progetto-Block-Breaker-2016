@@ -18,12 +18,6 @@ namespace WindowsFormsApplication5
 
         #endregion Fields
 
-        #region Constructors
-
-
-
-        #endregion Constructors
-
         #region Properties
 
         public Rectangle Bottom

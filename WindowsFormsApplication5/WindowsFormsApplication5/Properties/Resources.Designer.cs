@@ -83,9 +83,9 @@ namespace WindowsFormsApplication5.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ball {
+        internal static System.Drawing.Bitmap Ball {
             get {
-                object obj = ResourceManager.GetObject("ball", resourceCulture);
+                object obj = ResourceManager.GetObject("Ball", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -171,9 +171,9 @@ namespace WindowsFormsApplication5.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap gamepause {
+        internal static System.Drawing.Bitmap Gamepause {
             get {
-                object obj = ResourceManager.GetObject("gamepause", resourceCulture);
+                object obj = ResourceManager.GetObject("Gamepause", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -181,9 +181,19 @@ namespace WindowsFormsApplication5.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap instruction {
+        internal static System.Drawing.Bitmap Instructions {
             get {
-                object obj = ResourceManager.GetObject("instruction", resourceCulture);
+                object obj = ResourceManager.GetObject("Instructions", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Life {
+            get {
+                object obj = ResourceManager.GetObject("Life", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,16 +233,6 @@ namespace WindowsFormsApplication5.Properties {
         internal static System.Drawing.Bitmap New_Piskel {
             get {
                 object obj = ResourceManager.GetObject("New_Piskel", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap vita {
-            get {
-                object obj = ResourceManager.GetObject("vita", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

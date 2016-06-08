@@ -10,10 +10,10 @@ namespace WindowsFormsApplication5
 
         public Button start = new Button();
         private Bitmap backgroundimage;
-        private PictureBox logo;
+        private PictureBox Logo;
         public Button Help = new Button();
         public Panel MenuPanel = new Panel();
-        public Instruction instruction;
+        public Instructions Instructions = new Instructions();
         public Button Highscores = new Button();
         private Bitmap start_button_image;
 
@@ -62,18 +62,18 @@ namespace WindowsFormsApplication5
             this.riempiPanel();
 
             // Instructions
-            this.instruction = new Instruction(0, 0, 1000, 500);
-            this.instruction.Visible = false;
+            this.Instructions = this.Instructions.Create_Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
 
             //Logo
-            logo = new PictureBox();
-            logo.Width = 800;
-            logo.Height = 300;
-            logo.BackColor = Color.Transparent;
-            logo.Image = Properties.Resources.logo1;
-            logo.Top = 0;
-            logo.Left = this.ClientRectangle.Width / 2 - this.logo.Width / 2;
-            this.Controls.Add(logo);
+            Logo = new PictureBox();
+            Logo.Width = 800;
+            Logo.Height = 300;
+            Logo.BackColor = Color.Transparent;
+            Logo.Image = Properties.Resources.logo1;
+            Logo.Top = 0;
+            Logo.Left = this.ClientRectangle.Width / 2 - this.Logo.Width / 2;
+            this.Controls.Add(Logo);
+            
             // Aspetta il Garbage collector
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -126,11 +126,11 @@ namespace WindowsFormsApplication5
             this.MenuPanel.Controls.Add(Highscores);
 
             // Aggiunge i panel e istruzioni ai controlli
-            this.Controls.Add(instruction);
+            this.Controls.Add(Instructions);
             this.Controls.Add(MenuPanel);
 
             // Eventhandler
-            this.Help.Click += new EventHandler(this.Commands);
+            this.Help.Click += new EventHandler(this.Show_Instructions);
             this.Help.KeyPress += Help_KeyPress;
         }
 
@@ -140,7 +140,7 @@ namespace WindowsFormsApplication5
             {
                 this.start.Visible = true;
                 this.Help.Visible = true;
-                this.instruction.Visible = false;
+                this.Instructions.Visible = false;
             }
         }
 
@@ -168,11 +168,11 @@ namespace WindowsFormsApplication5
             this.start.FlatStyle = FlatStyle.Flat;
         }
 
-        private void Commands(object sender, EventArgs e)
+        private void Show_Instructions(object sender, EventArgs e)
         {
-            this.start.Visible = false;
-            this.Help.Visible = false;
-            this.instruction.Visible = true;
+            this.MenuPanel.Visible = false;
+            this.Logo.Visible = false;
+            this.Instructions.Visible = true;
         }
         #endregion Methods
     }

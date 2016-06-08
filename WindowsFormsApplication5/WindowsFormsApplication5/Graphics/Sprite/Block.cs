@@ -56,23 +56,23 @@ namespace WindowsFormsApplication5
             switch (blockLife)
             {
                 case 0:
-                    texture = Properties.Resources.Block_1;
+                    this.texture = Properties.Resources.Block_1;
                     break;
 
                 case 1:
-                    texture = Properties.Resources.Block_1;
+                    this.texture = Properties.Resources.Block_1;
                     break;
 
                 case 2:
-                    texture = Properties.Resources.Block_2;
+                    this.texture = Properties.Resources.Block_2;
                     break;
 
                 case 3:
-                    texture = Properties.Resources.Block_3;
+                    this.texture = Properties.Resources.Block_3;
                     break;
 
                 case 4:
-                    texture = Properties.Resources.Block_4;
+                    this.texture = Properties.Resources.Block_4;
                     break;
             }
         }

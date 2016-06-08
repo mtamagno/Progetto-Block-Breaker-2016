@@ -7,16 +7,18 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
-    public class Instruction : Panel
+    public class Instructions : Panel
     {
-        public Instruction(int Left, int Top, int Width, int Height)
+        public Instructions Create_Instructions(int Left, int Top, int Width, int Height)
         {
-            this.Top = Top;
-            this.Left = Left;
-            this.Width = Width;
-            this.Height = Height;
-            this.BackgroundImage = Properties.Resources.instruction;
-
+            var controller = this;
+            controller.Left = Left;
+            controller.Top = Top;
+            controller.Width = Width;
+            controller.Height = Height;
+            controller.BackgroundImage = Properties.Resources.Instructions;
+            controller.Visible = false;
+            return controller;
         }
     }
 }

@@ -30,18 +30,17 @@
         {
             this.SuspendLayout();
             // 
-            // Container
+            // Container2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 461);
-            this.KeyPreview = true;
-            this.Name = "Container";
-            this.Text = "BlockBreaker";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
-            this.Load += new System.EventHandler(this.Form2_Load);
-            this.ResizeBegin += new System.EventHandler(this.Form2_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.Form2_ResizeEnd);
+            this.Name = "Container2";
+            this.Text = "Container2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Container2_FormClosing);
+            this.Load += new System.EventHandler(this.Container2_Load);
+            this.ResizeBegin += new System.EventHandler(this.Container2_ResizeBegin);
+            this.ResizeEnd += new System.EventHandler(this.OnResizeEnd);
             this.ResumeLayout(false);
 
         }

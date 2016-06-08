@@ -66,11 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Container2.cs">
+    <Compile Include="Container.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Container2.Designer.cs">
-      <DependentUpon>Container2.cs</DependentUpon>
+    <Compile Include="Container.Designer.cs">
+      <DependentUpon>Container.cs</DependentUpon>
     </Compile>
     <Compile Include="GamePause.cs">
       <SubType>Component</SubType>
@@ -86,12 +86,6 @@
     </Compile>
     <Compile Include="Logic\CheckLife.cs" />
     <Compile Include="Logic\FPSChecker.cs" />
-    <Compile Include="Graphics\Forms\Container.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Graphics\Forms\Container.Designer.cs">
-      <DependentUpon>Container.cs</DependentUpon>
-    </Compile>
     <Compile Include="Graphics\Forms\Game.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,15 +113,11 @@
     <Compile Include="Logic\ScreenManager.cs" />
     <Compile Include="Graphics\Audio\Music.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Container2.resx">
-      <DependentUpon>Container2.cs</DependentUpon>
+    <EmbeddedResource Include="Container.resx">
+      <DependentUpon>Container.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Graphics\Forms\GameOver.resx">
       <DependentUpon>GameOver.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Graphics\Forms\Container.resx">
-      <DependentUpon>Container.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Graphics\Forms\Game.resx">
       <DependentUpon>Game.cs</DependentUpon>

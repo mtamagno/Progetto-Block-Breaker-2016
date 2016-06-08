@@ -119,7 +119,7 @@ namespace WindowsFormsApplication5
                     s.redraw(s,
                         (int)(Math.Abs((float)1/50 * Math.Min(l,h))),
                         (int)(Math.Abs((float)1/50 * Math.Min(l,h))),
-                        Properties.Resources.ball,
+                        Properties.Resources.Ball,
                         s.X * l / li, s.Y * h / hi);
                 }
                 else if (s.GetType().Name == "Paddle")
@@ -152,7 +152,7 @@ namespace WindowsFormsApplication5
                     s.redraw(s,
                         (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
                         (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
-                        Properties.Resources.vita, s.X * l / li, s.Y * h / hi);
+                        Properties.Resources.Life, s.X * l / li, s.Y * h / hi);
                 }
             }
             controller.racchetta.Y = h * 9 / 10;

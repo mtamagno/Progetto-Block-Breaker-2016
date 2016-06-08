@@ -15,7 +15,7 @@ namespace WindowsFormsApplication5
             this.Left = Left;
             this.Width = Width;
             this.Height = Height;
-            this.BackgroundImage = Properties.Resources.gamepause;
+            this.BackgroundImage = Properties.Resources.Gamepause;
         }
 
     }

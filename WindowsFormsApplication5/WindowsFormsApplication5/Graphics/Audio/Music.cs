@@ -10,10 +10,6 @@ namespace WindowsFormsApplication5
 
         #endregion Fields
 
-        #region Constructors
-
-        #endregion Constructors
-
         #region Methods
 
         public void Dispose_Music()

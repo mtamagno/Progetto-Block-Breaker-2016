@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
-    public partial class Container2 : Form
+    public partial class Container : Form
     {
         #region Fields
 
@@ -27,7 +27,7 @@ namespace WindowsFormsApplication5
 
         #region Constructors
 
-        public Container2()
+        public Container()
         {
             InitializeComponent();
         }
