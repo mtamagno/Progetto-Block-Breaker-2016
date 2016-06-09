@@ -335,11 +335,13 @@ namespace WindowsFormsApplication5
                 this.initializeForm(Game);
                 this.Game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
                 this.Game.ball.totalVelocityReset(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
+
             }
             if (this.menu != null)
             {
                 this.initializeForm(this.menu);
                 this.menu.on_resize(this.Width, this.Height);
+                this.menu.start.Click += new EventHandler(this.StartGame);
             }
             if (this.GameOver != null)
             {
