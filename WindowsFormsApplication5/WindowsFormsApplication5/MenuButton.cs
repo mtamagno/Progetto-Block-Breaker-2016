@@ -18,6 +18,20 @@ namespace WindowsFormsApplication5
             this.BackgroundImage = buttonBackground;
             this.BackgroundImageLayout = ImageLayout.Stretch;
             this.BackColor = Color.Black;
+            this.MouseHover += MouseHoverButton;
+            this.MouseLeave += MouseLeaveButton;
+            this.FlatStyle = FlatStyle.Flat;
+        }
+
+        private void MouseHoverButton(object sender, EventArgs e)
+        {
+            this.FlatStyle = FlatStyle.Standard;
+        }
+
+        private void MouseLeaveButton(object sender, EventArgs e)
+        {
+            
+            this.FlatStyle = FlatStyle.Flat;
         }
     }
 }

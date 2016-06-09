@@ -224,16 +224,6 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
-        private void Start_MouseEnter(object sender, EventArgs e)
-        {
-            this.start.FlatStyle = FlatStyle.Standard;
-        }
-
-        private void Start_MouseLeave(object sender, EventArgs e)
-        {
-            this.start.FlatStyle = FlatStyle.Flat;
-        }
-
         private void Show_Instructions(object sender, EventArgs e)
         {
             this.MenuPanel.Visible = false;
