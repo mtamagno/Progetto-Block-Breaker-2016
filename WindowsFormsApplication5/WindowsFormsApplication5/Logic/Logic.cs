@@ -112,8 +112,7 @@ namespace WindowsFormsApplication5
         //funzione per ridimensionare gli elementi
         public void resize(int li, int hi, int l, int h)
         {
-            controller.grid.redraw_grid(controller.grid, controller.background.Height, controller.background.Width);
-
+            
             //controllo tutti gli sprite che sono in gioco
             foreach (Sprite s in iManager.inGameSprites)
             {
@@ -148,17 +147,7 @@ namespace WindowsFormsApplication5
                         0);
                     s.X = controller.ClientRectangle.Width / 2 - s.Width / 2;
                     s.Y = controller.ClientRectangle.Height / 2 - s.Height / 2;
-                }
-
-                //ridimensiono i blocchi di gioco
-                else if (s.GetType().Name == "Block")
-                {
-                    controller.grid.redraw_block((Block)s,
-                        (100 * l / li),
-                        (50 * (h / hi)),
-                        s.X * l / li,
-                        s.Y * h / hi);
-                }
+                }                            
 
                 //ridimensiono la vita
                 else if (s.GetType().Name == "Life")
@@ -169,7 +158,25 @@ namespace WindowsFormsApplication5
                         Properties.Resources.Life, s.X * l / li, s.Y * h / hi);
                 }
             }
-            controller.racchetta.Y = h * 9 / 10;
+
+            controller.grid.redraw_grid(controller.grid, controller.background.Height, controller.background.Width);
+
+            foreach (Sprite s in iManager.inGameSprites)
+            {
+                //ridimensiono i blocchi di gioco
+                if (s.GetType().Name == "Block")
+                {
+                    controller.grid.redraw_block((Block)s,
+                        (100 * l / li),
+                        (50 * (h / hi)),
+                        s.X * l / li,
+                        s.Y * h / hi);
+                }
+            }
+
+                controller.racchetta.Y = h * 9 / 10;
+            
+
             spriteBatch.cntxt.MaximumBuffer = new Size(controller.ClientSize.Width + 1, controller.ClientSize.Height + 1);
             spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(controller.CreateGraphics(), new Rectangle(Point.Empty, controller.ClientSize));
             spriteBatch.Gfx = controller.CreateGraphics();

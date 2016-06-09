@@ -8,7 +8,7 @@ namespace WindowsFormsApplication5
     {
         #region Fields
 
-        public Button Continue = new Button();
+        public MenuButton Continue;
         public HighScore highScore = new HighScore();
         private Bitmap backgroundimage;
         private Bitmap start_button_image;
@@ -41,7 +41,8 @@ namespace WindowsFormsApplication5
             this.cleaner();
             this.BackgroundImage = new Bitmap(Properties.Resources.GameOver, this.ClientSize);
             this.BackgroundImageLayout = ImageLayout.Stretch;
-            this.Continue.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
+            Size s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
+            Continue = new MenuButton(s);            
             this.Continue.Top = ClientRectangle.Height / 8 * 6 - Continue.Height / 2;
             this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
             this.textBox.Top = this.Continue.Top + this.Continue.Height;
@@ -63,12 +64,9 @@ namespace WindowsFormsApplication5
         private void starter()
         {
             // Imposta l'immagine, il size, il background e il testo del pulsante Continue
-            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.Continue.Size);
-            this.Continue.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-            this.Continue.BackgroundImage = start_button_image;
-            this.Continue.BackgroundImageLayout = ImageLayout.Stretch;
+            Size s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
+            this.Continue = new MenuButton(s);
             this.Continue.Text = "Continue";
-            this.Continue.BackColor = Color.Black;
 
             // Imposta la sua posizione e lo aggiungo ai controlli
             this.Continue.Top = ClientRectangle.Height / 8 * 6 - Continue.Height / 2;
