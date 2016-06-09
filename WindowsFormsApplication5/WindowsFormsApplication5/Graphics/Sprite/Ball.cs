@@ -283,6 +283,7 @@ namespace WindowsFormsApplication5
                 this.velocity.Y *= -1;
                 this.Y = myview.Y;
             }
+           
         }
 
         #endregion Methods
