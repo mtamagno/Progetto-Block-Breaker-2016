@@ -16,12 +16,12 @@ namespace WindowsFormsApplication5
 
         private TextBox textBox = new TextBox();
         private Game Game;
-        private Thread gameAlive;
+        private Thread GameAlive;
         private GameOver GameOver;
         private Panel GamePanels;
-        private HighScore highScore;
-        private Start Menu;
-        private Music music;
+        private HighScore HighScore;
+        private new Menu Menu;
+        private Music Music;
 
         #endregion Fields
 
@@ -39,7 +39,7 @@ namespace WindowsFormsApplication5
         private void Container2_Load(object sender, EventArgs e)
         {
             this.MinimumSize = new System.Drawing.Size(700,450);
-            music = new Music();
+            Music = new Music();
 
             // Imposta again a false per dire che il gioco e' stato avviato per la prima volta
             again = false;
@@ -90,10 +90,10 @@ namespace WindowsFormsApplication5
             initializeForm(Game);
 
             // Inizializza il thread per controllare lo stato del gioco
-            initializeThread(gameAlive);
+            initializeThread(GameAlive);
 
             //faccio partire la musica di gioco
-            music.Game();
+            Music.Game();
         }
 
         private void initializeGameOver()
@@ -111,13 +111,13 @@ namespace WindowsFormsApplication5
             GameOver.Continue.Click += new EventHandler(this.ContinueToMenu);
 
             //Faccio partire la musica del GameOver
-            music.GameOver();
+            Music.GameOver();
         }
 
         private void initializeMenu()
         {
             //assegno al Menu un nuovo Menu
-            Menu = new Start();
+            Menu = new Menu();
 
             // Inizializza il Menu
             initializeForm(Menu);
@@ -132,7 +132,7 @@ namespace WindowsFormsApplication5
             Menu.start.Click += new EventHandler(this.StartGame);
             
             //Faccio partire la musica del Menu
-            music.Menu();
+            Music.Menu();
         }
 
         private void initializeForm(Form form)
@@ -169,10 +169,10 @@ namespace WindowsFormsApplication5
 
         private void initializeThread(Thread thread)
         {   //assegno al thread una funzione
-            gameAlive = new Thread(gameoverCheck);
+            GameAlive = new Thread(gameoverCheck);
 
             // Inizializza il thread
-            gameAlive.Start();
+            GameAlive.Start();
         }
 
         //Funzione chiamata quando si sta ridimensionando la finestra
@@ -267,8 +267,8 @@ namespace WindowsFormsApplication5
                 }
 
                 //pulisco il Thread
-                if (this.gameAlive != null)
-                    this.gameAlive = null;
+                if (this.GameAlive != null)
+                    this.GameAlive = null;
 
                 //Pulisco il garbage collector
                 GC.Collect();
@@ -279,10 +279,10 @@ namespace WindowsFormsApplication5
 
         private void ContinueToMenu(object sender, EventArgs e)
         {
-            // Salva prima lo score, poi l'highScore nell'xml
-            this.highScore.Name = GameOver.highScore.Name;
+            // Salva prima lo score, poi l'HighScore nell'xml
+            this.HighScore.Name = GameOver.highScore.Name;
             HighScoreSaver highScoreSaver = new HighScoreSaver();
-            highScoreSaver.ModifyOrCreateXML(highScore);
+            highScoreSaver.ModifyOrCreateXML(HighScore);
 
             // Imposta che il giocatore ha gia finito una partita
             this.again = true;
@@ -313,8 +313,8 @@ namespace WindowsFormsApplication5
                 //se il Game e' ancora attivo controllo se l utente ha finito il gioco
                 if (Game.Logic.shouldStop == true && Game.Logic.waitResize == false)
                 {
-                    //se l'utente ha finito il gioco salvo l highScore ottenuto
-                    this.highScore = this.Game.Logic.highScore;
+                    //se l'utente ha finito il gioco salvo l HighScore ottenuto
+                    this.HighScore = this.Game.Logic.highScore;
 
                     //ri Imposta il Game.Logic a false
                     Game.Logic.shouldStop = false;

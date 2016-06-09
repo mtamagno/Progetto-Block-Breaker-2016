@@ -9,7 +9,6 @@ namespace WindowsFormsApplication5
     public partial class Game : Form
     {
         #region Fields
-
         public View background;
         public Ball ball;
         public Grid grid;
@@ -26,6 +25,7 @@ namespace WindowsFormsApplication5
 
         public Game()
         {
+            // Inizializza i componenti
             InitializeComponent();
             return;
         }

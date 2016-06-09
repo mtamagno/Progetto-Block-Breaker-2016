@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
-    public partial class Start : Form
+    public partial class Menu : Form
     {
         #region Fields
 
@@ -20,10 +20,10 @@ namespace WindowsFormsApplication5
         #endregion Fields
 
         #region Constructors
-
-        public Start()
+        
+        public Menu()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         #endregion Constructors
@@ -181,7 +181,6 @@ namespace WindowsFormsApplication5
 
             // Eventhandler
             this.Help.Click += new EventHandler(this.Show_Instructions);
-            this.Help.KeyPress += Help_KeyPress;
         }
 
         /// <summary>
@@ -201,7 +200,7 @@ namespace WindowsFormsApplication5
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Help_KeyPress(object sender, KeyPressEventArgs e)
+        public void Help_KeyPress(object sender, KeyPressEventArgs e)
         {
             if(e.KeyChar == (char)Keys.Escape)
             {
@@ -223,7 +222,7 @@ namespace WindowsFormsApplication5
         }
 
         /// <summary>
-        /// Carica il form3
+        /// Carica il Menu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -234,16 +233,31 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
+        /// <summary>
+        /// Evento che serve a rendere i pulsanti tridimensionali al passaggio
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Start_MouseEnter(object sender, EventArgs e)
         {
             this.start.FlatStyle = FlatStyle.Standard;
         }
 
+        /// <summary>
+        /// Evento che annulla il precedente all'uscita del mouse dall'area del pulsante
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Start_MouseLeave(object sender, EventArgs e)
         {
             this.start.FlatStyle = FlatStyle.Flat;
         }
 
+        /// <summary>
+        /// Evento che permette di nascondere le istruzioni nascondendo il resto
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Show_Instructions(object sender, EventArgs e)
         {
             this.MenuPanel.Visible = false;
