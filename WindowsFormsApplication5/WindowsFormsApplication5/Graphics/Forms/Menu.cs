@@ -16,6 +16,7 @@ namespace WindowsFormsApplication5
         public MenuButton start;
         private Bitmap backgroundimage;
         private PictureBox Logo;
+        private string Testo;
 
         #endregion Fields
 
@@ -79,8 +80,9 @@ namespace WindowsFormsApplication5
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
             //Ricrea il Panel
-            this.CreatePanel();
-
+            Testo = this.start.Text;
+            this.CreatePanel();           
+            this.writer(Testo);
             //Ricrea il logo
             this.CreateLogo(this.ClientSize.Width, this.ClientSize.Height);
 
@@ -195,6 +197,7 @@ namespace WindowsFormsApplication5
         /// </summary>
         private void CreatePanel()
         {
+            s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             // Imposta le dimensioni e la posizione del pannello panel che conterrà start e help
             this.MenuPanel.Size = new Size(this.ClientRectangle.Width / 5, this.ClientRectangle.Height / 2);
             this.MenuPanel.Top = ClientRectangle.Height / 2 - this.MenuPanel.Size.Height / 15 * 2;
@@ -203,17 +206,23 @@ namespace WindowsFormsApplication5
             this.MenuPanel.BorderStyle = BorderStyle.Fixed3D;
 
             // Imposta le dimensioni e la posizione di start
+            if (this.start != null)
+                this.start.Dispose();
             this.start = new MenuButton(s);
             this.start.Top = this.MenuPanel.Height / 4 - start.Height / 5 * 2;
             this.start.Left = this.MenuPanel.Width / 2 - start.Width / 2;
-
+            
             // Imposta le dimensioni e la posizione di help
+            if (this.Help != null)
+                this.Help.Dispose();
             this.Help = new MenuButton(s);
             this.Help.Top = this.MenuPanel.Height / 3 + Help.Height / 5 * 2;
             this.Help.Left = this.MenuPanel.Width / 2 - Help.Width / 2;
             this.Help.Text = "Help";
 
             // Imposta le dimensioni e la posizione di Highscore
+            if (this.Highscores != null)
+                this.Highscores.Dispose();
             this.Highscores = new MenuButton(s);
             this.Highscores.Top = this.MenuPanel.Height / 4 + Highscores.Height * 2;
             this.Highscores.Left = this.MenuPanel.Width / 2 - Highscores.Width / 2;
@@ -221,6 +230,9 @@ namespace WindowsFormsApplication5
 
             // Eventhandler
             this.Help.Click += new EventHandler(this.Show_Instructions);
+            this.MenuPanel.Controls.Add(start);
+            this.MenuPanel.Controls.Add(Help);
+            this.MenuPanel.Controls.Add(Highscores);
         }
 
         /// <summary>
