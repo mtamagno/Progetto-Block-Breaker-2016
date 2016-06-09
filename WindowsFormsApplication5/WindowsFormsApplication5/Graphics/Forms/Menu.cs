@@ -29,24 +29,6 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
-        public void cleaner()
-        {
-            this.BackgroundImage.Dispose();
-            this.backgroundimage.Dispose();
-            GC.Collect();
-            GC.WaitForFullGCComplete();
-        }
-
-        public void on_resize(int l, int h)
-        {
-            this.cleaner();
-            this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
-            this.BackgroundImageLayout = ImageLayout.Stretch;
-            this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-            this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
-            this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
-            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
-        }
 
         /// <summary>
         /// Direttive che vanno eseguite in ogni caso
@@ -67,9 +49,6 @@ namespace WindowsFormsApplication5
 
             //Logo
             this.CreateLogo(this.ClientSize.Width, this.ClientSize.Height);
-            
-            // Aggiunge i tasti al panel, poi il panel e le istruzioni ai controlli del form
-            this.ControlsAdder();
 
             // Aspetta il Garbage collector
             GC.Collect();
@@ -78,6 +57,9 @@ namespace WindowsFormsApplication5
             //Effettua un on_resize che annulla un particolare bug nelle librerie di Drawings.dll
             //Che si può indurre eliminando questo primo on_resize e cliccando su help, poi effettuando il (primo) resize dalla schermata delle istruzioni
             this.on_resize(this.ClientSize.Width,this.ClientSize.Height);
+            // Aggiunge i tasti al panel, poi il panel e le istruzioni ai controlli del form
+            this.ControlsAdder();
+
         }
 
         public bool cleaner()

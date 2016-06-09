@@ -20,7 +20,7 @@ namespace WindowsFormsApplication5
         private GameOver GameOver;
         private Panel GamePanels;
         private HighScore highScore;
-        private Start Menu;
+        private Start menu;
         private Music music;
 
         #endregion Fields
@@ -116,21 +116,22 @@ namespace WindowsFormsApplication5
 
         private void initializeMenu()
         {
+            
             //assegno al Menu un nuovo Menu
-            Menu = new Start();
+            menu = new Start();
 
             // Inizializza il Menu
-            initializeForm(Menu);
+            initializeForm(menu);
 
             //Controllo se e' la prima partita dell utente
             if (again)
-                Menu.start.Text = "Play Again";
+                menu.start.Text = "Play Again";
             else
-                Menu.start.Text = "Play";
+                menu.start.Text = "Play";
 
             //Assegno al pulsante del Menu un evento
-            Menu.start.Click += new EventHandler(this.StartGame);
-            
+            menu.start.Click += new EventHandler(this.StartGame);
+            menu.start.Text = "Play";
             //Faccio partire la musica del Menu
             music.Menu();
         }
@@ -204,10 +205,10 @@ namespace WindowsFormsApplication5
                 Game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
                 Game.ball.totalVelocityReset(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
             }
-            if (Menu != null)
+            if (menu != null)
             {
-                initializeForm(Menu);
-                Menu.on_resize(this.Width, this.Height);
+                initializeForm(menu);
+                menu.on_resize(this.Width, this.Height);
             }
             if (GameOver != null)
             {
@@ -245,14 +246,14 @@ namespace WindowsFormsApplication5
                 }
 
                 //pulisco il Menu
-                if (this.Menu != null)
+                if (this.menu != null)
                 {
-                    this.Menu.start.Dispose();
-                    this.Menu.cleaner();
-                    this.Menu.Controls.Clear();
-                    this.Menu.Close();
-                    this.Menu.Dispose();
-                    this.Menu = null;
+                    this.menu.start.Dispose();
+                    this.menu.cleaner();
+                    this.menu.Controls.Clear();
+                    this.menu.Close();
+                    this.menu.Dispose();
+                    this.menu = null;
                 }
 
                 //pulisco il GameOver
