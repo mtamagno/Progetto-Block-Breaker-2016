@@ -75,7 +75,7 @@ namespace WindowsFormsApplication5
             this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
             this.Controls.Add(Continue);
 
-            // Imposta posizione, placeholder e size della texBox
+            // Imposta posizione, placeholder e size della textBox
             this.textBox.Size = Continue.Size;
             this.textBox.Top = Continue.Top + Continue.Height;
             this.textBox.Left = Continue.Left;
