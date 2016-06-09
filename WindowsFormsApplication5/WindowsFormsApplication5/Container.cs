@@ -15,12 +15,12 @@ namespace WindowsFormsApplication5
         private int lunghezza_client_iniziale;
 
         private TextBox textBox = new TextBox();
-        private Game game;
+        private Game Game;
         private Thread gameAlive;
-        private GameOver gameover;
-        private Panel gamePanels;
+        private GameOver GameOver;
+        private Panel GamePanels;
         private HighScore highScore;
-        private Start menu;
+        private Start Menu;
         private Music music;
 
         #endregion Fields
@@ -38,56 +38,56 @@ namespace WindowsFormsApplication5
 
         private void Container2_Load(object sender, EventArgs e)
         {
-            this.MinimumSize = new System.Drawing.Size(400,400);
+            this.MinimumSize = new System.Drawing.Size(700,450);
             music = new Music();
 
             // Imposta again a false per dire che il gioco e' stato avviato per la prima volta
             again = false;
-
+            
             // Inizializza il pannello che conterra' i form dell'applicazione
             initializeGamePanel();
-            gamePanels.AutoSizeMode = AutoSizeMode;
+            GamePanels.AutoSizeMode = AutoSizeMode;
 
-            // Inizializza il menu come primo form che apparira' nel gioco
+            // Inizializza il Menu come primo form che apparira' nel gioco
             initializeMenu();
         }
 
         private void initializeGamePanel()
         {
             //assegno al pannello un nuovo pannello
-            gamePanels = new Panel();
+            GamePanels = new Panel();
 
             // Imposta altezza e lunghezza del pannello
-            gamePanels.Width = this.Width;
-            gamePanels.Height = this.Height;
+            GamePanels.Width = this.Width;
+            GamePanels.Height = this.Height;
 
             // Imposta il metodo Dock per far riempire al pannello tutto lo spazio del form
             this.Dock = DockStyle.Fill;
 
             // Imposta la posizione iniziale del pannello
-            gamePanels.Top = 0;
-            gamePanels.Left = 0;
+            GamePanels.Top = 0;
+            GamePanels.Left = 0;
 
             // Imposta il Dock del pannello per far riempire ai Form figli del pannello tutto lo spazio del pannello
-            gamePanels.Dock = DockStyle.Fill;
-            gamePanels.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
+            GamePanels.Dock = DockStyle.Fill;
+            GamePanels.Anchor = AnchorStyles.Top & AnchorStyles.Bottom & AnchorStyles.Left & AnchorStyles.Right;
 
             //mostro il pannello
-            gamePanels.Show();
+            GamePanels.Show();
 
             //aggiungo il pannello al form
             this.Invoke(new MethodInvoker(delegate
             {
-                this.Controls.Add(gamePanels);
+                this.Controls.Add(GamePanels);
             }));
         }
 
         private void initializeGame()
         {   //assegno al gioco un nuovo gioco
-            game = new Game();
+            Game = new Game();
 
             // Inizializza il gioco
-            initializeForm(game);
+            initializeForm(Game);
 
             // Inizializza il thread per controllare lo stato del gioco
             initializeThread(gameAlive);
@@ -98,40 +98,40 @@ namespace WindowsFormsApplication5
 
         private void initializeGameOver()
         {
-            //assegno al gameover un nuovo gameover
-            gameover = new GameOver();
+            //assegno al GameOver un nuovo GameOver
+            GameOver = new GameOver();
 
-            // Inizializza il gameover
-            initializeForm(gameover);
+            // Inizializza il GameOver
+            initializeForm(GameOver);
 
-            //Assegno un testo al pulsante del form gameover
-            gameover.Continue.Text = "Continue";
+            //Assegno un testo al pulsante del form GameOver
+            GameOver.Continue.Text = "Continue";
 
-            //Assegno un evento al pusalnte del gameover
-            gameover.Continue.Click += new EventHandler(this.ContinueToMenu);
+            //Assegno un evento al pusalnte del GameOver
+            GameOver.Continue.Click += new EventHandler(this.ContinueToMenu);
 
-            //Faccio partire la musica del gameover
+            //Faccio partire la musica del GameOver
             music.GameOver();
         }
 
         private void initializeMenu()
         {
-            //assegno al menu un nuovo menu
-            menu = new Start();
+            //assegno al Menu un nuovo Menu
+            Menu = new Start();
 
-            // Inizializza il menu
-            initializeForm(menu);
+            // Inizializza il Menu
+            initializeForm(Menu);
 
             //Controllo se e' la prima partita dell utente
             if (again)
-                menu.start.Text = "Play Again";
+                Menu.start.Text = "Play Again";
             else
-                menu.start.Text = "Play";
+                Menu.start.Text = "Play";
 
-            //Assegno al pulsante del menu un evento
-            menu.start.Click += new EventHandler(this.StartGame);
+            //Assegno al pulsante del Menu un evento
+            Menu.start.Click += new EventHandler(this.StartGame);
             
-            //Faccio partire la musica del menu
+            //Faccio partire la musica del Menu
             music.Menu();
         }
 
@@ -142,8 +142,8 @@ namespace WindowsFormsApplication5
             form.AutoScaleMode = AutoScaleMode.Inherit;
 
             // Imposta altezza e larghezza del form
-            form.Width = gamePanels.Width;
-            form.Height = gamePanels.Height;
+            form.Width = GamePanels.Width;
+            form.Height = GamePanels.Height;
 
             // Imposta la posizione del form
             form.Left = 0;
@@ -160,7 +160,7 @@ namespace WindowsFormsApplication5
             //aggiungo e mostro il form a schermo
             this.Invoke(new MethodInvoker(delegate
             {
-                gamePanels.Controls.Add(form);
+                GamePanels.Controls.Add(form);
                 form.Show();
                 form.Focus();
                 form.BringToFront();
@@ -186,36 +186,36 @@ namespace WindowsFormsApplication5
         // FUnzione chiamata quando viene ridimensionata la finestra
         private void OnResizeEnd(object sender, EventArgs e)
         {
-            if(game != null)
-            game.logic.waitResize = true;
+            if(Game != null)
+            Game.Logic.waitResize = true;
             // Imposta i nuovi valori del gamePanel
-            gamePanels.Height = this.ClientRectangle.Height;
-            gamePanels.Width = this.ClientRectangle.Width;
-            gamePanels.Top = 0;
-            gamePanels.Left = 0;
+            GamePanels.Height = this.ClientRectangle.Height;
+            GamePanels.Width = this.ClientRectangle.Width;
+            GamePanels.Top = 0;
+            GamePanels.Left = 0;
 
             //Salvo le dimensioni del client
             lunghezza_client = this.ClientRectangle.Width;
             altezza_client = this.ClientRectangle.Height;
 
-            if (game != null)
+            if (Game != null)
             {
-                initializeForm(game);
-                game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
-                game.ball.totalVelocityReset(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
+                initializeForm(Game);
+                Game.on_resize(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
+                Game.ball.totalVelocityReset(lunghezza_client_iniziale, altezza_client_iniziale, lunghezza_client, altezza_client);
             }
-            if (menu != null)
+            if (Menu != null)
             {
-                initializeForm(menu);
-                menu.on_resize(this.Width, this.Height);
+                initializeForm(Menu);
+                Menu.on_resize(this.Width, this.Height);
             }
-            if (gameover != null)
+            if (GameOver != null)
             {
-                initializeForm(gameover);
-                gameover.on_resize(this.Width, this.Height);
+                initializeForm(GameOver);
+                GameOver.on_resize(this.Width, this.Height);
             }
-            if(game!=null)
-            game.logic.waitResize = false;
+            if(Game!=null)
+            Game.Logic.waitResize = false;
         }
 
         private void DisposeAll()
@@ -223,52 +223,52 @@ namespace WindowsFormsApplication5
             this.Invoke(new MethodInvoker(delegate
             {
                 //rimuovo il gamePanel dal container
-                this.Controls.Remove(gamePanels);
+                this.Controls.Remove(GamePanels);
 
                 //Pulisco il gamepanel
-                gamePanels.Dispose();
-                gamePanels.Controls.Clear();
+                this.GamePanels.Dispose();
+                this.GamePanels.Controls.Clear();
 
                 // Imposta il gamePanel a null
-                gamePanels = null;
+                this.GamePanels = null;
 
                 //pulisco il container
                 this.Controls.Clear();
 
                 //pulisco il gioco
-                if (game != null)
+                if (this.Game != null)
                 {
-                    game.Controls.Clear();
-                    game.Close();
-                    game.Dispose();
-                    game = null;
+                    this.Game.Controls.Clear();
+                    this.Game.Close();
+                    this.Game.Dispose();
+                    this.Game = null;
                 }
 
-                //pulisco il menu
-                if (menu != null)
+                //pulisco il Menu
+                if (this.Menu != null)
                 {
-                    menu.start.Dispose();
-                    menu.cleaner();
-                    menu.Controls.Clear();
-                    menu.Close();
-                    menu.Dispose();
-                    menu = null;
+                    this.Menu.start.Dispose();
+                    this.Menu.cleaner();
+                    this.Menu.Controls.Clear();
+                    this.Menu.Close();
+                    this.Menu.Dispose();
+                    this.Menu = null;
                 }
 
-                //pulisco il gameover
-                if (gameover != null)
+                //pulisco il GameOver
+                if (this.GameOver != null)
                 {
-                    gameover.Continue.Dispose();
-                    gameover.cleaner();
-                    gameover.Controls.Clear();
-                    gameover.Close();
-                    gameover.Dispose();
-                    gameover = null;
+                    this.GameOver.Continue.Dispose();
+                    this.GameOver.cleaner();
+                    this.GameOver.Controls.Clear();
+                    this.GameOver.Close();
+                    this.GameOver.Dispose();
+                    this.GameOver = null;
                 }
 
                 //pulisco il Thread
-                if (gameAlive != null)
-                    gameAlive = null;
+                if (this.gameAlive != null)
+                    this.gameAlive = null;
 
                 //Pulisco il garbage collector
                 GC.Collect();
@@ -280,21 +280,21 @@ namespace WindowsFormsApplication5
         private void ContinueToMenu(object sender, EventArgs e)
         {
             // Salva prima lo score, poi l'highScore nell'xml
-            this.highScore.Name = gameover.highScore.Name;
+            this.highScore.Name = GameOver.highScore.Name;
             HighScoreSaver highScoreSaver = new HighScoreSaver();
             highScoreSaver.ModifyOrCreateXML(highScore);
 
             // Imposta che il giocatore ha gia finito una partita
-            again = true;
+            this.again = true;
 
             // Pulisce tutto
-            DisposeAll();
+            this.DisposeAll();
 
             // Inizializza il gamePanel
-            initializeGamePanel();
+            this.initializeGamePanel();
 
             // Inizializza il Menu
-            initializeMenu();
+            this.initializeMenu();
 
             // Svuota il garbage collector per liberare memoria
             GC.Collect();
@@ -307,17 +307,17 @@ namespace WindowsFormsApplication5
 
         private void gameoverCheck()
         {
-            //controllo se il game e' ancora attivo
-            while (game != null)
+            //controllo se il Game e' ancora attivo
+            while (Game != null)
             {
-                //se il game e' ancora attivo controllo se l utente ha finito il gioco
-                if (game.logic.shouldStop == true && game.logic.waitResize == false)
+                //se il Game e' ancora attivo controllo se l utente ha finito il gioco
+                if (Game.Logic.shouldStop == true && Game.Logic.waitResize == false)
                 {
                     //se l'utente ha finito il gioco salvo l highScore ottenuto
-                    this.highScore = this.game.logic.highScore;
+                    this.highScore = this.Game.Logic.highScore;
 
-                    //ri Imposta il game.logic a false
-                    game.logic.shouldStop = false;
+                    //ri Imposta il Game.Logic a false
+                    Game.Logic.shouldStop = false;
 
                     //pulisco tutto
                     DisposeAll();
@@ -359,8 +359,8 @@ namespace WindowsFormsApplication5
         private void Container2_FormClosing(object sender, FormClosingEventArgs e)
         {
             //se l utente preme x dalla schermata di gioco devo fermare il thread del gioco
-            if (game != null)
-                game.logic.vita_rimanente = 0;
+            if (Game != null)
+                Game.Logic.vita_rimanente = 0;
 
             //pulisco tutto
             DisposeAll();

@@ -13,7 +13,7 @@ namespace WindowsFormsApplication5
         public View background;
         public Ball ball;
         public Grid grid;
-        public Logic logic;
+        public Logic Logic;
         public Paddle racchetta;
         public Life[] vita = new Life[3];
         public Thread gameThread;
@@ -36,8 +36,8 @@ namespace WindowsFormsApplication5
 
         public void on_resize(int li, int hi, int l, int h)
         {
-            // Richiama logic.resize
-            logic.resize(li, hi, l, h);
+            // Richiama Logic.resize
+            Logic.resize(li, hi, l, h);
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -56,7 +56,7 @@ namespace WindowsFormsApplication5
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (logic.AllowInput)
+            if (Logic.AllowInput)
             {
                 if (e.KeyChar == (char)Keys.Space)
                 {
@@ -64,7 +64,7 @@ namespace WindowsFormsApplication5
                     ball.canFall = true;
                     racchetta.followPointer = true;
                     gamePause.Visible = false;
-                    logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
+                    Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
                 if (e.KeyChar == (char)Keys.Enter && gamePause.Visible == false)
                 {
@@ -72,11 +72,11 @@ namespace WindowsFormsApplication5
                     ball.canFall = false;
                     racchetta.followPointer = false;
                     gamePause.Visible = true;
-                    logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
+                    Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
                 if (e.KeyChar == (char)Keys.Escape)
                 {
-                    this.logic.vita_rimanente = 0;
+                    this.Logic.vita_rimanente = 0;
                     this.Close();
                 }
             }
@@ -84,14 +84,14 @@ namespace WindowsFormsApplication5
 
         private void init_grid()
         {
-            grid = new Grid((int)this.background.X, (int)this.background.Y, this.background.Height, this.background.Width, Properties.Resources.Block_4, logic);
+            grid = new Grid((int)this.background.X, (int)this.background.Y, this.background.Height, this.background.Width, Properties.Resources.Block_4, Logic);
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
 
         public void life_init()
         {
-            for (int i = 0; i < logic.vita_rimanente; i++)
+            for (int i = 0; i < Logic.vita_rimanente; i++)
             {
                 vita[i] = new Life(this.ClientRectangle.Width - (float)1 / 50 * this.ClientRectangle.Width 
                         - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width,this.ClientRectangle.Height))) * (i + 1)-10*(i + 1), 
@@ -99,7 +99,7 @@ namespace WindowsFormsApplication5
                         - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height)))-5,
                     (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))),
                     (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))));
-                logic.iManager.inGameSprites.Add(vita[i]);
+                Logic.iManager.inGameSprites.Add(vita[i]);
             }
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -113,7 +113,7 @@ namespace WindowsFormsApplication5
         private void starter()
         {
             // Inizializza la logica
-            logic = new Logic(this);
+            Logic = new Logic(this);
 
             // Inizializza la variabile della visione del menù pausa a falso in caso sia vera
             gamePause = new GamePause(0, 0, 1000, 500);
@@ -125,7 +125,7 @@ namespace WindowsFormsApplication5
                 this.ClientRectangle.Y,
                 this.ClientRectangle.Width/30*29,
                 this.ClientRectangle.Height/5*4,
-                logic);
+                Logic);
             background.X = this.ClientRectangle.Width / 2 - this.background.Width / 2;
             background.Y = this.ClientRectangle.Height / 2 - this.background.Height / 2;
             // Inizializza griglia
@@ -133,18 +133,18 @@ namespace WindowsFormsApplication5
 
             // Inizializza racchetta
             if (this.Visible)
-                racchetta = new Paddle(logic.MousePoint.X - this.Location.X,
+                racchetta = new Paddle(Logic.MousePoint.X - this.Location.X,
                     this.background.Height * 9 / 10 + this.background.Y,
                     (int)(Math.Abs((float)1 / 8 * this.ParentForm.ClientRectangle.Width)),
                     (int)(Math.Abs((float)1 / 22 * this.ParentForm.ClientRectangle.Height)),
-                    logic);
+                    Logic);
 
             // Inizializza pallina
             ball = new Ball(300,
                 racchetta.Y - 10,
                 (int)(Math.Abs((float)1 / 50 * Math.Min(this.ParentForm.ClientRectangle.Width, this.ParentForm.ClientRectangle.Height))),
                 (int)(Math.Abs((float)1 / 50 * Math.Min(this.ParentForm.ClientRectangle.Width, this.ParentForm.ClientRectangle.Height))),
-                logic);
+                Logic);
 
             // Inizializza le vite
             life_init();
@@ -155,7 +155,7 @@ namespace WindowsFormsApplication5
             scoreSet();
 
             // Inizializza il thread del gioco
-            gameThread = new Thread(logic.gameLoop);
+            gameThread = new Thread(Logic.gameLoop);
             gameThread.Start();
 
 
