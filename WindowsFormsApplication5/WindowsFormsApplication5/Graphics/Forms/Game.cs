@@ -38,6 +38,7 @@ namespace WindowsFormsApplication5
         {
             // Richiama logic.resize
             logic.resize(li, hi, l, h);
+            racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
         }
 
         protected override void OnClosing(CancelEventArgs e)

@@ -8,15 +8,14 @@ namespace WindowsFormsApplication5
     {
         #region Fields
 
-        public Button start = new Button();
+        public MenuButton start;
         private Bitmap backgroundimage;
         private PictureBox Logo;
-        public Button Help = new Button();
+        public MenuButton Help;
         public Panel MenuPanel = new Panel();
         public Instructions Instructions = new Instructions();
-        public Button Highscores = new Button();
-        private Bitmap start_button_image;
-
+        public MenuButton Highscores;
+        public Size s;
         #endregion Fields
 
         #region Constructors
@@ -32,6 +31,8 @@ namespace WindowsFormsApplication5
 
         public void cleaner()
         {
+            this.Controls.Remove(start);
+            this.start.Dispose();
             this.BackgroundImage.Dispose();
             this.backgroundimage.Dispose();
             GC.Collect();
@@ -43,10 +44,11 @@ namespace WindowsFormsApplication5
             this.cleaner();
             this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
             this.BackgroundImageLayout = ImageLayout.Stretch;
-            this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-            this.start.Top = ClientRectangle.Height / 2 - start.Height / 2;
-            this.start.Left = ClientRectangle.Width / 2 - start.Width / 2;
-            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
+            this.start= new MenuButton(s);
+            this.start.Text = "Play";
+            this.start.Top = this.MenuPanel.Height / 4 - start.Height / 5 * 2;
+            this.start.Left = this.MenuPanel.Width / 2 - start.Width / 2;
+            this.MenuPanel.Controls.Add(start);
         }
 
         /// <summary>
@@ -54,6 +56,7 @@ namespace WindowsFormsApplication5
         /// </summary>
         public void starter()
         {
+            s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             // Background
             this.backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
             this.BackgroundImage = backgroundimage;
@@ -93,29 +96,18 @@ namespace WindowsFormsApplication5
             this.MenuPanel.BorderStyle = BorderStyle.Fixed3D;
 
             // Imposta le dimensioni e la posizione di start
-            this.start.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
-            this.start.BackgroundImage = start_button_image;
-            this.start.BackgroundImageLayout = ImageLayout.Stretch;
-            this.start.BackColor = Color.Black;
+            this.start = new MenuButton(s);
             this.start.Top = this.MenuPanel.Height / 4 - start.Height/5*2;
             this.start.Left = this.MenuPanel.Width / 2 - start.Width / 2;
 
             // Imposta le dimensioni e la posizione di help
-            this.Help.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-            this.Help.BackgroundImage = start_button_image;
-            this.Help.BackgroundImageLayout = ImageLayout.Stretch;
-            this.Help.BackColor = Color.Black;
+            this.Help = new MenuButton(s);
             this.Help.Top = this.MenuPanel.Height / 3 + Help.Height/5*2;
             this.Help.Left = this.MenuPanel.Width / 2 - Help.Width / 2;
             this.Help.Text = "Help";
 
             // Imposta le dimensioni e la posizione di Highscore
-            this.Highscores.Size = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.start.Size);
-            this.Highscores.BackgroundImage = start_button_image;
-            this.Highscores.BackgroundImageLayout = ImageLayout.Stretch;
-            this.Highscores.BackColor = Color.Black;
+            this.Highscores = new MenuButton(s);
             this.Highscores.Top = this.MenuPanel.Height / 4  + Highscores.Height*2 ;
             this.Highscores.Left = this.MenuPanel.Width / 2 - Highscores.Width / 2;
             this.Highscores.Text = "Highscores";

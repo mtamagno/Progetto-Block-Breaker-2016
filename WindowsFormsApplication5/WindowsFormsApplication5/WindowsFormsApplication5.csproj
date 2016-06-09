@@ -112,6 +112,9 @@
     <Compile Include="Logic\Program.cs" />
     <Compile Include="Logic\ScreenManager.cs" />
     <Compile Include="Graphics\Audio\Music.cs" />
+    <Compile Include="MenuButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Container.resx">
       <DependentUpon>Container.cs</DependentUpon>

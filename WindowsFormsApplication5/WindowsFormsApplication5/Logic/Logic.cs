@@ -113,7 +113,7 @@ namespace WindowsFormsApplication5
         //funzione per ridimensionare gli elementi
         public void resize(int li, int hi, int l, int h)
         {
-            controller.grid.redraw_grid(controller.grid, controller.ClientRectangle.Height, controller.ClientRectangle.Width);
+            controller.grid.redraw_grid(controller.grid, controller.background.Height, controller.background.Width);
             //controllo tutti gli sprite che sono in gioco
             foreach (Sprite s in iManager.inGameSprites)
             {
@@ -141,11 +141,13 @@ namespace WindowsFormsApplication5
                 else if (s.GetType().Name == "View")
                 {
                     s.redraw(s,
-                        l,
-                        h,
+                        l/30*29,
+                        h/5*4,
                         Properties.Resources.Background,
                         0,
                         0);
+                    s.X = controller.ClientRectangle.Width / 2 - s.Width / 2;
+                    s.Y = controller.ClientRectangle.Height / 2 - s.Height / 2;
                 }
 
                 //ridimensiono i blocchi di gioco
