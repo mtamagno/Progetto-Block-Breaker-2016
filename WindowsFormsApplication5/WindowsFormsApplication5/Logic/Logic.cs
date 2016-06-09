@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace WindowsFormsApplication5
 {
@@ -11,19 +12,19 @@ namespace WindowsFormsApplication5
         #region Public Fields
 
         public SpriteBatch spriteBatch;
-        public Stopwatch gameTime = new Stopwatch();
-        public InputManager iManager = new InputManager();
-        public HighScore highScore = new HighScore();
-        public List<Keys> KeysHeld = new List<Keys>();
-        public List<Keys> KeysPressed = new List<Keys>();
+        public Stopwatch gameTime;
+        public InputManager iManager;
+        public HighScore highScore;
+        public List<Keys> KeysHeld;
+        public List<Keys> KeysPressed;
         public Point MousePoint;
         public float deltaTime;
-        public int previous_score = 0;
-        public int righe_griglia = 25;
-        public int score = 0;
-        public int vita_rimanente = 3;
+        public int previous_score;
+        public int righe_griglia;
+        public int score;
+        public int vita_rimanente;
         public bool AllowInput;
-        public bool shouldStop = false;
+        public bool shouldStop;
         public volatile bool waitResize;
 
         #endregion Public Fields
@@ -41,10 +42,10 @@ namespace WindowsFormsApplication5
 
         public Logic(Game form)
         {
+            //inizializzo il controller
             this.controller = form;
-            this.vita_rimanente = 3;
-            this.fpsChecker = new FPSChecker(this.gameTime);
-            spriteBatch = new SpriteBatch(controller.ClientSize, controller.CreateGraphics());
+            //inizializzo le variabili
+            init();
         }
 
         #endregion Public Constructors
@@ -109,11 +110,14 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
+        //funzione per ridimensionare gli elementi
         public void resize(int li, int hi, int l, int h)
         {
             controller.grid.redraw_grid(controller.grid, controller.ClientRectangle.Height, controller.ClientRectangle.Width);
+            //controllo tutti gli sprite che sono in gioco
             foreach (Sprite s in iManager.inGameSprites)
             {
+                //ridimensiono la pallina
                 if (s.GetType().Name == "Ball")
                 {
                     s.redraw(s,
@@ -122,6 +126,8 @@ namespace WindowsFormsApplication5
                         Properties.Resources.Ball,
                         s.X * l / li, s.Y * h / hi);
                 }
+
+                //ridimensiono la racchetta
                 else if (s.GetType().Name == "Paddle")
                 {
                     s.redraw(s, (int)(Math.Abs((float)1/8 * l)),
@@ -130,6 +136,8 @@ namespace WindowsFormsApplication5
                         s.X * l / li,
                         s.Y * h / hi);
                 }
+
+                //ridimensiono lo sfondo
                 else if (s.GetType().Name == "View")
                 {
                     s.redraw(s,
@@ -139,6 +147,8 @@ namespace WindowsFormsApplication5
                         0,
                         0);
                 }
+
+                //ridimensiono i blocchi di gioco
                 else if (s.GetType().Name == "Block")
                 {
                     controller.grid.redraw_block((Block)s,
@@ -147,6 +157,8 @@ namespace WindowsFormsApplication5
                         s.X * l / li,
                         s.Y * h / hi);
                 }
+
+                //ridimensiono la vita
                 else if (s.GetType().Name == "Life")
                 {
                     s.redraw(s,
@@ -159,6 +171,8 @@ namespace WindowsFormsApplication5
             spriteBatch.cntxt.MaximumBuffer = new Size(controller.ClientSize.Width + 1, controller.ClientSize.Height + 1);
             spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(controller.CreateGraphics(), new Rectangle(Point.Empty, controller.ClientSize));
             spriteBatch.Gfx = controller.CreateGraphics();
+
+            //uso il garbage collector per pulire
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
@@ -168,6 +182,25 @@ namespace WindowsFormsApplication5
 
         #region Private Methods
 
+        //inizializzo le variabili di gioco
+        private void init()
+        {
+            this.vita_rimanente = 3;
+            this.gameTime = new Stopwatch();
+            this.fpsChecker = new FPSChecker(this.gameTime);
+            this.iManager = new InputManager();
+            this.highScore = new HighScore();
+            this.KeysHeld = new List<Keys>();
+            this.KeysPressed = new List<Keys>();
+            this.shouldStop = false;
+            this.vita_rimanente = 3;
+            this.score = 0;
+            this.righe_griglia = 25;
+            this.previous_score = 0;
+            this.spriteBatch = new SpriteBatch(controller.ClientSize, controller.CreateGraphics());
+        }
+
+        //controllo quanti blocchi sono rimasti in gioco
         private void checkActiveBlock()
         {
             if (activeBlock == 0)
@@ -176,6 +209,7 @@ namespace WindowsFormsApplication5
             }
         }
 
+        //setto lo score dell utente
         private void checkscore()
         {
             previous_score = score;
@@ -197,8 +231,14 @@ namespace WindowsFormsApplication5
                 }
             }
             if (previous_score < score)
-                Console.WriteLine(score);
+            {
+                controller.Invoke(new MethodInvoker(delegate
+                {
+                    controller.score.Text = "Score: " + score;
+                }));
+            }
         }
+                
 
         /// <summary>
         /// Funzione che svuota il buffer creato quando il Thread Game non è ancora partito ma si è spinto qualcosa

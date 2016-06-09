@@ -56,145 +56,165 @@ namespace WindowsFormsApplication5
         /// <summary>
         /// Metodo collider che calcola le azioni da svolgere in caso di impatto
         /// </summary>
-        public void Collider(InputManager iManager)
+        private void Collider(InputManager iManager)
         {
             // Per ogni sprite presente nella lista contenuta dell'imanager
             foreach (Sprite s in iManager.inGameSprites)
             {
                 if (s.GetType().Name == "Block")
                 {
-                    Block myBlock = (Block)s;
-                    block_hit = false;
-
-                    if (this.isCollidingWith(myBlock) && myBlock.canCollide == true)
-                    {
-                        // Se un blocco viene toccato dalla pallina gli tolgo una vita e cambio la texture
-                        if (this.isTouchingTop(myBlock) || this.isTouchingBottom(myBlock))
-                        {
-                            if (this.X + this.Width / 2 > myBlock.X && this.X + this.Width / 2 < myBlock.X + myBlock.Width)
-                            {
-                                // Setta block_hit a true
-                                block_hit = true;
-                                
-                                //Inverte la Velocità Y della pallina
-                                this.velocity.Y *= -1;
-
-                                //Scala la vita del blocco di uno, riproduce il suono ed esegue la funzione textureSwitcher
-                                myBlock.blockLife--;
-                                PlaySound();
-                                myBlock.textureSwitcher();
-
-                                if (myBlock.blockLife <= 0)
-                                {
-                                    myBlock.torender = false;
-                                    myBlock.canCollide = false;
-                                }
-                                else
-                                // Disegna il blocco
-                                {
-                                    myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
-                                }
-                            }
-                        }
-                        if (this.isTouchingLeft(myBlock) || this.isTouchingRight(myBlock))
-                        {
-                            if (this.Y + this.Height / 2 > myBlock.Y && this.Y + this.Height / 2 < myBlock.Y + myBlock.Height)
-                            {
-                                //Inverte la Velocità X della pallina
-                                this.velocity.X *= -1;
-
-                                //Scala la vita del blocco di uno, riproduce il suono ed esegue la 
-                                //funzione textureSwitcher se block hit non è già a 1
-                                if (!block_hit)
-                                {
-                                    myBlock.blockLife--;
-                                    PlaySound();
-                                    myBlock.textureSwitcher();
-
-                                    if (myBlock.blockLife <= 0)
-                                    {
-                                        myBlock.torender = false;
-                                        myBlock.canCollide = false;
-                                    }
-                                    else
-                                    // Disegna il blocco
-                                    {
-                                        myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                    BlockCollision(s);
+                } 
 
                 if (s.GetType().Name == "Paddle")
                 {
-                    Paddle mypaddle = (Paddle)s;
-                    if (mypaddle.isCollidingWith(this))
-                    {
-                        //La pallina impatta con la racchetta
-                        if (this.isTouchingBottom(mypaddle))
-                        {
-                            //La pallina impatta con la metà sinistra
-                            if ((this.X + this.Width / 2) <= (mypaddle.X + mypaddle.Width / 2))
-                            {
-                                double coseno;
-                                coseno = Math.Abs(Math.Cos(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
-                                this.velocity.X = -this.velocityTot * (float)coseno;
-                                this.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.velocityTot * this.velocityTot) - (this.velocity.X * this.velocity.X))));
-                                this.Y = mypaddle.Y - this.Height;
-                            }
-                            else
-
-                            //Altrimenti con la metà destra
-                            {
-                                double seno;
-                                seno = Math.Abs(Math.Sin(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X - mypaddle.Width / 2, mypaddle.Width / 2)));
-                                this.velocity.X = this.velocityTot * (float)seno;
-                                this.velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((this.velocityTot * this.velocityTot) - (this.velocity.X * this.velocity.X))));
-                                this.Y = mypaddle.Y - this.Height;
-                            }
-                        }
-                    }
+                    PaddleCollision(s);
                 }
 
-                //faccio rimanere la pallina all'interno dello schermo e scalo una vita se la y della pallina arriva all'altezza di view.heigth
+                
                 if (s.GetType().Name == "View")
                 {
-                    View myview = (View)s;
+                    ViewCollision(s);
+                }
+            }
+        }
 
-                    //La X della pallina è oltre il limite destro o sinistro
-                    if ((this.X + (float)this.Width) >= (float)myview.Width)
+        //Gestisco i casi in cui la pallina collide contro i bordi dello schermo
+        //faccio rimanere la pallina all'interno dello schermo e scalo una vita se la y della pallina arriva all'altezza di view.heigth
+        private void ViewCollision(Sprite s)
+        {
+            View myview = (View)s;
+
+            //La X della pallina è oltre il limite destro o sinistro
+            if ((this.X + (float)this.Width) >= (float)myview.Width + myview.X)
+            {
+                this.velocity.X *= -1;
+                this.X = (float)myview.Width - this.Width + myview.X;
+            }
+            else
+            if (this.X <= myview.X)
+            {
+                this.velocity.X *= -1;
+                this.X = myview.X;
+            }
+
+            //La Y della pallina è oltre il limite superiore o inferiore
+            if ((this.Y + (float)this.Height) >= (float)myview.Height + myview.X)
+            {
+                myview.bottomCollide = 1;
+            }
+            else
+            if (this.Y <= myview.Y)
+            {
+                this.velocity.Y *= -1;
+                this.Y = myview.Y;
+            }
+        }
+
+        //Gestisco i casi in cui la pallina collide contro la racchetta
+        private void PaddleCollision(Sprite s)
+        {
+            Paddle mypaddle = (Paddle)s;
+            if (mypaddle.isCollidingWith(this))
+            {
+                //La pallina impatta con la racchetta
+                if (this.isTouchingBottom(mypaddle))
+                {
+                    //La pallina impatta con la metà sinistra
+                    if ((this.X + this.Width / 2) <= (mypaddle.X + mypaddle.Width / 2))
                     {
-                        this.velocity.X *= -1;
-                        this.X = (float)myview.Width - this.Width;
+                        double coseno;
+                        coseno = Math.Abs(Math.Cos(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
+                        this.velocity.X = -this.velocityTot * (float)coseno;
+                        this.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.velocityTot * this.velocityTot) - (this.velocity.X * this.velocity.X))));
+                        this.Y = mypaddle.Y - this.Height;
                     }
                     else
-                    if (this.X < 0)
-                    {
-                        this.velocity.X *= -1;
-                        this.X = 0;
-                    }
 
-                    //La Y della pallina è oltre il limite superiore o inferiore
-                    if ((this.Y + (float)this.Height) >= (float)myview.Height)
+                    //Altrimenti con la metà destra
                     {
-                        myview.bottomCollide = 1;
-                    }
-                    else
-                    if (this.Y < 0)
-                    {
-                        this.velocity.Y *= -1;
-                        this.Y = 0;
+                        double seno;
+                        seno = Math.Abs(Math.Sin(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X - mypaddle.Width / 2, mypaddle.Width / 2)));
+                        this.velocity.X = this.velocityTot * (float)seno;
+                        this.velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((this.velocityTot * this.velocityTot) - (this.velocity.X * this.velocity.X))));
+                        this.Y = mypaddle.Y - this.Height;
                     }
                 }
             }
         }
 
+        //Gestisco i casi in cui la pallina collide contro i blocchi
+        private void BlockCollision(Sprite s)
+        {
+            Block myBlock = (Block)s;
+            block_hit = false;
+
+            if (this.isCollidingWith(myBlock) && myBlock.canCollide == true)
+            {
+                // Se un blocco viene toccato dalla pallina gli tolgo una vita e cambio la texture
+                if (this.isTouchingTop(myBlock) || this.isTouchingBottom(myBlock))
+                {
+                    if (this.X + this.Width / 2 > myBlock.X && this.X + this.Width / 2 < myBlock.X + myBlock.Width)
+                    {
+                        // Setta block_hit a true
+                        block_hit = true;
+
+                        //Inverte la Velocità Y della pallina
+                        this.velocity.Y *= -1;
+
+                        //Scala la vita del blocco di uno, riproduce il suono ed esegue la funzione textureSwitcher
+                        myBlock.blockLife--;
+                        PlaySound();
+                        myBlock.textureSwitcher();
+
+                        if (myBlock.blockLife <= 0)
+                        {
+                            myBlock.torender = false;
+                            myBlock.canCollide = false;
+                        }
+                        else
+                        // Disegna il blocco
+                        {
+                            myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
+                        }
+                    }
+                }
+                if (this.isTouchingLeft(myBlock) || this.isTouchingRight(myBlock))
+                {
+                    if (this.Y + this.Height / 2 > myBlock.Y && this.Y + this.Height / 2 < myBlock.Y + myBlock.Height)
+                    {
+                        //Inverte la Velocità X della pallina
+                        this.velocity.X *= -1;
+
+                        //Scala la vita del blocco di uno, riproduce il suono ed esegue la 
+                        //funzione textureSwitcher se block hit non è già a 1
+                        if (!block_hit)
+                        {
+                            myBlock.blockLife--;
+                            PlaySound();
+                            myBlock.textureSwitcher();
+
+                            if (myBlock.blockLife <= 0)
+                            {
+                                myBlock.torender = false;
+                                myBlock.canCollide = false;
+                            }
+                            else
+                            // Disegna il blocco
+                            {
+                                myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
+
         /// <summary>
         /// Metodo playsound che riproduce il suono
         /// </summary>
-        public void PlaySound()
+        private void PlaySound()
         {
             FrameworkDispatcher.Update();
             Music.Play();
