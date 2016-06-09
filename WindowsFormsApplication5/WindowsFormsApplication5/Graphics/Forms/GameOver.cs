@@ -41,14 +41,18 @@ namespace WindowsFormsApplication5
             this.cleaner();
             this.BackgroundImage = new Bitmap(Properties.Resources.GameOver, this.ClientSize);
             this.BackgroundImageLayout = ImageLayout.Stretch;
+            Continue.Dispose();
             Size s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
             Continue = new MenuButton(s);            
             this.Continue.Top = ClientRectangle.Height / 8 * 6 - Continue.Height / 2;
             this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
+            this.Continue.Text = "Continue";
             this.textBox.Top = this.Continue.Top + this.Continue.Height;
             this.textBox.Size = this.Continue.Size;
             this.textBox.Left = this.Continue.Left;
             this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.Continue.Size);
+            this.Continue.Click += Continue_Click;
+            this.Controls.Add(Continue);
         }
 
         private void Continue_Click(object sender, EventArgs e)
