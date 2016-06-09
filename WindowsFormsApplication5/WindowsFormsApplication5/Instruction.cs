@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
     public class Instructions : Panel
     {
+        #region Methods
+
         public Instructions CreateInstructions(int Left, int Top, int Width, int Height)
         {
             var controller = this;
@@ -21,5 +18,7 @@ namespace WindowsFormsApplication5
             controller.Visible = false;
             return controller;
         }
+
+        #endregion Methods
     }
 }

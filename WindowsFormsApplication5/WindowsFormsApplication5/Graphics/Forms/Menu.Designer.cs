@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication5
 {
-    partial class Start
+    partial class Menu
     {
         /// <summary>
         /// Required designer variable.
@@ -31,13 +31,13 @@
         {
             this.SuspendLayout();
             // 
-            // Start
+            // menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 411);
-            this.Name = "Start";
-            this.Text = "Start";
+            this.Name = "menu";
+            this.Text = "menu";
             this.Load += new System.EventHandler(this.ContainerLoad);          
             this.ResumeLayout(false);
 

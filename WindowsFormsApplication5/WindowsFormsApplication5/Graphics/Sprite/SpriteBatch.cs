@@ -50,7 +50,6 @@ namespace WindowsFormsApplication5
             bfgfx.Graphics.DrawImageUnscaled(b, rec);
         }
 
-        
         public void End()
         {
             try
