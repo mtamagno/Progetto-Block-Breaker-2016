@@ -1,24 +1,26 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
     public partial class Game : Form
     {
         #region Fields
+
         public View background;
         public Ball ball;
+        public Thread gameThread;
         public Grid grid;
         public Logic Logic;
         public Paddle racchetta;
+        public Label score;
         public Life[] vita = new Life[3];
-        public Thread gameThread;
         private GamePause gamePause;
         private Label gameTitle;
-        public Label score;
+
         #endregion Fields
 
         #region Constructors
@@ -34,6 +36,22 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
+        public void life_init()
+        {
+            for (int i = 0; i < Logic.vita_rimanente; i++)
+            {
+                vita[i] = new Life(this.ClientRectangle.Width - (float)1 / 50 * this.ClientRectangle.Width
+                        - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))) * (i + 1) - 10 * (i + 1),
+                    this.ClientRectangle.Height - (float)1 / 50 * this.ClientRectangle.Height
+                        - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))) - 5,
+                    (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))),
+                    (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))));
+                Logic.iManager.inGameSprites.Add(vita[i]);
+            }
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
         public void on_resize(int li, int hi, int l, int h)
         {
             // Richiama logic.resize
@@ -42,8 +60,8 @@ namespace WindowsFormsApplication5
         }
 
         protected override void OnClosing(CancelEventArgs e)
-        {           
-            // Chiudo Game 
+        {
+            // Chiudo Game
             base.OnClosing(e);
             System.Environment.Exit(0);
             this.Close();
@@ -83,6 +101,20 @@ namespace WindowsFormsApplication5
             }
         }
 
+        private void gameTitleset()
+        {
+            gameTitle = new Label();
+            gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width;
+            gameTitle.Top = 20;
+            gameTitle.Width = this.ClientRectangle.Width;
+            gameTitle.TextAlign = ContentAlignment.MiddleCenter;
+            gameTitle.Text = "BlockBreaker";
+            gameTitle.BackColor = Color.Black;
+            gameTitle.ForeColor = Color.White;
+            gameTitle.Font = new Font("Arial", 15);
+            this.Controls.Add(gameTitle);
+        }
+
         private void init_grid()
         {
             grid = new Grid((int)this.background.X, (int)this.background.Y, this.background.Height, this.background.Width, Properties.Resources.Block_4, Logic);
@@ -90,25 +122,24 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
-        public void life_init()
-        {
-            for (int i = 0; i < Logic.vita_rimanente; i++)
-            {
-                vita[i] = new Life(this.ClientRectangle.Width - (float)1 / 50 * this.ClientRectangle.Width 
-                        - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width,this.ClientRectangle.Height))) * (i + 1)-10*(i + 1), 
-                    this.ClientRectangle.Height - (float)1/50 * this.ClientRectangle.Height 
-                        - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height)))-5,
-                    (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))),
-                    (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))));
-                Logic.iManager.inGameSprites.Add(vita[i]);
-            }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
-
         private void loadContent()
         {
             starter();
+        }
+
+        private void scoreSet()
+        {
+            score = new Label();
+            score.Left = 20;
+            score.Top = this.ClientRectangle.Height - 40;
+            score.Width = this.ClientRectangle.Width / 2;
+
+            //score.TextAlign = ContentAlignment.MiddleCenter;
+            score.Text = "Score: 0";
+            score.BackColor = Color.Black;
+            score.ForeColor = Color.White;
+            score.Font = new Font("Arial", 15);
+            this.Controls.Add(score);
         }
 
         private void starter()
@@ -124,11 +155,12 @@ namespace WindowsFormsApplication5
             // Inizializza il background
             background = new View(this.ClientRectangle.X,
                 this.ClientRectangle.Y,
-                this.ClientRectangle.Width/30*29,
-                this.ClientRectangle.Height/5*4,
+                this.ClientRectangle.Width / 30 * 29,
+                this.ClientRectangle.Height / 5 * 4,
                 Logic);
             background.X = this.ClientRectangle.Width / 2 - this.background.Width / 2;
             background.Y = this.ClientRectangle.Height / 2 - this.background.Height / 2;
+
             // Inizializza griglia
             init_grid();
 
@@ -152,6 +184,7 @@ namespace WindowsFormsApplication5
 
             // inizializzo il titolo del gioco
             gameTitleset();
+
             //inizializzo il label dello score
             scoreSet();
 
@@ -159,38 +192,9 @@ namespace WindowsFormsApplication5
             gameThread = new Thread(Logic.gameLoop);
             gameThread.Start();
 
-
             // Aspetta il Garbage Collector
             GC.Collect();
             GC.WaitForPendingFinalizers();
-        }
-
-        private void scoreSet()
-        {
-            score = new Label();
-            score.Left = 20;
-            score.Top = this.ClientRectangle.Height - 40;
-            score.Width = this.ClientRectangle.Width/2;
-            //score.TextAlign = ContentAlignment.MiddleCenter;
-            score.Text = "Score: 0";
-            score.BackColor = Color.Black;
-            score.ForeColor = Color.White;
-            score.Font = new Font("Arial", 15);
-            this.Controls.Add(score);
-        }
-
-        private void gameTitleset()
-        {
-            gameTitle = new Label();
-            gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width;
-            gameTitle.Top = 20;
-            gameTitle.Width = this.ClientRectangle.Width;
-            gameTitle.TextAlign = ContentAlignment.MiddleCenter;
-            gameTitle.Text = "BlockBreaker";
-            gameTitle.BackColor = Color.Black;
-            gameTitle.ForeColor = Color.White;
-            gameTitle.Font = new Font("Arial", 15);
-            this.Controls.Add(gameTitle);
         }
 
         #endregion Methods

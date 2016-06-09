@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
-    class GamePause : Panel
+    internal class GamePause : Panel
     {
-        public GamePause(int Left , int Top, int Width, int Height)
+        #region Constructors
+
+        public GamePause(int Left, int Top, int Width, int Height)
         {
             this.Top = Top;
             this.Left = Left;
@@ -18,5 +15,6 @@ namespace WindowsFormsApplication5
             this.BackgroundImage = Properties.Resources.Gamepause;
         }
 
+        #endregion Constructors
     }
 }

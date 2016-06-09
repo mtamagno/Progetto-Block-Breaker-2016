@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
     public class MenuButton : Button
     {
+        #region Fields
+
         private Bitmap buttonBackground;
+
+        #endregion Fields
+
+        #region Constructors
+
         public MenuButton(Size s)
         {
             this.Size = s;
@@ -19,5 +21,7 @@ namespace WindowsFormsApplication5
             this.BackgroundImageLayout = ImageLayout.Stretch;
             this.BackColor = Color.Black;
         }
+
+        #endregion Constructors
     }
 }

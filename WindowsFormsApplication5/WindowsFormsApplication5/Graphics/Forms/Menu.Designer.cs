@@ -31,13 +31,13 @@
         {
             this.SuspendLayout();
             // 
-            // Menu
+            // menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 411);
-            this.Name = "Menu";
-            this.Text = "Menu";
+            this.Name = "menu";
+            this.Text = "menu";
             this.Load += new System.EventHandler(this.ContainerLoad);          
             this.ResumeLayout(false);
 

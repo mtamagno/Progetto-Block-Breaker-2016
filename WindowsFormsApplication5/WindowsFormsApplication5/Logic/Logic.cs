@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Threading;
 
 namespace WindowsFormsApplication5
 {
@@ -44,6 +43,7 @@ namespace WindowsFormsApplication5
         {
             //inizializzo il controller
             this.controller = form;
+
             //inizializzo le variabili
             init();
         }
@@ -70,7 +70,6 @@ namespace WindowsFormsApplication5
             {
                 if (waitResize == false)
                 {
-
                     // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
                     controller.ball.canCollide = true;
 
@@ -114,6 +113,7 @@ namespace WindowsFormsApplication5
         public void resize(int li, int hi, int l, int h)
         {
             controller.grid.redraw_grid(controller.grid, controller.background.Height, controller.background.Width);
+
             //controllo tutti gli sprite che sono in gioco
             foreach (Sprite s in iManager.inGameSprites)
             {
@@ -121,8 +121,8 @@ namespace WindowsFormsApplication5
                 if (s.GetType().Name == "Ball")
                 {
                     s.redraw(s,
-                        (int)(Math.Abs((float)1/50 * Math.Min(l,h))),
-                        (int)(Math.Abs((float)1/50 * Math.Min(l,h))),
+                        (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
+                        (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
                         Properties.Resources.Ball,
                         s.X * l / li, s.Y * h / hi);
                 }
@@ -130,8 +130,8 @@ namespace WindowsFormsApplication5
                 //ridimensiono la racchetta
                 else if (s.GetType().Name == "Paddle")
                 {
-                    s.redraw(s, (int)(Math.Abs((float)1/8 * l)),
-                        (int)(Math.Abs((float)1/22 * h)),
+                    s.redraw(s, (int)(Math.Abs((float)1 / 8 * l)),
+                        (int)(Math.Abs((float)1 / 22 * h)),
                         Properties.Resources.New_Piskel,
                         s.X * l / li,
                         s.Y * h / hi);
@@ -141,8 +141,8 @@ namespace WindowsFormsApplication5
                 else if (s.GetType().Name == "View")
                 {
                     s.redraw(s,
-                        l/30*29,
-                        h/5*4,
+                        l / 30 * 29,
+                        h / 5 * 4,
                         Properties.Resources.Background,
                         0,
                         0);
@@ -240,7 +240,6 @@ namespace WindowsFormsApplication5
                 }));
             }
         }
-                
 
         /// <summary>
         /// Funzione che svuota il buffer creato quando il Thread Game non è ancora partito ma si è spinto qualcosa
