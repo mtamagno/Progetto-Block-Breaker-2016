@@ -235,22 +235,6 @@ namespace WindowsFormsApplication5
             this.Instructions.Visible = true;
         }
 
-        /// <summary>
-        /// Evento che serve a rendere i pulsanti tridimensionali al passaggio
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Start_MouseEnter(object sender, EventArgs e)
-        {
-            this.start.FlatStyle = FlatStyle.Standard;
-        }
-
-        /// <summary>
-        /// Evento che annulla il precedente all'uscita del mouse dall'area del pulsante
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
         #endregion Methods
     }
 }
