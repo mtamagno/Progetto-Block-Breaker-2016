@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace WindowsFormsApplication5
 {
@@ -22,7 +23,7 @@ namespace WindowsFormsApplication5
         public int velocityTotRaggiunto;
         private bool block_hit = false;
         private SoundEffect Music;
-
+        private Thread hurt;
         #endregion Fields
 
         #region Constructors
@@ -116,6 +117,7 @@ namespace WindowsFormsApplication5
                 if ((Cursor.Position.X - thisform.Location.X - this.Width * 2) >= 0 && Cursor.Position.X - thisform.Location.X < thisform.Width)
                     this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - 15;
             }
+
         }
 
         //Gestisco i casi in cui la pallina collide contro i blocchi
@@ -218,6 +220,9 @@ namespace WindowsFormsApplication5
             Paddle mypaddle = (Paddle)s;
             if (mypaddle.isCollidingWith(this))
             {
+                hurt = new Thread(mypaddle.hurt);
+                hurt.Start();
+
                 //La pallina impatta con la racchetta
                 if (this.isTouchingBottom(mypaddle))
                 {
@@ -240,8 +245,9 @@ namespace WindowsFormsApplication5
                         this.velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((this.velocityTot * this.velocityTot) - (this.velocity.X * this.velocity.X))));
                         this.Y = mypaddle.Y - this.Height;
                     }
-                }
+                }              
             }
+
         }
 
         /// <summary>

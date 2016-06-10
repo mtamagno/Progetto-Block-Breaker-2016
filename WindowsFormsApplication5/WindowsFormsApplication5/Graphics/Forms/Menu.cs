@@ -50,20 +50,6 @@ namespace WindowsFormsApplication5
             return makeInstructionsVisible;
         }
 
-        /// <summary>
-        /// Gestore eventi per la pressione di tasti
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void Help_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Escape)
-            {
-                this.start.Visible = true;
-                this.Help.Visible = true;
-                this.Instructions.Visible = false;
-            }
-        }
 
         /// <summary>
         /// Funzione che si occupa del resize di questo form e dei sui componenti
@@ -105,7 +91,7 @@ namespace WindowsFormsApplication5
         /// </summary>
         public void starter()
         {
-            s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
+            s = new Size(this.ClientSize.Width / 5, this.ClientSize.Height / 10);
 
             // Background
             this.backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
@@ -116,7 +102,7 @@ namespace WindowsFormsApplication5
 
             // Instructions
             this.Instructions = this.Instructions.CreateInstructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
-            this.Controls.Add(Instructions);
+            
 
             //Logo
             this.CreateLogo(this.ClientSize.Width, this.ClientSize.Height);
@@ -162,10 +148,12 @@ namespace WindowsFormsApplication5
         private void ControlsAdder()
         {
             // Aggiunge i bottoni al panel e poi il panel ai controlli
+            this.Controls.Add(MenuPanel);
             this.MenuPanel.Controls.Add(start);
             this.MenuPanel.Controls.Add(Help);
             this.MenuPanel.Controls.Add(Highscores);
-            this.Controls.Add(MenuPanel);
+            this.Controls.Add(Instructions);
+
         }
 
         /// <summary>
@@ -197,7 +185,7 @@ namespace WindowsFormsApplication5
         /// </summary>
         private void CreatePanel()
         {
-            s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
+            s = new Size(this.ClientSize.Width / 6, this.ClientSize.Height / 10);
             // Imposta le dimensioni e la posizione del pannello panel che conterrà start e help
             this.MenuPanel.Size = new Size(this.ClientRectangle.Width / 5, this.ClientRectangle.Height / 2);
             this.MenuPanel.Top = ClientRectangle.Height / 2 - this.MenuPanel.Size.Height / 15 * 2;
@@ -245,7 +233,27 @@ namespace WindowsFormsApplication5
             this.MenuPanel.Visible = false;
             this.Logo.Visible = false;
             this.Instructions.Visible = true;
+            this.Focus();
+            this.KeyPress += new KeyPressEventHandler(this.Help_KeyPress);
+       }
+
+        /// <summary>
+        /// Gestore eventi per la pressione di tasti
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void Help_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Escape)
+            {
+                this.MenuPanel.Visible = true;
+                this.start.Visible = true;
+                this.Help.Visible = true;
+                this.Instructions.Visible = false;
+                this.Logo.Visible = true;
+            }
         }
+
 
         #endregion Methods
     }

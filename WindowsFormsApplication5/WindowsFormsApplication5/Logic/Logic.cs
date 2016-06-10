@@ -130,7 +130,7 @@ namespace WindowsFormsApplication5
                 else if (s.GetType().Name == "Paddle")
                 {
                     s.redraw(s, (int)(Math.Abs((float)1 / 8 * l)),
-                        (int)(Math.Abs((float)1 / 22 * h)),
+                        (int)(Math.Abs((float)1 / 15 * h)),
                         Properties.Resources.New_Piskel,
                         s.X * l / li,
                         s.Y * h / hi);

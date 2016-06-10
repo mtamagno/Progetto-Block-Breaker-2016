@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace WindowsFormsApplication5
 {
@@ -9,6 +10,7 @@ namespace WindowsFormsApplication5
         #region Fields
 
         public Bitmap texture;
+
 
         #endregion Fields
 
@@ -45,8 +47,10 @@ namespace WindowsFormsApplication5
             try
             {
                 if (followPointer)
-                    if ((Cursor.Position.X - thisform.Location.X) >= 0 && Cursor.Position.X - thisform.Location.X < thisform.Width)
-                        this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - 10;
+                {
+                    if ((Cursor.Position.X - thisform.Location.X) >= 0 && Cursor.Position.X - thisform.Location.X < thisform.Width)                    
+                        this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - 10;                                 
+                }
             }
             catch
             {
@@ -55,6 +59,20 @@ namespace WindowsFormsApplication5
             }
         }
 
+        public void hurt()
+        {
+            
+            Texture = Properties.Resources.hurt;
+            this.graphics(Texture, this.X, this.Y, this.Width, this.Height);
+            Thread.Sleep(700);
+            this.normal();
+        }
+
+        public void normal()
+        {
+            Texture = Properties.Resources.New_Piskel;
+            this.graphics(Texture, this.X, this.Y, this.Width, this.Height);
+        }
         #endregion Methods
     }
 }

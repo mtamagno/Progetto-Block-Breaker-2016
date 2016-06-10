@@ -170,7 +170,7 @@ namespace WindowsFormsApplication5
                 racchetta = new Paddle(Logic.MousePoint.X - this.Location.X,
                     this.background.Height * 9 / 10 + this.background.Y,
                     (int)(Math.Abs((float)1 / 8 * this.ParentForm.ClientRectangle.Width)),
-                    (int)(Math.Abs((float)1 / 22 * this.ParentForm.ClientRectangle.Height)),
+                    (int)(Math.Abs((float)1 / 15 * this.ParentForm.ClientRectangle.Height)),
                     Logic);
 
             // Inizializza pallina
