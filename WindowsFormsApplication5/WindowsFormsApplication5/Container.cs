@@ -98,61 +98,68 @@ namespace WindowsFormsApplication5
 
         private void DisposeAll()
         {
-            this.Invoke(new MethodInvoker(delegate
+            try
             {
-                //rimuovo il gamePanel dal container
-                this.Controls.Remove(GamePanels);
-
-                //Pulisco il gamepanel
-                this.GamePanels.Dispose();
-                this.GamePanels.Controls.Clear();
-
-                // Imposta il gamePanel a null
-                this.GamePanels = null;
-
-                //pulisco il container
-                this.Controls.Clear();
-
-                //pulisco il gioco
-                if (this.Game != null)
+                this.Invoke(new MethodInvoker(delegate
                 {
-                    this.Game.Controls.Clear();
-                    this.Game.Close();
-                    this.Game.Dispose();
-                    this.Game = null;
-                }
+                    //rimuovo il gamePanel dal container
+                    this.Controls.Remove(GamePanels);
 
-                //pulisco il menu
-                if (this.menu != null)
-                {
-                    this.menu.start.Dispose();
-                    this.menu.cleaner();
-                    this.menu.Controls.Clear();
-                    this.menu.Close();
-                    this.menu.Dispose();
-                    this.menu = null;
-                }
+                    //Pulisco il gamepanel
+                    this.GamePanels.Dispose();
+                    this.GamePanels.Controls.Clear();
 
-                //pulisco il GameOver
-                if (this.GameOver != null)
-                {
-                    this.GameOver.Continue.Dispose();
-                    this.GameOver.cleaner();
-                    this.GameOver.Controls.Clear();
-                    this.GameOver.Close();
-                    this.GameOver.Dispose();
-                    this.GameOver = null;
-                }
+                    // Imposta il gamePanel a null
+                    this.GamePanels = null;
 
-                //pulisco il Thread
-                if (this.GameAlive != null)
-                    this.GameAlive = null;
+                    //pulisco il container
+                    this.Controls.Clear();
 
-                //Pulisco il garbage collector
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.WaitForFullGCComplete();
-            }));
+                    //pulisco il gioco
+                    if (this.Game != null)
+                    {
+                        this.Game.Controls.Clear();
+                        this.Game.Close();
+                        this.Game.Dispose();
+                        this.Game = null;
+                    }
+
+                    //pulisco il menu
+                    if (this.menu != null)
+                    {
+                        this.menu.start.Dispose();
+                        this.menu.cleaner();
+                        this.menu.Controls.Clear();
+                        this.menu.Close();
+                        this.menu.Dispose();
+                        this.menu = null;
+                    }
+
+                    //pulisco il GameOver
+                    if (this.GameOver != null)
+                    {
+                        this.GameOver.Continue.Dispose();
+                        this.GameOver.cleaner();
+                        this.GameOver.Controls.Clear();
+                        this.GameOver.Close();
+                        this.GameOver.Dispose();
+                        this.GameOver = null;
+                    }
+
+                    //pulisco il Thread
+                    if (this.GameAlive != null)
+                        this.GameAlive = null;
+
+                    //Pulisco il garbage collector
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.WaitForFullGCComplete();
+                }));
+            }catch(InvalidOperationException)
+            {
+                Thread.Sleep(1000);
+                this.Close();
+            }
         }
 
         private void gameoverCheck()
@@ -274,11 +281,19 @@ namespace WindowsFormsApplication5
             //mostro il pannello
             GamePanels.Show();
 
-            //aggiungo il pannello al form
-            this.Invoke(new MethodInvoker(delegate
+            try
             {
-                this.Controls.Add(GamePanels);
-            }));
+                //aggiungo il pannello al form
+                this.Invoke(new MethodInvoker(delegate
+                {
+                    this.Controls.Add(GamePanels);
+                }));
+            }
+            catch(InvalidOperationException)
+            {
+                Thread.Sleep(1000);
+                this.Close();
+            }
         }
 
         private void initializeMenu()

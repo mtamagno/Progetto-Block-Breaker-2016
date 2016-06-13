@@ -42,9 +42,8 @@ namespace WindowsFormsApplication5
             for (int i = 0; i < Logic.vita_rimanente; i++)
             {
                 vita[i] = new Life(this.ClientRectangle.Width - (float)1 / 50 * this.ClientRectangle.Width
-                        - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))) * (i + 1) - 10 * (i + 1),
-                    this.ClientRectangle.Height - (float)1 / 50 * this.ClientRectangle.Height
-                        - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))) - 5,
+                            - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))) * (i + 1) - 10 * (i + 1),
+                    (float)1 / 50 * this.ClientRectangle.Height + (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))),
                     (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))),
                     (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))));
                 Logic.iManager.inGameSprites.Add(vita[i]);
@@ -60,13 +59,18 @@ namespace WindowsFormsApplication5
             racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
             score.Top = this.ClientRectangle.Height - 40;
             score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
-            gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width/2;
+            gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
 
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            // Chiudo Game
+            // Verifico che IsAlive non sia verificato
+            while (this.gameThread.IsAlive) { }
+
+            // Libera la memoria e chiudo il form
+            Thread.Sleep(1000);
+            this.Dispose();
             base.OnClosing(e);
             System.Environment.Exit(0);
             this.Close();
@@ -110,7 +114,7 @@ namespace WindowsFormsApplication5
         {
             gameTitle = new Label();
             gameTitle.Top = 20;
-            gameTitle.Width = this.ClientRectangle.Width/3*2;
+            gameTitle.Width = this.ClientRectangle.Width / 3 * 2;
             gameTitle.TextAlign = ContentAlignment.MiddleCenter;
             gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
             gameTitle.Text = "BlockBreaker";
@@ -135,7 +139,7 @@ namespace WindowsFormsApplication5
         private void scoreSet()
         {
             score = new Label();
-            score.Left = this.ClientRectangle.Width/2 - this.score.Width/2;
+            score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
             score.Top = this.ClientRectangle.Height - 40;
             score.Width = this.ClientRectangle.Width / 8;
 

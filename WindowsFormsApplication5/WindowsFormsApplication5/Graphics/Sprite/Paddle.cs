@@ -23,7 +23,7 @@ namespace WindowsFormsApplication5
             texture = Properties.Resources.New_Piskel;
             canFall = false;
             canCollide = true;
-            torender = true;
+            toRender = true;
             followPointer = true;
             hurted = false;
 

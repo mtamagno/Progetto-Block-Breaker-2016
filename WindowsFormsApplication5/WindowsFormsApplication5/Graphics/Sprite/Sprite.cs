@@ -12,7 +12,7 @@ namespace WindowsFormsApplication5
         public bool canFall;
         public bool followPointer;
         public Bitmap Texture;
-        public bool torender;
+        public bool toRender;
         public int Width, Height;
         public float X, Y;
 

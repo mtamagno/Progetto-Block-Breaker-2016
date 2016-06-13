@@ -35,7 +35,7 @@ namespace WindowsFormsApplication5
             canFall = false;
             canCollide = true;
             followPointer = true;
-            torender = true;
+            toRender = true;
 
             stream = TitleContainer.OpenStream("Music.wav");
             Music = SoundEffect.FromStream(stream);
@@ -146,7 +146,7 @@ namespace WindowsFormsApplication5
 
                         if (myBlock.blockLife <= 0)
                         {
-                            myBlock.torender = false;
+                            myBlock.toRender = false;
                             myBlock.canCollide = false;
                         }
                         else
@@ -174,7 +174,7 @@ namespace WindowsFormsApplication5
 
                             if (myBlock.blockLife <= 0)
                             {
-                                myBlock.torender = false;
+                                myBlock.toRender = false;
                                 myBlock.canCollide = false;
                             }
                             else

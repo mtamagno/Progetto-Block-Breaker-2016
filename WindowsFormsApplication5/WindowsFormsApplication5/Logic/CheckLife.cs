@@ -27,7 +27,7 @@
                 for (int i = lifes; i < 3; i++)
                 {
                     if (lifes > 0)
-                        ThisForm.vita[i].torender = false;
+                        ThisForm.vita[i].toRender = false;
                 }
             }
             return (lifes);

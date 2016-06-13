@@ -281,7 +281,7 @@ namespace WindowsFormsApplication5
         {
             spriteBatch.Begin();
             foreach (Sprite s in iManager.inGameSprites)
-                if (s.torender == true)
+                if (s.toRender == true)
                     spriteBatch.Draw(s);
             spriteBatch.End();
         }

@@ -33,11 +33,11 @@ namespace WindowsFormsApplication5
 
             // Imposta il render a true in caso abbia più di 0 vite
             if (blockLife >= 1 && blockLife <= 4)
-                torender = true;
+                toRender = true;
             followPointer = false;
 
             //se non bisogna renderizzarlo non deve poter collidere
-            if (torender != true)
+            if (toRender != true)
                 canCollide = false;
 
             this.textureSwitcher();
