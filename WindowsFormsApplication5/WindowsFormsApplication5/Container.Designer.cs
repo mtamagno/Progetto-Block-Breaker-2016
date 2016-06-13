@@ -30,17 +30,16 @@
         {
             this.SuspendLayout();
             // 
-            // Container2
+            // Container
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 461);
-            this.Name = "Container2";
+            this.Name = "Container";
             this.Text = "Container2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Container2_FormClosing);
             this.Load += new System.EventHandler(this.Container2_Load);
-            this.ResizeBegin += new System.EventHandler(this.Container2_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.OnResizeEnd);
+            this.SizeChanged += new System.EventHandler(this.OnResizeEnd);
             this.ResumeLayout(false);
 
         }

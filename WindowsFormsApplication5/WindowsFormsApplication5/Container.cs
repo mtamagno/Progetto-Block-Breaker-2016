@@ -51,23 +51,20 @@ namespace WindowsFormsApplication5
         private void Container2_Load(object sender, EventArgs e)
         {
             this.MinimumSize = new System.Drawing.Size(700, 450);
-            Music = new Music();
+            this.Music = new Music();
 
             // Imposta again a false per dire che il gioco e' stato avviato per la prima volta
-            again = false;
+            this.again = false;
+
 
             // Inizializza il pannello che conterra' i form dell'applicazione
-            initializeGamePanel();
-            GamePanels.AutoSizeMode = AutoSizeMode;
+            this.initializeGamePanel();
+            this.GamePanels.AutoSizeMode = AutoSizeMode;
 
             // Inizializza il menu come primo form che apparira' nel gioco
-            initializeMenu();
-        }
+            this.initializeMenu();
 
-        //Funzione chiamata quando si sta ridimensionando la finestra
-        private void Container2_ResizeBegin(object sender, EventArgs e)
-        {
-            //Salvo le dimensioni del client prima del ridimensionamento per poter calcolare la proporzione
+            //Salvo le dimensioni del client prima dei ridimensionamenti per poter calcolare la proporzione
             lunghezza_client_iniziale = this.ClientRectangle.Width;
             altezza_client_iniziale = this.ClientRectangle.Height;
         }
@@ -286,35 +283,35 @@ namespace WindowsFormsApplication5
 
         private void initializeMenu()
         {
-            //assegno al menu un nuovo menu
+            // Assegna al menu un nuovo menu
             this.menu = new Menu();
 
             // Inizializza il menu
             initializeForm(menu);
 
-            //Controllo se e' la prima partita dell utente
+            // Controlla se e' la prima partita dell utente
             if (again)
                 this.menu.start.Text = "Play Again";
             else
                 this.menu.start.Text = "Play";
 
-            //Assegno al pulsante del menu un evento
+            // Assegna al pulsante del menu un evento
             this.menu.start.Click += new EventHandler(this.StartGame);
             this.menu.start.Text = "Play";
 
-            //Faccio partire la musica del menu
+            // Fa partire la musica del menu
             this.Music.Menu();
         }
 
         private void initializeThread(Thread thread)
-        {   //assegno al thread una funzione
+        {   // Assegna al thread una funzione
             GameAlive = new Thread(gameoverCheck);
 
             // Inizializza il thread
             GameAlive.Start();
         }
 
-        // FUnzione chiamata quando viene ridimensionata la finestra
+        // Funzione chiamata quando viene ridimensionata la finestra
         private void OnResizeEnd(object sender, EventArgs e)
         {
             if (Game != null)
@@ -326,7 +323,7 @@ namespace WindowsFormsApplication5
             GamePanels.Top = 0;
             GamePanels.Left = 0;
 
-            //Salvo le dimensioni del client
+            // Salva le dimensioni del client
             lunghezza_client = this.ClientRectangle.Width;
             altezza_client = this.ClientRectangle.Height;
 
@@ -350,6 +347,10 @@ namespace WindowsFormsApplication5
             }
             if (this.Game != null)
                 Game.Logic.waitResize = false;
+
+            // Aggiorna le nuove dimensioni iniziali del client
+            lunghezza_client_iniziale = this.ClientRectangle.Width;
+            altezza_client_iniziale = this.ClientRectangle.Height;
         }
 
         private void StartGame(object sender, EventArgs e)
