@@ -9,12 +9,12 @@ namespace WindowsFormsApplication5
 
         public int blockLife;
 
-        //variabili per vita e texture
+        // Variabili per vita e texture
         public int initialLife;
 
         public Bitmap texture;
 
-        //creo il random che mi servirà a calcolare vite in modo casuale
+        // Crea il random che mi servirà a calcolare vite in modo casuale
         private static Random random = new Random();
 
         #endregion Fields
@@ -50,6 +50,9 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
+        /// <summary>
+        /// Funzione che permette di cambiare la texture del blocco a seconda delle vite rimanenti
+        /// </summary>
         public void textureSwitcher()
         {
             //assegno texture diverse, a seconda della vita

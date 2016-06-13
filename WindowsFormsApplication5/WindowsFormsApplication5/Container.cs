@@ -35,8 +35,13 @@ namespace WindowsFormsApplication5
         #endregion Constructors
 
         #region Methods
-
-        private void Container2_FormClosing(object sender, FormClosingEventArgs e)
+        
+        /// <summary>
+        /// Funzione per la chiusura di container
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ContainerFormClosing(object sender, FormClosingEventArgs e)
         {
             //se l utente preme x dalla schermata di gioco devo fermare il thread del gioco
             if (Game != null)
@@ -48,6 +53,11 @@ namespace WindowsFormsApplication5
             System.Environment.Exit(0);
         }
 
+        /// <summary>
+        /// Funzione Per il Caricamento di Container
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Container2_Load(object sender, EventArgs e)
         {
             this.MinimumSize = new System.Drawing.Size(700, 450);
@@ -69,6 +79,11 @@ namespace WindowsFormsApplication5
             altezza_client_iniziale = this.ClientRectangle.Height;
         }
 
+        /// <summary>
+        /// Funzione necessaria per cambiare form dopo la fine della partita
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ContinueToMenu(object sender, EventArgs e)
         {
             // Salva prima lo score, poi l'HighScore nell'xml
@@ -96,6 +111,9 @@ namespace WindowsFormsApplication5
             GC.WaitForFullGCComplete();
         }
 
+        /// <summary>
+        /// Funzione per la liberazione della memoria di ogni parte del programma (musica a parte)
+        /// </summary>
         private void DisposeAll()
         {
             try
@@ -162,6 +180,9 @@ namespace WindowsFormsApplication5
             }
         }
 
+        /// <summary>
+        /// Funzione necessaria per sapere se il gioco è ancora attivo ma deve essere chiuso, oppure no
+        /// </summary>
         private void gameoverCheck()
         {
             //controllo se il Game e' ancora attivo
@@ -194,6 +215,10 @@ namespace WindowsFormsApplication5
             }
         }
 
+        /// <summary>
+        /// Funzione helper per facilitare l'inizializzazione dei form
+        /// </summary>
+        /// <param name="form"></param>
         private void initializeForm(Form form)
         {
             // Imposta il topLevel del form a false
@@ -226,6 +251,9 @@ namespace WindowsFormsApplication5
             }));
         }
 
+        /// <summary>
+        /// Funzione necessaria ad inizializzare il form del gioco
+        /// </summary>
         private void initializeGame()
         {   //assegno al gioco un nuovo gioco
             Game = new Game();
@@ -234,12 +262,15 @@ namespace WindowsFormsApplication5
             initializeForm(Game);
 
             // Inizializza il thread per controllare lo stato del gioco
-            initializeThread(GameAlive);
+            initializeThreadGameoverCheck(GameAlive);
 
             //faccio partire la musica di gioco
             Music.Game();
         }
 
+        /// <summary>
+        /// Funzione necessaria a inizializzare il form del gameover
+        /// </summary>
         private void initializeGameOver()
         {
             //assegno al GameOver un nuovo GameOver
@@ -258,6 +289,9 @@ namespace WindowsFormsApplication5
             Music.GameOver();
         }
 
+        /// <summary>
+        /// Funzione necessaria a inizializzare il GamePanel
+        /// </summary>
         private void initializeGamePanel()
         {
             //assegno al pannello un nuovo pannello
@@ -296,6 +330,9 @@ namespace WindowsFormsApplication5
             }
         }
 
+        /// <summary>
+        /// Funzione necessaria a inizializzare il form del menu
+        /// </summary>
         private void initializeMenu()
         {
             // Assegna al menu un nuovo menu
@@ -318,7 +355,11 @@ namespace WindowsFormsApplication5
             this.Music.Menu();
         }
 
-        private void initializeThread(Thread thread)
+        /// <summary>
+        /// Funzione necessaria a inizializzare il thread del gameover
+        /// </summary>
+        /// <param name="thread"></param>
+        private void initializeThreadGameoverCheck(Thread thread)
         {   // Assegna al thread una funzione
             GameAlive = new Thread(gameoverCheck);
 
@@ -326,8 +367,12 @@ namespace WindowsFormsApplication5
             GameAlive.Start();
         }
 
-        // Funzione chiamata quando viene ridimensionata la finestra
-        private void OnResizeEnd(object sender, EventArgs e)
+        /// <summary>
+        /// Funzione necessaria quando si effettua il resize della finestra
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSizeChange(object sender, EventArgs e)
         {
             if (Game != null)
                 Game.Logic.waitResize = true;
@@ -368,6 +413,11 @@ namespace WindowsFormsApplication5
             altezza_client_iniziale = this.ClientRectangle.Height;
         }
 
+        /// <summary>
+        /// Funzione necessaria a far partire il gioco
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartGame(object sender, EventArgs e)
         {
             //Pulisco tutto

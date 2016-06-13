@@ -54,7 +54,13 @@ namespace WindowsFormsApplication5
         #endregion Constructors
 
         #region Methods
-
+        /// <summary>
+        /// Risetta la velocità totale massima a seconda della grandezza del client in modo che non rallenti o acceleri la pallina a seconda del size
+        /// </summary>
+        /// <param name="lunghezza_client_iniziale"></param>
+        /// <param name="altezza_client_iniziale"></param>
+        /// <param name="lunghezza_client"></param>
+        /// <param name="altezza_client"></param>
         public void totalVelocityReset(int lunghezza_client_iniziale, int altezza_client_iniziale, int lunghezza_client, int altezza_client)
         {
             this.velocity.Y = this.velocity.Y * altezza_client / altezza_client_iniziale;
@@ -259,13 +265,15 @@ namespace WindowsFormsApplication5
             Music.Play();
         }
 
-        //Gestisco i casi in cui la pallina collide contro i bordi dello schermo
-        //faccio rimanere la pallina all'interno dello schermo e scalo una vita se la y della pallina arriva all'altezza di view.heigth
+        /// <summary>
+        /// Gestisco i casi in cui la pallina collide contro i bordi dello schermo
+        /// </summary>
+        /// <param name="s"></param>
         private void ViewCollision(Sprite s)
         {
             View myview = (View)s;
 
-            //La X della pallina è oltre il limite destro o sinistro
+            // La X della pallina è oltre il limite destro o sinistro
             if ((this.X + (float)this.Width) >= (float)myview.Width + myview.X)
             {
                 this.velocity.X *= -1;
@@ -278,7 +286,8 @@ namespace WindowsFormsApplication5
                 this.X = myview.X;
             }
 
-            //La Y della pallina è oltre il limite superiore o inferiore
+            // Fa rimanere la pallina all'interno dello schermo e scalo una vita se la y della pallina arriva all'altezza di view.heigth
+            // La Y della pallina è oltre il limite superiore o inferiore
             if ((this.Y + (float)this.Height) >= (float)myview.Height + myview.X)
             {
                 myview.bottomCollide = 1;
@@ -289,7 +298,6 @@ namespace WindowsFormsApplication5
                 this.velocity.Y *= -1;
                 this.Y = myview.Y;
             }
-           
         }
 
         #endregion Methods

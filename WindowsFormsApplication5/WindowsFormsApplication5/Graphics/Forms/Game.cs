@@ -37,6 +37,9 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
+        /// <summary>
+        /// Funzione che permette l'inizializzazione delle vite e del loro disegno iniziale
+        /// </summary>
         public void life_init()
         {
             for (int i = 0; i < Logic.vita_rimanente; i++)
@@ -52,6 +55,13 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
+        /// <summary>
+        /// Funzione che viene chiamata al resize della finestra e che chiama le funzioni che cambiano i vari size dei componenti passandogli le nuove e le vecchie misure
+        /// </summary>
+        /// <param name="li">initial width</param>
+        /// <param name="hi">initial heigth</param>
+        /// <param name="l">new width</param>
+        /// <param name="h">new heigth</param>
         public void on_resize(int li, int hi, int l, int h)
         {
             // Richiama logic.resize
@@ -63,25 +73,54 @@ namespace WindowsFormsApplication5
 
         }
 
+        /// <summary>
+        /// Funzione chiamata 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnClosing(CancelEventArgs e)
         {
-            // Verifico che IsAlive non sia verificato
-            while (this.gameThread.IsAlive) { }
+            try
+            {
+                // Prova a chiudere il form, se non ci riesce allora lo fa nel modo più lento ma sicuro
+                this.Close();
+            }
+            catch
+            {
+                // Verifico che IsAlive non sia verificato
+                while (this.gameThread.IsAlive) { }
 
-            // Libera la memoria e chiudo il form
-            Thread.Sleep(1000);
-            this.Dispose();
-            base.OnClosing(e);
-            System.Environment.Exit(0);
-            this.Close();
+                // Libera la memoria e chiudo il form
+                Thread.Sleep(1000);
+                this.Dispose();
+                base.OnClosing(e);
+                System.Environment.Exit(0);
+                this.Close();
+            }
         }
 
+        /// <summary>
+        /// Funzione che permette il caricamento iniziale del gioco
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
-            loadContent();
+            try
+            {
+                loadContent();
+            }
+            // Gestiamo un raro caso in cui crashava il gioco che viene gestito da OnLoad
+            catch
+            {
+                base.OnLoad(e);
+                loadContent();
+            }
         }
 
+        /// <summary>
+        /// Funzione che gestisce l'evento della pressione dei tasti durante l'esecuzione del gioco
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Logic.AllowInput)
@@ -110,6 +149,9 @@ namespace WindowsFormsApplication5
             }
         }
 
+        /// <summary>
+        /// Funzione che permette il reset del titolo del gioco per poterlo scalare
+        /// </summary>
         private void gameTitleset()
         {
             gameTitle = new Label();
@@ -124,6 +166,9 @@ namespace WindowsFormsApplication5
             this.Controls.Add(gameTitle);
         }
 
+        /// <summary>
+        /// Funzione che permette di inizializzare la griglia
+        /// </summary>
         private void init_grid()
         {
             grid = new Grid((int)this.background.X, (int)this.background.Y, this.background.Height, this.background.Width, Properties.Resources.Block_4, Logic);
@@ -131,11 +176,17 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
+        /// <summary>
+        /// Funzione che permette di caricare il contenuto all'avvio
+        /// </summary>
         private void loadContent()
         {
             starter();
         }
 
+        /// <summary>
+        /// Funzione che permette
+        /// </summary>
         private void scoreSet()
         {
             score = new Label();
@@ -151,6 +202,9 @@ namespace WindowsFormsApplication5
             this.Controls.Add(score);
         }
 
+        /// <summary>
+        /// Funzione starter invocata all'avvio di questo form per inizializzarlo
+        /// </summary>
         private void starter()
         {
             // Inizializza la logica
@@ -217,10 +271,5 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Methods
-
-        private void Game_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

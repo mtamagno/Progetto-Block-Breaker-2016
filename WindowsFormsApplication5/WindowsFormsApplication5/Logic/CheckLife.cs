@@ -2,16 +2,14 @@
 {
     internal class CheckLife
     {
-        #region Constructors
-
-        public CheckLife()
-        {
-        }
-
-        #endregion Constructors
-
         #region Methods
-
+        
+        /// <summary>
+        /// Funzione per il Check dell'hit del bottom
+        /// </summary>
+        /// <param name="ThisForm"></param>
+        /// <param name="lifes"></param>
+        /// <returns></returns>
         public int check(Game ThisForm, int lifes)
         {
             if (ThisForm.background.bottomCollide == 1)

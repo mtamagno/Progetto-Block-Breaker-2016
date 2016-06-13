@@ -19,6 +19,9 @@ namespace WindowsFormsApplication5
         #endregion Fields
 
         #region Properties
+        /// <summary>
+        /// Proprietà che ritornano le coordinate delle parti degi sprite
+        /// </summary>
 
         public Rectangle Bottom
         {
@@ -49,12 +52,23 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
-        //Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
+        /// <summary>
+        /// Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
+        /// </summary>
+        /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(this);
         }
 
+        /// <summary>
+        /// Funzione necessaria alla creazione da bitmap degli sprite, e dei loro disegni
+        /// </summary>
+        /// <param name="texture"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public void graphics(Bitmap texture, float x, float y, int width, int height)
         {
             // Disegna il bitmap
@@ -120,7 +134,6 @@ namespace WindowsFormsApplication5
 
         #endregion Methods
 
-        //Il collider fa un check di eventuali impatti tra sprites
     }
 
     /// <summary>

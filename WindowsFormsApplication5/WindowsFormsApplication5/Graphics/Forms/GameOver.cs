@@ -18,7 +18,6 @@ namespace WindowsFormsApplication5
 
         #region Constructors
 
-        // Costruttore che inizializza lo starter
         public GameOver()
         {
             InitializeComponent();
@@ -28,6 +27,9 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
+        /// <summary>
+        /// Funzione che permette di liberare la memoria dall'immagine di background
+        /// </summary>
         public void cleaner()
         {
             this.BackgroundImage.Dispose();
@@ -36,6 +38,11 @@ namespace WindowsFormsApplication5
             GC.WaitForFullGCComplete();
         }
 
+        /// <summary>
+        /// Funzione che permette di ridimensionare ad ogni resize, l'immagine di backGround, la textBox ed il pulsante
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="h"></param>
         public void on_resize(int l, int h)
         {
             this.cleaner();
@@ -55,9 +62,15 @@ namespace WindowsFormsApplication5
             this.Controls.Add(Continue);
         }
 
+        /// <summary>
+        /// Funzione che viene chiamata se si clicca su continua, così da salvare il nome immesso(se si è cambiato quello standard)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Continue_Click(object sender, EventArgs e)
         {
-            highScore.Name = textBox.Text;
+            if(textBox.Text != "Insert Name..." && textBox.Text != " ")
+                highScore.Name = textBox.Text;
         }
 
         private void GameOver_Load(object sender, EventArgs e)

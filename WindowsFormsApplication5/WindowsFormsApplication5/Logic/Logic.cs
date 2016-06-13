@@ -149,7 +149,7 @@ namespace WindowsFormsApplication5
                     s.Y = controller.ClientRectangle.Height / 2 - s.Height / 2;
                 }                            
 
-                //ridimensiono la vita
+                // Ridimensiono la vita
                 else if (s.GetType().Name == "Life")
                 {
                     s.redraw(s,
@@ -158,6 +158,7 @@ namespace WindowsFormsApplication5
                         Properties.Resources.Life, s.X * l / li, s.Y * h / hi);
                 }
 
+                // Ridimensiono la skin
                 else if (s.GetType().Name == "Skin")
                 {
                     s.redraw(s,
@@ -167,12 +168,12 @@ namespace WindowsFormsApplication5
                         0,
                         0);
                 }
-
-
             }
 
+            // Ridimensiono la griglia
             controller.grid.redraw_grid(controller.grid, controller.background.Height, controller.background.Width);
 
+            //Per ogni sprite in iManager.inGameSprites, ridimensiono lo sprite
             foreach (Sprite s in iManager.inGameSprites)
             {
                 //ridimensiono i blocchi di gioco
@@ -186,9 +187,10 @@ namespace WindowsFormsApplication5
                 }
             }
 
-                controller.racchetta.Y = h * 9 / 10;
+            // Sposto la racchetta all'altezza giusta
+            controller.racchetta.Y = h * 9 / 10;
             
-
+            // Ridimensiono la superfice di disegno
             spriteBatch.cntxt.MaximumBuffer = new Size(controller.ClientSize.Width + 1, controller.ClientSize.Height + 1);
             spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(controller.CreateGraphics(), new Rectangle(Point.Empty, controller.ClientSize));
             spriteBatch.Gfx = controller.CreateGraphics();
@@ -203,7 +205,9 @@ namespace WindowsFormsApplication5
 
         #region Private Methods
 
-        //inizializzo le variabili di gioco
+        /// <summary>
+        /// Funzione per l'inizializzazione del gioco
+        /// </summary>
         private void init()
         {
             this.vita_rimanente = 3;
@@ -221,7 +225,9 @@ namespace WindowsFormsApplication5
             this.spriteBatch = new SpriteBatch(controller.ClientSize, controller.CreateGraphics());
         }
 
-        //controllo quanti blocchi sono rimasti in gioco
+        /// <summary>
+        /// Funzione per il controllo di quanti blocchi sono rimasti in gioco
+        /// </summary>
         private void checkActiveBlock()
         {
             if (activeBlock == 0)
@@ -230,7 +236,9 @@ namespace WindowsFormsApplication5
             }
         }
 
-        //setto lo score dell utente
+        /// <summary>
+        /// Funzione per il check dello score dell'utente
+        /// </summary>
         private void checkscore()
         {
             previous_score = score;
@@ -279,7 +287,7 @@ namespace WindowsFormsApplication5
         /// </summary>
         private void render()
         {
-            spriteBatch.Begin();
+            spriteBatch.Clear();
             foreach (Sprite s in iManager.inGameSprites)
                 if (s.toRender == true)
                     spriteBatch.Draw(s);
