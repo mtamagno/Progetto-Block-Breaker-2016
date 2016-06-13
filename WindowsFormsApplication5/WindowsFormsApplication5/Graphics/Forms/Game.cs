@@ -59,6 +59,9 @@ namespace WindowsFormsApplication5
             Logic.resize(li, hi, l, h);
             racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
             score.Top = this.ClientRectangle.Height - 40;
+            score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
+            gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width/2;
+
         }
 
         protected override void OnClosing(CancelEventArgs e)
@@ -106,10 +109,10 @@ namespace WindowsFormsApplication5
         private void gameTitleset()
         {
             gameTitle = new Label();
-            gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width;
             gameTitle.Top = 20;
-            gameTitle.Width = this.ClientRectangle.Width;
+            gameTitle.Width = this.ClientRectangle.Width/3*2;
             gameTitle.TextAlign = ContentAlignment.MiddleCenter;
+            gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
             gameTitle.Text = "BlockBreaker";
             gameTitle.BackColor = Color.Black;
             gameTitle.ForeColor = Color.White;
