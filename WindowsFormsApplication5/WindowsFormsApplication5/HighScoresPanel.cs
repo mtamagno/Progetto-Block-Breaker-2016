@@ -1,20 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Xml;
+using System.IO;
+
 
 namespace WindowsFormsApplication5
 {
-    public class Instructions : Panel
+    class HighScoresPanel : Panel
     {
-        #region Methods
         MyFonts fontTitle;
         MyFonts fontParagraph;
         Label Title;
         Label Paragraph;
+        XmlTextReader Reader;
+        int Highscore_counter;
 
-
-        public Instructions(int Left, int Top, int Width, int Height)
+        public HighScoresPanel(int Left, int Top, int Width, int Height)
         {
+            Title = new Label();
+            Paragraph = new Label();
+            Reader = new XmlTextReader("HighScores.xml");
+            Highscore_counter= 0;
+            for(int i = 0; Reader.Read() && i < 100; i++)
+            {
+                switch (Reader.NodeType)
+                {
+
+                    case XmlNodeType.Element:
+                        Console.WriteLine("<" + Reader.Name + ">");
+                        break;
+
+                    case XmlNodeType.Text:
+                        Paragraph.Text += Reader.Value + " - ";
+                        Console.WriteLine( Reader.Value );
+                        Highscore_counter++;
+                        break;
+
+                    case XmlNodeType.EndElement:
+                        Console.WriteLine("</" + Reader.Name + ">");
+                        break;
+                }
+                if (Highscore_counter == 2)
+                {
+                    Paragraph.Text += "\n\n";
+                    Highscore_counter = 0;
+                }
+
+            }
+
+            Console.ReadLine();
 
             this.Left = Left;
             this.Top = Top;
@@ -24,30 +63,17 @@ namespace WindowsFormsApplication5
 
             fontParagraph = new MyFonts(MyFonts.FontType.paragraph);
             fontTitle = new MyFonts(MyFonts.FontType.Title);
-            Title = new Label();
-            Paragraph = new Label();
             Title.UseCompatibleTextRendering = true;
             Title.Top = 30;
-            Title.Text = "Help";
+            Title.Text = "Highscores";
             Title.Height = 60;
             Title.Width = this.Width;
             Title.Font = new Font(fontTitle.type.Families[0], 30, FontStyle.Regular);
             Title.TextAlign = ContentAlignment.MiddleCenter;
             Title.ForeColor = Color.White;
 
-            
             Paragraph.Height = 300;
             Paragraph.Top = 100;
-
-            Paragraph.Text = "Ingame Instructions:" +
-                "\n.\n." +
-                "\nClick on the button start to start the game"+
-                "\n."+
-                "\nMove your cursor to move the paddle" +
-                "\n." +
-                "\nPress space to throw the ball" +
-                "\n." +
-                "\nPress enter to pause the game";
 
             Paragraph.UseCompatibleTextRendering = true;
             Paragraph.Width = this.Width;
@@ -55,7 +81,7 @@ namespace WindowsFormsApplication5
             Paragraph.TextAlign = ContentAlignment.MiddleCenter;
             Paragraph.ForeColor = Color.White;
 
-           
+
             this.Controls.Add(Title);
             this.Controls.Add(Paragraph);
             /*controller.BackgroundImage = Properties.Resources.Instructions;
@@ -63,8 +89,7 @@ namespace WindowsFormsApplication5
             controller.Visible = false;
             return controller;*/
             this.Visible = false;
-        }
 
-        #endregion Methods
+        }
     }
 }

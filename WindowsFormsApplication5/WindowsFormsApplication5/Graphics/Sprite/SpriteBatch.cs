@@ -37,6 +37,13 @@ namespace WindowsFormsApplication5
         {
             try
             {
+                if(s.GetType().Name == "Paddle")
+                {
+                    Paddle mypaddle = (Paddle)s;
+                    if (mypaddle.hurted == true)
+                        s.graphics(s.Texture, s.X, s.Y, s.Width, s.Height);
+                }
+
                 bfgfx.Graphics.DrawImageUnscaled(s.Texture, s.toRec);
             }
             catch

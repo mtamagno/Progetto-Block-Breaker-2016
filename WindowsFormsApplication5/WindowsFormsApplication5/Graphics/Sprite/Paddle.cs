@@ -10,6 +10,7 @@ namespace WindowsFormsApplication5
         #region Fields
 
         public Bitmap texture;
+        public bool hurted;
 
 
         #endregion Fields
@@ -24,6 +25,7 @@ namespace WindowsFormsApplication5
             canCollide = true;
             torender = true;
             followPointer = true;
+            hurted = false;
 
             this.graphics(texture, x, y, width, height);
             logic.iManager.inGameSprites.Add(this);
@@ -61,17 +63,17 @@ namespace WindowsFormsApplication5
 
         public void hurt()
         {
-            
             Texture = Properties.Resources.hurt;
-            this.graphics(Texture, this.X, this.Y, this.Width, this.Height);
-            Thread.Sleep(700);
+            hurted = true;                
+            Thread.Sleep(600);
             this.normal();
         }
 
         public void normal()
         {
             Texture = Properties.Resources.New_Piskel;
-            this.graphics(Texture, this.X, this.Y, this.Width, this.Height);
+            Thread.Sleep(50);
+            hurted = false;
         }
         #endregion Methods
     }

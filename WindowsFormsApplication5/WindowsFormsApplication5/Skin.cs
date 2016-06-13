@@ -2,19 +2,14 @@
 
 namespace WindowsFormsApplication5
 {
-    public class View : Sprite
+    public class Skin : Sprite
     {
-        #region Fields
 
         public Bitmap texture;
 
-        #endregion Fields
-
-        #region Constructors
-
-        public View(float x, float y, int width, int height, Logic logic)
+        public Skin(float x, float y, int width, int height, Logic logic)
         {
-            texture = Properties.Resources.Schermo_800_600_GBA;
+            texture = Properties.Resources.Skin;
             canFall = false;
             torender = true;
             canCollide = true;
@@ -23,7 +18,5 @@ namespace WindowsFormsApplication5
             this.graphics(texture, x, y, width, height);
             logic.iManager.inGameSprites.Add(this);
         }
-
-        #endregion Constructors
     }
 }

@@ -10,6 +10,7 @@ namespace WindowsFormsApplication5
     {
         #region Fields
 
+        public Skin skin;
         public View background;
         public Ball ball;
         public Thread gameThread;
@@ -131,14 +132,14 @@ namespace WindowsFormsApplication5
         private void scoreSet()
         {
             score = new Label();
-            score.Left = 20;
+            score.Left = this.ClientRectangle.Width/2 - this.score.Width/2;
             score.Top = this.ClientRectangle.Height - 40;
-            score.Width = this.ClientRectangle.Width / 2;
+            score.Width = this.ClientRectangle.Width / 8;
 
-            //score.TextAlign = ContentAlignment.MiddleCenter;
+            score.TextAlign = ContentAlignment.MiddleCenter;
             score.Text = "Score: 0";
             score.BackColor = Color.Black;
-            score.ForeColor = Color.White;
+            score.ForeColor = Color.Transparent;
             score.Font = new Font("Arial", 15);
             this.Controls.Add(score);
         }
@@ -147,6 +148,16 @@ namespace WindowsFormsApplication5
         {
             // Inizializza la logica
             Logic = new Logic(this);
+
+            //Inizializzo la skin
+
+            skin = new Skin(this.ClientRectangle.X,
+            this.ClientRectangle.Y,
+            this.ClientRectangle.Width,
+            this.ClientRectangle.Height,
+            Logic);
+            skin.X = 0;
+            skin.Y = 0;
 
             // Inizializza la variabile della visione del menù pausa a falso in caso sia vera
             gamePause = new GamePause(0, 0, 1000, 500);
@@ -199,5 +210,10 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Methods
+
+        private void Game_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

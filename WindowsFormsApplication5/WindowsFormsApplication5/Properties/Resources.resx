@@ -127,26 +127,14 @@
   <data name="Background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Background.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Block_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Block.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="Life" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\8_bit_heart_stock_by_xquatrox-d4r844m.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Block_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Block_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Block_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Block_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BackGround_Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BackGround_Image.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BlueRoundedButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\BlueRoundedButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Block_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Block1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GameOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\maxresdefault.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -156,9 +144,6 @@
   </data>
   <data name="Instructions" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\instruction.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Logo.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="logo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -177,5 +162,32 @@
   </data>
   <data name="small_font" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\small_font.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="SegoeKeycaps" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\SegoeKeycaps.TTF;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="smallfr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\smallfr.fon;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Linds" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Linds.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Block_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Nuvola 5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Block_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Nuvola 7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Block_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Nuvola 8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Block_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Nuvola 3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Schermo_800_600_GBA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Schermo 800 600 GBA.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Skin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
