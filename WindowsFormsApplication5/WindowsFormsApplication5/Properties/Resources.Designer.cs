@@ -209,12 +209,12 @@ namespace WindowsFormsApplication5.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap Logo {
+        internal static byte[] Linds {
             get {
-                object obj = ResourceManager.GetObject("Logo", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("Linds", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -248,11 +248,51 @@ namespace WindowsFormsApplication5.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Schermo_800_600_GBA {
+            get {
+                object obj = ResourceManager.GetObject("Schermo_800_600_GBA", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SegoeKeycaps {
+            get {
+                object obj = ResourceManager.GetObject("SegoeKeycaps", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Skin {
+            get {
+                object obj = ResourceManager.GetObject("Skin", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] small_font {
             get {
                 object obj = ResourceManager.GetObject("small_font", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] smallfr {
+            get {
+                object obj = ResourceManager.GetObject("smallfr", resourceCulture);
                 return ((byte[])(obj));
             }
         }

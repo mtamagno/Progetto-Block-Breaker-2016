@@ -10,12 +10,13 @@ namespace WindowsFormsApplication5
 
         public MenuButton Help;
         public MenuButton Highscores;
-        public Instructions Instructions = new Instructions();
+        public Instructions Instructions;
         public Panel MenuPanel = new Panel();
         public Size s;
         public MenuButton start;
         private Bitmap backgroundimage;
         private PictureBox Logo;
+        private HighScoresPanel highscorepanel;
         private string Testo;
 
         #endregion Fields
@@ -24,6 +25,7 @@ namespace WindowsFormsApplication5
 
         public Menu()
         {
+            Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
             InitializeComponent();
         }
 
@@ -73,8 +75,7 @@ namespace WindowsFormsApplication5
             this.CreateLogo(this.ClientSize.Width, this.ClientSize.Height);
 
             //Ricrea le istruzioni
-            this.Instructions = new Instructions();
-            this.Instructions = this.Instructions.CreateInstructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
+            this.Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
             this.Controls.Add(Instructions);
 
             if (makeInstructionsVisible == true)
@@ -101,8 +102,8 @@ namespace WindowsFormsApplication5
             this.CreatePanel();
 
             // Instructions
-            this.Instructions = this.Instructions.CreateInstructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
-            
+            this.Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
+            this.highscorepanel = new HighScoresPanel(0, 0, this.ClientSize.Width, this.ClientSize.Height);
 
             //Logo
             this.CreateLogo(this.ClientSize.Width, this.ClientSize.Height);
@@ -153,9 +154,9 @@ namespace WindowsFormsApplication5
             this.MenuPanel.Controls.Add(Help);
             this.MenuPanel.Controls.Add(Highscores);
             this.Controls.Add(Instructions);
-
+            this.Controls.Add(highscorepanel);
         }
-
+        
         /// <summary>
         /// Crea il logo con le giuste dimensioni
         /// </summary>
@@ -218,6 +219,7 @@ namespace WindowsFormsApplication5
 
             // Eventhandler
             this.Help.Click += new EventHandler(this.Show_Instructions);
+            this.Highscores.Click += new EventHandler(this.Show_highscore);
             this.MenuPanel.Controls.Add(start);
             this.MenuPanel.Controls.Add(Help);
             this.MenuPanel.Controls.Add(Highscores);
@@ -250,10 +252,19 @@ namespace WindowsFormsApplication5
                 this.start.Visible = true;
                 this.Help.Visible = true;
                 this.Instructions.Visible = false;
+                this.highscorepanel.Visible = false;
                 this.Logo.Visible = true;
             }
         }
-
+        
+        private void Show_highscore(object sender, EventArgs e)
+        {
+            this.MenuPanel.Visible = false;
+            this.Logo.Visible = false;
+            this.highscorepanel.Visible = true;
+            this.Focus();
+            this.KeyPress += new KeyPressEventHandler(this.Help_KeyPress);
+        }
 
         #endregion Methods
     }

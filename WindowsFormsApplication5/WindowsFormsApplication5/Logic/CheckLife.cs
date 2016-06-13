@@ -17,7 +17,7 @@
             if (ThisForm.background.bottomCollide == 1)
             {
                 ThisForm.ball.canFall = false;
-                ThisForm.ball.Y = ThisForm.racchetta.Y;
+                ThisForm.ball.Y = ThisForm.racchetta.Y - ThisForm.ball.Height ;
                 ThisForm.ball.followPointer = true;
                 ThisForm.ball.velocityTot = 0;
                 ThisForm.ball.velocity.X = 0;

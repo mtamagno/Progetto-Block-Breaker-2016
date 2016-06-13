@@ -142,7 +142,7 @@ namespace WindowsFormsApplication5
                     s.redraw(s,
                         l / 30 * 29,
                         h / 5 * 4,
-                        Properties.Resources.Background,
+                        Properties.Resources.Schermo_800_600_GBA,
                         0,
                         0);
                     s.X = controller.ClientRectangle.Width / 2 - s.Width / 2;
@@ -157,6 +157,18 @@ namespace WindowsFormsApplication5
                         (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
                         Properties.Resources.Life, s.X * l / li, s.Y * h / hi);
                 }
+
+                else if (s.GetType().Name == "Skin")
+                {
+                    s.redraw(s,
+                        l,
+                        h,
+                        Properties.Resources.Skin,
+                        0,
+                        0);
+                }
+
+
             }
 
             controller.grid.redraw_grid(controller.grid, controller.background.Height, controller.background.Width);
