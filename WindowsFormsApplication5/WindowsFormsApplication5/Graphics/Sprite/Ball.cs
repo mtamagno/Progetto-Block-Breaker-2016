@@ -47,7 +47,7 @@ namespace WindowsFormsApplication5
             toRender = true;
 
 
-            stream = TitleContainer.OpenStream(@"Music.wav");
+            stream = TitleContainer.OpenStream(@"SoundEffect/Music.wav");
             Music = SoundEffect.FromStream(stream);
 
             //rendo invisibile lo sfondo dello sprite della pallina

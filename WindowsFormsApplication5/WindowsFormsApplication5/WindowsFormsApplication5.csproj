@@ -142,7 +142,7 @@
     </Compile>
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
-    <Content Include="Linds.ttf">
+    <Content Include="Fonts\Linds.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\Settings.settings">
@@ -156,7 +156,7 @@
     </Compile>
     <EmbeddedResource Include="Resources\Linds.ttf" />
     <EmbeddedResource Include="Resources\SegoeKeycaps.TTF" />
-    <Content Include="SegoeKeycaps.TTF">
+    <Content Include="Fonts\SegoeKeycaps.TTF">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -193,7 +193,7 @@
     <Content Include="content\collide.wav" />
     <Content Include="content\Music.mp3" />
     <None Include="Resources\maxresdefault.jpg" />
-    <Content Include="Music.wav">
+    <Content Include="SoundEffect\Music.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Music.wav" />

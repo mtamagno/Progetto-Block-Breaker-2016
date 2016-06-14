@@ -37,7 +37,7 @@ namespace WindowsFormsApplication5
         {
             PrivateFontCollection Type;
             Type = new PrivateFontCollection();
-            Type.AddFontFile("SegoeKeycaps.TTF");
+            Type.AddFontFile("FOnts/SegoeKeycaps.TTF");
             type = Type;
         }
 
@@ -48,7 +48,7 @@ namespace WindowsFormsApplication5
         {
             PrivateFontCollection Type;
             Type = new PrivateFontCollection();
-            Type.AddFontFile("Linds.ttf");
+            Type.AddFontFile("FOnts/Linds.ttf");
             type = Type;
         }
 
