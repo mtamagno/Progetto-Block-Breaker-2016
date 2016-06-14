@@ -59,7 +59,7 @@ namespace WindowsFormsApplication5
                 if (followPointer)
                 {
                     if(thisform != null)
-                    if ((Cursor.Position.X - thisform.Location.X) >= 0 && Cursor.Position.X - thisform.Location.X < thisform.Width)                    
+                    if ((Cursor.Position.X - thisform.Location.X) >= 95 && Cursor.Position.X - thisform.Location.X < thisform.Width-90)                    
                         this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - 10;                                 
                 }
             }
