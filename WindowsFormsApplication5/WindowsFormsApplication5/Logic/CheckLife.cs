@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication5
+﻿namespace BlockBreaker
 {
     internal class CheckLife
     {

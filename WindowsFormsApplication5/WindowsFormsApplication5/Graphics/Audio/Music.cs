@@ -1,6 +1,6 @@
 ﻿using System.Media;
 
-namespace WindowsFormsApplication5
+namespace BlockBreaker
 {
     internal class Music
     {

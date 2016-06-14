@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication5
+﻿namespace BlockBreaker
 {
     partial class Game
     {

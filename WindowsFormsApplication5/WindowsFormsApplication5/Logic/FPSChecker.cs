@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication5
+namespace BlockBreaker
 {
     internal class FPSChecker
     {

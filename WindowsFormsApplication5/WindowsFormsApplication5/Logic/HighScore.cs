@@ -4,7 +4,7 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace WindowsFormsApplication5
+namespace BlockBreaker
 {
     public class HighScore
     {

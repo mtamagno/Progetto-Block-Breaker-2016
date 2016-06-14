@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication5
+namespace BlockBreaker
 {
     public class Logic
     {

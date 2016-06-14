@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using System;
 
-namespace WindowsFormsApplication5
+namespace BlockBreaker
 {
     public class MenuButton : Button
     {

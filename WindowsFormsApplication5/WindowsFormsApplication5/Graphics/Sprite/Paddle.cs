@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace WindowsFormsApplication5
+namespace BlockBreaker
 {
     public class Paddle : Sprite
     {

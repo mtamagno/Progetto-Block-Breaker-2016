@@ -9,7 +9,7 @@ using System.Xml;
 using System.IO;
 
 
-namespace WindowsFormsApplication5
+namespace BlockBreaker
 {
     class HighScoresPanel : Panel
     {

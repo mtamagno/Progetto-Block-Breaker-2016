@@ -6,7 +6,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Threading;
 
-namespace WindowsFormsApplication5
+namespace BlockBreaker
 {
     public class Ball : Sprite
     {

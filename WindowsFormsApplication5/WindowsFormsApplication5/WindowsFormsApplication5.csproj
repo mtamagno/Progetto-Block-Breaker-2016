@@ -7,7 +7,7 @@
     <ProjectGuid>{1354745A-9754-4908-88FB-1931AEE2A88A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WindowsFormsApplication5</RootNamespace>
+    <RootNamespace>BlockBreaker</RootNamespace>
     <AssemblyName>BlockBreaker</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

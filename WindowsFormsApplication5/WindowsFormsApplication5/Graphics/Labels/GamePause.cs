@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 
-namespace WindowsFormsApplication5
+namespace BlockBreaker
 {
     internal class GamePause : Panel
     {

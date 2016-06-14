@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace WindowsFormsApplication5
+namespace BlockBreaker
 {
     public class View : Sprite
     {

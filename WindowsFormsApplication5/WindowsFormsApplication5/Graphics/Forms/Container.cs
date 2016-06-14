@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication5
+namespace BlockBreaker
 {
     public partial class Container : Form
     {
