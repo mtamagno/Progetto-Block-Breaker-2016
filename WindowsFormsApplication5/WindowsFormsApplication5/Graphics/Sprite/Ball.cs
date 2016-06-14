@@ -286,7 +286,7 @@ namespace WindowsFormsApplication5
                 this.X = myview.X;
             }
 
-            // Fa rimanere la pallina all'interno dello schermo e scalo una vita se la y della pallina arriva all'altezza di view.heigth
+            // Fa rimanere la pallina all'interno dello schermo e scalo una vita se la y della pallina arriva all'altezza di view.height
             // La Y della pallina è oltre il limite superiore o inferiore
             if ((this.Y + (float)this.Height) >= (float)myview.Height + myview.X)
             {

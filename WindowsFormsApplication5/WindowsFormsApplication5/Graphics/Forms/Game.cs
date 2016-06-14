@@ -51,6 +51,7 @@ namespace WindowsFormsApplication5
                     (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))));
                 Logic.iManager.inGameSprites.Add(vita[i]);
             }
+
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -102,7 +103,7 @@ namespace WindowsFormsApplication5
         /// Funzione che permette il caricamento iniziale del gioco
         /// </summary>
         /// <param name="e"></param>
-        protected override void OnLoad(EventArgs e)
+        protected void OnLoad(object sender, EventArgs e)
         {
             try
             {

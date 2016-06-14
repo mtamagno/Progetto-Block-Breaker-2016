@@ -40,10 +40,9 @@
             this.ClientSize = new System.Drawing.Size(800, 500);
             this.Name = "Game";
             this.Text = "Game";
-            this.Load += new System.EventHandler(this.Game_Load);
+            this.Load += new System.EventHandler(this.OnLoad);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);
-
         }
 
         #endregion

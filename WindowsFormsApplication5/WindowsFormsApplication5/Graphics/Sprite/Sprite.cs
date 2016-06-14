@@ -89,10 +89,10 @@ namespace WindowsFormsApplication5
         }
 
         //Funzione redraw necessaria ogni qual volta si effettua il resize dei vari sprite
-        public void redraw(Sprite sprite, int newWidth, int newHeigth, Bitmap risorsa, float nuova_X, float nuova_Y)
+        public void redraw(Sprite sprite, int newWidth, int newheight, Bitmap risorsa, float nuova_X, float nuova_Y)
         {
             sprite.Width = newWidth;
-            sprite.Height = newHeigth;
+            sprite.Height = newheight;
             Bitmap b = new Bitmap(sprite.Width, sprite.Height);
             using (Graphics g = Graphics.FromImage(b))
             {
