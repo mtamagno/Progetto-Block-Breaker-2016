@@ -64,31 +64,34 @@ namespace WindowsFormsApplication5
         /// <param name="h">new height</param>
         public void on_resize(int l, int h)
         {
-            // Libera la memoria e capisce se si era sulle istruzioni o meno
-            var makeInstructionsVisible = this.cleaner();
-            
-            // Ricrea il BackGround
-            this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
-            this.BackgroundImageLayout = ImageLayout.Stretch;
-
-            //Ricrea il Panel
-            Testo = this.start.Text;
-            this.CreatePanel();           
-            this.writer(Testo);
-            //Ricrea il logo
-            this.CreateLogo(this.ClientSize.Width, this.ClientSize.Height);
-
-            //Ricrea le istruzioni
-            this.Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
-            this.Controls.Add(Instructions);
-
-            if (makeInstructionsVisible == true)
+            if (this.ClientSize.Width > 0 && this.ClientSize.Height > 0)
             {
-                this.MenuPanel.Visible = false;
-                this.Logo.Visible = false;
-                this.Instructions.Visible = true;
-        }
-            this.Help.KeyPress += Help_KeyPress;
+                // Libera la memoria e capisce se si era sulle istruzioni o meno
+                var makeInstructionsVisible = this.cleaner();
+
+                // Ricrea il BackGround
+                this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
+                this.BackgroundImageLayout = ImageLayout.Stretch;
+
+                //Ricrea il Panel
+                Testo = this.start.Text;
+                this.CreatePanel();
+                this.writer(Testo);
+                //Ricrea il logo
+                this.CreateLogo(this.ClientSize.Width, this.ClientSize.Height);
+
+                //Ricrea le istruzioni
+                this.Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                this.Controls.Add(Instructions);
+
+                if (makeInstructionsVisible == true)
+                {
+                    this.MenuPanel.Visible = false;
+                    this.Logo.Visible = false;
+                    this.Instructions.Visible = true;
+                }
+                this.Help.KeyPress += Help_KeyPress;
+            }
         }
 
         /// <summary>

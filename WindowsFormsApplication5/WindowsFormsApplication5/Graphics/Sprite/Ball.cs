@@ -18,6 +18,10 @@ namespace WindowsFormsApplication5
         public Stream stream;
         public Bitmap texture;
         public PointF velocity;
+        public PointF previousVelocity;
+        public float previousX;
+        public float previousY;
+        public float previousVelocityTot;
         public float velocityTot;
         public float velocityTotLimit = 3000;
         public int velocityTotRaggiunto;
@@ -31,13 +35,19 @@ namespace WindowsFormsApplication5
         public Ball(float x, float y, int width, int height, Logic logic)
         {
             // Imposta le proprietà della pallina
+            this.previousVelocityTot = 0;
+            this.previousVelocity.X = 0;
+            this.previousVelocity.Y = 0;
+            this.previousX = 0;
+            this.previousY = 0;
             texture = Properties.Resources.Ball;
             canFall = false;
             canCollide = true;
             followPointer = true;
             toRender = true;
 
-            stream = TitleContainer.OpenStream("Music.wav");
+
+            stream = TitleContainer.OpenStream(@"Music.wav");
             Music = SoundEffect.FromStream(stream);
 
             //rendo invisibile lo sfondo dello sprite della pallina
@@ -113,6 +123,8 @@ namespace WindowsFormsApplication5
                         }
                     }
                 }
+
+
                 this.X += this.velocity.X * 1 / 500;
                 this.Y += this.velocity.Y * 1 / 500;
             }
@@ -120,6 +132,7 @@ namespace WindowsFormsApplication5
             //se deve seguire il mouse faccio in modo che lo faccia
             if (followPointer == true)
             {
+                if(thisform != null)
                 if ((Cursor.Position.X - thisform.Location.X - this.Width * 2) >= 0 && Cursor.Position.X - thisform.Location.X < thisform.Width)
                     this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - 15;
             }

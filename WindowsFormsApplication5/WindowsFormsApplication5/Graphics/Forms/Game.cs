@@ -21,6 +21,9 @@ namespace WindowsFormsApplication5
         public Life[] vita = new Life[3];
         private GamePause gamePause;
         private Label gameTitle;
+        public bool end;
+        public float ballX;
+        public float ballY;
 
         #endregion Fields
 
@@ -56,21 +59,31 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
-        /// <summary>
-        /// Funzione che viene chiamata al resize della finestra e che chiama le funzioni che cambiano i vari size dei componenti passandogli le nuove e le vecchie misure
-        /// </summary>
-        /// <param name="li">initial width</param>
-        /// <param name="hi">initial heigth</param>
-        /// <param name="l">new width</param>
-        /// <param name="h">new heigth</param>
+        public void lifeEnd()
+        {
+                this.Invoke(new MethodInvoker(delegate
+                {
+                    this.Visible = false;
+                }));
+            
+            
+        }
+
         public void on_resize(int li, int hi, int l, int h)
         {
             // Richiama logic.resize
+            if (hi > 0 && h > 0 && li > 0 && l > 0)
+            {
             Logic.resize(li, hi, l, h);
             racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
             score.Top = this.ClientRectangle.Height - 40;
             score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
             gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
+            }
+            else
+            {
+                Pause();
+            }
 
         }
 
@@ -80,24 +93,11 @@ namespace WindowsFormsApplication5
         /// <param name="e"></param>
         protected override void OnClosing(CancelEventArgs e)
         {
-            try
-            {
-                // Prova a chiudere il form, se non ci riesce allora lo fa nel modo più lento ma sicuro
-                this.Close();
-            }
-            catch
-            {
-                // Verifico che IsAlive non sia verificato
-                while (this.gameThread.IsAlive) { }
-
-                // Libera la memoria e chiudo il form
-                Thread.Sleep(1000);
-                this.Dispose();
                 base.OnClosing(e);
                 System.Environment.Exit(0);
                 this.Close();
             }
-        }
+
 
         /// <summary>
         /// Funzione che permette il caricamento iniziale del gioco
@@ -128,26 +128,44 @@ namespace WindowsFormsApplication5
             {
                 if (e.KeyChar == (char)Keys.Space)
                 {
+                    if (gamePause.Visible == false)
+                    {
                     ball.followPointer = false;
                     ball.canFall = true;
                     racchetta.followPointer = true;
+                    }
+                    if (gamePause.Visible == true)
+                    {
                     gamePause.Visible = false;
+                        ball.X = ball.previousX;
+                        ball.Y = ball.previousY;                      
+                    }
                     Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
                 if (e.KeyChar == (char)Keys.Enter && gamePause.Visible == false)
                 {
-                    ball.followPointer = false;
-                    ball.canFall = false;
-                    racchetta.followPointer = false;
-                    gamePause.Visible = true;
+                    Pause();
                     Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
                 if (e.KeyChar == (char)Keys.Escape)
                 {
-                    this.Logic.vita_rimanente = 0;
-                    this.Close();
+                    Logic.vita_rimanente = 0;
+                }
                 }
             }
+
+        public void Pause()
+        {
+            ball.followPointer = false;
+            ball.canFall = false;
+            ball.previousX = ball.X;
+            ball.previousY = ball.Y;
+            ball.previousVelocity.X = ball.velocity.X;
+            ball.previousVelocity.Y = ball.velocity.Y;
+            ball.previousVelocityTot = ball.velocityTot;
+            racchetta.followPointer = false;
+            gamePause.Visible = true;
+            
         }
 
         /// <summary>
@@ -262,6 +280,7 @@ namespace WindowsFormsApplication5
             //inizializzo il label dello score
             scoreSet();
 
+            end = false;
             // Inizializza il thread del gioco
             gameThread = new Thread(Logic.gameLoop);
             gameThread.Start();

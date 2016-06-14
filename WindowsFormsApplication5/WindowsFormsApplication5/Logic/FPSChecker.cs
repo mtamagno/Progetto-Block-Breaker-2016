@@ -74,11 +74,14 @@ namespace WindowsFormsApplication5
         {
             try
             {
-                controller.Invoke(new MethodInvoker(delegate
+                if (controller != null)
                 {
-                    if (controller.ParentForm != null)
-                        controller.ParentForm.Text = "fps: " + this.fps.ToString() + "ups:" + this.ups.ToString();
-                }));
+                    controller.Invoke(new MethodInvoker(delegate
+                    {
+                        if (controller.ParentForm != null)
+                            controller.ParentForm.Text = "fps: " + this.fps.ToString() + "ups:" + this.ups.ToString();
+                    }));
+                }
             }
             catch
             {

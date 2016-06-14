@@ -66,28 +66,23 @@ namespace WindowsFormsApplication5
             // Crea il buffer
 
             // Finchè non si deve fermare continua ad eseguire
-            while (shouldStop == false)
+            while (shouldStop == false && vita_rimanente > 0)
             {
+                if (controller.WindowState == FormWindowState.Minimized)
+                {
+                    controller.Pause();
+                }
+
                 if (waitResize == false)
                 {
+
+                        if (controller.WindowState != FormWindowState.Minimized)
+                    {
                     // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
                     controller.ball.canCollide = true;
 
                     // Controlla le vite che rimangono al giocatore
                     vita_rimanente = checkLife.check(controller, vita_rimanente);
-
-                    // Se non ne rimangono segnala con la variabile shouldStop che si deve visualizzare la schermata GameOver
-                    if (vita_rimanente <= 0)
-                    {
-                        shouldStop = true;
-
-                        // Salva lo score
-                        this.highScore.Score = score;
-                        GC.Collect();
-                        GC.WaitForPendingFinalizers();
-                        GC.Collect();
-                        return;
-                    }
 
                     // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
                     if (gameTime.ElapsedMilliseconds % 1000 != 0)
@@ -97,33 +92,63 @@ namespace WindowsFormsApplication5
                     }
 
                     // Controlla gli fps contandoli e vede se è il caso di stamparli
+
                     fpsChecker.checkfps(controller);
 
-                    //
                     this.updater(this.controller, this.iManager, fpsChecker);
                     render();
                 }
+                }
+            }
+
+            // Se non ne rimangono segnala con la variabile shouldStop che si deve visualizzare la schermata GameOver
+            if (vita_rimanente <= 0)
+            {
+                gameover();
             }
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
+            }
+
+        public void gameover()
+        {
+            // Salva lo score
+            this.highScore.Score = score;
+            //comunico al gioco che le vite sono finite
+            controller.lifeEnd();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            return;
+
         }
 
         //funzione per ridimensionare gli elementi
         public void resize(int li, int hi, int l, int h)
         {
-            
+            if (vita_rimanente > 0 && h > 0 && hi > 0 && l > 0 && li > 0)               
+            {
             //controllo tutti gli sprite che sono in gioco
             foreach (Sprite s in iManager.inGameSprites)
             {
                 //ridimensiono la pallina
                 if (s.GetType().Name == "Ball")
                 {
+
+                            Ball myBall = (Ball)s;
+                            if (myBall.X > 1000 && myBall.Y < 0)
+                                s.X = myBall.previousX;
+                            if (myBall.Y == 0)
+                                s.Y = myBall.previousY;
+                        
+
                     s.redraw(s,
                         (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
                         (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
                         Properties.Resources.Ball,
-                        s.X * l / li, s.Y * h / hi);
+                            s.X * l / li,
+                            s.Y * h / hi);
                 }
 
                 //ridimensiono la racchetta
@@ -177,6 +202,8 @@ namespace WindowsFormsApplication5
             foreach (Sprite s in iManager.inGameSprites)
             {
                 //ridimensiono i blocchi di gioco
+                    if (hi > 0 && li > 0)
+                    {
                 if (s.GetType().Name == "Block")
                 {
                     controller.grid.redraw_block((Block)s,
@@ -186,9 +213,10 @@ namespace WindowsFormsApplication5
                         s.Y * h / hi);
                 }
             }
+                }
 
             // Sposto la racchetta all'altezza giusta
-            controller.racchetta.Y = h * 9 / 10;
+                controller.racchetta.Y = h * 9 / 10;
             
             // Ridimensiono la superfice di disegno
             spriteBatch.cntxt.MaximumBuffer = new Size(controller.ClientSize.Width + 1, controller.ClientSize.Height + 1);
@@ -200,7 +228,7 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
             GC.Collect();
         }
-
+        }
         #endregion Public Methods
 
         #region Private Methods
@@ -241,6 +269,7 @@ namespace WindowsFormsApplication5
         /// </summary>
         private void checkscore()
         {
+
             previous_score = score;
             activeBlock = 0;
             foreach (Sprite s in iManager.inGameSprites)
@@ -266,8 +295,8 @@ namespace WindowsFormsApplication5
                     controller.score.Text = "Score: " + score;
                 }));
             }
-        }
 
+        }
         /// <summary>
         /// Funzione che svuota il buffer creato quando il Thread Game non è ancora partito ma si è spinto qualcosa
         /// </summary>
@@ -289,8 +318,20 @@ namespace WindowsFormsApplication5
         {
             spriteBatch.Clear();
             foreach (Sprite s in iManager.inGameSprites)
+                {
                 if (s.toRender == true)
+                {
+                    if (s.GetType().Name == "Ball")
+                    {
+                        Ball myBall = (Ball)s;
+                        if (myBall.X > 1000 && myBall.Y < 0)
+                            s.X = myBall.previousX;
+                        if (myBall.Y == 0)
+                            s.Y = myBall.previousY;
+                    }
                     spriteBatch.Draw(s);
+                }
+                }
             spriteBatch.End();
         }
 
@@ -299,6 +340,8 @@ namespace WindowsFormsApplication5
         /// </summary>
         private void updater(Game ThisForm, InputManager iManager, FPSChecker fpsChecker)
         {
+            if (vita_rimanente > 0)
+            {
             if (gameTime.ElapsedMilliseconds - fpsChecker.upsTime > fpsChecker.interval)
             {
                 ThisForm.ball.Update(iManager, ThisForm.ParentForm);
@@ -313,6 +356,7 @@ namespace WindowsFormsApplication5
                 fpsChecker.ups_tmp++;
             }
         }
+    }
     }
 
     #endregion Private Methods

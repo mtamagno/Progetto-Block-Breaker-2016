@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace WindowsFormsApplication5
 {
@@ -7,7 +8,6 @@ namespace WindowsFormsApplication5
         #region Fields
 
         public BufferedGraphics bfgfx;
-
         //Variabile per i buffered graphics
         public BufferedGraphicsContext cntxt = BufferedGraphicsManager.Current;
 
@@ -41,21 +41,36 @@ namespace WindowsFormsApplication5
         /// <param name="s"></param>
         public void Draw(Sprite s)
         {
-            try
-            {
-                if(s.GetType().Name == "Paddle")
+                try
                 {
-                    Paddle mypaddle = (Paddle)s;
-                    if (mypaddle.hurted == true)
-                        s.graphics(s.Texture, s.X, s.Y, s.Width, s.Height);
+                    if (s.GetType().Name == "Paddle")
+                    {
+                        Paddle mypaddle = (Paddle)s;
+                        if (mypaddle.hurted == true)
+                            s.graphics(s.Texture, s.X, s.Y, s.Width, s.Height);
+                    }
+                    if (s.GetType().Name == "Ball")
+                     {
+                    Ball myBall = (Ball)s;
+                    if (float.IsNaN(s.X))
+                        s.X = myBall.previousX;
+                    if (float.IsNaN(s.Y))
+                        s.Y = myBall.previousY;
+                    if (float.IsNaN(myBall.velocity.X))
+                        myBall.velocity.X = myBall.previousVelocity.X;
+                    if (float.IsNaN(myBall.velocity.Y))
+                        myBall.velocity.Y = myBall.previousVelocity.Y;
+                    if (float.IsNaN(myBall.velocityTot))
+                        myBall.velocityTot = myBall.previousVelocityTot;
                 }
-
+               
                 bfgfx.Graphics.DrawImageUnscaled(s.Texture, s.toRec);
-            }
-            catch
-            {
-                // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ri Disegna
-            }
+                }
+                catch
+                {
+                    // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ri Disegna
+                }
+            
         }
 
         /// <summary>
@@ -75,7 +90,8 @@ namespace WindowsFormsApplication5
         {
             try
             {
-                bfgfx.Render(Gfx);
+                if(Form.ActiveForm != null && Gfx != null && (!float.IsNaN(Gfx.ClipBounds.Location.X)))
+                    bfgfx.Render(Gfx);
             }
             catch (System.ArgumentException)
             {

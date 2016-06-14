@@ -91,6 +91,8 @@ namespace WindowsFormsApplication5
         //Funzione redraw necessaria ogni qual volta si effettua il resize dei vari sprite
         public void redraw(Sprite sprite, int newWidth, int newheight, Bitmap risorsa, float nuova_X, float nuova_Y)
         {
+            if (newWidth > 0 && newHeigth > 0)
+            {
             sprite.Width = newWidth;
             sprite.Height = newheight;
             Bitmap b = new Bitmap(sprite.Width, sprite.Height);
@@ -119,7 +121,7 @@ namespace WindowsFormsApplication5
             try
             {
                 // Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
-                if (sprite.GetType().Name == "Paddle")
+                    if (sprite.GetType().Name == "Paddle" && Container.ActiveForm != null)
                     sprite.Y = (Math.Abs(Container.ActiveForm.ClientRectangle.Height - sprite.Height)) * 9 / 10;
             }
             catch
@@ -133,7 +135,8 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Methods
-
+        }
+        //Il collider fa un check di eventuali impatti tra sprites
     }
 
     /// <summary>

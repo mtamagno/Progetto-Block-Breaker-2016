@@ -9,10 +9,9 @@ namespace WindowsFormsApplication5
         #region Fields
 
         public MenuButton Continue;
-        public HighScore highScore = new HighScore();
         private Bitmap backgroundimage;
         private Bitmap start_button_image;
-        private TextBox textBox = new TextBox();
+        public TextBox textBox = new TextBox();
 
         #endregion Fields
 
@@ -45,6 +44,8 @@ namespace WindowsFormsApplication5
         /// <param name="h"></param>
         public void on_resize(int l, int h)
         {
+            if (this.ClientSize.Height < 0 || this.ClientSize.Width < 0)
+            {
             this.cleaner();
             this.BackgroundImage = new Bitmap(Properties.Resources.GameOver, this.ClientSize);
             this.BackgroundImageLayout = ImageLayout.Stretch;
@@ -54,23 +55,12 @@ namespace WindowsFormsApplication5
             this.Continue.Top = ClientRectangle.Height / 8 * 6 - Continue.Height / 2;
             this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
             this.Continue.Text = "Continue";
-            this.textBox.Top = this.Continue.Top + this.Continue.Height;
+                this.textBox.Top = this.Continue.Top - this.Continue.Height;
             this.textBox.Size = this.Continue.Size;
             this.textBox.Left = this.Continue.Left;
             this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.Continue.Size);
-            this.Continue.Click += Continue_Click;
             this.Controls.Add(Continue);
         }
-
-        /// <summary>
-        /// Funzione che viene chiamata se si clicca su continua, così da salvare il nome immesso(se si è cambiato quello standard)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Continue_Click(object sender, EventArgs e)
-        {
-            if(textBox.Text != "Insert Name..." && textBox.Text != " ")
-                highScore.Name = textBox.Text;
         }
 
         private void GameOver_Load(object sender, EventArgs e)
@@ -96,10 +86,10 @@ namespace WindowsFormsApplication5
             this.textBox.Left = Continue.Left;
             this.textBox.Text = "Insert Name...";
             this.textBox.Click += TextBox_Click;
-            this.Continue.Click += Continue_Click;
             this.Controls.Add(textBox);
 
             // Imposta l'immagine di background
+            if(this.Size.Height > 0 )
             this.backgroundimage = new Bitmap(Properties.Resources.GameOver, this.Size);
 
             // IntPtr handle = backgroundimage.GetHbitmap();
