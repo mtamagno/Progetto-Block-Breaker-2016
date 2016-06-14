@@ -124,7 +124,6 @@ namespace WindowsFormsApplication5
                     }
                 }
 
-
                 this.X += this.velocity.X * 1 / 500;
                 this.Y += this.velocity.Y * 1 / 500;
             }
@@ -134,7 +133,7 @@ namespace WindowsFormsApplication5
             {
                 if(thisform != null)
                     if ((Cursor.Position.X - thisform.Location.X) >= thisform.Width / 11 && Cursor.Position.X - thisform.Location.X < thisform.Width - thisform.Width / 11)
-                        this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - 15;
+                        this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - this.Width/3*2 - this.Width / 10 * 9;
             }
 
         }
