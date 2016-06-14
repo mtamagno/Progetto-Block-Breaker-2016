@@ -25,8 +25,8 @@ namespace WindowsFormsApplication5
 
         public Menu()
         {
-            Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
-            InitializeComponent();
+            this.Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
+            this.InitializeComponent();
         }
 
         #endregion Constructors
@@ -61,7 +61,7 @@ namespace WindowsFormsApplication5
         /// Funzione che si occupa del resize di questo form e dei sui componenti
         /// </summary>
         /// <param name="l">new Width</param>
-        /// <param name="h">new Heigth</param>
+        /// <param name="h">new height</param>
         public void on_resize(int l, int h)
         {
             if (this.ClientSize.Width > 0 && this.ClientSize.Height > 0)
@@ -170,8 +170,8 @@ namespace WindowsFormsApplication5
         /// <param name="Left"></param>
         /// <param name="Top"></param>
         /// <param name="Width"></param>
-        /// <param name="Heigth"></param>
-        private void CreateLogo(int Width, int Heigth)
+        /// <param name="height"></param>
+        private void CreateLogo(int Width, int height)
         {
             if (this.Logo != null)
             {

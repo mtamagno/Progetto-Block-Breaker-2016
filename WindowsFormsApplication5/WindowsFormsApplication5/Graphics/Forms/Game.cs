@@ -54,6 +54,7 @@ namespace WindowsFormsApplication5
                     (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))));
                 Logic.iManager.inGameSprites.Add(vita[i]);
             }
+
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -73,11 +74,11 @@ namespace WindowsFormsApplication5
             // Richiama logic.resize
             if (hi > 0 && h > 0 && li > 0 && l > 0)
             {
-              Logic.resize(li, hi, l, h);
-              racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
-              score.Top = this.ClientRectangle.Height - 40;
-              score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
-              gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
+            Logic.resize(li, hi, l, h);
+            racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
+            score.Top = this.ClientRectangle.Height - 40;
+            score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
+                gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
               
                 if (gamePause.Visible == true)
                 {
@@ -118,8 +119,6 @@ namespace WindowsFormsApplication5
         /// Funzione che permette il caricamento iniziale del gioco
         /// </summary>
         /// <param name="e"></param>
-        /// 
-
         protected void OnLoad(object sender, EventArgs e)
         {
             try
