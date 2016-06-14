@@ -319,7 +319,7 @@ namespace WindowsFormsApplication5
             spriteBatch.Clear();
             foreach (Sprite s in iManager.inGameSprites)
                 {
-                if (s.torender == true)
+                if (s.toRender == true)
                 {
                     if (s.GetType().Name == "Ball")
                     {

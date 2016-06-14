@@ -132,14 +132,14 @@ namespace WindowsFormsApplication5
         {
             try
             {
-            this.Invoke(new MethodInvoker(delegate
-            {
+                this.Invoke(new MethodInvoker(delegate
+                {
                 //rimuovo il gamePanel dal container
                 this.Controls.Remove(GamePanels);
 
                 //Pulisco il gamepanel
                 this.GamePanels.Dispose();
-                this.GamePanels.Controls.Clear();
+                    this.GamePanels.Controls.Clear();
 
                 // Imposta il gamePanel a null
                 this.GamePanels = null;
@@ -149,44 +149,45 @@ namespace WindowsFormsApplication5
 
                 //pulisco il gioco
                 if (this.Game != null)
-                {
-                    this.Game.Controls.Clear();
-                    this.Game.Close();
-                    this.Game.Dispose();
-                    this.Game = null;
-                }
+                    {
+                        this.Game.Controls.Clear();
+                        this.Game.Close();
+                        this.Game.Dispose();
+                        this.Game = null;
+                    }
 
                 //pulisco il menu
                 if (this.menu != null)
-                {
-                    this.menu.start.Dispose();
-                    this.menu.cleaner();
-                    this.menu.Controls.Clear();
-                    this.menu.Close();
-                    this.menu.Dispose();
-                    this.menu = null;
-                }
+                    {
+                        this.menu.start.Dispose();
+                        this.menu.cleaner();
+                        this.menu.Controls.Clear();
+                        this.menu.Close();
+                        this.menu.Dispose();
+                        this.menu = null;
+                    }
 
                 //pulisco il GameOver
                 if (this.GameOver != null)
-                {
-                    this.GameOver.Continue.Dispose();
-                    this.GameOver.cleaner();
-                    this.GameOver.Controls.Clear();
-                    this.GameOver.Close();
-                    this.GameOver.Dispose();
-                    this.GameOver = null;
-                }
+                    {
+                        this.GameOver.Continue.Dispose();
+                        this.GameOver.cleaner();
+                        this.GameOver.Controls.Clear();
+                        this.GameOver.Close();
+                        this.GameOver.Dispose();
+                        this.GameOver = null;
+                    }
 
                 //Pulisco il garbage collector
                 GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.WaitForFullGCComplete();
-            }));
-            }catch(InvalidOperationException)
+                    GC.WaitForPendingFinalizers();
+                    GC.WaitForFullGCComplete();
+                }));
+            }
+            catch (InvalidOperationException)
             {
-                Thread.Sleep(1000);
                 this.Close();
+            }
         }
 
         private void initializeForm(Form form)
@@ -231,9 +232,6 @@ namespace WindowsFormsApplication5
 
             // Inizializza il gioco
             initializeForm(Game);
-
-            // Inizializza il thread per controllare lo stato del gioco
-            initializeThreadGameoverCheck(GameAlive);
 
             //faccio partire la musica di gioco
             Music.Game();
@@ -349,7 +347,7 @@ namespace WindowsFormsApplication5
         }
 
         // Funzione chiamata quando viene ridimensionata la finestra
-        private void OnResizeEnd(object sender, EventArgs e)
+        private void OnSizeChange(object sender, EventArgs e)
         {
             if (Game != null)
                 Game.Logic.waitResize = true;

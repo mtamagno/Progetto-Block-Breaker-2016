@@ -96,13 +96,15 @@ namespace WindowsFormsApplication5
             System.Environment.Exit(0);
             this.Close();
         }
-        }
+        
 
         /// <summary>
         /// Funzione che permette il caricamento iniziale del gioco
         /// </summary>
         /// <param name="e"></param>
-        protected override void OnLoad(EventArgs e)
+        /// 
+
+        protected void OnLoad(object sender, EventArgs e)
         {
             try
             {
