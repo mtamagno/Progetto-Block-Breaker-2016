@@ -12,6 +12,7 @@ namespace WindowsFormsApplication5
         private Bitmap backgroundimage;
         private Bitmap start_button_image;
         public TextBox textBox = new TextBox();
+        public Label Nickname;
 
         #endregion Fields
 
@@ -76,13 +77,13 @@ namespace WindowsFormsApplication5
             this.Continue.Text = "Continue";
 
             // Imposta la sua posizione e lo aggiungo ai controlli
-            this.Continue.Top = ClientRectangle.Height / 8 * 6 - Continue.Height / 2;
+            this.Continue.Top = ClientRectangle.Height / 11 * 10 - Continue.Height / 2;
             this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
             this.Controls.Add(Continue);
 
             // Imposta posizione, placeholder e size della textBox
             this.textBox.Size = Continue.Size;
-            this.textBox.Top = Continue.Top + Continue.Height;
+            this.textBox.Top = Continue.Top - Continue.Height;
             this.textBox.Left = Continue.Left;
             this.textBox.Text = "Insert Name...";
             this.textBox.Click += TextBox_Click;

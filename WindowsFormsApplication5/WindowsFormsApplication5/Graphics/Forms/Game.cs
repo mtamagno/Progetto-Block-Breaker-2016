@@ -21,7 +21,7 @@ namespace WindowsFormsApplication5
         public Life[] vita = new Life[3];
         private GamePause gamePause;
         private Label gameTitle;
-        public bool end;
+        public bool ballpointer;
         public float ballX;
         public float ballY;
 
@@ -74,27 +74,16 @@ namespace WindowsFormsApplication5
             // Richiama logic.resize
             if (hi > 0 && h > 0 && li > 0 && l > 0)
             {
-            Logic.resize(li, hi, l, h);
-            racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
-            score.Top = this.ClientRectangle.Height - 40;
-            score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
+                gamePause.Width = this.Width;
+                gamePause.Height = this.Height;
+                Logic.resize(li, hi, l, h);
+                racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
+                score.Top = this.ClientRectangle.Height - 40;
+                score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
                 gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
-              
-                if (gamePause.Visible == true)
-                {
-                    gamePause.Dispose();
-                    gamePause = new GamePause(0, 0, this.Width, this.Height);
-                    gamePause.Visible = true;
-                    this.Controls.Add(gamePause);
-                }
-                if (gamePause.Visible == false)
-                {
-                    gamePause.Dispose();
-                    gamePause = new GamePause(0, 0, this.Width, this.Height);
-                    gamePause.Visible = false;
-                    this.Controls.Add(gamePause);
-                }
-
+                gamePause.ResetText();
+                gamePause.setText();
+                Pause();
             }
             else
             {
@@ -146,15 +135,20 @@ namespace WindowsFormsApplication5
                 {
                     if (gamePause.Visible == false)
                     {
-                    ball.followPointer = false;
-                    ball.canFall = true;
+                        ballpointer = false;
+                        ball.followPointer = false;
+                        ball.canFall = true;
+
                     racchetta.followPointer = true;
                     }
                     if (gamePause.Visible == true)
                     {
-                    gamePause.Visible = false;
-                        ball.X = ball.previousX;
-                        ball.Y = ball.previousY;                      
+                        gamePause.Visible = false;
+                        if (ballpointer == true)
+                        {
+                            ball.followPointer = true;
+                            racchetta.followPointer = true;
+                        }
                     }
                     Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
@@ -172,6 +166,8 @@ namespace WindowsFormsApplication5
 
         public void Pause()
         {
+            if (ball.followPointer == true)
+                ballpointer = true;
             ball.followPointer = false;
             ball.canFall = false;
             ball.previousX = ball.X;
@@ -254,6 +250,7 @@ namespace WindowsFormsApplication5
             Logic);
             skin.X = 0;
             skin.Y = 0;
+            ballpointer = true;
 
             // Inizializza la variabile della visione del menù pausa a falso in caso sia vera
             gamePause = new GamePause(0, 0, this.Width, this.Height);
@@ -296,7 +293,6 @@ namespace WindowsFormsApplication5
             //inizializzo il label dello score
             scoreSet();
 
-            end = false;
             // Inizializza il thread del gioco
             gameThread = new Thread(Logic.gameLoop);
             gameThread.Start();

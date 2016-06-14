@@ -48,7 +48,8 @@ namespace WindowsFormsApplication5
                 {
                     while (Game.gameThread.IsAlive) {
                         Game.Logic.shouldStop = true;
-                    } ;
+                        Game.Close();
+                    } 
                     Game.Visible = false;
 
                 }
