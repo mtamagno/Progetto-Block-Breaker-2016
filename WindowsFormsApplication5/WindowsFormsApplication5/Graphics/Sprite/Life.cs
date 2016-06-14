@@ -17,7 +17,7 @@ namespace WindowsFormsApplication5
             // Imposta le variabili standard della vita alla creazione
             texture = Properties.Resources.Life;
             canFall = false;
-            torender = true;
+            toRender = true;
             canCollide = false;
             followPointer = false;
 

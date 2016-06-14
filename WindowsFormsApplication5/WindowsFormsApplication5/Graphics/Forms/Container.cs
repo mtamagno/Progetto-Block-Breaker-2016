@@ -34,29 +34,39 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
-        private void Container2_FormClosing(object sender, FormClosingEventArgs e)
+        /// <summary>
+        /// Funzione per la chiusura di container
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ContainerFormClosing(object sender, FormClosingEventArgs e)
         {
             this.Invoke(new MethodInvoker(delegate
             {
-                //se l utente preme x dalla schermata di gioco devo fermare il thread del gioco
-                if (Game != null)
+            //se l utente preme x dalla schermata di gioco devo fermare il thread del gioco
+            if (Game != null)
                 {
                     while (Game.gameThread.IsAlive) {
                         Game.Logic.shouldStop = true;
                     } ;
                     Game.Visible = false;
-                   
+
                 }
-                //pulisco tutto        
+            //pulisco tutto
                 Thread.Sleep(1000);
-                DisposeAll();
-                base.OnClosing(e);
-                System.Environment.Exit(0);
+            DisposeAll();
+            base.OnClosing(e);
+            System.Environment.Exit(0);
             }));
 
             
         }
 
+        /// <summary>
+        /// Funzione Per il Caricamento di Container
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Container2_Load(object sender, EventArgs e)
         {
             this.MinimumSize = new System.Drawing.Size(700, 450);
@@ -77,35 +87,40 @@ namespace WindowsFormsApplication5
             altezza_client_iniziale = this.ClientRectangle.Height;
         }
 
+        /// <summary>
+        /// Funzione necessaria per cambiare form dopo la fine della partita
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ContinueToMenu(object sender, EventArgs e)
         {
 
             if (GameOver.textBox.Text != "Insert Name..." && !string.IsNullOrEmpty(GameOver.textBox.Text) && !string.IsNullOrWhiteSpace(GameOver.textBox.Text))
             {
-                // Salva prima lo score, poi l'HighScore nell'xml
+            // Salva prima lo score, poi l'HighScore nell'xml
                 this.HighScore.Name = GameOver.textBox.Text;
-                HighScoreSaver highScoreSaver = new HighScoreSaver();
-                highScoreSaver.ModifyOrCreateXML(HighScore);
+            HighScoreSaver highScoreSaver = new HighScoreSaver();
+            highScoreSaver.ModifyOrCreateXML(HighScore);
 
-                // Imposta che il giocatore ha gia finito una partita
-                this.again = true;
+            // Imposta che il giocatore ha gia finito una partita
+            this.again = true;
 
-                // Pulisce tutto
-                this.DisposeAll();
+            // Pulisce tutto
+            this.DisposeAll();
 
-                // Inizializza il gamePanel
-                this.initializeGamePanel();
+            // Inizializza il gamePanel
+            this.initializeGamePanel();
 
-                // Inizializza il menu
-                this.initializeMenu();
+            // Inizializza il menu
+            this.initializeMenu();
 
-                // Svuota il garbage collector per liberare memoria
-                GC.Collect();
+            // Svuota il garbage collector per liberare memoria
+            GC.Collect();
 
-                // Aspetta che il garbage collecor finisca
-                GC.WaitForPendingFinalizers();
-                GC.WaitForFullGCComplete();
-            }
+            // Aspetta che il garbage collecor finisca
+            GC.WaitForPendingFinalizers();
+            GC.WaitForFullGCComplete();
+        }
 
             else
             {
@@ -115,6 +130,8 @@ namespace WindowsFormsApplication5
 
         private void DisposeAll()
         {
+            try
+            {
             this.Invoke(new MethodInvoker(delegate
             {
                 //rimuovo il gamePanel dal container
@@ -166,6 +183,10 @@ namespace WindowsFormsApplication5
                 GC.WaitForPendingFinalizers();
                 GC.WaitForFullGCComplete();
             }));
+            }catch(InvalidOperationException)
+            {
+                Thread.Sleep(1000);
+                this.Close();
         }
 
         private void initializeForm(Form form)
@@ -200,13 +221,19 @@ namespace WindowsFormsApplication5
             }));
         }
 
+        /// <summary>
+        /// Funzione necessaria ad inizializzare il form del gioco
+        /// </summary>
         private void initializeGame()
         {   
             //assegno al gioco un nuovo gioco
-            Game = new Game();           
+            Game = new Game();
 
             // Inizializza il gioco
             initializeForm(Game);
+
+            // Inizializza il thread per controllare lo stato del gioco
+            initializeThreadGameoverCheck(GameAlive);
 
             //faccio partire la musica di gioco
             Music.Game();
@@ -215,6 +242,9 @@ namespace WindowsFormsApplication5
             Game.VisibleChanged += new EventHandler(onGameover);
         }
 
+        /// <summary>
+        /// Funzione necessaria a inizializzare il form del gameover
+        /// </summary>
         private void initializeGameOver()
         {
             //assegno al GameOver un nuovo GameOver
@@ -278,13 +308,24 @@ namespace WindowsFormsApplication5
             //mostro il pannello
             GamePanels.Show();
 
+            try
+            {
             //aggiungo il pannello al form
             this.Invoke(new MethodInvoker(delegate
             {
                 this.Controls.Add(GamePanels);
             }));
         }
+            catch(InvalidOperationException)
+            {
+                Thread.Sleep(1000);
+                this.Close();
+            }
+        }
 
+        /// <summary>
+        /// Funzione necessaria a inizializzare il form del menu
+        /// </summary>
         private void initializeMenu()
         {
             // Assegna al menu un nuovo menu
@@ -349,6 +390,11 @@ namespace WindowsFormsApplication5
             altezza_client_iniziale = this.ClientRectangle.Height;
         }
 
+        /// <summary>
+        /// Funzione necessaria a far partire il gioco
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StartGame(object sender, EventArgs e)
         {
             //Pulisco tutto

@@ -12,13 +12,16 @@ namespace WindowsFormsApplication5
         public bool canFall;
         public bool followPointer;
         public Bitmap Texture;
-        public bool torender;
+        public bool toRender;
         public int Width, Height;
         public float X, Y;
 
         #endregion Fields
 
         #region Properties
+        /// <summary>
+        /// Proprietà che ritornano le coordinate delle parti degi sprite
+        /// </summary>
 
         public Rectangle Bottom
         {
@@ -49,12 +52,23 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
-        //Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
+        /// <summary>
+        /// Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
+        /// </summary>
+        /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(this);
         }
 
+        /// <summary>
+        /// Funzione necessaria alla creazione da bitmap degli sprite, e dei loro disegni
+        /// </summary>
+        /// <param name="texture"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
         public void graphics(Bitmap texture, float x, float y, int width, int height)
         {
             // Disegna il bitmap
@@ -79,48 +93,48 @@ namespace WindowsFormsApplication5
         {
             if (newWidth > 0 && newHeigth > 0)
             {
-                sprite.Width = newWidth;
-                sprite.Height = newHeigth;
-                Bitmap b = new Bitmap(sprite.Width, sprite.Height);
-                using (Graphics g = Graphics.FromImage(b))
+            sprite.Width = newWidth;
+            sprite.Height = newHeigth;
+            Bitmap b = new Bitmap(sprite.Width, sprite.Height);
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                // Imposta a transparent lo sfondo dello sprite della pallina
+                if (sprite.GetType().Name == "Ball")
                 {
-                    // Imposta a transparent lo sfondo dello sprite della pallina
-                    if (sprite.GetType().Name == "Ball")
-                    {
-                        Color backColor = risorsa.GetPixel(0, 0);
-                        risorsa.MakeTransparent(backColor);
-                    }
-                    try
-                    {
-                        g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
-                    }
-                    catch
-                    {
-                        g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
-
-                        // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ri Disegna
-                    }
+                    Color backColor = risorsa.GetPixel(0, 0);
+                    risorsa.MakeTransparent(backColor);
                 }
-                sprite.X = nuova_X;
-                sprite.Y = nuova_Y;
-
                 try
                 {
-                    // Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
-                    if (sprite.GetType().Name == "Paddle" && Container.ActiveForm != null)
-                        sprite.Y = (Math.Abs(Container.ActiveForm.ClientRectangle.Height - sprite.Height)) * 9 / 10;
+                    g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
                 }
                 catch
                 {
-                    // Errore gestito nel caso in cui si stia ridimensionando il form e venga variata di conseguenza l'altezza della racchetta
-                }
+                    g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
 
-                // Imposta la texture dello sprite
-                sprite.Texture = b;
-                return;
+                    // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ri Disegna
+                }
+            }
+            sprite.X = nuova_X;
+            sprite.Y = nuova_Y;
+
+            try
+            {
+                // Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
+                    if (sprite.GetType().Name == "Paddle" && Container.ActiveForm != null)
+                    sprite.Y = (Math.Abs(Container.ActiveForm.ClientRectangle.Height - sprite.Height)) * 9 / 10;
+            }
+            catch
+            {
+                // Errore gestito nel caso in cui si stia ridimensionando il form e venga variata di conseguenza l'altezza della racchetta
             }
 
-            #endregion Methods
+            // Imposta la texture dello sprite
+            sprite.Texture = b;
+            return;
+        }
+
+        #endregion Methods
         }
         //Il collider fa un check di eventuali impatti tra sprites
     }

@@ -14,11 +14,12 @@ namespace WindowsFormsApplication5
 
         public View(float x, float y, int width, int height, Logic logic)
         {
-            texture = Properties.Resources.Schermo_800_600_GBA;
-            canFall = false;
-            torender = true;
-            canCollide = true;
-            followPointer = false;
+            //Imposta la texture e i vaolri di canfall toRender cancollide e followpointer
+            this.texture = Properties.Resources.Schermo_800_600_GBA;
+            this.canFall = false;
+            this.toRender = true;
+            this.canCollide = true;
+            this.followPointer = false;
 
             this.graphics(texture, x, y, width, height);
             logic.iManager.inGameSprites.Add(this);

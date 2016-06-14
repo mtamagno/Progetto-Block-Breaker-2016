@@ -21,10 +21,15 @@ namespace WindowsFormsApplication5
     {
         #region Methods
 
+        /// <summary>
+        /// Funzione che si occupa di aggiungere gli highScores e di riordinarli ogni volta in un file "HighScores.xml" che viene creato se non esiste
+        /// </summary>
+        /// <param name="CurrentHighScore"></param>
         public void ModifyOrCreateXML(HighScore CurrentHighScore)
         {
             if (File.Exists("HighScores.xml"))
             {
+
                 XDocument xDocument = XDocument.Load("HighScores.xml");
                 IEnumerable<XElement> rows;
                 XElement root = xDocument.Element("HighScores");
@@ -32,15 +37,13 @@ namespace WindowsFormsApplication5
                 XElement lastrow = rows.Last();
                 lastrow.AddAfterSelf(
                 new XElement("HighScore",
-                new XElement("Name", CurrentHighScore.Name),
-                new XElement("Score", CurrentHighScore.Score)));
+                    new XElement("Name", CurrentHighScore.Name),
+                    new XElement("Score", CurrentHighScore.Score)));
 
                 // Crea la lista giusta e salvo
                 var ciao = xDocument.Descendants("HighScore").OrderByDescending(e => (int.Parse(e.Element("Score").Value)));
                 root.ReplaceAll(ciao);
                 xDocument.Save("HighScores.xml");
-
-                // Da creare un pulsante "Apri HighScores"
             }
             else
             {

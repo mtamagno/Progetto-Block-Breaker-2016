@@ -37,9 +37,9 @@
             this.ClientSize = new System.Drawing.Size(984, 461);
             this.Name = "Container";
             this.Text = "Container2";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Container2_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ContainerFormClosing);
             this.Load += new System.EventHandler(this.Container2_Load);
-            this.SizeChanged += new System.EventHandler(this.OnResizeEnd);
+            this.SizeChanged += new System.EventHandler(this.OnSizeChange);
             this.ResumeLayout(false);
 
         }

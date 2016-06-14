@@ -40,14 +40,16 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
+        /// <summary>
+        /// Funzione che permette l'inizializzazione delle vite e del loro disegno iniziale
+        /// </summary>
         public void life_init()
         {
             for (int i = 0; i < Logic.vita_rimanente; i++)
             {
                 vita[i] = new Life(this.ClientRectangle.Width - (float)1 / 50 * this.ClientRectangle.Width
                         - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))) * (i + 1) - 10 * (i + 1),
-                    this.ClientRectangle.Height - (float)1 / 50 * this.ClientRectangle.Height
-                        - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))) - 5,
+                    (float)1 / 50 * this.ClientRectangle.Height + (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))),
                     (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))),
                     (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))));
                 Logic.iManager.inGameSprites.Add(vita[i]);
@@ -71,32 +73,54 @@ namespace WindowsFormsApplication5
             // Richiama logic.resize
             if (hi > 0 && h > 0 && li > 0 && l > 0)
             {
-                Logic.resize(li, hi, l, h);
-                racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
-                score.Top = this.ClientRectangle.Height - 40;
-                score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
+            Logic.resize(li, hi, l, h);
+            racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
+            score.Top = this.ClientRectangle.Height - 40;
+            score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
                 gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
             }
             else
             {
                 Pause();
             }
-            
+
         }
 
+        /// <summary>
+        /// Funzione chiamata 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnClosing(CancelEventArgs e)
         {
             base.OnClosing(e);
             System.Environment.Exit(0);
             this.Close();
         }
+        }
 
+        /// <summary>
+        /// Funzione che permette il caricamento iniziale del gioco
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnLoad(EventArgs e)
         {
+            try
+            {
+                loadContent();
+            }
+            // Gestiamo un raro caso in cui crashava il gioco che viene gestito da OnLoad
+            catch
+            {
             base.OnLoad(e);
             loadContent();
         }
+        }
 
+        /// <summary>
+        /// Funzione che gestisce l'evento della pressione dei tasti durante l'esecuzione del gioco
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (Logic.AllowInput)
@@ -105,13 +129,13 @@ namespace WindowsFormsApplication5
                 {
                     if (gamePause.Visible == false)
                     {
-                        ball.followPointer = false;
-                        ball.canFall = true;
-                        racchetta.followPointer = true;
+                    ball.followPointer = false;
+                    ball.canFall = true;
+                    racchetta.followPointer = true;
                     }
                     if (gamePause.Visible == true)
                     {
-                        gamePause.Visible = false;
+                    gamePause.Visible = false;
                         ball.X = ball.previousX;
                         ball.Y = ball.previousY;                      
                     }
@@ -126,8 +150,8 @@ namespace WindowsFormsApplication5
                 {
                     Logic.vita_rimanente = 0;
                 }
+                }
             }
-        }
 
         public void Pause()
         {
@@ -143,11 +167,14 @@ namespace WindowsFormsApplication5
             
         }
 
+        /// <summary>
+        /// Funzione che permette il reset del titolo del gioco per poterlo scalare
+        /// </summary>
         private void gameTitleset()
         {
             gameTitle = new Label();
             gameTitle.Top = 20;
-            gameTitle.Width = this.ClientRectangle.Width/3*2;
+            gameTitle.Width = this.ClientRectangle.Width / 3 * 2;
             gameTitle.TextAlign = ContentAlignment.MiddleCenter;
             gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
             gameTitle.Text = "BlockBreaker";
@@ -157,6 +184,9 @@ namespace WindowsFormsApplication5
             this.Controls.Add(gameTitle);
         }
 
+        /// <summary>
+        /// Funzione che permette di inizializzare la griglia
+        /// </summary>
         private void init_grid()
         {
             grid = new Grid((int)this.background.X, (int)this.background.Y, this.background.Height, this.background.Width, Properties.Resources.Block_4, Logic);
@@ -164,15 +194,21 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
+        /// <summary>
+        /// Funzione che permette di caricare il contenuto all'avvio
+        /// </summary>
         private void loadContent()
         {
             starter();
         }
 
+        /// <summary>
+        /// Funzione che permette
+        /// </summary>
         private void scoreSet()
         {
             score = new Label();
-            score.Left = this.ClientRectangle.Width/2 - this.score.Width/2;
+            score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
             score.Top = this.ClientRectangle.Height - 40;
             score.Width = this.ClientRectangle.Width / 8;
 
@@ -184,6 +220,9 @@ namespace WindowsFormsApplication5
             this.Controls.Add(score);
         }
 
+        /// <summary>
+        /// Funzione starter invocata all'avvio di questo form per inizializzarlo
+        /// </summary>
         private void starter()
         {
             // Inizializza la logica
@@ -251,10 +290,5 @@ namespace WindowsFormsApplication5
         }
 
         #endregion Methods
-
-        private void Game_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

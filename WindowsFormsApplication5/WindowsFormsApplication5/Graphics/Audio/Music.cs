@@ -12,27 +12,40 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
+        /// <summary>
+        /// Funzione per la liberazione delle risorse occupate dalla musica
+        /// </summary>
         public void Dispose_Music()
         {
-            backgroundMusic.Dispose();
+            this.backgroundMusic.Stop();
+            this.backgroundMusic.Dispose();
         }
 
+        /// <summary>
+        /// Funzione per la riproduzione della musica del gioco
+        /// </summary>
         public void Game()
         {
-            backgroundMusic = new SoundPlayer(Properties.Resources.Game_Music);
-            backgroundMusic.PlayLooping();
+            this.backgroundMusic = new SoundPlayer(Properties.Resources.Game_Music);
+            this.backgroundMusic.PlayLooping();
         }
 
+        /// <summary>
+        /// Funzione per la riproduzione della musica della schermata del gameover
+        /// </summary>
         public void GameOver()
         {
-            backgroundMusic = new SoundPlayer(Properties.Resources.GameOver_Music);
-            backgroundMusic.PlayLooping();
+            this.backgroundMusic = new SoundPlayer(Properties.Resources.GameOver_Music);
+            this.backgroundMusic.PlayLooping();
         }
 
+        /// <summary>
+        /// Funzione per la riproduzione della musica della schermata del menù
+        /// </summary>
         public void Menu()
         {
-            backgroundMusic = new SoundPlayer(Properties.Resources.Menu_Music);
-            backgroundMusic.PlayLooping();
+            this.backgroundMusic = new SoundPlayer(Properties.Resources.Menu_Music);
+            this.backgroundMusic.PlayLooping();
         }
 
         #endregion Methods

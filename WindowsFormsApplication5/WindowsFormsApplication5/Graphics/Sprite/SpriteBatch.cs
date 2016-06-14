@@ -28,11 +28,17 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
-        public void Begin()
+        /// <summary>
+        /// Funzione che pulisce bufferedgraphics
+        /// </summary>
+        public void Clear()
         {
             bfgfx.Graphics.Clear(Color.Transparent);
         }
-
+        /// <summary>
+        /// Funzione che gestisce l'animazione della racchetta e disegna gli sprites
+        /// </summary>
+        /// <param name="s"></param>
         public void Draw(Sprite s)
         {
                 try
@@ -67,11 +73,19 @@ namespace WindowsFormsApplication5
             
         }
 
+        /// <summary>
+        /// Funzione che permette il disegno in bufferedGraphics di bitmap
+        /// </summary>
+        /// <param name="b"></param>
+        /// <param name="rec"></param>
         public void drawImage(Bitmap b, Rectangle rec)
         {
             bfgfx.Graphics.DrawImageUnscaled(b, rec);
         }
 
+        /// <summary>
+        /// Funzione per la terminazione di bufferedGraphics
+        /// </summary>
         public void End()
         {
             try
@@ -81,7 +95,8 @@ namespace WindowsFormsApplication5
             }
             catch (System.ArgumentException)
             {
-                // Errore che può essere generato dalla chiusura tramite il tasto x del form container
+                // Errore che può essere generato dalla chiusura tramite il tasto x del form container mentre si sta cercando di disegnare
+                // basta non fare nulla e il form verrà chiuso
             }
         }
 

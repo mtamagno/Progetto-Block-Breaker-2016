@@ -78,26 +78,26 @@ namespace WindowsFormsApplication5
 
                         if (controller.WindowState != FormWindowState.Minimized)
                     {
-                        // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
-                        controller.ball.canCollide = true;
+                    // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
+                    controller.ball.canCollide = true;
 
-                        // Controlla le vite che rimangono al giocatore
-                        vita_rimanente = checkLife.check(controller, vita_rimanente);
+                    // Controlla le vite che rimangono al giocatore
+                    vita_rimanente = checkLife.check(controller, vita_rimanente);
 
-                        // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
-                        if (gameTime.ElapsedMilliseconds % 1000 != 0)
-                        {
-                            checkscore();
-                            checkActiveBlock();
-                        }
-
-                        // Controlla gli fps contandoli e vede se è il caso di stamparli
-
-                        fpsChecker.checkfps(controller);
-
-                        this.updater(this.controller, this.iManager, fpsChecker);
-                        render();
+                    // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
+                    if (gameTime.ElapsedMilliseconds % 1000 != 0)
+                    {
+                        checkscore();
+                        checkActiveBlock();
                     }
+
+                    // Controlla gli fps contandoli e vede se è il caso di stamparli
+
+                    fpsChecker.checkfps(controller);
+
+                    this.updater(this.controller, this.iManager, fpsChecker);
+                    render();
+                }
                 }
             }
 
@@ -109,7 +109,7 @@ namespace WindowsFormsApplication5
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
-        }
+            }
 
         public void gameover()
         {
@@ -129,12 +129,12 @@ namespace WindowsFormsApplication5
         {
             if (vita_rimanente > 0 && h > 0 && hi > 0 && l > 0 && li > 0)               
             {
-                //controllo tutti gli sprite che sono in gioco
-                foreach (Sprite s in iManager.inGameSprites)
+            //controllo tutti gli sprite che sono in gioco
+            foreach (Sprite s in iManager.inGameSprites)
+            {
+                //ridimensiono la pallina
+                if (s.GetType().Name == "Ball")
                 {
-                    //ridimensiono la pallina
-                    if (s.GetType().Name == "Ball")
-                    {
 
                             Ball myBall = (Ball)s;
                             if (myBall.X > 1000 && myBall.Y < 0)
@@ -143,95 +143,99 @@ namespace WindowsFormsApplication5
                                 s.Y = myBall.previousY;
                         
 
-                        s.redraw(s,
-                            (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
-                            (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
-                            Properties.Resources.Ball,
+                    s.redraw(s,
+                        (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
+                        (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
+                        Properties.Resources.Ball,
                             s.X * l / li,
                             s.Y * h / hi);
-                    }
-
-                    //ridimensiono la racchetta
-                    else if (s.GetType().Name == "Paddle")
-                    {
-                        s.redraw(s, (int)(Math.Abs((float)1 / 8 * l)),
-                            (int)(Math.Abs((float)1 / 15 * h)),
-                            Properties.Resources.New_Piskel,
-                            s.X * l / li,
-                            s.Y * h / hi);
-                    }
-
-                    //ridimensiono lo sfondo
-                    else if (s.GetType().Name == "View")
-                    {
-                        s.redraw(s,
-                            l / 30 * 29,
-                            h / 5 * 4,
-                            Properties.Resources.Schermo_800_600_GBA,
-                            0,
-                            0);
-                        s.X = controller.ClientRectangle.Width / 2 - s.Width / 2;
-                        s.Y = controller.ClientRectangle.Height / 2 - s.Height / 2;
-                    }
-
-                    //ridimensiono la vita
-                    else if (s.GetType().Name == "Life")
-                    {
-                        s.redraw(s,
-                            (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
-                            (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
-                            Properties.Resources.Life, s.X * l / li, s.Y * h / hi);
-                    }
-
-                    else if (s.GetType().Name == "Skin")
-                    {
-                        s.redraw(s,
-                            l,
-                            h,
-                            Properties.Resources.Skin,
-                            0,
-                            0);
-                    }
-
-
                 }
 
-                controller.grid.redraw_grid(controller.grid, controller.background.Height, controller.background.Width);
-
-                foreach (Sprite s in iManager.inGameSprites)
+                //ridimensiono la racchetta
+                else if (s.GetType().Name == "Paddle")
                 {
-                    //ridimensiono i blocchi di gioco
+                    s.redraw(s, (int)(Math.Abs((float)1 / 8 * l)),
+                        (int)(Math.Abs((float)1 / 15 * h)),
+                        Properties.Resources.New_Piskel,
+                        s.X * l / li,
+                        s.Y * h / hi);
+                }
+
+                //ridimensiono lo sfondo
+                else if (s.GetType().Name == "View")
+                {
+                    s.redraw(s,
+                        l / 30 * 29,
+                        h / 5 * 4,
+                        Properties.Resources.Schermo_800_600_GBA,
+                        0,
+                        0);
+                    s.X = controller.ClientRectangle.Width / 2 - s.Width / 2;
+                    s.Y = controller.ClientRectangle.Height / 2 - s.Height / 2;
+                }                            
+
+                // Ridimensiono la vita
+                else if (s.GetType().Name == "Life")
+                {
+                    s.redraw(s,
+                        (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
+                        (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
+                        Properties.Resources.Life, s.X * l / li, s.Y * h / hi);
+                }
+
+                // Ridimensiono la skin
+                else if (s.GetType().Name == "Skin")
+                {
+                    s.redraw(s,
+                        l,
+                        h,
+                        Properties.Resources.Skin,
+                        0,
+                        0);
+                }
+            }
+
+            // Ridimensiono la griglia
+            controller.grid.redraw_grid(controller.grid, controller.background.Height, controller.background.Width);
+
+            //Per ogni sprite in iManager.inGameSprites, ridimensiono lo sprite
+            foreach (Sprite s in iManager.inGameSprites)
+            {
+                //ridimensiono i blocchi di gioco
                     if (hi > 0 && li > 0)
                     {
-                        if (s.GetType().Name == "Block")
-                        {
-                            controller.grid.redraw_block((Block)s,
-                                (100 * l / li),
-                                (50 * (h / hi)),
-                                s.X * l / li,
-                                s.Y * h / hi);
-                        }
-                    }
+                if (s.GetType().Name == "Block")
+                {
+                    controller.grid.redraw_block((Block)s,
+                        (100 * l / li),
+                        (50 * (h / hi)),
+                        s.X * l / li,
+                        s.Y * h / hi);
+                }
+            }
                 }
 
+            // Sposto la racchetta all'altezza giusta
                 controller.racchetta.Y = h * 9 / 10;
+            
+            // Ridimensiono la superfice di disegno
+            spriteBatch.cntxt.MaximumBuffer = new Size(controller.ClientSize.Width + 1, controller.ClientSize.Height + 1);
+            spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(controller.CreateGraphics(), new Rectangle(Point.Empty, controller.ClientSize));
+            spriteBatch.Gfx = controller.CreateGraphics();
 
-
-                spriteBatch.cntxt.MaximumBuffer = new Size(controller.ClientSize.Width + 1, controller.ClientSize.Height + 1);
-                spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(controller.CreateGraphics(), new Rectangle(Point.Empty, controller.ClientSize));
-                spriteBatch.Gfx = controller.CreateGraphics();
-
-                //uso il garbage collector per pulire
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                GC.Collect();
-            }
+            //uso il garbage collector per pulire
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
         }
         #endregion Public Methods
 
         #region Private Methods
 
-        //inizializzo le variabili di gioco
+        /// <summary>
+        /// Funzione per l'inizializzazione del gioco
+        /// </summary>
         private void init()
         {
             this.vita_rimanente = 3;
@@ -249,7 +253,9 @@ namespace WindowsFormsApplication5
             this.spriteBatch = new SpriteBatch(controller.ClientSize, controller.CreateGraphics());
         }
 
-        //controllo quanti blocchi sono rimasti in gioco
+        /// <summary>
+        /// Funzione per il controllo di quanti blocchi sono rimasti in gioco
+        /// </summary>
         private void checkActiveBlock()
         {
             if (activeBlock == 0)
@@ -258,36 +264,38 @@ namespace WindowsFormsApplication5
             }
         }
 
-        //setto lo score dell utente
+        /// <summary>
+        /// Funzione per il check dello score dell'utente
+        /// </summary>
         private void checkscore()
         {
 
-                previous_score = score;
-                activeBlock = 0;
-                foreach (Sprite s in iManager.inGameSprites)
+            previous_score = score;
+            activeBlock = 0;
+            foreach (Sprite s in iManager.inGameSprites)
+            {
+                if (s.GetType().Name == "Block")
                 {
-                    if (s.GetType().Name == "Block")
+                    Block myBlock = (Block)s;
+                    if (myBlock.blockLife == 0)
                     {
-                        Block myBlock = (Block)s;
-                        if (myBlock.blockLife == 0)
-                        {
-                            score += myBlock.initialLife;
-                            myBlock.blockLife = -1;
-                        }
-                        if (myBlock.blockLife > 0)
-                        {
-                            activeBlock++;
-                        }
+                        score += myBlock.initialLife;
+                        myBlock.blockLife = -1;
+                    }
+                    if (myBlock.blockLife > 0)
+                    {
+                        activeBlock++;
                     }
                 }
-                if (previous_score < score)
+            }
+            if (previous_score < score)
+            {
+                controller.Invoke(new MethodInvoker(delegate
                 {
-                    controller.Invoke(new MethodInvoker(delegate
-                    {
-                        controller.score.Text = "Score: " + score;
-                    }));
-                }
-            
+                    controller.score.Text = "Score: " + score;
+                }));
+            }
+
         }
         /// <summary>
         /// Funzione che svuota il buffer creato quando il Thread Game non è ancora partito ma si è spinto qualcosa
@@ -308,8 +316,8 @@ namespace WindowsFormsApplication5
         /// </summary>
         private void render()
         {
-                spriteBatch.Begin();
-                foreach (Sprite s in iManager.inGameSprites)
+            spriteBatch.Clear();
+            foreach (Sprite s in iManager.inGameSprites)
                 {
                 if (s.torender == true)
                 {
@@ -324,7 +332,7 @@ namespace WindowsFormsApplication5
                     spriteBatch.Draw(s);
                 }
                 }
-                spriteBatch.End();           
+            spriteBatch.End();
         }
 
         /// <summary>
@@ -334,21 +342,21 @@ namespace WindowsFormsApplication5
         {
             if (vita_rimanente > 0)
             {
-                if (gameTime.ElapsedMilliseconds - fpsChecker.upsTime > fpsChecker.interval)
+            if (gameTime.ElapsedMilliseconds - fpsChecker.upsTime > fpsChecker.interval)
+            {
+                ThisForm.ball.Update(iManager, ThisForm.ParentForm);
+                ThisForm.racchetta.Update(iManager, ThisForm.ParentForm);
+                if (gameTime.Elapsed.Seconds != fpsChecker.previousSecond)
                 {
-                    ThisForm.ball.Update(iManager, ThisForm.ParentForm);
-                    ThisForm.racchetta.Update(iManager, ThisForm.ParentForm);
-                    if (gameTime.Elapsed.Seconds != fpsChecker.previousSecond)
-                    {
-                        fpsChecker.previousSecond = gameTime.Elapsed.Seconds;
-                        fpsChecker.ups = fpsChecker.ups_tmp;
-                        fpsChecker.ups_tmp = 0;
-                    }
-                    fpsChecker.upsTime = gameTime.ElapsedMilliseconds;
-                    fpsChecker.ups_tmp++;
+                    fpsChecker.previousSecond = gameTime.Elapsed.Seconds;
+                    fpsChecker.ups = fpsChecker.ups_tmp;
+                    fpsChecker.ups_tmp = 0;
                 }
+                fpsChecker.upsTime = gameTime.ElapsedMilliseconds;
+                fpsChecker.ups_tmp++;
             }
         }
+    }
     }
 
     #endregion Private Methods

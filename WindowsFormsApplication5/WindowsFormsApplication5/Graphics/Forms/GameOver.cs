@@ -17,7 +17,6 @@ namespace WindowsFormsApplication5
 
         #region Constructors
 
-        // Costruttore che inizializza lo starter
         public GameOver()
         {
             InitializeComponent();
@@ -27,6 +26,9 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
+        /// <summary>
+        /// Funzione che permette di liberare la memoria dall'immagine di background
+        /// </summary>
         public void cleaner()
         {
             this.BackgroundImage.Dispose();
@@ -35,25 +37,30 @@ namespace WindowsFormsApplication5
             GC.WaitForFullGCComplete();
         }
 
+        /// <summary>
+        /// Funzione che permette di ridimensionare ad ogni resize, l'immagine di backGround, la textBox ed il pulsante
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="h"></param>
         public void on_resize(int l, int h)
         {
             if (this.ClientSize.Height < 0 || this.ClientSize.Width < 0)
             {
-                this.cleaner();
-                this.BackgroundImage = new Bitmap(Properties.Resources.GameOver, this.ClientSize);
-                this.BackgroundImageLayout = ImageLayout.Stretch;
-                Continue.Dispose();
-                Size s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-                Continue = new MenuButton(s);
-                this.Continue.Top = ClientRectangle.Height / 8 * 6 - Continue.Height / 2;
-                this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
-                this.Continue.Text = "Continue";
+            this.cleaner();
+            this.BackgroundImage = new Bitmap(Properties.Resources.GameOver, this.ClientSize);
+            this.BackgroundImageLayout = ImageLayout.Stretch;
+            Continue.Dispose();
+            Size s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
+            Continue = new MenuButton(s);            
+            this.Continue.Top = ClientRectangle.Height / 8 * 6 - Continue.Height / 2;
+            this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
+            this.Continue.Text = "Continue";
                 this.textBox.Top = this.Continue.Top - this.Continue.Height;
-                this.textBox.Size = this.Continue.Size;
-                this.textBox.Left = this.Continue.Left;
-                this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.Continue.Size);
-                this.Controls.Add(Continue);
-            }
+            this.textBox.Size = this.Continue.Size;
+            this.textBox.Left = this.Continue.Left;
+            this.start_button_image = new Bitmap(Properties.Resources.BlueRoundedButton, this.Continue.Size);
+            this.Controls.Add(Continue);
+        }
         }
 
         private void GameOver_Load(object sender, EventArgs e)

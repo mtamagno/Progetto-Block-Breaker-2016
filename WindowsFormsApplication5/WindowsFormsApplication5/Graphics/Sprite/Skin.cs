@@ -11,7 +11,7 @@ namespace WindowsFormsApplication5
         {
             texture = Properties.Resources.Skin;
             canFall = false;
-            torender = true;
+            toRender = true;
             canCollide = true;
             followPointer = false;
 

@@ -33,6 +33,11 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
+        /// <summary>
+        /// Funzione che permette di pulire dalla memoria le immagini caricate nel menù e che segnala se quando ciò avviene erano aperte o meno le istruzioni,
+        /// questo è necessario per capire poi se riaprirle dopo un resize
+        /// </summary>
+        /// <returns></returns>
         public bool cleaner()
         {
             //Crea la variabile che segnala se erano aperte le istruzioni
@@ -52,12 +57,11 @@ namespace WindowsFormsApplication5
             return makeInstructionsVisible;
         }
 
-
         /// <summary>
         /// Funzione che si occupa del resize di questo form e dei sui componenti
         /// </summary>
-        /// <param name="l"></param>
-        /// <param name="h"></param>
+        /// <param name="l">new Width</param>
+        /// <param name="h">new Heigth</param>
         public void on_resize(int l, int h)
         {
             if (this.ClientSize.Width > 0 && this.ClientSize.Height > 0)
@@ -260,6 +264,11 @@ namespace WindowsFormsApplication5
             }
         }
         
+        /// <summary>
+        /// Funzione che permette di mostrare Gli highScores migliori
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Show_highscore(object sender, EventArgs e)
         {
             this.MenuPanel.Visible = false;

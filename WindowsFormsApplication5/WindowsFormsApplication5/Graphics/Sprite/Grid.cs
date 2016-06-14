@@ -29,7 +29,11 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
-        //Metodo insert_grid utilizzato per inserire nei posti giusti i blocchi grazie alle coordinate della griglia
+        /// <summary>
+        /// Metodo insert_grid utilizzato per inserire nei posti giusti i blocchi grazie alle coordinate della griglia
+        /// </summary>
+        /// <param name="Texture"></param>
+        /// <param name="iManager"></param>
         public void insert_grid(Bitmap Texture, InputManager iManager)
         {
             for (int i = 0; i < grid.ColumnCount; i++)
@@ -42,14 +46,26 @@ namespace WindowsFormsApplication5
             }
         }
 
-        //Metodo utilizzato per scalare i blocchi al variare della dimensione della finestra di gioco
+        /// <summary>
+        /// Metodo utilizzato per scalare i blocchi al variare della dimensione della finestra di gioco
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="newWidth"></param>
+        /// <param name="new_height"></param>
+        /// <param name="nuova_x"></param>
+        /// <param name="nuova_y"></param>
         public void redraw_block(Block s, int newWidth, int new_height, float nuova_x, float nuova_y)
         {
             s.textureSwitcher();
             s.redraw(s, (grid.Width / grid.ColumnCount), (grid.Height / grid.RowCount), s.texture, nuova_x, nuova_y);
         }
 
-        //Metodo utilizzato per scalare la griglia al variare della dimensione della finestra di gioco
+        /// <summary>
+        /// Metodo utilizzato per scalare la griglia al variare della dimensione della finestra di gioco
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="client_height"></param>
+        /// <param name="client_width"></param>
         public void redraw_grid(Grid grid, float client_height, float client_width)
         {
             grid.grid.Width = (int)client_width;

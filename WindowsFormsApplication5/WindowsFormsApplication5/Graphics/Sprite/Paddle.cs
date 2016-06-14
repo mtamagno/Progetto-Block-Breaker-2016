@@ -12,18 +12,16 @@ namespace WindowsFormsApplication5
         public Bitmap texture;
         public bool hurted;
 
-
         #endregion Fields
 
         #region Constructors
 
-        //       private static Random random = new Random();
         public Paddle(float x, float y, int width, int height, Logic logic)
         {
             texture = Properties.Resources.New_Piskel;
             canFall = false;
             canCollide = true;
-            torender = true;
+            toRender = true;
             followPointer = true;
             hurted = false;
 
@@ -35,7 +33,12 @@ namespace WindowsFormsApplication5
 
         #region Methods
 
-        //Funzione che restituisce l'angolo con cui la pallina deve essere fatta rimbalzare, a seconda del punto di impatto sulla racchetta
+        /// <summary>
+        /// Funzione che restituisce l'angolo con cui la pallina deve essere fatta rimbalzare, a seconda del punto di impatto sulla racchetta
+        /// </summary>
+        /// <param name="posizione_attuale"></param>
+        /// <param name="posizione_massima"></param>
+        /// <returns></returns>
         public double angolo(float posizione_attuale, float posizione_massima)
         {
             double calcolo = 0;
@@ -44,6 +47,11 @@ namespace WindowsFormsApplication5
             return calcolo;
         }
 
+        /// <summary>
+        /// Funzione Update che richiama il collider e si occupa di spostare le coordinate della racchetta di volta in volta
+        /// </summary>
+        /// <param name="iManager"></param>
+        /// <param name="thisform"></param>
         public void Update(InputManager iManager, Form thisform)
         {
             try
@@ -62,6 +70,9 @@ namespace WindowsFormsApplication5
             }
         }
 
+        /// <summary>
+        /// Funzione che rende la racchetta "animata" cambiando la texture per un breve periodo di tempo ad ogni hit
+        /// </summary>
         public void hurt()
         {
             Texture = Properties.Resources.hurt;
@@ -70,6 +81,9 @@ namespace WindowsFormsApplication5
             this.normal();
         }
 
+        /// <summary>
+        /// Funzione che rende la racchetta "nomale" facendo tornare la texture uguale a quella dello stato prima dell'impatto
+        /// </summary>
         public void normal()
         {
             Texture = Properties.Resources.New_Piskel;
