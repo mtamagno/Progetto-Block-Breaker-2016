@@ -133,7 +133,7 @@ namespace WindowsFormsApplication5
             if (followPointer == true)
             {
                 if(thisform != null)
-                    if ((Cursor.Position.X - thisform.Location.X) >= 95 && Cursor.Position.X - thisform.Location.X < thisform.Width - 90)
+                    if ((Cursor.Position.X - thisform.Location.X) >= thisform.Width / 11 && Cursor.Position.X - thisform.Location.X < thisform.Width - thisform.Width / 11)
                         this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - 15;
             }
 
