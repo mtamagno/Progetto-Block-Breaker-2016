@@ -79,7 +79,7 @@ namespace BlockBreaker
                     controller.Invoke(new MethodInvoker(delegate
                     {
                         if (controller.ParentForm != null)
-                            controller.ParentForm.Text = "fps: " + this.fps.ToString() + "ups:" + this.ups.ToString();
+                            controller.ParentForm.Text = "BlockBreaker - Game      " + "    fps: " + this.fps.ToString() + "ups:" + this.ups.ToString();
                     }));
                 }
             }

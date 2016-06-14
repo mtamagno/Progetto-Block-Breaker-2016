@@ -249,6 +249,8 @@ namespace BlockBreaker
             //assegno al GameOver un nuovo GameOver
             GameOver = new GameOver();
 
+            this.Text = "BlockBreaker - Gameover";
+
             // Inizializza il GameOver
             initializeForm(GameOver);
 
@@ -329,7 +331,7 @@ namespace BlockBreaker
         {
             // Assegna al menu un nuovo menu
             this.menu = new Menu();
-
+            this.Text = "BlockBreaker - Menu";
             // Inizializza il menu
             initializeForm(menu);
 
