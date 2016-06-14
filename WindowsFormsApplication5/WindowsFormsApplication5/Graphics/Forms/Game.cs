@@ -21,6 +21,9 @@ namespace WindowsFormsApplication5
         public Life[] vita = new Life[3];
         private GamePause gamePause;
         private Label gameTitle;
+        public bool end;
+        public float ballX;
+        public float ballY;
 
         #endregion Fields
 
@@ -53,20 +56,36 @@ namespace WindowsFormsApplication5
             GC.WaitForPendingFinalizers();
         }
 
+        public void lifeEnd()
+        {
+                this.Invoke(new MethodInvoker(delegate
+                {
+                    this.Visible = false;
+                }));
+            
+            
+        }
+
         public void on_resize(int li, int hi, int l, int h)
         {
             // Richiama logic.resize
-            Logic.resize(li, hi, l, h);
-            racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
-            score.Top = this.ClientRectangle.Height - 40;
-            score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
-            gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width/2;
-
+            if (hi > 0 && h > 0 && li > 0 && l > 0)
+            {
+                Logic.resize(li, hi, l, h);
+                racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
+                score.Top = this.ClientRectangle.Height - 40;
+                score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
+                gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
+            }
+            else
+            {
+                Pause();
+            }
+            
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            // Chiudo Game
             base.OnClosing(e);
             System.Environment.Exit(0);
             this.Close();
@@ -84,26 +103,44 @@ namespace WindowsFormsApplication5
             {
                 if (e.KeyChar == (char)Keys.Space)
                 {
-                    ball.followPointer = false;
-                    ball.canFall = true;
-                    racchetta.followPointer = true;
-                    gamePause.Visible = false;
+                    if (gamePause.Visible == false)
+                    {
+                        ball.followPointer = false;
+                        ball.canFall = true;
+                        racchetta.followPointer = true;
+                    }
+                    if (gamePause.Visible == true)
+                    {
+                        gamePause.Visible = false;
+                        ball.X = ball.previousX;
+                        ball.Y = ball.previousY;                      
+                    }
                     Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
                 if (e.KeyChar == (char)Keys.Enter && gamePause.Visible == false)
                 {
-                    ball.followPointer = false;
-                    ball.canFall = false;
-                    racchetta.followPointer = false;
-                    gamePause.Visible = true;
+                    Pause();
                     Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
                 if (e.KeyChar == (char)Keys.Escape)
                 {
-                    this.Logic.vita_rimanente = 0;
-                    this.Close();
+                    Logic.vita_rimanente = 0;
                 }
             }
+        }
+
+        public void Pause()
+        {
+            ball.followPointer = false;
+            ball.canFall = false;
+            ball.previousX = ball.X;
+            ball.previousY = ball.Y;
+            ball.previousVelocity.X = ball.velocity.X;
+            ball.previousVelocity.Y = ball.velocity.Y;
+            ball.previousVelocityTot = ball.velocityTot;
+            racchetta.followPointer = false;
+            gamePause.Visible = true;
+            
         }
 
         private void gameTitleset()
@@ -203,6 +240,7 @@ namespace WindowsFormsApplication5
             //inizializzo il label dello score
             scoreSet();
 
+            end = false;
             // Inizializza il thread del gioco
             gameThread = new Thread(Logic.gameLoop);
             gameThread.Start();

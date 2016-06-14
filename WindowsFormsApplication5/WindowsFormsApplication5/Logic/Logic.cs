@@ -66,139 +66,167 @@ namespace WindowsFormsApplication5
             // Crea il buffer
 
             // Finchè non si deve fermare continua ad eseguire
-            while (shouldStop == false)
+            while (shouldStop == false && vita_rimanente > 0)
             {
+                if (controller.WindowState == FormWindowState.Minimized)
+                {
+                    controller.Pause();
+                }
+
                 if (waitResize == false)
                 {
-                    // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
-                    controller.ball.canCollide = true;
 
-                    // Controlla le vite che rimangono al giocatore
-                    vita_rimanente = checkLife.check(controller, vita_rimanente);
-
-                    // Se non ne rimangono segnala con la variabile shouldStop che si deve visualizzare la schermata GameOver
-                    if (vita_rimanente <= 0)
+                        if (controller.WindowState != FormWindowState.Minimized)
                     {
-                        shouldStop = true;
+                        // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
+                        controller.ball.canCollide = true;
 
-                        // Salva lo score
-                        this.highScore.Score = score;
-                        GC.Collect();
-                        GC.WaitForPendingFinalizers();
-                        GC.Collect();
-                        return;
+                        // Controlla le vite che rimangono al giocatore
+                        vita_rimanente = checkLife.check(controller, vita_rimanente);
+
+                        // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
+                        if (gameTime.ElapsedMilliseconds % 1000 != 0)
+                        {
+                            checkscore();
+                            checkActiveBlock();
+                        }
+
+                        // Controlla gli fps contandoli e vede se è il caso di stamparli
+
+                        fpsChecker.checkfps(controller);
+
+                        this.updater(this.controller, this.iManager, fpsChecker);
+                        render();
                     }
-
-                    // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
-                    if (gameTime.ElapsedMilliseconds % 1000 != 0)
-                    {
-                        checkscore();
-                        checkActiveBlock();
-                    }
-
-                    // Controlla gli fps contandoli e vede se è il caso di stamparli
-                    fpsChecker.checkfps(controller);
-
-                    //
-                    this.updater(this.controller, this.iManager, fpsChecker);
-                    render();
                 }
+            }
+
+            // Se non ne rimangono segnala con la variabile shouldStop che si deve visualizzare la schermata GameOver
+            if (vita_rimanente <= 0)
+            {
+                gameover();
             }
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
+
+        public void gameover()
+        {
+            // Salva lo score
+            this.highScore.Score = score;
+            //comunico al gioco che le vite sono finite
+            controller.lifeEnd();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            return;
+
         }
 
         //funzione per ridimensionare gli elementi
         public void resize(int li, int hi, int l, int h)
         {
-            
-            //controllo tutti gli sprite che sono in gioco
-            foreach (Sprite s in iManager.inGameSprites)
+            if (vita_rimanente > 0 && h > 0 && hi > 0 && l > 0 && li > 0)               
             {
-                //ridimensiono la pallina
-                if (s.GetType().Name == "Ball")
+                //controllo tutti gli sprite che sono in gioco
+                foreach (Sprite s in iManager.inGameSprites)
                 {
-                    s.redraw(s,
-                        (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
-                        (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
-                        Properties.Resources.Ball,
-                        s.X * l / li, s.Y * h / hi);
+                    //ridimensiono la pallina
+                    if (s.GetType().Name == "Ball")
+                    {
+
+                            Ball myBall = (Ball)s;
+                            if (myBall.X > 1000 && myBall.Y < 0)
+                                s.X = myBall.previousX;
+                            if (myBall.Y == 0)
+                                s.Y = myBall.previousY;
+                        
+
+                        s.redraw(s,
+                            (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
+                            (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
+                            Properties.Resources.Ball,
+                            s.X * l / li,
+                            s.Y * h / hi);
+                    }
+
+                    //ridimensiono la racchetta
+                    else if (s.GetType().Name == "Paddle")
+                    {
+                        s.redraw(s, (int)(Math.Abs((float)1 / 8 * l)),
+                            (int)(Math.Abs((float)1 / 15 * h)),
+                            Properties.Resources.New_Piskel,
+                            s.X * l / li,
+                            s.Y * h / hi);
+                    }
+
+                    //ridimensiono lo sfondo
+                    else if (s.GetType().Name == "View")
+                    {
+                        s.redraw(s,
+                            l / 30 * 29,
+                            h / 5 * 4,
+                            Properties.Resources.Schermo_800_600_GBA,
+                            0,
+                            0);
+                        s.X = controller.ClientRectangle.Width / 2 - s.Width / 2;
+                        s.Y = controller.ClientRectangle.Height / 2 - s.Height / 2;
+                    }
+
+                    //ridimensiono la vita
+                    else if (s.GetType().Name == "Life")
+                    {
+                        s.redraw(s,
+                            (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
+                            (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
+                            Properties.Resources.Life, s.X * l / li, s.Y * h / hi);
+                    }
+
+                    else if (s.GetType().Name == "Skin")
+                    {
+                        s.redraw(s,
+                            l,
+                            h,
+                            Properties.Resources.Skin,
+                            0,
+                            0);
+                    }
+
+
                 }
 
-                //ridimensiono la racchetta
-                else if (s.GetType().Name == "Paddle")
+                controller.grid.redraw_grid(controller.grid, controller.background.Height, controller.background.Width);
+
+                foreach (Sprite s in iManager.inGameSprites)
                 {
-                    s.redraw(s, (int)(Math.Abs((float)1 / 8 * l)),
-                        (int)(Math.Abs((float)1 / 15 * h)),
-                        Properties.Resources.New_Piskel,
-                        s.X * l / li,
-                        s.Y * h / hi);
+                    //ridimensiono i blocchi di gioco
+                    if (hi > 0 && li > 0)
+                    {
+                        if (s.GetType().Name == "Block")
+                        {
+                            controller.grid.redraw_block((Block)s,
+                                (100 * l / li),
+                                (50 * (h / hi)),
+                                s.X * l / li,
+                                s.Y * h / hi);
+                        }
+                    }
                 }
-
-                //ridimensiono lo sfondo
-                else if (s.GetType().Name == "View")
-                {
-                    s.redraw(s,
-                        l / 30 * 29,
-                        h / 5 * 4,
-                        Properties.Resources.Schermo_800_600_GBA,
-                        0,
-                        0);
-                    s.X = controller.ClientRectangle.Width / 2 - s.Width / 2;
-                    s.Y = controller.ClientRectangle.Height / 2 - s.Height / 2;
-                }                            
-
-                //ridimensiono la vita
-                else if (s.GetType().Name == "Life")
-                {
-                    s.redraw(s,
-                        (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
-                        (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
-                        Properties.Resources.Life, s.X * l / li, s.Y * h / hi);
-                }
-
-                else if (s.GetType().Name == "Skin")
-                {
-                    s.redraw(s,
-                        l,
-                        h,
-                        Properties.Resources.Skin,
-                        0,
-                        0);
-                }
-
-
-            }
-
-            controller.grid.redraw_grid(controller.grid, controller.background.Height, controller.background.Width);
-
-            foreach (Sprite s in iManager.inGameSprites)
-            {
-                //ridimensiono i blocchi di gioco
-                if (s.GetType().Name == "Block")
-                {
-                    controller.grid.redraw_block((Block)s,
-                        (100 * l / li),
-                        (50 * (h / hi)),
-                        s.X * l / li,
-                        s.Y * h / hi);
-                }
-            }
 
                 controller.racchetta.Y = h * 9 / 10;
-            
 
-            spriteBatch.cntxt.MaximumBuffer = new Size(controller.ClientSize.Width + 1, controller.ClientSize.Height + 1);
-            spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(controller.CreateGraphics(), new Rectangle(Point.Empty, controller.ClientSize));
-            spriteBatch.Gfx = controller.CreateGraphics();
 
-            //uso il garbage collector per pulire
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
+                spriteBatch.cntxt.MaximumBuffer = new Size(controller.ClientSize.Width + 1, controller.ClientSize.Height + 1);
+                spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(controller.CreateGraphics(), new Rectangle(Point.Empty, controller.ClientSize));
+                spriteBatch.Gfx = controller.CreateGraphics();
+
+                //uso il garbage collector per pulire
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+            }
         }
-
         #endregion Public Methods
 
         #region Private Methods
@@ -233,33 +261,34 @@ namespace WindowsFormsApplication5
         //setto lo score dell utente
         private void checkscore()
         {
-            previous_score = score;
-            activeBlock = 0;
-            foreach (Sprite s in iManager.inGameSprites)
-            {
-                if (s.GetType().Name == "Block")
+
+                previous_score = score;
+                activeBlock = 0;
+                foreach (Sprite s in iManager.inGameSprites)
                 {
-                    Block myBlock = (Block)s;
-                    if (myBlock.blockLife == 0)
+                    if (s.GetType().Name == "Block")
                     {
-                        score += myBlock.initialLife;
-                        myBlock.blockLife = -1;
-                    }
-                    if (myBlock.blockLife > 0)
-                    {
-                        activeBlock++;
+                        Block myBlock = (Block)s;
+                        if (myBlock.blockLife == 0)
+                        {
+                            score += myBlock.initialLife;
+                            myBlock.blockLife = -1;
+                        }
+                        if (myBlock.blockLife > 0)
+                        {
+                            activeBlock++;
+                        }
                     }
                 }
-            }
-            if (previous_score < score)
-            {
-                controller.Invoke(new MethodInvoker(delegate
+                if (previous_score < score)
                 {
-                    controller.score.Text = "Score: " + score;
-                }));
-            }
+                    controller.Invoke(new MethodInvoker(delegate
+                    {
+                        controller.score.Text = "Score: " + score;
+                    }));
+                }
+            
         }
-
         /// <summary>
         /// Funzione che svuota il buffer creato quando il Thread Game non è ancora partito ma si è spinto qualcosa
         /// </summary>
@@ -279,11 +308,23 @@ namespace WindowsFormsApplication5
         /// </summary>
         private void render()
         {
-            spriteBatch.Begin();
-            foreach (Sprite s in iManager.inGameSprites)
+                spriteBatch.Begin();
+                foreach (Sprite s in iManager.inGameSprites)
+                {
                 if (s.torender == true)
+                {
+                    if (s.GetType().Name == "Ball")
+                    {
+                        Ball myBall = (Ball)s;
+                        if (myBall.X > 1000 && myBall.Y < 0)
+                            s.X = myBall.previousX;
+                        if (myBall.Y == 0)
+                            s.Y = myBall.previousY;
+                    }
                     spriteBatch.Draw(s);
-            spriteBatch.End();
+                }
+                }
+                spriteBatch.End();           
         }
 
         /// <summary>
@@ -291,18 +332,21 @@ namespace WindowsFormsApplication5
         /// </summary>
         private void updater(Game ThisForm, InputManager iManager, FPSChecker fpsChecker)
         {
-            if (gameTime.ElapsedMilliseconds - fpsChecker.upsTime > fpsChecker.interval)
+            if (vita_rimanente > 0)
             {
-                ThisForm.ball.Update(iManager, ThisForm.ParentForm);
-                ThisForm.racchetta.Update(iManager, ThisForm.ParentForm);
-                if (gameTime.Elapsed.Seconds != fpsChecker.previousSecond)
+                if (gameTime.ElapsedMilliseconds - fpsChecker.upsTime > fpsChecker.interval)
                 {
-                    fpsChecker.previousSecond = gameTime.Elapsed.Seconds;
-                    fpsChecker.ups = fpsChecker.ups_tmp;
-                    fpsChecker.ups_tmp = 0;
+                    ThisForm.ball.Update(iManager, ThisForm.ParentForm);
+                    ThisForm.racchetta.Update(iManager, ThisForm.ParentForm);
+                    if (gameTime.Elapsed.Seconds != fpsChecker.previousSecond)
+                    {
+                        fpsChecker.previousSecond = gameTime.Elapsed.Seconds;
+                        fpsChecker.ups = fpsChecker.ups_tmp;
+                        fpsChecker.ups_tmp = 0;
+                    }
+                    fpsChecker.upsTime = gameTime.ElapsedMilliseconds;
+                    fpsChecker.ups_tmp++;
                 }
-                fpsChecker.upsTime = gameTime.ElapsedMilliseconds;
-                fpsChecker.ups_tmp++;
             }
         }
     }

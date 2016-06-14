@@ -77,49 +77,51 @@ namespace WindowsFormsApplication5
         //Funzione redraw necessaria ogni qual volta si effettua il resize dei vari sprite
         public void redraw(Sprite sprite, int newWidth, int newHeigth, Bitmap risorsa, float nuova_X, float nuova_Y)
         {
-            sprite.Width = newWidth;
-            sprite.Height = newHeigth;
-            Bitmap b = new Bitmap(sprite.Width, sprite.Height);
-            using (Graphics g = Graphics.FromImage(b))
+            if (newWidth > 0 && newHeigth > 0)
             {
-                // Imposta a transparent lo sfondo dello sprite della pallina
-                if (sprite.GetType().Name == "Ball")
+                sprite.Width = newWidth;
+                sprite.Height = newHeigth;
+                Bitmap b = new Bitmap(sprite.Width, sprite.Height);
+                using (Graphics g = Graphics.FromImage(b))
                 {
-                    Color backColor = risorsa.GetPixel(0, 0);
-                    risorsa.MakeTransparent(backColor);
+                    // Imposta a transparent lo sfondo dello sprite della pallina
+                    if (sprite.GetType().Name == "Ball")
+                    {
+                        Color backColor = risorsa.GetPixel(0, 0);
+                        risorsa.MakeTransparent(backColor);
+                    }
+                    try
+                    {
+                        g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
+                    }
+                    catch
+                    {
+                        g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
+
+                        // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ri Disegna
+                    }
                 }
+                sprite.X = nuova_X;
+                sprite.Y = nuova_Y;
+
                 try
                 {
-                    g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
+                    // Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
+                    if (sprite.GetType().Name == "Paddle" && Container.ActiveForm != null)
+                        sprite.Y = (Math.Abs(Container.ActiveForm.ClientRectangle.Height - sprite.Height)) * 9 / 10;
                 }
                 catch
                 {
-                    g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
-
-                    // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ri Disegna
+                    // Errore gestito nel caso in cui si stia ridimensionando il form e venga variata di conseguenza l'altezza della racchetta
                 }
-            }
-            sprite.X = nuova_X;
-            sprite.Y = nuova_Y;
 
-            try
-            {
-                // Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
-                if (sprite.GetType().Name == "Paddle")
-                    sprite.Y = (Math.Abs(Container.ActiveForm.ClientRectangle.Height - sprite.Height)) * 9 / 10;
-            }
-            catch
-            {
-                // Errore gestito nel caso in cui si stia ridimensionando il form e venga variata di conseguenza l'altezza della racchetta
+                // Imposta la texture dello sprite
+                sprite.Texture = b;
+                return;
             }
 
-            // Imposta la texture dello sprite
-            sprite.Texture = b;
-            return;
+            #endregion Methods
         }
-
-        #endregion Methods
-
         //Il collider fa un check di eventuali impatti tra sprites
     }
 
