@@ -73,11 +73,27 @@ namespace WindowsFormsApplication5
             // Richiama logic.resize
             if (hi > 0 && h > 0 && li > 0 && l > 0)
             {
-            Logic.resize(li, hi, l, h);
-            racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
-            score.Top = this.ClientRectangle.Height - 40;
-            score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
-                gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
+              Logic.resize(li, hi, l, h);
+              racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
+              score.Top = this.ClientRectangle.Height - 40;
+              score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
+              gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
+              
+                if (gamePause.Visible == true)
+                {
+                    gamePause.Dispose();
+                    gamePause = new GamePause(0, 0, this.Width, this.Height);
+                    gamePause.Visible = true;
+                    this.Controls.Add(gamePause);
+                }
+                if (gamePause.Visible == false)
+                {
+                    gamePause.Dispose();
+                    gamePause = new GamePause(0, 0, this.Width, this.Height);
+                    gamePause.Visible = false;
+                    this.Controls.Add(gamePause);
+                }
+
             }
             else
             {
@@ -241,7 +257,7 @@ namespace WindowsFormsApplication5
             skin.Y = 0;
 
             // Inizializza la variabile della visione del menù pausa a falso in caso sia vera
-            gamePause = new GamePause(0, 0, 1000, 500);
+            gamePause = new GamePause(0, 0, this.Width, this.Height);
             gamePause.Visible = false;
             this.Controls.Add(gamePause);
 

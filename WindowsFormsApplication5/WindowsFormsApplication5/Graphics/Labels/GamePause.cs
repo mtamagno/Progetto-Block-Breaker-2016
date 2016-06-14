@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using System.Drawing;
 
 namespace WindowsFormsApplication5
 {
@@ -12,7 +13,7 @@ namespace WindowsFormsApplication5
             this.Left = Left;
             this.Width = Width;
             this.Height = Height;
-            this.BackgroundImage = Properties.Resources.Gamepause;
+            this.BackgroundImage = new Bitmap(Properties.Resources.Gamepause, this.Size);
         }
 
         #endregion Constructors
