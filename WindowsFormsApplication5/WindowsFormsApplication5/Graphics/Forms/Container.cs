@@ -95,7 +95,7 @@ namespace BlockBreaker
             altezza_client_iniziale = this.ClientRectangle.Height;
         }
 
-        private void ButtonAudioSet(Form form)
+        private void ButtonAudioSet()
         {
             if (Audio_button != null)
                 Audio_button.Dispose();
@@ -259,7 +259,11 @@ namespace BlockBreaker
                 form.Focus();
                 form.BringToFront();
             }));
-            ButtonAudioSet(form);
+            ButtonAudioSet();
+            if (AudioOnOff == false)
+            {
+                AudioOnOff = true;
+            }
             form.Focus();
         }
 
