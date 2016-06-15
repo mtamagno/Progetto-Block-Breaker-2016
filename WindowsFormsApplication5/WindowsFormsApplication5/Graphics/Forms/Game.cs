@@ -142,7 +142,7 @@ namespace BlockBreaker
                 if (e.KeyChar == (char)Keys.Escape)
                 {
                     Pause();
-                    DialogResult dialogResult = MessageBox.Show("Do u want to proced to GameOver?", "ALERT", MessageBoxButtons.YesNo);
+                    DialogResult dialogResult = MessageBox.Show("Do you want to proced to GameOver?", "ALERT", MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
                     {
                         Logic.vita_rimanente = 0;
