@@ -104,11 +104,20 @@ namespace BlockBreaker
             // Se non ne rimangono segnala con la variabile shouldStop che si deve visualizzare la schermata GameOver
             if (vita_rimanente <= 0)
             {
+                foreach (Sprite s in iManager.inGameSprites)
+                {
+                    s.toRender = false;
+                }
                 gameover();
             }
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
+            foreach (Sprite s in iManager.inGameSprites)
+            {
+                s.toRender = false;
+            }
+                return;
             }
 
         public void gameover()

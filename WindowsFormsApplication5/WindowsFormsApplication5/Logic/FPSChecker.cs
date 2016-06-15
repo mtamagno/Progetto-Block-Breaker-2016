@@ -15,7 +15,7 @@ namespace BlockBreaker
         public Stopwatch gameTime;
 
         //variabile per limitare gli fps
-        public int interval = 1000 / 70;
+        public int interval = 1000 / 85;
 
         public long lastTime;
         public int previousSecond;

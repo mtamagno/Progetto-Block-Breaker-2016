@@ -6,7 +6,7 @@ namespace BlockBreaker
     {
         #region Fields
 
-        private SoundPlayer backgroundMusic;
+        public SoundPlayer backgroundMusic;
 
         #endregion Fields
 

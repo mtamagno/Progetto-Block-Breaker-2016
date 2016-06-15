@@ -71,6 +71,8 @@ namespace BlockBreaker
         /// <param name="altezza_client_iniziale"></param>
         /// <param name="lunghezza_client"></param>
         /// <param name="altezza_client"></param>
+        /// 
+
         public void totalVelocityReset(int lunghezza_client_iniziale, int altezza_client_iniziale, int lunghezza_client, int altezza_client)
         {
             this.velocity.Y = this.velocity.Y * altezza_client / altezza_client_iniziale;
