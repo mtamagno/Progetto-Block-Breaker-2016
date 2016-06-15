@@ -198,7 +198,7 @@ namespace BlockBreaker
             this.MenuPanel.Size = new Size(this.ClientRectangle.Width / 5, this.ClientRectangle.Height / 2);
             this.MenuPanel.Top = ClientRectangle.Height / 2 - this.MenuPanel.Size.Height / 15 * 2;
             this.MenuPanel.Left = ClientRectangle.Width / 2 - this.MenuPanel.Size.Width / 2;
-            this.MenuPanel.BackColor = Color.Transparent;
+            this.MenuPanel.BackColor = Color.FromArgb(150, Color.Black);
             this.MenuPanel.BorderStyle = BorderStyle.Fixed3D;
 
             // Imposta le dimensioni e la posizione di start

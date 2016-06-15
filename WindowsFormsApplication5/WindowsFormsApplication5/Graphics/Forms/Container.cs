@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace BlockBreaker
 {
@@ -18,8 +19,10 @@ namespace BlockBreaker
         private int lunghezza_client;
         private int lunghezza_client_iniziale;
         private Menu menu;
+        private AudioButtons Audio_button;
         private Music Music;
         private TextBox textBox = new TextBox();
+        private bool AudioOnOff;
 
         #endregion Fields
 
@@ -73,6 +76,8 @@ namespace BlockBreaker
         private void Container2_Load(object sender, EventArgs e)
         {
             this.MinimumSize = new System.Drawing.Size(700, 450);
+
+            AudioOnOff = true;
             this.Music = new Music();
 
             // Imposta again a false per dire che il gioco e' stato avviato per la prima volta
@@ -88,6 +93,37 @@ namespace BlockBreaker
             //Salvo le dimensioni del client prima dei ridimensionamenti per poter calcolare la proporzione
             lunghezza_client_iniziale = this.ClientRectangle.Width;
             altezza_client_iniziale = this.ClientRectangle.Height;
+        }
+
+        private void ButtonAudioSet(Form form)
+        {
+            if (Audio_button != null)
+                Audio_button.Dispose();
+            Size s = new Size(30, 30);
+            Audio_button = new AudioButtons(s);
+            Audio_button.Visible = true;
+            Audio_button.Left = 50;
+            Audio_button.Top = this.Height - this.Audio_button.Height - 45;
+            this.Controls.Add(Audio_button);
+            Audio_button.BringToFront();
+            this.Audio_button.MouseClick += Audio;
+            Audio_button.TabStop = false;
+            Audio_button.BackColor = Color.Transparent;
+
+        }
+
+        private void Audio(object sender, EventArgs e)
+        {
+            AudioOnOff = !AudioOnOff;
+
+            if (!AudioOnOff)
+                this.Music.backgroundMusic.Stop();
+            else
+                this.Music.backgroundMusic.Play();
+
+            Audio_button.ChangeState();
+            this.ProcessTabKey(true);
+
         }
 
         /// <summary>
@@ -223,7 +259,11 @@ namespace BlockBreaker
                 form.Focus();
                 form.BringToFront();
             }));
+            ButtonAudioSet(form);
+            form.Focus();
         }
+
+
 
         /// <summary>
         /// Funzione necessaria ad inizializzare il form del gioco
