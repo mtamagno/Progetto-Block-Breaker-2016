@@ -18,6 +18,7 @@ namespace BlockBreaker
         private PictureBox Logo;
         private HighScoresPanel highscorepanel;
         private string Testo;
+        private bool showhighscore;
 
         #endregion Fields
 
@@ -27,6 +28,7 @@ namespace BlockBreaker
         {
             this.Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
             this.InitializeComponent();
+            showhighscore = false;
         }
 
         #endregion Constructors
@@ -82,8 +84,16 @@ namespace BlockBreaker
 
                 //Ricrea le istruzioni
                 this.Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                this.highscorepanel.Dispose();
+                this.highscorepanel = new HighScoresPanel(0, 0, this.ClientSize.Width, this.ClientSize.Height);
                 this.Controls.Add(Instructions);
-
+                this.Controls.Add(highscorepanel);
+                if (showhighscore == true)
+                {
+                    this.highscorepanel.Visible = true;
+                    this.MenuPanel.Visible = false;
+                    this.Logo.Visible = false;
+                }
                 if (makeInstructionsVisible == true)
                 {
                     this.MenuPanel.Visible = false;
@@ -261,6 +271,7 @@ namespace BlockBreaker
                 this.Instructions.Visible = false;
                 this.highscorepanel.Visible = false;
                 this.Logo.Visible = true;
+                showhighscore = false;
             }
         }
         
@@ -276,6 +287,7 @@ namespace BlockBreaker
             this.highscorepanel.Visible = true;
             this.Focus();
             this.KeyPress += new KeyPressEventHandler(this.Help_KeyPress);
+            showhighscore = true;
         }
 
         #endregion Methods

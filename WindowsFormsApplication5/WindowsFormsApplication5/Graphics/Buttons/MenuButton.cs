@@ -37,7 +37,8 @@ namespace BlockBreaker
 
         private void MouseHoverButton(object sender, EventArgs e)
         {
-            this.FlatStyle = FlatStyle.Standard;
+            this.FlatStyle = FlatStyle.Popup;
+           
         }
 
         private void MouseLeaveButton(object sender, EventArgs e)
