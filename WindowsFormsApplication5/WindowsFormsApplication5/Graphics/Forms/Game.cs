@@ -98,9 +98,7 @@ namespace BlockBreaker
         /// <param name="e"></param>
         protected override void OnClosing(CancelEventArgs e)
         {
-            base.OnClosing(e);
-            System.Environment.Exit(0);
-            this.Close();
+
         }
         
 
