@@ -192,7 +192,6 @@
     <None Include="Resources\BackGround_Image.jpg" />
     <None Include="Resources\BlueRoundedButton.png" />
     <None Include="Resources\Block1.png" />
-    <None Include="Resources\Background_Music.wav" />
     <Content Include="content\collide.wav" />
     <Content Include="content\Music.mp3" />
     <None Include="Resources\maxresdefault.jpg" />
