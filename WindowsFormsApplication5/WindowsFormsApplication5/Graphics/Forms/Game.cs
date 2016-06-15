@@ -133,23 +133,7 @@ namespace BlockBreaker
             {
                 if (e.KeyChar == (char)Keys.Space)
                 {
-                    if (gamePause.Visible == false)
-                    {
-                        ballpointer = false;
-                        ball.followPointer = false;
-                        ball.canFall = true;
-
-                    racchetta.followPointer = true;
-                    }
-                    if (gamePause.Visible == true)
-                    {
-                        gamePause.Visible = false;
-                        if (ballpointer == true)
-                        {
-                            ball.followPointer = true;
-                            racchetta.followPointer = true;
-                        }
-                    }
+                    ThrowBall();
                     Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
                 if (e.KeyChar == (char)Keys.Enter && gamePause.Visible == false)
@@ -159,10 +143,41 @@ namespace BlockBreaker
                 }
                 if (e.KeyChar == (char)Keys.Escape)
                 {
-                    Logic.vita_rimanente = 0;
+                    Pause();
+                    DialogResult dialogResult = MessageBox.Show("Do u want to proced to GameOver?", "ALERT", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        Logic.vita_rimanente = 0;
+                    }
+                    else if (dialogResult == DialogResult.No)
+                    {
+                        ThrowBall();
+                    }
+
                 }
                 }
             }
+
+        public void ThrowBall()
+        {
+            if (gamePause.Visible == false)
+            {
+                ballpointer = false;
+                ball.followPointer = false;
+                ball.canFall = true;
+
+                racchetta.followPointer = true;
+            }
+            if (gamePause.Visible == true)
+            {
+                gamePause.Visible = false;
+                if (ballpointer == true)
+                {
+                    ball.followPointer = true;
+                    racchetta.followPointer = true;
+                }
+            }
+        }
 
         public void Pause()
         {

@@ -44,17 +44,17 @@ namespace BlockBreaker
             this.Invoke(new MethodInvoker(delegate
             {
             //se l utente preme x dalla schermata di gioco devo fermare il thread del gioco
-            if (Game != null)
+          /*  if (Game != null)
                 {
+                    Game.Logic.shouldStop = true;
                     while (Game.gameThread.IsAlive) {
-                        Game.Logic.shouldStop = true;
-                        Game.Close();
+                        DisposeAll();
                     } 
-                    Game.Visible = false;
+                   // Game.Visible = false;
 
-                }
+                }*/
             //pulisco tutto
-                Thread.Sleep(1000);
+            Thread.Sleep(1000);
             DisposeAll();
             base.OnClosing(e);
             System.Environment.Exit(0);
