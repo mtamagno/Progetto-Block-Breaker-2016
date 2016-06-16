@@ -13,12 +13,12 @@ namespace BlockBreaker
         public Instructions Instructions;
         public Panel MenuPanel = new Panel();
         public Size s;
-        public MenuButton start;
-        private Bitmap backgroundimage;
-        private PictureBox Logo;
-        private HighScoresPanel highscorepanel;
-        private string Testo;
-        private bool showhighscore;
+        public MenuButton Start;
+        private Bitmap _backgroundimage;
+        private PictureBox _logo;
+        private HighScoresPanel _highScoresPanel;
+        private string _testo;
+        private bool _showhighscore;
 
         #endregion Fields
 
@@ -28,7 +28,7 @@ namespace BlockBreaker
         {
             this.Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
             this.InitializeComponent();
-            showhighscore = false;
+            _showhighscore = false;
         }
 
         #endregion Constructors
@@ -40,14 +40,14 @@ namespace BlockBreaker
         /// questo è necessario per capire poi se riaprirle dopo un resize
         /// </summary>
         /// <returns></returns>
-        public bool cleaner()
+        public bool Cleaner()
         {
             //Crea la variabile che segnala se erano aperte le istruzioni
             var makeInstructionsVisible = false;
 
             //Libera la memoria dalle immagini
             this.BackgroundImage.Dispose();
-            this.backgroundimage.Dispose();
+            this._backgroundimage.Dispose();
             if (this.Instructions.Visible)
             {
                 this.Instructions.Visible = false;
@@ -69,35 +69,35 @@ namespace BlockBreaker
             if (this.ClientSize.Width > 0 && this.ClientSize.Height > 0)
             {
                 // Libera la memoria e capisce se si era sulle istruzioni o meno
-                var makeInstructionsVisible = this.cleaner();
+                var makeInstructionsVisible = this.Cleaner();
 
                 // Ricrea il BackGround
                 this.BackgroundImage = new Bitmap(Properties.Resources.BackGround_Image, this.ClientSize);
                 this.BackgroundImageLayout = ImageLayout.Stretch;
 
                 //Ricrea il Panel
-                Testo = this.start.Text;
+                _testo = this.Start.Text;
                 this.CreatePanel();
-                this.writer(Testo);
+                this.Writer(_testo);
                 //Ricrea il logo
                 this.CreateLogo(this.ClientSize.Width, this.ClientSize.Height);
 
                 //Ricrea le istruzioni
                 this.Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
-                this.highscorepanel.Dispose();
-                this.highscorepanel = new HighScoresPanel(0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                this._highScoresPanel.Dispose();
+                this._highScoresPanel = new HighScoresPanel(0, 0, this.ClientSize.Width, this.ClientSize.Height);
                 this.Controls.Add(Instructions);
-                this.Controls.Add(highscorepanel);
-                if (showhighscore == true)
+                this.Controls.Add(_highScoresPanel);
+                if (_showhighscore == true)
                 {
-                    this.highscorepanel.Visible = true;
+                    this._highScoresPanel.Visible = true;
                     this.MenuPanel.Visible = false;
-                    this.Logo.Visible = false;
+                    this._logo.Visible = false;
                 }
                 if (makeInstructionsVisible == true)
                 {
                     this.MenuPanel.Visible = false;
-                    this.Logo.Visible = false;
+                    this._logo.Visible = false;
                     this.Instructions.Visible = true;
                 }
                 this.Help.KeyPress += Help_KeyPress;
@@ -107,22 +107,22 @@ namespace BlockBreaker
         /// <summary>
         /// Direttive che vanno eseguite in ogni caso
         /// </summary>
-        public void starter()
+        private void Starter()
         {
             s = new Size(this.ClientSize.Width / 5, this.ClientSize.Height / 10);
 
             // Background
-            this.backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
-            this.BackgroundImage = backgroundimage;
+            this._backgroundimage = new Bitmap(Properties.Resources.BackGround_Image, this.Size);
+            this.BackgroundImage = _backgroundimage;
 
             // Crea e riempie il panel centrale
             this.CreatePanel();
 
             // Instructions
             this.Instructions = new Instructions(0, 0, this.ClientSize.Width, this.ClientSize.Height);
-            this.highscorepanel = new HighScoresPanel(0, 0, this.ClientSize.Width, this.ClientSize.Height);
+            this._highScoresPanel = new HighScoresPanel(0, 0, this.ClientSize.Width, this.ClientSize.Height);
 
-            //Logo
+            //_logo
             this.CreateLogo(this.ClientSize.Width, this.ClientSize.Height);
 
             // Aspetta il Garbage collector
@@ -138,12 +138,12 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        /// Permette di scrivere il testo scelto dentro al tasto start
+        /// Permette di scrivere il testo scelto dentro al tasto Start
         /// </summary>
         /// <param name="testo"></param>
-        public void writer(string testo)
+        public void Writer(string testo)
         {
-            this.start.Text = testo;
+            this.Start.Text = testo;
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -155,7 +155,7 @@ namespace BlockBreaker
         /// <param name="e"></param>
         private void ContainerLoad(object sender, EventArgs e)
         {
-            this.starter();
+            this.Starter();
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -167,11 +167,11 @@ namespace BlockBreaker
         {
             // Aggiunge i bottoni al panel e poi il panel ai controlli
             this.Controls.Add(MenuPanel);
-            this.MenuPanel.Controls.Add(start);
+            this.MenuPanel.Controls.Add(Start);
             this.MenuPanel.Controls.Add(Help);
             this.MenuPanel.Controls.Add(Highscores);
             this.Controls.Add(Instructions);
-            this.Controls.Add(highscorepanel);
+            this.Controls.Add(_highScoresPanel);
         }
         
         /// <summary>
@@ -183,52 +183,50 @@ namespace BlockBreaker
         /// <param name="height"></param>
         private void CreateLogo(int Width, int height)
         {
-            if (this.Logo != null)
+            if (this._logo != null)
             {
-                this.Logo.Dispose();
+                this._logo.Dispose();
             }
-            this.Logo = new PictureBox();
-            this.Logo.Width = this.MenuPanel.Width * 4;
-            this.Logo.Height = this.MenuPanel.Top;
-            this.Logo.Image = new Bitmap(Properties.Resources.logo1, this.Logo.Size);
-            this.Logo.BackColor = Color.Transparent;
-            this.Logo.Top = 0;
-            this.Logo.Left = Width / 2 - this.Logo.Width / 2;
-            this.Controls.Add(Logo);
+            this._logo = new PictureBox();
+            this._logo.Width = this.MenuPanel.Width * 4;
+            this._logo.Height = this.MenuPanel.Top;
+            this._logo.Image = new Bitmap(Properties.Resources.logo1, this._logo.Size);
+            this._logo.BackColor = Color.Transparent;
+            this._logo.Top = 0;
+            this._logo.Left = Width / 2 - this._logo.Width / 2;
+            this.Controls.Add(_logo);
         }
 
         /// <summary>
         /// Dimensiona il panel a seconda della grandezza della grandezza del 
-        /// client e lo riempie con i pulsanti start e help
+        /// client e lo riempie con i pulsanti Start e help
         /// </summary>
         private void CreatePanel()
         {
             s = new Size(this.ClientSize.Width / 6, this.ClientSize.Height / 10);
-            // Imposta le dimensioni e la posizione del pannello panel che conterrà start e help
+            // Imposta le dimensioni e la posizione del pannello panel che conterrà Start e help
             this.MenuPanel.Size = new Size(this.ClientRectangle.Width / 5, this.ClientRectangle.Height / 2);
             this.MenuPanel.Top = ClientRectangle.Height / 2 - this.MenuPanel.Size.Height / 15 * 2;
             this.MenuPanel.Left = ClientRectangle.Width / 2 - this.MenuPanel.Size.Width / 2;
             this.MenuPanel.BackColor = Color.FromArgb(150, Color.Black);
             this.MenuPanel.BorderStyle = BorderStyle.Fixed3D;
 
-            // Imposta le dimensioni e la posizione di start
-            if (this.start != null)
-                this.start.Dispose();
-            this.start = new MenuButton(s);
-            this.start.Top = this.MenuPanel.Height / 4 - start.Height / 5 * 2;
-            this.start.Left = this.MenuPanel.Width / 2 - start.Width / 2;
+            // Imposta le dimensioni e la posizione di Start
+            if (this.Start != null)
+                this.Start.Dispose();
+            this.Start = new MenuButton(s);
+            this.Start.Top = this.MenuPanel.Height / 4 - Start.Height / 5 * 2;
+            this.Start.Left = this.MenuPanel.Width / 2 - Start.Width / 2;
             
             // Imposta le dimensioni e la posizione di help
-            if (this.Help != null)
-                this.Help.Dispose();
+            this.Help?.Dispose();
             this.Help = new MenuButton(s);
             this.Help.Top = this.MenuPanel.Height / 3 + Help.Height / 5 * 2;
             this.Help.Left = this.MenuPanel.Width / 2 - Help.Width / 2;
             this.Help.Text = "Help";
 
             // Imposta le dimensioni e la posizione di Highscore
-            if (this.Highscores != null)
-                this.Highscores.Dispose();
+            this.Highscores?.Dispose();
             this.Highscores = new MenuButton(s);
             this.Highscores.Top = this.MenuPanel.Height / 4 + Highscores.Height * 2;
             this.Highscores.Left = this.MenuPanel.Width / 2 - Highscores.Width / 2;
@@ -237,7 +235,7 @@ namespace BlockBreaker
             // Eventhandler
             this.Help.Click += new EventHandler(this.Show_Instructions);
             this.Highscores.Click += new EventHandler(this.Show_highscore);
-            this.MenuPanel.Controls.Add(start);
+            this.MenuPanel.Controls.Add(Start);
             this.MenuPanel.Controls.Add(Help);
             this.MenuPanel.Controls.Add(Highscores);
         }
@@ -250,7 +248,7 @@ namespace BlockBreaker
         private void Show_Instructions(object sender, EventArgs e)
         {
             this.MenuPanel.Visible = false;
-            this.Logo.Visible = false;
+            this._logo.Visible = false;
             this.Instructions.Visible = true;
             this.Focus();
             this.KeyPress += new KeyPressEventHandler(this.Help_KeyPress);
@@ -266,12 +264,12 @@ namespace BlockBreaker
             if (e.KeyChar == (char)Keys.Escape)
             {
                 this.MenuPanel.Visible = true;
-                this.start.Visible = true;
+                this.Start.Visible = true;
                 this.Help.Visible = true;
                 this.Instructions.Visible = false;
-                this.highscorepanel.Visible = false;
-                this.Logo.Visible = true;
-                showhighscore = false;
+                this._highScoresPanel.Visible = false;
+                this._logo.Visible = true;
+                _showhighscore = false;
             }
         }
         
@@ -283,11 +281,11 @@ namespace BlockBreaker
         private void Show_highscore(object sender, EventArgs e)
         {
             this.MenuPanel.Visible = false;
-            this.Logo.Visible = false;
-            this.highscorepanel.Visible = true;
+            this._logo.Visible = false;
+            this._highScoresPanel.Visible = true;
             this.Focus();
             this.KeyPress += new KeyPressEventHandler(this.Help_KeyPress);
-            showhighscore = true;
+            _showhighscore = true;
         }
 
         #endregion Methods

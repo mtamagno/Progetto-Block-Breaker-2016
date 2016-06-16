@@ -10,20 +10,20 @@ namespace BlockBreaker
     {
         #region Fields
 
-        public Skin skin;
-        public Playground background;
-        public Ball ball;
-        public Thread gameThread;
-        public Grid grid;
+        private Skin _skin;
+        public Playground Background;
+        public Ball Ball;
+        public Thread GameThread;
+        public Grid Grid;
         public Logic Logic;
-        public Paddle racchetta;
-        public Label score;
-        public Life[] vita = new Life[3];
-        private GamePause gamePause;
-        private Label gameTitle;
-        public bool ballpointer;
-        public float ballX;
-        public float ballY;
+        public Paddle Racchetta;
+        public Label Score;
+        public Life[] Vita = new Life[3];
+        private GamePause _gamePause;
+        private Label _gameTitle;
+        private bool _ballpointer;
+        public float BallX;
+        public float BallY;
 
         #endregion Fields
 
@@ -45,14 +45,14 @@ namespace BlockBreaker
         /// </summary>
         public void life_init()
         {
-            for (int i = 0; i < Logic.vita_rimanente; i++)
+            for (int i = 0; i < Logic.VitaRimanente; i++)
             {
-                vita[i] = new Life(this.ClientRectangle.Width - (float)1 / 50 * this.ClientRectangle.Width
+                Vita[i] = new Life(this.ClientRectangle.Width - (float)1 / 50 * this.ClientRectangle.Width
                         - (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))) * (i + 1) - 10 * (i + 1),
                     (float)1 / 50 * this.ClientRectangle.Height + (float)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))),
                     (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))),
                     (int)(Math.Abs((float)1 / 25 * Math.Min(this.ClientRectangle.Width, this.ClientRectangle.Height))));
-                Logic.iManager.inGameSprites.Add(vita[i]);
+                Logic.IManager.inGameSprites.Add(Vita[i]);
             }
 
             GC.Collect();
@@ -74,15 +74,15 @@ namespace BlockBreaker
             // Richiama logic.resize
             if (hi > 0 && h > 0 && li > 0 && l > 0)
             {
-                gamePause.Width = this.Width;
-                gamePause.Height = this.Height;
-                Logic.resize(li, hi, l, h);
-                racchetta.Y = this.background.Height * 9 / 10 + this.background.Y;
-                score.Top = this.ClientRectangle.Height - 40;
-                score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
-                gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
-                gamePause.ResetText();
-                gamePause.setText();
+                _gamePause.Width = this.Width;
+                _gamePause.Height = this.Height;
+                Logic.Resize(li, hi, l, h);
+                Racchetta.Y = (float)this.Background.Height * 9 / 10 + this.Background.Y;
+                Score.Top = this.ClientRectangle.Height - 40;
+                Score.Left = this.ClientRectangle.Width / 2 - this.Score.Width / 2;
+                _gameTitle.Left = this.ClientRectangle.Width / 2 - this._gameTitle.Width / 2;
+                _gamePause.ResetText();
+                _gamePause.setText();
                 Pause();
             }
             else
@@ -100,23 +100,25 @@ namespace BlockBreaker
         {
 
         }
-        
+
 
         /// <summary>
         /// Funzione che permette il caricamento iniziale del gioco
         /// </summary>
+        /// <param name="sender"></param>
         /// <param name="e"></param>
         protected void OnLoad(object sender, EventArgs e)
         {
+            if (sender == null) throw new ArgumentNullException(nameof(sender));
             try
             {
-                loadContent();
+                LoadContent();
             }
             // Gestiamo un raro caso in cui crashava il gioco che viene gestito da OnLoad
             catch
             {
             base.OnLoad(e);
-            loadContent();
+            LoadContent();
         }
         }
 
@@ -127,87 +129,86 @@ namespace BlockBreaker
         /// <param name="e"></param>
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Logic.AllowInput)
+            if (sender == null) throw new ArgumentNullException(nameof(sender));
+            if (!Logic.AllowInput) return;
+            if (e.KeyChar == (char)Keys.Space)
             {
-                if (e.KeyChar == (char)Keys.Space)
+                ThrowBall();
+                Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
+            }
+            if (e.KeyChar == (char)Keys.Enter && _gamePause.Visible == false)
+            {
+                Pause();
+                Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
+            }
+            if (e.KeyChar == (char)Keys.Escape)
+            {
+                Pause();
+                DialogResult dialogResult = MessageBox.Show("Do you want to proced to GameOver?", "ALERT", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    Logic.VitaRimanente = 0;
+                }
+                else if (dialogResult == DialogResult.No)
                 {
                     ThrowBall();
-                    Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
                 }
-                if (e.KeyChar == (char)Keys.Enter && gamePause.Visible == false)
-                {
-                    Pause();
-                    Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
-                }
-                if (e.KeyChar == (char)Keys.Escape)
-                {
-                    Pause();
-                    DialogResult dialogResult = MessageBox.Show("Do you want to proced to GameOver?", "ALERT", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        Logic.vita_rimanente = 0;
-                    }
-                    else if (dialogResult == DialogResult.No)
-                    {
-                        ThrowBall();
-                    }
 
-                }
-                }
             }
+        }
 
         public void ThrowBall()
         {
-            if (gamePause.Visible == false)
+            if (_gamePause.Visible == false)
             {
-                ballpointer = false;
-                ball.followPointer = false;
-                ball.canFall = true;
-
-                racchetta.followPointer = true;
+                _ballpointer = false;
+                Ball.FollowPointer = false;
+                Ball.CanFall = true;
+                Ball.VelocityTotLimit = 3000;
+                Racchetta.FollowPointer = true;
             }
-            if (gamePause.Visible == true)
+            if (_gamePause.Visible == true)
             {
-                gamePause.Visible = false;
-                if (ballpointer == true)
+                _gamePause.Visible = false;
+                if (_ballpointer == true)
                 {
-                    ball.followPointer = true;
-                    racchetta.followPointer = true;
+                    Ball.FollowPointer = true;
+                    Racchetta.FollowPointer = true;
                 }
             }
         }
 
         public void Pause()
         {
-            if (ball.followPointer == true)
-                ballpointer = true;
-            ball.followPointer = false;
-            ball.canFall = false;
-            ball.previousX = ball.X;
-            ball.previousY = ball.Y;
-            ball.previousVelocity.X = ball.velocity.X;
-            ball.previousVelocity.Y = ball.velocity.Y;
-            ball.previousVelocityTot = ball.velocityTot;
-            racchetta.followPointer = false;
-            gamePause.Visible = true;
+            if (Ball.FollowPointer == true)
+                _ballpointer = true;
+            Ball.FollowPointer = false;
+            Ball.CanFall = false;
+            Ball.PreviousX = Ball.X;
+            Ball.PreviousY = Ball.Y;
+            Ball.PreviousVelocity.X = Ball.Velocity.X;
+            Ball.PreviousVelocity.Y = Ball.Velocity.Y;
+            Ball.PreviousVelocityTot = Ball.VelocityTot;
+            Racchetta.FollowPointer = false;
+            _gamePause.Visible = true;
             
         }
 
         /// <summary>
         /// Funzione che permette il reset del titolo del gioco per poterlo scalare
         /// </summary>
-        private void gameTitleset()
+        private void GameTitleset()
         {
-            gameTitle = new Label();
-            gameTitle.Top = 20;
-            gameTitle.Width = this.ClientRectangle.Width / 3 * 2;
-            gameTitle.TextAlign = ContentAlignment.MiddleCenter;
-            gameTitle.Left = this.ClientRectangle.Width / 2 - this.gameTitle.Width / 2;
-            gameTitle.Text = "BlockBreaker";
-            gameTitle.BackColor = Color.Black;
-            gameTitle.ForeColor = Color.White;
-            gameTitle.Font = new Font("Arial", 15);
-            this.Controls.Add(gameTitle);
+            _gameTitle = new Label();
+            _gameTitle.Top = 20;
+            _gameTitle.Width = this.ClientRectangle.Width / 3 * 2;
+            _gameTitle.TextAlign = ContentAlignment.MiddleCenter;
+            _gameTitle.Left = this.ClientRectangle.Width / 2 - this._gameTitle.Width / 2;
+            _gameTitle.Text = "BlockBreaker";
+            _gameTitle.BackColor = Color.Black;
+            _gameTitle.ForeColor = Color.White;
+            _gameTitle.Font = new Font("Arial", 15);
+            this.Controls.Add(_gameTitle);
         }
 
         /// <summary>
@@ -215,7 +216,7 @@ namespace BlockBreaker
         /// </summary>
         private void init_grid()
         {
-            grid = new Grid((int)this.background.X, (int)this.background.Y, this.background.Height, this.background.Width, Properties.Resources.Block_4, Logic);
+            Grid = new Grid((int)this.Background.X, (int)this.Background.Y, this.Background.Height, this.Background.Width, Properties.Resources.Block_4, Logic);
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -223,76 +224,76 @@ namespace BlockBreaker
         /// <summary>
         /// Funzione che permette di caricare il contenuto all'avvio
         /// </summary>
-        private void loadContent()
+        private void LoadContent()
         {
-            starter();
+            Starter();
         }
 
         /// <summary>
         /// Funzione che permette
         /// </summary>
-        private void scoreSet()
+        private void ScoreSet()
         {
-            score = new Label();
-            score.Left = this.ClientRectangle.Width / 2 - this.score.Width / 2;
-            score.Top = this.ClientRectangle.Height - 40;
-            score.Width = this.ClientRectangle.Width / 8;
+            Score = new Label();
+            Score.Left = this.ClientRectangle.Width / 2 - this.Score.Width / 2;
+            Score.Top = this.ClientRectangle.Height - 40;
+            Score.Width = this.ClientRectangle.Width / 8;
 
-            score.TextAlign = ContentAlignment.MiddleCenter;
-            score.Text = "Score: 0";
-            score.BackColor = Color.Black;
-            score.ForeColor = Color.Transparent;
-            score.Font = new Font("Arial", 15);
-            this.Controls.Add(score);
+            Score.TextAlign = ContentAlignment.MiddleCenter;
+            Score.Text = "Score: 0";
+            Score.BackColor = Color.Black;
+            Score.ForeColor = Color.Transparent;
+            Score.Font = new Font("Arial", 15);
+            this.Controls.Add(Score);
         }
 
         /// <summary>
-        /// Funzione starter invocata all'avvio di questo form per inizializzarlo
+        /// Funzione Starter invocata all'avvio di questo form per inizializzarlo
         /// </summary>
-        private void starter()
+        private void Starter()
         {
             // Inizializza la logica
             Logic = new Logic(this);
 
             //Inizializzo la skin
 
-            skin = new Skin(this.ClientRectangle.X,
+            _skin = new Skin(this.ClientRectangle.X,
             this.ClientRectangle.Y,
             this.ClientRectangle.Width,
             this.ClientRectangle.Height,
             Logic);
-            skin.X = 0;
-            skin.Y = 0;
-            ballpointer = true;
+            _skin.X = 0;
+            _skin.Y = 0;
+            _ballpointer = true;
 
             // Inizializza la variabile della visione del menù pausa a falso in caso sia vera
-            gamePause = new GamePause(0, 0, this.Width, this.Height);
-            gamePause.Visible = false;
-            this.Controls.Add(gamePause);
+            _gamePause = new GamePause(0, 0, this.Width, this.Height);
+            _gamePause.Visible = false;
+            this.Controls.Add(_gamePause);
 
             // Inizializza il background
-            background = new Playground(this.ClientRectangle.X,
+            Background = new Playground(this.ClientRectangle.X,
                 this.ClientRectangle.Y,
                 this.ClientRectangle.Width / 30 * 29,
                 this.ClientRectangle.Height / 5 * 4,
                 Logic);
-            background.X = this.ClientRectangle.Width / 2 - this.background.Width / 2;
-            background.Y = this.ClientRectangle.Height / 2 - this.background.Height / 2;
+            Background.X = this.ClientRectangle.Width / 2 - this.Background.Width / 2;
+            Background.Y = this.ClientRectangle.Height / 2 - this.Background.Height / 2;
 
             // Inizializza griglia
             init_grid();
 
             // Inizializza racchetta
             if (this.Visible)
-                racchetta = new Paddle(Logic.MousePoint.X - this.Location.X,
-                    this.background.Height * 9 / 10 + this.background.Y,
+                Racchetta = new Paddle(Logic.MousePoint.X - this.Location.X,
+                    (float)this.Background.Height * 9 / 10 + this.Background.Y,
                     (int)(Math.Abs((float)1 / 8 * this.ParentForm.ClientRectangle.Width)),
                     (int)(Math.Abs((float)1 / 15 * this.ParentForm.ClientRectangle.Height)),
                     Logic);
 
             // Inizializza pallina
-            ball = new Ball(300,
-                racchetta.Y - 10,
+            Ball = new Ball(300,
+                Racchetta.Y - 10,
                 (int)(Math.Abs((float)1 / 50 * Math.Min(this.ParentForm.ClientRectangle.Width, this.ParentForm.ClientRectangle.Height))),
                 (int)(Math.Abs((float)1 / 50 * Math.Min(this.ParentForm.ClientRectangle.Width, this.ParentForm.ClientRectangle.Height))),
                 Logic);
@@ -301,14 +302,14 @@ namespace BlockBreaker
             life_init();
 
             // inizializzo il titolo del gioco
-            gameTitleset();
+            GameTitleset();
 
             //inizializzo il label dello score
-            scoreSet();
+            ScoreSet();
 
             // Inizializza il thread del gioco
-            gameThread = new Thread(Logic.gameLoop);
-            gameThread.Start();
+            GameThread = new Thread(Logic.GameLoop);
+            GameThread.Start();
 
             // Aspetta il Garbage Collector
             GC.Collect();

@@ -7,15 +7,15 @@ namespace BlockBreaker
     {
         #region Fields
 
-        public int blockLife;
+        public int BlockLife;
 
         // Variabili per vita e texture
-        public int initialLife;
+        public int InitialLife;
 
         public Bitmap texture;
 
         // Crea il random che mi servirà a calcolare vite in modo casuale
-        private static Random random = new Random();
+        private static readonly Random Random = new Random();
 
         #endregion Fields
 
@@ -24,23 +24,23 @@ namespace BlockBreaker
         public Block(float x, float y, int width, int height)
         {
             //Alla creazione genero un nuomero casuale di vita
-            blockLife = random.Next(0, 5);
-            initialLife = blockLife;
+            BlockLife = Random.Next(0, 5);
+            InitialLife = BlockLife;
 
             // Imposta le proprietà dello sprite
-            canFall = false;
-            canCollide = true;
+            CanFall = false;
+            CanCollide = true;
 
             // Imposta il render a true in caso abbia più di 0 vite
-            if (blockLife >= 1 && blockLife <= 4)
-                toRender = true;
-            followPointer = false;
+            if (BlockLife >= 1 && BlockLife <= 4)
+                ToRender = true;
+            FollowPointer = false;
 
             //se non bisogna renderizzarlo non deve poter collidere
-            if (toRender != true)
-                canCollide = false;
+            if (ToRender != true)
+                CanCollide = false;
 
-            this.textureSwitcher();
+            this.TextureSwitcher();
 
             //renderizzo il blocco
             this.CreateSprite(texture, x, y, width, height);
@@ -53,10 +53,10 @@ namespace BlockBreaker
         /// <summary>
         /// Funzione che permette di cambiare la texture del blocco a seconda delle vite rimanenti
         /// </summary>
-        public void textureSwitcher()
+        public void TextureSwitcher()
         {
             //assegno texture diverse, a seconda della vita
-            switch (blockLife)
+            switch (BlockLife)
             {
                 case 0:
                     this.texture = Properties.Resources.Block_1;

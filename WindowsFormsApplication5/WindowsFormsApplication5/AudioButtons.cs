@@ -9,29 +9,29 @@ using System.IO;
 
 namespace BlockBreaker
 {
-    class AudioButtons : Button
+    sealed class AudioButtons : Button
     {
         #region Fields
 
-        private Bitmap buttonBackground;
-        private bool state;
+        private Bitmap _buttonBackground;
+        private bool _state;
 
-        MyFonts fonts;
+        readonly MyFonts fonts;
         #endregion Fields
 
         #region Constructors
 
         public AudioButtons(Size s)
         {
-            state = true;
+            _state = true;
             if (s.Height > 0 && s.Width > 0)
             {
                 fonts = new MyFonts(MyFonts.FontType.paragraph);
                 this.UseCompatibleTextRendering = true;
                 this.Size = s;
                 this.Font = new Font(fonts.type.Families[0], 12, FontStyle.Regular);
-                this.buttonBackground = new Bitmap(Properties.Resources.Audio, this.Size);
-                this.BackgroundImage = buttonBackground;
+                this._buttonBackground = new Bitmap(Properties.Resources.Audio, this.Size);
+                this.BackgroundImage = _buttonBackground;
                 this.BackgroundImageLayout = ImageLayout.Stretch;
                 this.BackColor = Color.Transparent;
                 this.MouseHover += MouseHoverButton;
@@ -56,13 +56,13 @@ namespace BlockBreaker
 
         public void ChangeState()
         {
-            state = !state;
-            this.buttonBackground.Dispose();
-            if(state)
-            this.buttonBackground = new Bitmap(Properties.Resources.Audio, this.Size);
+            _state = !_state;
+            this._buttonBackground.Dispose();
+            if(_state)
+            this._buttonBackground = new Bitmap(Properties.Resources.Audio, this.Size);
             else
-            this.buttonBackground = new Bitmap(Properties.Resources.AudioOff, this.Size);
-            this.BackgroundImage = buttonBackground;
+            this._buttonBackground = new Bitmap(Properties.Resources.AudioOff, this.Size);
+            this.BackgroundImage = _buttonBackground;
             this.BackgroundImageLayout = ImageLayout.Stretch;
         }
 

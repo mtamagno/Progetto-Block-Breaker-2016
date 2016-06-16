@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace BlockBreaker
 {
@@ -6,7 +7,7 @@ namespace BlockBreaker
     {
         #region Fields
 
-        public Bitmap texture;
+  
 
         #endregion Fields
 
@@ -14,15 +15,21 @@ namespace BlockBreaker
 
         public Playground(float x, float y, int width, int height, Logic logic)
         {
+            if (logic == null) throw new ArgumentNullException(nameof(logic));
+            if (x < 0) throw new ArgumentOutOfRangeException(nameof(x));
+            if (y < 0) throw new ArgumentOutOfRangeException(nameof(y));
+            if (width <= 0) throw new ArgumentOutOfRangeException(nameof(width));
+            if (height <= 0) throw new ArgumentOutOfRangeException(nameof(height));
+
             //Imposta la texture e i vaolri di canfall toRender cancollide e followpointer
-            this.texture = Properties.Resources.Schermo_800_600_GBA;
-            this.canFall = false;
-            this.toRender = true;
-            this.canCollide = true;
-            this.followPointer = false;
+            var texture = Properties.Resources.Schermo_800_600_GBA;
+            this.CanFall = false;
+            this.ToRender = true;
+            this.CanCollide = true;
+            this.FollowPointer = false;
 
             this.CreateSprite(texture, x, y, width, height);
-            logic.iManager.inGameSprites.Add(this);
+            logic.IManager.inGameSprites.Add(this);
         }
 
         #endregion Constructors

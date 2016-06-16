@@ -9,9 +9,10 @@ namespace BlockBreaker
         #region Fields
 
         public MenuButton Continue;
-        private Bitmap backgroundimage;
-        public TextBox textBox;
+        private Bitmap _backgroundimage;
+        public TextBox TextBox;
         public Label Nickname;
+        private MyFonts fonts;
 
         #endregion Fields
 
@@ -29,10 +30,10 @@ namespace BlockBreaker
         /// <summary>
         /// Funzione che permette di liberare la memoria dall'immagine di background
         /// </summary>
-        public void cleaner()
+        public void Cleaner()
         {
             this.BackgroundImage.Dispose();
-            this.backgroundimage.Dispose();
+            this._backgroundimage.Dispose();
             GC.Collect();
             GC.WaitForFullGCComplete();
         }
@@ -46,7 +47,7 @@ namespace BlockBreaker
         {
             if (this.ClientSize.Height > 0 || this.ClientSize.Width > 0)
             {
-            this.cleaner();
+            this.Cleaner();
             this.BackgroundImage = new Bitmap(Properties.Resources.GameOver, this.ClientSize);
             this.BackgroundImageLayout = ImageLayout.Stretch;
 
@@ -74,18 +75,18 @@ namespace BlockBreaker
                 this.Controls.Add(Nickname);
 
                 // Imposta posizione, placeholder e size della textBox
-                this.textBox.Dispose();
-                this.textBox = new TextBox();
-                this.textBox.Size = Continue.Size;
-                this.textBox.Top = Continue.Top - Continue.Height;
-                this.textBox.Left = Continue.Left + this.Nickname.Width / 2;
-                this.textBox.Text = "Insert Name...";
-                this.textBox.Click += TextBox_Click;
-                this.Controls.Add(textBox);
+                this.TextBox.Dispose();
+                this.TextBox = new TextBox();
+                this.TextBox.Size = Continue.Size;
+                this.TextBox.Top = Continue.Top - Continue.Height;
+                this.TextBox.Left = Continue.Left + this.TextBox.Width / 2;
+                this.TextBox.Text = "Insert Name...";
+                this.TextBox.Click += TextBox_Click;
+                this.Controls.Add(TextBox);
 
                 // Imposta l'immagine di background
                 if (this.Size.Height > 0)
-                    this.backgroundimage = new Bitmap(Properties.Resources.GameOver, this.Size);
+                    this._backgroundimage = new Bitmap(Properties.Resources.GameOver, this.Size);
 
                 // Aspetto il Garbage Collector
                 GC.Collect();
@@ -96,13 +97,14 @@ namespace BlockBreaker
 
         private void GameOver_Load(object sender, EventArgs e)
         {
-            starter();
+            Starter();
         }
 
-        private void starter()
+        private void Starter()
         {
             // Imposta l'immagine, il size, il background e il testo del pulsante Continue
             Size s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
+            this.TextBox = new TextBox();
             this.Continue = new MenuButton(s);
             this.Continue.Text = "Continue";
 
@@ -111,34 +113,34 @@ namespace BlockBreaker
             this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
             this.Controls.Add(Continue);
 
+            // Imposta posizione, placeholder e size della textBox
+
+            this.TextBox.Size = Continue.Size;
+            this.TextBox.Top = Continue.Top - Continue.Height;
+            this.TextBox.Left = Continue.Left + this.TextBox.Width/2;
+            this.TextBox.Text = "Insert Name...";
+            this.Controls.Add(TextBox);
+            this.TextBox.Click += TextBox_Click;
+
+            // Imposta l'immagine di background
+            if (this.Size.Height > 0 )
+            this._backgroundimage = new Bitmap(Properties.Resources.GameOver, this.Size);
+
+            // IntPtr handle = backgroundimage.GetHbitmap();
+            this.BackgroundImage = _backgroundimage;
+
+
             // Imposta la label
-            this.Nickname = new Label();
-            MyFonts fonts = new MyFonts(MyFonts.FontType.paragraph);
-            this.Nickname.UseCompatibleTextRendering = true;
+            Nickname = new Label();
+            this.Nickname.BackColor = Color.Black;
+            fonts = new MyFonts(MyFonts.FontType.paragraph);
             this.Nickname.Width = 80;
             this.Nickname.Top = Continue.Top - Continue.Height;
             this.Nickname.Font = new Font(fonts.type.Families[0], 12, FontStyle.Regular);
             this.Nickname.ForeColor = Color.White;
-            this.Nickname.BackColor = Color.Black;
             this.Nickname.Text = "Nickname: ";
-            this.Nickname.Left = ClientRectangle.Width / 2 - Continue.Width / 2 - this.Nickname.Width/2;
+            this.Nickname.Left = ClientRectangle.Width / 2 - Continue.Width / 2 - this.Nickname.Width / 2;
             this.Controls.Add(Nickname);
-
-            // Imposta posizione, placeholder e size della textBox
-            this.textBox = new TextBox();
-            this.textBox.Size = Continue.Size;
-            this.textBox.Top = Continue.Top - Continue.Height;
-            this.textBox.Left = Continue.Left + this.Nickname.Width/2;
-            this.textBox.Text = "Insert Name...";
-            this.textBox.Click += TextBox_Click;
-            this.Controls.Add(textBox);
-
-            // Imposta l'immagine di background
-            if(this.Size.Height > 0 )
-            this.backgroundimage = new Bitmap(Properties.Resources.GameOver, this.Size);
-
-            // IntPtr handle = backgroundimage.GetHbitmap();
-            this.BackgroundImage = backgroundimage;
 
             // Aspetto il Garbage Collector
             GC.Collect();
@@ -147,7 +149,7 @@ namespace BlockBreaker
 
         private void TextBox_Click(object sender, EventArgs e)
         {
-            textBox.Clear();
+            TextBox.Clear();
         }
 
         #endregion Methods

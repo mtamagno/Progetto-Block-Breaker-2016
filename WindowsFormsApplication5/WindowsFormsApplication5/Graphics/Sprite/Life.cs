@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using System;
 
 namespace BlockBreaker
 {
@@ -6,20 +6,22 @@ namespace BlockBreaker
     {
         #region Fields
 
-        private Bitmap texture;
-
         #endregion Fields
 
         #region Constructors
 
         public Life(float x, float y, int width, int height)
         {
+            if (x <= 0) throw new ArgumentOutOfRangeException(nameof(x));
+            if (y <= 0) throw new ArgumentOutOfRangeException(nameof(y));
+            if (width <= 0) throw new ArgumentOutOfRangeException(nameof(width));
+            if (height <= 0) throw new ArgumentOutOfRangeException(nameof(height));
             // Imposta le variabili standard della vita alla creazione
-            texture = Properties.Resources.Life;
-            canFall = false;
-            toRender = true;
-            canCollide = false;
-            followPointer = false;
+            var texture = Properties.Resources.Life;
+            CanFall = false;
+            ToRender = true;
+            CanCollide = false;
+            FollowPointer = false;
 
             // Disegna la vita
             this.CreateSprite(texture, x, y, width, height);

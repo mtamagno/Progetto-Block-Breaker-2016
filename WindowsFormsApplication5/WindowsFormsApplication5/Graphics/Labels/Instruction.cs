@@ -7,15 +7,12 @@ namespace BlockBreaker
     public class Instructions : Panel
     {
         #region Methods
+
         MyFonts fontTitle;
         MyFonts fontParagraph;
-        Label Title;
-        Label Paragraph;
-        Label Esc;
 
         public Instructions(int Left, int Top, int Width, int Height)
         {
-
             this.Left = Left;
             this.Top = Top;
             this.Width = Width;
@@ -24,9 +21,9 @@ namespace BlockBreaker
 
             fontParagraph = new MyFonts(MyFonts.FontType.paragraph);
             fontTitle = new MyFonts(MyFonts.FontType.Title);
-            Esc = new Label();
-            Title = new Label();
-            Paragraph = new Label();
+            var Esc = new Label();
+            var Title = new Label();
+            var Paragraph = new Label();
             Title.UseCompatibleTextRendering = true;
             Title.Top = 30;
             Title.Text = "Help";
