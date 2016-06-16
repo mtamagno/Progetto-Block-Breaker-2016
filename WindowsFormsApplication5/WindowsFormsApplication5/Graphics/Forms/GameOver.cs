@@ -10,7 +10,6 @@ namespace BlockBreaker
 
         public MenuButton Continue;
         private Bitmap backgroundimage;
-        private Bitmap start_button_image;
         public TextBox textBox;
         public Label Nickname;
 
@@ -50,12 +49,10 @@ namespace BlockBreaker
             this.cleaner();
             this.BackgroundImage = new Bitmap(Properties.Resources.GameOver, this.ClientSize);
             this.BackgroundImageLayout = ImageLayout.Stretch;
-            Continue.Dispose();
 
                 // Imposta l'immagine, il size, il background e il testo del pulsante Continue
                 Size s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-                this.Continue = new MenuButton(s);
-                this.Continue.Text = "Continue";
+                this.Continue.Text = "Continue"; 
 
                 // Imposta la sua posizione e lo aggiungo ai controlli
                 this.Continue.Top = ClientRectangle.Height / 11 * 10 - Continue.Height / 2;
@@ -94,6 +91,7 @@ namespace BlockBreaker
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
             }
+            this.Focus();
         }
 
         private void GameOver_Load(object sender, EventArgs e)
