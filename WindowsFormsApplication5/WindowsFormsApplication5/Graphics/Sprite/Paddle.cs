@@ -25,7 +25,7 @@ namespace BlockBreaker
             followPointer = true;
             hurted = false;
 
-            this.graphics(texture, x, y, width, height);
+            this.CreateSprite(texture, x, y, width, height);
             logic.iManager.inGameSprites.Add(this);
         }
 

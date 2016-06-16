@@ -55,7 +55,7 @@ namespace BlockBreaker
             texture.MakeTransparent(backColor);
 
             // Disegna la pallina
-            this.graphics(texture, x, y, width, height);
+            this.CreateSprite(texture, x, y, width, height);
 
             // aggiungo la pallina all'inputmanager che tiene conto di tutti gli sprite presenti nel gioco
             logic.iManager.inGameSprites.Add(this);
@@ -173,7 +173,7 @@ namespace BlockBreaker
 
                         // Disegna il blocco
                         {
-                            myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
+                            myBlock.CreateSprite(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
                         }
                     }
                 }
@@ -201,7 +201,7 @@ namespace BlockBreaker
 
                             // Disegna il blocco
                             {
-                                myBlock.graphics(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
+                                myBlock.CreateSprite(myBlock.texture, myBlock.X, myBlock.Y, myBlock.Width, myBlock.Height);
                             }
                         }
                     }
@@ -227,7 +227,7 @@ namespace BlockBreaker
                     PaddleCollision(s);
                 }
 
-                if (s.GetType().Name == "View")
+                if (s.GetType().Name == "Playground")
                 {
                     ViewCollision(s);
                 }
@@ -285,7 +285,7 @@ namespace BlockBreaker
         /// <param name="s"></param>
         private void ViewCollision(Sprite s)
         {
-            View myview = (View)s;
+            Playground myview = (Playground)s;
 
             // La X della pallina è oltre il limite destro o sinistro
             if ((this.X + (float)this.Width) >= (float)myview.Width + myview.X)

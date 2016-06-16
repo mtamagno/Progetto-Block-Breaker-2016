@@ -152,7 +152,7 @@ namespace BlockBreaker
                                 s.Y = myBall.previousY;
                         
 
-                    s.redraw(s,
+                    s.Redraw(s,
                         (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
                         (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
                         Properties.Resources.Ball,
@@ -163,7 +163,7 @@ namespace BlockBreaker
                 //ridimensiono la racchetta
                 else if (s.GetType().Name == "Paddle")
                 {
-                    s.redraw(s, (int)(Math.Abs((float)1 / 8 * l)),
+                    s.Redraw(s, (int)(Math.Abs((float)1 / 8 * l)),
                         (int)(Math.Abs((float)1 / 15 * h)),
                         Properties.Resources.New_Piskel,
                         s.X * l / li,
@@ -171,9 +171,9 @@ namespace BlockBreaker
                 }
 
                 //ridimensiono lo sfondo
-                else if (s.GetType().Name == "View")
+                else if (s.GetType().Name == "Playground")
                 {
-                    s.redraw(s,
+                    s.Redraw(s,
                         l / 30 * 29,
                         h / 5 * 4,
                         Properties.Resources.Schermo_800_600_GBA,
@@ -186,7 +186,7 @@ namespace BlockBreaker
                 // Ridimensiono la vita
                 else if (s.GetType().Name == "Life")
                 {
-                    s.redraw(s,
+                    s.Redraw(s,
                         (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
                         (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
                         Properties.Resources.Life, s.X * l / li, s.Y * h / hi);
@@ -195,7 +195,7 @@ namespace BlockBreaker
                 // Ridimensiono la skin
                 else if (s.GetType().Name == "Skin")
                 {
-                    s.redraw(s,
+                    s.Redraw(s,
                         l,
                         h,
                         Properties.Resources.Skin,

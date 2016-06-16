@@ -69,7 +69,7 @@ namespace BlockBreaker
         /// <param name="y"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public void graphics(Bitmap texture, float x, float y, int width, int height)
+        public void CreateSprite(Bitmap texture, float x, float y, int width, int height)
         {
             // Disegna il bitmap
             Bitmap b = new Bitmap(width, height);
@@ -88,8 +88,8 @@ namespace BlockBreaker
             return;
         }
 
-        //Funzione redraw necessaria ogni qual volta si effettua il resize dei vari sprite
-        public void redraw(Sprite sprite, int newWidth, int newheight, Bitmap risorsa, float nuova_X, float nuova_Y)
+        //Funzione Redraw necessaria ogni qual volta si effettua il resize dei vari sprite
+        public void Redraw(Sprite sprite, int newWidth, int newheight, Bitmap risorsa, float nuova_X, float nuova_Y)
         {
             if (newWidth > 0 && newheight > 0)
             {

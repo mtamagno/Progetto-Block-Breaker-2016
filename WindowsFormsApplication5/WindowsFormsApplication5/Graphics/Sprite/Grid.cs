@@ -57,7 +57,7 @@ namespace BlockBreaker
         public void redraw_block(Block s, int newWidth, int new_height, float nuova_x, float nuova_y)
         {
             s.textureSwitcher();
-            s.redraw(s, (grid.Width / grid.ColumnCount), (grid.Height / grid.RowCount), s.texture, nuova_x, nuova_y);
+            s.Redraw(s, (grid.Width / grid.ColumnCount), (grid.Height / grid.RowCount), s.texture, nuova_x, nuova_y);
         }
 
         /// <summary>

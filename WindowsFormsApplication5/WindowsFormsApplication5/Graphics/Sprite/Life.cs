@@ -22,7 +22,7 @@ namespace BlockBreaker
             followPointer = false;
 
             // Disegna la vita
-            this.graphics(texture, x, y, width, height);
+            this.CreateSprite(texture, x, y, width, height);
         }
 
         #endregion Constructors

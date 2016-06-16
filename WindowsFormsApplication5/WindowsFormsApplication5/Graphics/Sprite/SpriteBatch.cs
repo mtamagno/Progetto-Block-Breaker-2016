@@ -8,7 +8,7 @@ namespace BlockBreaker
         #region Fields
 
         public BufferedGraphics bfgfx;
-        //Variabile per i buffered graphics
+        //Variabile per i buffered CreateSprite
         public BufferedGraphicsContext cntxt = BufferedGraphicsManager.Current;
 
         public Graphics Gfx;
@@ -47,7 +47,7 @@ namespace BlockBreaker
                     {
                         Paddle mypaddle = (Paddle)s;
                         if (mypaddle.hurted == true)
-                            s.graphics(s.Texture, s.X, s.Y, s.Width, s.Height);
+                            s.CreateSprite(s.Texture, s.X, s.Y, s.Width, s.Height);
                     }
                     if (s.GetType().Name == "Ball")
                      {

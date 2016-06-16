@@ -11,7 +11,7 @@ namespace BlockBreaker
         #region Fields
 
         public Skin skin;
-        public View background;
+        public Playground background;
         public Ball ball;
         public Thread gameThread;
         public Grid grid;
@@ -271,7 +271,7 @@ namespace BlockBreaker
             this.Controls.Add(gamePause);
 
             // Inizializza il background
-            background = new View(this.ClientRectangle.X,
+            background = new Playground(this.ClientRectangle.X,
                 this.ClientRectangle.Y,
                 this.ClientRectangle.Width / 30 * 29,
                 this.ClientRectangle.Height / 5 * 4,

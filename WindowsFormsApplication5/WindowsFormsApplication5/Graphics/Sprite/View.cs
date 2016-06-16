@@ -2,7 +2,7 @@
 
 namespace BlockBreaker
 {
-    public class View : Sprite
+    public class Playground : Sprite
     {
         #region Fields
 
@@ -12,7 +12,7 @@ namespace BlockBreaker
 
         #region Constructors
 
-        public View(float x, float y, int width, int height, Logic logic)
+        public Playground(float x, float y, int width, int height, Logic logic)
         {
             //Imposta la texture e i vaolri di canfall toRender cancollide e followpointer
             this.texture = Properties.Resources.Schermo_800_600_GBA;
@@ -21,7 +21,7 @@ namespace BlockBreaker
             this.canCollide = true;
             this.followPointer = false;
 
-            this.graphics(texture, x, y, width, height);
+            this.CreateSprite(texture, x, y, width, height);
             logic.iManager.inGameSprites.Add(this);
         }
 

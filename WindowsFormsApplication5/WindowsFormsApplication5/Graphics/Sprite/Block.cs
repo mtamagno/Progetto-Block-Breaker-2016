@@ -43,7 +43,7 @@ namespace BlockBreaker
             this.textureSwitcher();
 
             //renderizzo il blocco
-            this.graphics(texture, x, y, width, height);
+            this.CreateSprite(texture, x, y, width, height);
         }
 
         #endregion Constructors
