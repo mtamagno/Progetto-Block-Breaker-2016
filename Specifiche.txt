@@ -1,21 +1,72 @@
-Base:
-Board;
+Invio del progetto per posta elettronica
 
-Elementi da rompere: più scuro è il colore, più difficile è romperli; dopo ogni hit il blocco cambia classe;
-Pallina;
-Muro tipo pong ovunque ma non nella parte inferiore, anche il player è fatto di muro ma ha gli angoli smussati;
-Elemento del punteggio;
+Il progetto, comprensivo di relazione, codice sorgente e altri file utili per la compilazione del programma (file di progetto e risorse), deve essere consegnato per posta elettronica al docente con almeno una settimana di anticipo rispetto alla prova scritta mediante un allegato in formato compresso .zip o .rar o .tar.gz o .7z.
 
-Algoritmi:
-Algoritmo della pallina del rimbalzo: ogni angolo interpreta la nuova triettoria da prendere;
-Velocità crescente: non c'è limite di tempo ma diventa sempre più facile perdere;
+Il docente comunica per posta elettronica la valutazione del progetto uno o due giorni prima della prova scritta.
 
+Evitare problemi di invio dell'allegato per posta elettronica:
+Prima di comprimere l'allegato, si consiglia sempre di escludere da esso tutti gli eseguibili/librerie che possono essere rigenerati mediante compilazione del progetto (operazioni di clean o pulisci soluzione), sia per diminuire la dimensione dell'allegato che per evitare problemi di firewall durante la spedizione per posta elettronica.
+Poiché l'operazione di clean integrata nell'ambiente di sviluppo Visual Studio (Express) ignora i file di hosting del processo di debug, si consiglia anche di rimuovere manualmente dalla cartella bin tutti gli eseguibili aventi estensione .vshost.exe.
+In maniera più radicale è possibile cancellare completamente le cartelle bin e obj in quanto verranno entrambe rigenerate durante la compilazione del progetto.
+N.B.: nella cartella bin, di norma, non dovrebbe essere presente alcun file copiato a mano. Copiare manualmente file in tale cartella, infatti, non è una buona pratica, poiché tutti i file del progetto dovrebbero essere inclusi attraverso l'ambiente di sviluppo, eventualmente specificando se devono essere automticamente copiati o meno nella cartella bin durante la compilazione.
+Se nel progetto sono inclusi librerie o eseguibili precompilati (.dll e .exe) che non possono essere rigenerati mediante compilazione, come ad esempio le librerie di terze parti per gestire l'interazione con il database sqlite, occorre seguire il punto successivo.
+Se l'allegato è particolarmente voluminoso, ovvero occupa più di 3MB di memoria, oppure se include librerie o eseguibili precompilati che NON possono essere rigenerati mediante compilazione, è fortemente consigliato l'uso di servizi come GoogleDrive, DropBox o simili per depositare l'allegato e renderlo accessibile al docente attraverso un link riportato nel testo della mail.
+Qualche minuto dopo aver spedito la mail, controllare sempre che non sia arrivata una risposta avente per oggetto delivery status notification, o qualcosa di simile, per avvisare che la spedizione è fallita oppure che la mail è stata bloccata dal firewall di posta. In tal caso si consiglia di seguire con maggiore attenzione i diversi punti elencati sopra e spedire una nuova mail.
+Relazione
 
+La relazione, da scrivere in corretta lingua italiana o inglese, può essere in formato PDF, DOC o RTF e deve contenere le seguenti sezioni:
 
+SPECIFICA DEL PROBLEMA: riportare una descrizione del tema scelto, immedesimandosi in un dirigente che si rivolge ad un team di sviluppo software e che cerca di essere chiaro e non ambiguo per evitare perdite di tempo e di denaro.
+SPECIFICA DEI REQUISITI: riportare una descrizione dettagliata delle funzionalità dell'applicazione espresse mediante diagrammi dei casi d'uso (Use Cases UML) e relative tabelle.
+ANALISI E PROGETTAZIONE: riportare la struttura ed il funzionamento del programma, indicando le principali scelte di progetto che sono state effettuate.
+La struttura delle classi del programma deve essere rappresentata mediante Class Diagram UML.
+È consigliato l'utilizzo di altri diagrammi UML per illustrare anche gli aspetti relativi alla interazione e al comportamento delle parti più critiche programma.
+IMPLEMENTAZIONE: riportare la stampa ben leggibile dei sorgenti del programma, eventualmente accompagnata da parti di testo che illustrino il funzionamento di alcune sue parti.
+Nota: i file di progetto generati interamente dal compilatore/ambiente di sviluppo non devono essere stampati, ma devono comunque essere allegati al progetto per agevolarne la compilazione.
+TEST: riportare la documentazione dei test condotti sfruttando tecniche di tipo white-box e/o black-box, correlando i test ai casi d'uso presentati nella sezione di "Specifica dei Requisiti".
+COMPILAZIONE ED ESECUZIONE: riportare i requisiti e le istruzioni per compilare ed eseguire il programma, citando in particolare:
+sistema operativo, con relativa versione e architettura (32 o 64 bit), sul quale l'applicazione può essere compilata ed eseguita;
+nome e versione dell'ambiente di sviluppo o del compilatore utilizzato;
+altre risorse, requisiti minimi, librerie software non-standard e/o ulteriori strumenti di sviluppo eventualmente impiegati nel progetto;
+il nome del file di progetto o la linea di comando utile per la compilazione della applicazione;
+il nome del file eseguibile o la linea di comando (comprensiva di eventuali argomenti) utile per l'esecuzione della applicazione.
+Codice sorgente
 
+Il software sviluppato in C#:
 
-
-
-
-TODO:
-POWER UP;
+Deve essere originale, ovvero non copiato da altri studenti, da siti web, o riciclato da progetti proposti in altri esami
+la violazione di questa norma comporta l'annullamento del progetto ed una penale variabile da 3 a 5 punti per gli appelli successivi
+Deve essere compilabile senza che vengano segnalati errori o messaggi di warning.
+Lo studente può scegliere di utilizzare uno tra i seguenti compilatori o ambienti di sviluppo con licenza d'uso gratuita:
+Visual C# Express Edition 2008 o 2010;
+Visual Studio Express for Desktop 2012 o 2013;
+Visual Studio Community 2013;
+MonoDevelop o Xamarin Studio (free version), se si usano sistemi operativi differenti da Windows.
+Se il programma utilizza interfacce grafiche, la gestione dei componenti visuali (bottoni, aree di testo, ecc.) e degli eventi ad essi associati deve essere fortemente disaccoppiata dalla logica funzionale (o modello) della applicazione, sfruttando pattern architetturali adeguati, come ad esempio MVC, PAC oppure architetture multi-tier o simili.
+Nella valutazione del progetto saranno penalizzate le applicazioni form-oriented, ovvero quelle in cui la logica funzionale viene prevalentemente implementata all'interno degli stessi file o classi in cui vengono gestiti i componenti visuali e i relativi eventi.
+Se il programma NON utilizza interfacce grafiche, la gestione dell'input/output su console deve essere fortemente disaccoppiata dalla logica funzionale (o modello) della applicazione, sfruttando pattern architetturali adeguati (vedere punto precedente).
+Se si realizza un progetto che richiede una base di dati, l'unico DB ammesso è SQLite (http://www.sqlite.org). Il motivo è che tale DB permette la portabilità della applicazione su diversi sistemi operativi e non richiede l'installazione di sistemi di gestione attivi e separati dalla applicazione (quali MySql o altri).
+Deve essere leggibile, ovvero:
+privo di scelte di progetto non descritte nella relazione
+privo di identificatori non evocativi di ciò che rappresentano
+ben strutturato
+ben commentato
+ben indentato
+ben spaziato
+Deve essere basato sui principi della programmazione ad oggetti:
+incapsulamento e occultamento della informazione (information hiding)
+ereditarietà
+polimorfismo
+È anche consigliato e incoraggiato l'uso di uno o più design pattern fra quelli presentati nel corso
+Deve sfruttare opportunamente i costrutti del linguaggio:
+gestione delle eccezioni
+generics
+gestione delle strutture dati di alto livello offerte dalla libreria standard (ad esempio "collezioni" come List, Stack, Queue, Dictionary, ecc.)
+Deve essere valido dal punto di vista della qualità del software, con particolare riferimento alle caratteristiche di
+funzionalità
+affidabilità
+usabilità
+efficienza
+manutenibilità
+portabilità
+Ogni inosservanza di quanto stabilito sopra a proposito della preparazione della relazione e dello sviluppo del software determina una riduzione nel voto attribuito al progetto.
