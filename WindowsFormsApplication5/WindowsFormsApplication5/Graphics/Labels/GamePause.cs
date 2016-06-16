@@ -75,7 +75,7 @@ namespace BlockBreaker
 
             Esc.UseCompatibleTextRendering = true;
             Esc.Height = 40;
-            Esc.Top = this.Height - Esc.Height * 8 / 7;
+            Esc.Top = this.Height - Esc.Height * 2;
             Esc.Width = 200;
             Esc.TextAlign = ContentAlignment.MiddleCenter;
             Esc.Left = 10;
