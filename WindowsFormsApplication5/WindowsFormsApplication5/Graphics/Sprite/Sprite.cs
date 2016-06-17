@@ -122,7 +122,7 @@ namespace BlockBreaker
             return s1.ToRec.IntersectsWith(s2.ToRec);
         }
 
-        public static bool isTouchingBottom(this Sprite s1, Sprite s2)
+        public static bool IsTouchingBottom(this Sprite s1, Sprite s2)
         {
             return s1.Bottom.IntersectsWith(s2.Top);
         }

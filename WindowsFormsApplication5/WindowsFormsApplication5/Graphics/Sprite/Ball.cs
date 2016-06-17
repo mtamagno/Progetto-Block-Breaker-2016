@@ -244,7 +244,7 @@ namespace BlockBreaker
             Paddle mypaddle = (Paddle)s;
             if (mypaddle.IsCollidingWith(this))
             {
-                _hurt = new Thread(mypaddle.On_Hurt);
+                _hurt = new Thread(mypaddle.OnHurt);
                 _hurt.Start();
 
                 //La pallina impatta con la racchetta

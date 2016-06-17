@@ -35,7 +35,7 @@ namespace BlockBreaker
         #region Methods
 
         /// <summary>
-        /// Funzione che restituisce l'angolo con cui la pallina deve essere fatta rimbalzare, a seconda del punto di impatto sulla racchetta
+        /// Funzione che restituisce l'Angolo con cui la pallina deve essere fatta rimbalzare, a seconda del punto di impatto sulla racchetta
         /// </summary>
         /// <param name="posizione_attuale"></param>
         /// <param name="posizione_massima"></param>
