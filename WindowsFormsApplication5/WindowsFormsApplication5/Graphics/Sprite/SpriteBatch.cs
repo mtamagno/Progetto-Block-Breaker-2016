@@ -74,16 +74,6 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        /// Funzione che permette il disegno in bufferedGraphics di bitmap
-        /// </summary>
-        /// <param name="b"></param>
-        /// <param name="rec"></param>
-        public void drawImage(Bitmap b, Rectangle rec)
-        {
-            bfgfx.Graphics.DrawImageUnscaled(b, rec);
-        }
-
-        /// <summary>
         /// Funzione per la terminazione di bufferedGraphics
         /// </summary>
         public void End()
@@ -96,7 +86,7 @@ namespace BlockBreaker
             catch (System.ArgumentException)
             {
                 // Errore che può essere generato dalla chiusura tramite il tasto x del form container mentre si sta cercando di disegnare
-                // basta non fare nulla e il form verrà chiuso
+                // basta non fare nulla e attendere, dato che il form verrà chiuso dopo il dispose dei vari elementi ancora valorizzati.
             }
         }
 

@@ -93,48 +93,33 @@ namespace BlockBreaker
         {
             if (newWidth > 0 && newheight > 0)
             {
-            sprite.Width = newWidth;
-            sprite.Height = newheight;
-            Bitmap b = new Bitmap(sprite.Width, sprite.Height);
-            using (Graphics g = Graphics.FromImage(b))
-            {
-                // Imposta a transparent lo sfondo dello sprite della pallina
-                if (sprite.GetType().Name == "Ball")
+                sprite.Width = newWidth;
+                sprite.Height = newheight;
+                Bitmap b = new Bitmap(sprite.Width, sprite.Height);
+                using (Graphics g = Graphics.FromImage(b))
                 {
-                    Color backColor = risorsa.GetPixel(0, 0);
-                    risorsa.MakeTransparent(backColor);
-                }
-                try
-                {
+                    // Imposta a transparent lo sfondo dello sprite della pallina
+                    if (sprite.GetType().Name == "Ball")
+                    {
+                        Color backColor = risorsa.GetPixel(0, 0);
+                        risorsa.MakeTransparent(backColor);
+                    }
+                    // Ridisegna lo sprite
                     g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
                 }
-                catch
-                {
-                    g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
+                sprite.X = nuova_X;
+                sprite.Y = nuova_Y;
 
-                    // Errore gestito causato dal movimento della finestra che causa un errore nelle coordinate durante il ri Disegna
-                }
-            }
-            sprite.X = nuova_X;
-            sprite.Y = nuova_Y;
-
-            try
-            {
                 // Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
-                    if (sprite.GetType().Name == "Paddle" && Container.ActiveForm != null)
+                if (sprite.GetType().Name == "Paddle" && Container.ActiveForm != null)
                     sprite.Y = (Math.Abs(Container.ActiveForm.ClientRectangle.Height - sprite.Height)) * 9 / 10;
-            }
-            catch
-            {
-                // Errore gestito nel caso in cui si stia ridimensionando il form e venga variata di conseguenza l'altezza della racchetta
+
+                // Imposta la texture dello sprite
+                sprite.Texture = b;
+                return;
             }
 
-            // Imposta la texture dello sprite
-            sprite.Texture = b;
-            return;
-        }
-
-        #endregion Methods
+            #endregion Methods
         }
         //Il collider fa un check di eventuali impatti tra sprites
     }
@@ -150,14 +135,6 @@ namespace BlockBreaker
         public static bool isCollidingWith(this Sprite s1, Sprite s2)
         {
             if (s1.toRec.IntersectsWith(s2.toRec))
-                return true;
-            else
-                return false;
-        }
-
-        public static bool isOnStage(this Sprite s1, Rectangle clientRec)
-        {
-            if (s1.toRec.IntersectsWith(clientRec))
                 return true;
             else
                 return false;

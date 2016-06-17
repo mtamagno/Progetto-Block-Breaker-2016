@@ -55,7 +55,7 @@ namespace BlockBreaker
         /// </summary>
         public void textureSwitcher()
         {
-            //assegno texture diverse, a seconda della vita
+            // Assegna texture diverse al blocco corrente, a seconda della vita
             switch (blockLife)
             {
                 case 0:

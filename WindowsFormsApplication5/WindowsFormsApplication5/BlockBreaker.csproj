@@ -110,7 +110,7 @@
     <Compile Include="Graphics\Sprite\Paddle.cs" />
     <Compile Include="Graphics\Sprite\Sprite.cs" />
     <Compile Include="Graphics\Sprite\SpriteBatch.cs" />
-    <Compile Include="Graphics\Sprite\View.cs" />
+    <Compile Include="Graphics\Sprite\PlayGround.cs" />
     <Compile Include="Logic\HighScore.cs" />
     <Compile Include="Logic\InputManager.cs" />
     <Compile Include="Logic\Logic.cs" />
