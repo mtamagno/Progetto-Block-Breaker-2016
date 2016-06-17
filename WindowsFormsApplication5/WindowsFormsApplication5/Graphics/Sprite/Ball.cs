@@ -244,7 +244,7 @@ namespace BlockBreaker
             Paddle mypaddle = (Paddle)s;
             if (mypaddle.IsCollidingWith(this))
             {
-                _hurt = new Thread(mypaddle.hurt);
+                _hurt = new Thread(mypaddle.On_Hurt);
                 _hurt.Start();
 
                 //La pallina impatta con la racchetta
@@ -254,7 +254,7 @@ namespace BlockBreaker
                     if ((this.X + this.Width / 2) <= (mypaddle.X + mypaddle.Width / 2))
                     {
                         double coseno;
-                        coseno = Math.Abs(Math.Cos(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
+                        coseno = Math.Abs(Math.Cos(mypaddle.Angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
                         this.Velocity.X = -this.VelocityTot * (float)coseno;
                         this.Velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.VelocityTot * this.VelocityTot) - (this.Velocity.X * this.Velocity.X))));
                         this.Y = mypaddle.Y - this.Height;
@@ -264,7 +264,7 @@ namespace BlockBreaker
                     //Altrimenti con la metà destra
                     {
                         double seno;
-                        seno = Math.Abs(Math.Sin(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X - mypaddle.Width / 2, mypaddle.Width / 2)));
+                        seno = Math.Abs(Math.Sin(mypaddle.Angolo(this.X + this.Width / 2 - mypaddle.X - mypaddle.Width / 2, mypaddle.Width / 2)));
                         this.Velocity.X = this.VelocityTot * (float)seno;
                         this.Velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((this.VelocityTot * this.VelocityTot) - (this.Velocity.X * this.Velocity.X))));
                         this.Y = mypaddle.Y - this.Height;

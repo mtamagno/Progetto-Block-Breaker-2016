@@ -8,7 +8,7 @@ namespace BlockBreaker
     {
         #region Fields
 
-        public bool Hurted;
+        public bool Hurt;
 
         #endregion Fields
 
@@ -24,7 +24,7 @@ namespace BlockBreaker
             CanCollide = true;
             ToRender = true;
             FollowPointer = true;
-            Hurted = false;
+            Hurt = false;
 
             this.CreateSprite(texture, x, y, width, height);
             logic.IManager.inGameSprites.Add(this);
@@ -40,7 +40,7 @@ namespace BlockBreaker
         /// <param name="posizione_attuale"></param>
         /// <param name="posizione_massima"></param>
         /// <returns></returns>
-        public double angolo(float posizione_attuale, float posizione_massima)
+        public double Angolo(float posizione_attuale, float posizione_massima)
         {
             double calcolo = 0;
             calcolo = (posizione_attuale / posizione_massima) * 75;
@@ -74,22 +74,22 @@ namespace BlockBreaker
         /// <summary>
         /// Funzione che rende la racchetta "animata" cambiando la texture per un breve periodo di tempo ad ogni hit
         /// </summary>
-        public void hurt()
+        public void OnHurt()
         {
             Texture = Properties.Resources.hurt;
-            Hurted = true;                
+            Hurt = true;                
             Thread.Sleep(600);
-            this.normal();
+            this.Normalize();
         }
 
         /// <summary>
         /// Funzione che rende la racchetta "nomale" facendo tornare la texture uguale a quella dello stato prima dell'impatto
         /// </summary>
-        public void normal()
+        public void Normalize()
         {
             Texture = Properties.Resources.New_Piskel;
             Thread.Sleep(50);
-            Hurted = false;
+            Hurt = false;
         }
         #endregion Methods
     }

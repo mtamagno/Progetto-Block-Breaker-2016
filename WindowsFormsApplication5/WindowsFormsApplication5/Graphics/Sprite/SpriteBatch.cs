@@ -48,7 +48,7 @@ namespace BlockBreaker
                     if (s.GetType().Name == "Paddle")
                     {
                         Paddle mypaddle = (Paddle)s;
-                        if (mypaddle.Hurted == true)
+                        if (mypaddle.Hurt == true)
                             s.CreateSprite(s.Texture, s.X, s.Y, s.Width, s.Height);
                     }
                     if (s.GetType().Name == "Ball")
