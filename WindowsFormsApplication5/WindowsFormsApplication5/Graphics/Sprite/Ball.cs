@@ -13,42 +13,46 @@ namespace BlockBreaker
         #region Fields
 
         //variabili per accelerazione y, texture, velocità totale e attuale, spia che notifica la raggiunta della velocità massima
-        public int Accel_y = 50;
+        public int AccelY = 50;
 
-        public Stream stream;
-        public Bitmap texture;
-        public PointF velocity;
-        public PointF previousVelocity;
-        public float previousX;
-        public float previousY;
-        public float previousVelocityTot;
-        public float velocityTot;
-        public float velocityTotLimit = 3000;
-        public int velocityTotRaggiunto;
-        private bool block_hit = false;
-        private SoundEffect Music;
-        private Thread hurt;
+        public Stream Stream;
+        public PointF Velocity;
+        public PointF PreviousVelocity;
+        public float PreviousX;
+        public float PreviousY;
+        public float PreviousVelocityTot;
+        public float VelocityTot;
+        public float VelocityTotLimit = 3000;
+        public int VelocityTotRaggiunto;
+        private bool _blockHit = false;
+        private readonly SoundEffect _music;
+        private Thread _hurt;
         #endregion Fields
 
         #region Constructors
 
         public Ball(float x, float y, int width, int height, Logic logic)
         {
+            if (logic == null) throw new ArgumentNullException(nameof(logic));
+            if (x <= 0) throw new ArgumentOutOfRangeException(nameof(x));
+            if (y <= 0) throw new ArgumentOutOfRangeException(nameof(y));
+            if (width <= 0) throw new ArgumentOutOfRangeException(nameof(width));
+            if (height <= 0) throw new ArgumentOutOfRangeException(nameof(height));
             // Imposta le proprietà della pallina
-            this.previousVelocityTot = 0;
-            this.previousVelocity.X = 0;
-            this.previousVelocity.Y = 0;
-            this.previousX = 0;
-            this.previousY = 0;
-            texture = Properties.Resources.Ball;
-            canFall = false;
-            canCollide = true;
-            followPointer = true;
-            toRender = true;
+            this.PreviousVelocityTot = 0;
+            this.PreviousVelocity.X = 0;
+            this.PreviousVelocity.Y = 0;
+            this.PreviousX = 0;
+            this.PreviousY = 0;
+            var texture = Properties.Resources.Ball;
+            CanFall = false;
+            CanCollide = true;
+            FollowPointer = true;
+            ToRender = true;
 
 
-            stream = TitleContainer.OpenStream(@"SoundEffect/Music.wav");
-            Music = SoundEffect.FromStream(stream);
+            Stream = TitleContainer.OpenStream(@"SoundEffect/Music.wav");
+            _music = SoundEffect.FromStream(Stream);
 
             //rendo invisibile lo sfondo dello sprite della pallina
             System.Drawing.Color backColor = texture.GetPixel(0, 0);
@@ -58,7 +62,7 @@ namespace BlockBreaker
             this.CreateSprite(texture, x, y, width, height);
 
             // aggiungo la pallina all'inputmanager che tiene conto di tutti gli sprite presenti nel gioco
-            logic.iManager.inGameSprites.Add(this);
+            logic.IManager.inGameSprites.Add(this);
         }
 
         #endregion Constructors
@@ -67,21 +71,21 @@ namespace BlockBreaker
         /// <summary>
         /// Risetta la velocità totale massima a seconda della grandezza del client in modo che non rallenti o acceleri la pallina a seconda del size
         /// </summary>
-        /// <param name="lunghezza_client_iniziale"></param>
-        /// <param name="altezza_client_iniziale"></param>
-        /// <param name="lunghezza_client"></param>
-        /// <param name="altezza_client"></param>
+        /// <param name="lunghezzaClientIniziale"></param>
+        /// <param name="altezzaClientIniziale"></param>
+        /// <param name="lunghezzaClient"></param>
+        /// <param name="altezzaClient"></param>
         /// 
 
-        public void totalVelocityReset(int lunghezza_client_iniziale, int altezza_client_iniziale, int lunghezza_client, int altezza_client)
+        public virtual void TotalVelocityReset(int lunghezzaClientIniziale, int altezzaClientIniziale, int lunghezzaClient, int altezzaClient)
         {
-            this.velocity.Y = this.velocity.Y * altezza_client / altezza_client_iniziale;
-            this.velocity.X = this.velocity.X * lunghezza_client / lunghezza_client_iniziale;
+            this.Velocity.Y = this.Velocity.Y * altezzaClient / altezzaClientIniziale;
+            this.Velocity.X = this.Velocity.X * lunghezzaClient / lunghezzaClientIniziale;
 
             //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
-            this.velocityTot = (float)Math.Sqrt((double)((this.velocity.X * this.velocity.X) + (this.velocity.Y * this.velocity.Y)));
-            if (this.velocityTotRaggiunto == 1)
-                this.velocityTotLimit = this.velocityTot;
+            this.VelocityTot = (float)Math.Sqrt((double)((this.Velocity.X * this.Velocity.X) + (this.Velocity.Y * this.Velocity.Y)));
+            if (this.VelocityTotRaggiunto == 1)
+                this.VelocityTotLimit = this.VelocityTot;
         }
 
         /// <summary>
@@ -89,53 +93,53 @@ namespace BlockBreaker
         /// </summary>
         public void Update(InputManager iManager, Form thisform)
         {
+            if (thisform == null) throw new ArgumentNullException(nameof(thisform));
             Collider(iManager);
 
             //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
-            velocityTot = (float)Math.Sqrt((double)((velocity.X * velocity.X) + (velocity.Y * velocity.Y)));
+            VelocityTot = (float)Math.Sqrt((double)((Velocity.X * Velocity.X) + (Velocity.Y * Velocity.Y)));
 
             //Se la velocità totale non è ancora a velocityTotLimit, Imposta la spia a 0 così da continuare a farla aumentare
-            if (velocityTot < velocityTotLimit)
-                velocityTotRaggiunto = 0;
+            if (VelocityTot < VelocityTotLimit)
+                VelocityTotRaggiunto = 0;
 
             //Se il valore canFall è vero e quindi si tratta della pallina,
             //in caso la velocità massima non sia arrivata a velocityTotLimit
             //incremento la velocità y, altrimenti no
-            if (canFall == true)
+            if (CanFall == true)
             {
                 //Blocco l'incremento di velocità totale oltre i velocityTotLimit
-                if (this.velocityTot >= velocityTotLimit)
+                if (this.VelocityTot >= VelocityTotLimit)
                 {
-                    this.velocityTot = velocityTotLimit;
-                    this.velocityTotRaggiunto = 1;
+                    this.VelocityTot = VelocityTotLimit;
+                    this.VelocityTotRaggiunto = 1;
                 }
 
                 //Altrimenti aumento la velocità di y (o decremento se questa è negativa)
                 else
                 {
-                    if (this.velocityTotRaggiunto == 0)
+                    if (this.VelocityTotRaggiunto == 0)
                     {
-                        if (this.velocity.Y >= 0)
+                        if (this.Velocity.Y >= 0)
                         {
-                            this.velocity.Y += Accel_y;
+                            this.Velocity.Y += AccelY;
                         }
                         else
                         {
-                            this.velocity.Y -= Accel_y;
+                            this.Velocity.Y -= AccelY;
                         }
                     }
                 }
 
-                this.X += this.velocity.X * 1 / 500;
-                this.Y += this.velocity.Y * 1 / 500;
+                this.X += this.Velocity.X * 1 / 500;
+                this.Y += this.Velocity.Y * 1 / 500;
             }
 
             //se deve seguire il mouse faccio in modo che lo faccia
-            if (followPointer == true)
+            if (FollowPointer == true)
             {
-                if(thisform != null)
-                    if ((Cursor.Position.X - thisform.Location.X) >= thisform.Width / 11 && Cursor.Position.X - thisform.Location.X < thisform.Width - thisform.Width / 11)
-                        this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - this.Width/3*2 - this.Width / 10 * 9;
+                if ((Cursor.Position.X - thisform.Location.X) >= thisform.Width / 11 && Cursor.Position.X - thisform.Location.X < thisform.Width - thisform.Width / 11)
+                    this.X = Cursor.Position.X - thisform.Location.X - this.Width / 2 - this.Width/3*2 - this.Width / 10 * 9;
             }
 
         }
@@ -144,30 +148,30 @@ namespace BlockBreaker
         private void BlockCollision(Sprite s)
         {
             Block myBlock = (Block)s;
-            block_hit = false;
+            _blockHit = false;
 
-            if (this.isCollidingWith(myBlock) && myBlock.canCollide == true)
+            if (this.IsCollidingWith(myBlock) && myBlock.CanCollide == true)
             {
                 // Se un blocco viene toccato dalla pallina gli tolgo una vita e cambio la texture
-                if (this.isTouchingTop(myBlock) || this.isTouchingBottom(myBlock))
+                if (this.IsTouchingTop(myBlock) || this.IsTouchingBottom(myBlock))
                 {
-                    if (this.X + this.Width / 2 > myBlock.X && this.X + this.Width / 2 < myBlock.X + myBlock.Width)
+                    if (this.X + (float)this.Width / 2 > myBlock.X && this.X + (float)this.Width / 2 < myBlock.X + myBlock.Width)
                     {
                         // Setta block_hit a true
-                        block_hit = true;
+                        _blockHit = true;
 
                         //Inverte la Velocità Y della pallina
-                        this.velocity.Y *= -1;
+                        this.Velocity.Y *= -1;
 
                         //Scala la vita del blocco di uno, riproduce il suono ed esegue la funzione textureSwitcher
-                        myBlock.blockLife--;
+                        myBlock.BlockLife--;
                         PlaySound();
-                        myBlock.textureSwitcher();
+                        myBlock.TextureSwitcher();
 
-                        if (myBlock.blockLife <= 0)
+                        if (myBlock.BlockLife <= 0)
                         {
-                            myBlock.toRender = false;
-                            myBlock.canCollide = false;
+                            myBlock.ToRender = false;
+                            myBlock.CanCollide = false;
                         }
                         else
 
@@ -177,25 +181,25 @@ namespace BlockBreaker
                         }
                     }
                 }
-                if (this.isTouchingLeft(myBlock) || this.isTouchingRight(myBlock))
+                if (this.IsTouchingLeft(myBlock) || this.IsTouchingRight(myBlock))
                 {
-                    if (this.Y + this.Height / 2 > myBlock.Y && this.Y + this.Height / 2 < myBlock.Y + myBlock.Height)
+                    if (this.Y + (float)this.Height / 2 > myBlock.Y && this.Y + (float)this.Height / 2 < myBlock.Y + myBlock.Height)
                     {
                         //Inverte la Velocità X della pallina
-                        this.velocity.X *= -1;
+                        this.Velocity.X *= -1;
 
                         //Scala la vita del blocco di uno, riproduce il suono ed esegue la
                         //funzione textureSwitcher se block hit non è già a 1
-                        if (!block_hit)
+                        if (!_blockHit)
                         {
-                            myBlock.blockLife--;
+                            myBlock.BlockLife--;
                             PlaySound();
-                            myBlock.textureSwitcher();
+                            myBlock.TextureSwitcher();
 
-                            if (myBlock.blockLife <= 0)
+                            if (myBlock.BlockLife <= 0)
                             {
-                                myBlock.toRender = false;
-                                myBlock.canCollide = false;
+                                myBlock.ToRender = false;
+                                myBlock.CanCollide = false;
                             }
                             else
 
@@ -238,21 +242,21 @@ namespace BlockBreaker
         private void PaddleCollision(Sprite s)
         {
             Paddle mypaddle = (Paddle)s;
-            if (mypaddle.isCollidingWith(this))
+            if (mypaddle.IsCollidingWith(this))
             {
-                hurt = new Thread(mypaddle.hurt);
-                hurt.Start();
+                _hurt = new Thread(mypaddle.hurt);
+                _hurt.Start();
 
                 //La pallina impatta con la racchetta
-                if (this.isTouchingBottom(mypaddle))
+                if (this.IsTouchingBottom(mypaddle))
                 {
                     //La pallina impatta con la metà sinistra
                     if ((this.X + this.Width / 2) <= (mypaddle.X + mypaddle.Width / 2))
                     {
                         double coseno;
                         coseno = Math.Abs(Math.Cos(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
-                        this.velocity.X = -this.velocityTot * (float)coseno;
-                        this.velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.velocityTot * this.velocityTot) - (this.velocity.X * this.velocity.X))));
+                        this.Velocity.X = -this.VelocityTot * (float)coseno;
+                        this.Velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.VelocityTot * this.VelocityTot) - (this.Velocity.X * this.Velocity.X))));
                         this.Y = mypaddle.Y - this.Height;
                     }
                     else
@@ -261,8 +265,8 @@ namespace BlockBreaker
                     {
                         double seno;
                         seno = Math.Abs(Math.Sin(mypaddle.angolo(this.X + this.Width / 2 - mypaddle.X - mypaddle.Width / 2, mypaddle.Width / 2)));
-                        this.velocity.X = this.velocityTot * (float)seno;
-                        this.velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((this.velocityTot * this.velocityTot) - (this.velocity.X * this.velocity.X))));
+                        this.Velocity.X = this.VelocityTot * (float)seno;
+                        this.Velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((this.VelocityTot * this.VelocityTot) - (this.Velocity.X * this.Velocity.X))));
                         this.Y = mypaddle.Y - this.Height;
                     }
                 }              
@@ -276,7 +280,7 @@ namespace BlockBreaker
         private void PlaySound()
         {
             FrameworkDispatcher.Update();
-            Music.Play();
+            _music.Play();
         }
 
         /// <summary>
@@ -290,13 +294,13 @@ namespace BlockBreaker
             // La X della pallina è oltre il limite destro o sinistro
             if ((this.X + (float)this.Width) >= (float)myview.Width + myview.X)
             {
-                this.velocity.X *= -1;
+                this.Velocity.X *= -1;
                 this.X = (float)myview.Width - this.Width + myview.X;
             }
             else
             if (this.X <= myview.X)
             {
-                this.velocity.X *= -1;
+                this.Velocity.X *= -1;
                 this.X = myview.X;
             }
 
@@ -304,12 +308,12 @@ namespace BlockBreaker
             // La Y della pallina è oltre il limite superiore o inferiore
             if ((this.Y + (float)this.Height) >= (float)myview.Height + myview.X)
             {
-                myview.bottomCollide = 1;
+                myview.BottomCollide = 1;
             }
             else
             if (this.Y <= myview.Y)
             {
-                this.velocity.Y *= -1;
+                this.Velocity.Y *= -1;
                 this.Y = myview.Y;
             }
         }

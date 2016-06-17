@@ -1,32 +1,31 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace BlockBreaker
 {
-    internal class FPSChecker
+    internal class FpsChecker
     {
         #region Fields
 
-        public float deltaTime;
 
         //variabili per fps
-        public int fps;
+        private int _fps;
 
-        public Stopwatch gameTime;
+        private readonly Stopwatch _gameTime;
 
         //variabile per limitare gli fps
-        public int interval = 1000 / 85;
+        public int Interval = 1000 / 85;
 
-        public long lastTime;
-        public int previousSecond;
-        public int ups;
+        public int PreviousSecond;
+        public int Ups;
 
         //vairbili per ups
-        public int ups_tmp;
+        public int UpsTmp;
 
-        public long upsTime;
-        private int fpsCounter;
-        private long fpsTime;
+        public long UpsTime;
+        private int _fpsCounter;
+        private long _fpsTime;
 
         #endregion Fields
 
@@ -36,9 +35,10 @@ namespace BlockBreaker
         /// Funzione che avvia il timer
         /// </summary>
         /// <param name="timer"></param>
-        public FPSChecker(Stopwatch timer)
+        public FpsChecker(Stopwatch timer)
         {
-            this.gameTime = timer;
+            if (timer == null) throw new ArgumentNullException(nameof(timer));
+            this._gameTime = timer;
         }
 
         #endregion Constructors
@@ -49,39 +49,35 @@ namespace BlockBreaker
         /// Funzione per il check degli fps, li conta per poi resettare il totale e restituire il risultato ogni secondo
         /// </summary>
         /// <param name="controller"></param>
-        public void checkfps(Game controller)
+        public void Checkfps(Game controller)
         {
-            if (gameTime.ElapsedMilliseconds - fpsTime > 1000)
+            if (controller == null) throw new ArgumentNullException(nameof(controller));
+            if (_gameTime.ElapsedMilliseconds - _fpsTime > 1000)
             {
-                fpsTime = gameTime.ElapsedMilliseconds;
-                fps = fpsCounter;
-                fpsCounter = 0;
-                fpsWriter(controller);
+                _fpsTime = _gameTime.ElapsedMilliseconds;
+                _fps = _fpsCounter;
+                _fpsCounter = 0;
+                FpsWriter(controller);
             }
             else
             {
-                fpsCounter++;
+                _fpsCounter++;
             }
-            deltaTime = gameTime.ElapsedMilliseconds - lastTime;
-            lastTime = gameTime.ElapsedMilliseconds;
         }
 
         /// <summary>
         /// Funzione che scrive sul form il numero degli fps e degli ups
         /// </summary>
         /// <param name="controller"></param>
-        public void fpsWriter(Game controller)
+        public void FpsWriter(Game controller)
         {
             try
             {
-                if (controller != null)
+                controller?.Invoke(new MethodInvoker(delegate
                 {
-                    controller.Invoke(new MethodInvoker(delegate
-                    {
-                        if (controller.ParentForm != null)
-                            controller.ParentForm.Text = "BlockBreaker - Game      " + "    fps: " + this.fps.ToString() + "ups:" + this.ups.ToString();
-                    }));
-                }
+                    if (controller.ParentForm != null)
+                        controller.ParentForm.Text = "BlockBreaker - Game      " + "    fps: " + this._fps.ToString() + "ups:" + this.Ups.ToString();
+                }));
             }
             catch
             {

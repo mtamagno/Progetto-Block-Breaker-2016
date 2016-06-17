@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace BlockBreaker
@@ -7,9 +8,9 @@ namespace BlockBreaker
     {
         #region Fields
 
-        public BufferedGraphics bfgfx;
+        public BufferedGraphics Bfgfx;
         //Variabile per i buffered CreateSprite
-        public BufferedGraphicsContext cntxt = BufferedGraphicsManager.Current;
+        public BufferedGraphicsContext Cntxt = BufferedGraphicsManager.Current;
 
         public Graphics Gfx;
 
@@ -19,8 +20,9 @@ namespace BlockBreaker
 
         public SpriteBatch(Size clientSize, Graphics gfx)
         {
-            cntxt.MaximumBuffer = new Size(clientSize.Width + 1, clientSize.Height + 1);
-            bfgfx = cntxt.Allocate(gfx, new Rectangle(Point.Empty, clientSize));
+            if (gfx == null) throw new ArgumentNullException(nameof(gfx));
+            Cntxt.MaximumBuffer = new Size(clientSize.Width + 1, clientSize.Height + 1);
+            Bfgfx = Cntxt.Allocate(gfx, new Rectangle(Point.Empty, clientSize));
             Gfx = gfx;
         }
 
@@ -33,7 +35,7 @@ namespace BlockBreaker
         /// </summary>
         public void Clear()
         {
-            bfgfx.Graphics.Clear(Color.Transparent);
+            Bfgfx.Graphics.Clear(Color.Transparent);
         }
         /// <summary>
         /// Funzione che gestisce l'animazione della racchetta e disegna gli sprites
@@ -46,25 +48,25 @@ namespace BlockBreaker
                     if (s.GetType().Name == "Paddle")
                     {
                         Paddle mypaddle = (Paddle)s;
-                        if (mypaddle.hurted == true)
+                        if (mypaddle.Hurted == true)
                             s.CreateSprite(s.Texture, s.X, s.Y, s.Width, s.Height);
                     }
                     if (s.GetType().Name == "Ball")
                      {
                     Ball myBall = (Ball)s;
                     if (float.IsNaN(s.X))
-                        s.X = myBall.previousX;
+                        s.X = myBall.PreviousX;
                     if (float.IsNaN(s.Y))
-                        s.Y = myBall.previousY;
-                    if (float.IsNaN(myBall.velocity.X))
-                        myBall.velocity.X = myBall.previousVelocity.X;
-                    if (float.IsNaN(myBall.velocity.Y))
-                        myBall.velocity.Y = myBall.previousVelocity.Y;
-                    if (float.IsNaN(myBall.velocityTot))
-                        myBall.velocityTot = myBall.previousVelocityTot;
+                        s.Y = myBall.PreviousY;
+                    if (float.IsNaN(myBall.Velocity.X))
+                        myBall.Velocity.X = myBall.PreviousVelocity.X;
+                    if (float.IsNaN(myBall.Velocity.Y))
+                        myBall.Velocity.Y = myBall.PreviousVelocity.Y;
+                    if (float.IsNaN(myBall.VelocityTot))
+                        myBall.VelocityTot = myBall.PreviousVelocityTot;
                 }
                
-                bfgfx.Graphics.DrawImageUnscaled(s.Texture, s.toRec);
+                Bfgfx.Graphics.DrawImageUnscaled(s.Texture, s.ToRec);
                 }
                 catch
                 {
@@ -81,7 +83,7 @@ namespace BlockBreaker
             try
             {
                 if(Form.ActiveForm != null && Gfx != null && (!float.IsNaN(Gfx.ClipBounds.Location.X)))
-                    bfgfx.Render(Gfx);
+                    Bfgfx.Render(Gfx);
             }
             catch (System.ArgumentException)
             {

@@ -4,12 +4,11 @@ using System;
 
 namespace BlockBreaker
 {
-    public class MenuButton : Button
+    public sealed class MenuButton : Button
     {
         #region Fields
 
-        private Bitmap buttonBackground;
-        MyFonts fonts;
+        private readonly MyFonts _fonts;
         #endregion Fields
 
         #region Constructors
@@ -18,11 +17,11 @@ namespace BlockBreaker
         {
             if (s.Height > 0 && s.Width > 0)
             {
-                fonts = new MyFonts(MyFonts.FontType.paragraph);
+                _fonts = new MyFonts(MyFonts.FontType.paragraph);
                 this.UseCompatibleTextRendering = true;
                 this.Size = s;
-                this.Font = new Font(fonts.type.Families[0], 12, FontStyle.Regular);
-                this.buttonBackground = new Bitmap(Properties.Resources.BlueRoundedButton, this.Size);
+                this.Font = new Font(_fonts.type.Families[0], 12, FontStyle.Regular);
+                var buttonBackground = new Bitmap(Properties.Resources.BlueRoundedButton, this.Size);
                 this.BackgroundImage = buttonBackground;
                 this.BackgroundImageLayout = ImageLayout.Stretch;
                 this.BackColor = Color.Transparent;

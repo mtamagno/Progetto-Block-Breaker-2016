@@ -10,30 +10,30 @@ namespace BlockBreaker
     {
         #region Public Fields
 
-        public SpriteBatch spriteBatch;
-        public Stopwatch gameTime;
-        public InputManager iManager;
-        public HighScore highScore;
+        public SpriteBatch SpriteBatch;
+        public Stopwatch GameTime;
+        public InputManager IManager;
+        public HighScore HighScore;
         public List<Keys> KeysHeld;
         public List<Keys> KeysPressed;
         public Point MousePoint;
-        public float deltaTime;
-        public int previous_score;
-        public int righe_griglia;
-        public int score;
-        public int vita_rimanente;
+        public float DeltaTime;
+        public int PreviousScore;
+        public int RigheGriglia;
+        public int Score;
+        public int VitaRimanente;
         public bool AllowInput;
-        public bool shouldStop;
-        public volatile bool waitResize;
+        public bool ShouldStop;
+        public volatile bool WaitResize;
 
         #endregion Public Fields
 
         #region Private Fields
 
-        private CheckLife checkLife = new CheckLife();
-        private int activeBlock;
-        private Game controller;
-        private FPSChecker fpsChecker;
+        private readonly CheckLife _checkLife = new CheckLife();
+        private int _activeBlock;
+        private readonly Game _controller;
+        private FpsChecker _fpsChecker;
 
         #endregion Private Fields
 
@@ -41,8 +41,9 @@ namespace BlockBreaker
 
         public Logic(Game form)
         {
+            if (form == null) throw new ArgumentNullException(nameof(form));
             //inizializzo il controller
-            this.controller = form;
+            this._controller = form;
 
             //inizializzo le variabili
             init();
@@ -55,37 +56,37 @@ namespace BlockBreaker
         /// <summary>
         /// Loop che costituisce il gioco vero e proprio
         /// </summary>
-        public void gameLoop()
+        public void GameLoop()
         {
             // Elimino i comandi premuti prima dell'inizio del gioco
             input();
 
             // Inizializza il timer del gioco
-            gameTime.Start();
+            GameTime.Start();
 
             // Crea il buffer
 
             // Finchè non si deve fermare continua ad eseguire
-            while (shouldStop == false && vita_rimanente > 0)
+            while (ShouldStop == false && VitaRimanente > 0)
             {
-                if (controller.WindowState == FormWindowState.Minimized)
+                if (_controller.WindowState == FormWindowState.Minimized)
                 {
-                    controller.Pause();
+                    _controller.Pause();
                 }
 
-                if (waitResize == false)
+                if (WaitResize == false)
                 {
 
-                        if (controller.WindowState != FormWindowState.Minimized)
+                        if (_controller.WindowState != FormWindowState.Minimized)
                     {
                     // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
-                    controller.ball.canCollide = true;
+                    _controller.Ball.CanCollide = true;
 
                     // Controlla le vite che rimangono al giocatore
-                    vita_rimanente = checkLife.check(controller, vita_rimanente);
+                    VitaRimanente = _checkLife.Check(_controller, VitaRimanente);
 
                     // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
-                    if (gameTime.ElapsedMilliseconds % 1000 != 0)
+                    if (GameTime.ElapsedMilliseconds % 1000 != 0)
                     {
                         checkscore();
                         checkActiveBlock();
@@ -93,29 +94,29 @@ namespace BlockBreaker
 
                     // Controlla gli fps contandoli e vede se è il caso di stamparli
 
-                    fpsChecker.checkfps(controller);
+                    _fpsChecker.Checkfps(_controller);
 
-                    this.updater(this.controller, this.iManager, fpsChecker);
+                    this.updater(this._controller, this.IManager, _fpsChecker);
                     render();
                 }
                 }
             }
 
             // Se non ne rimangono segnala con la variabile shouldStop che si deve visualizzare la schermata GameOver
-            if (vita_rimanente <= 0)
+            if (VitaRimanente <= 0)
             {
-                foreach (Sprite s in iManager.inGameSprites)
+                foreach (Sprite s in IManager.inGameSprites)
                 {
-                    s.toRender = false;
+                    s.ToRender = false;
                 }
                 gameover();
             }
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
-            foreach (Sprite s in iManager.inGameSprites)
+            foreach (Sprite s in IManager.inGameSprites)
             {
-                s.toRender = false;
+                s.ToRender = false;
             }
                 return;
             }
@@ -123,9 +124,9 @@ namespace BlockBreaker
         public void gameover()
         {
             // Salva lo score
-            this.highScore.Score = score;
+            this.HighScore.Score = Score;
             //comunico al gioco che le vite sono finite
-            controller.lifeEnd();
+            _controller.lifeEnd();
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
@@ -134,12 +135,12 @@ namespace BlockBreaker
         }
 
         //funzione per ridimensionare gli elementi
-        public void resize(int li, int hi, int l, int h)
+        public void Resize(int li, int hi, int l, int h)
         {
-            if (vita_rimanente > 0 && h > 0 && hi > 0 && l > 0 && li > 0)               
+            if (VitaRimanente > 0 && h > 0 && hi > 0 && l > 0 && li > 0)               
             {
             //controllo tutti gli sprite che sono in gioco
-            foreach (Sprite s in iManager.inGameSprites)
+            foreach (Sprite s in IManager.inGameSprites)
             {
                 //ridimensiono la pallina
                 if (s.GetType().Name == "Ball")
@@ -147,9 +148,9 @@ namespace BlockBreaker
 
                             Ball myBall = (Ball)s;
                             if (myBall.X > 1000 && myBall.Y < 0)
-                                s.X = myBall.previousX;
+                                s.X = myBall.PreviousX;
                             if (myBall.Y == 0)
-                                s.Y = myBall.previousY;
+                                s.Y = myBall.PreviousY;
                         
 
                     s.Redraw(s,
@@ -179,8 +180,8 @@ namespace BlockBreaker
                         Properties.Resources.Schermo_800_600_GBA,
                         0,
                         0);
-                    s.X = controller.ClientRectangle.Width / 2 - s.Width / 2;
-                    s.Y = controller.ClientRectangle.Height / 2 - s.Height / 2;
+                    s.X = _controller.ClientRectangle.Width / 2 - s.Width / 2;
+                    s.Y = _controller.ClientRectangle.Height / 2 - s.Height / 2;
                 }                            
 
                 // Ridimensiono la vita
@@ -205,17 +206,17 @@ namespace BlockBreaker
             }
 
             // Ridimensiono la griglia
-            controller.grid.redraw_grid(controller.grid, controller.background.Height, controller.background.Width);
+            _controller.Grid.redraw_grid(_controller.Grid, _controller.Background.Height, _controller.Background.Width);
 
             //Per ogni sprite in iManager.inGameSprites, ridimensiono lo sprite
-            foreach (Sprite s in iManager.inGameSprites)
+            foreach (Sprite s in IManager.inGameSprites)
             {
                 //ridimensiono i blocchi di gioco
                     if (hi > 0 && li > 0)
                     {
                 if (s.GetType().Name == "Block")
                 {
-                    controller.grid.redraw_block((Block)s,
+                    _controller.Grid.redraw_block((Block)s,
                         (100 * l / li),
                         (50 * (h / hi)),
                         s.X * l / li,
@@ -225,12 +226,12 @@ namespace BlockBreaker
                 }
 
             // Sposto la racchetta all'altezza giusta
-                controller.racchetta.Y = h * 9 / 10;
+                _controller.Racchetta.Y = h * 9 / 10;
             
             // Ridimensiono la superfice di disegno
-            spriteBatch.cntxt.MaximumBuffer = new Size(controller.ClientSize.Width + 1, controller.ClientSize.Height + 1);
-            spriteBatch.bfgfx = spriteBatch.cntxt.Allocate(controller.CreateGraphics(), new Rectangle(Point.Empty, controller.ClientSize));
-            spriteBatch.Gfx = controller.CreateGraphics();
+            SpriteBatch.Cntxt.MaximumBuffer = new Size(_controller.ClientSize.Width + 1, _controller.ClientSize.Height + 1);
+            SpriteBatch.Bfgfx = SpriteBatch.Cntxt.Allocate(_controller.CreateGraphics(), new Rectangle(Point.Empty, _controller.ClientSize));
+            SpriteBatch.Gfx = _controller.CreateGraphics();
 
             //uso il garbage collector per pulire
             GC.Collect();
@@ -247,19 +248,19 @@ namespace BlockBreaker
         /// </summary>
         private void init()
         {
-            this.vita_rimanente = 3;
-            this.gameTime = new Stopwatch();
-            this.fpsChecker = new FPSChecker(this.gameTime);
-            this.iManager = new InputManager();
-            this.highScore = new HighScore();
+            this.VitaRimanente = 3;
+            this.GameTime = new Stopwatch();
+            this._fpsChecker = new FpsChecker(this.GameTime);
+            this.IManager = new InputManager();
+            this.HighScore = new HighScore();
             this.KeysHeld = new List<Keys>();
             this.KeysPressed = new List<Keys>();
-            this.shouldStop = false;
-            this.vita_rimanente = 3;
-            this.score = 0;
-            this.righe_griglia = 25;
-            this.previous_score = 0;
-            this.spriteBatch = new SpriteBatch(controller.ClientSize, controller.CreateGraphics());
+            this.ShouldStop = false;
+            this.VitaRimanente = 3;
+            this.Score = 0;
+            this.RigheGriglia = 25;
+            this.PreviousScore = 0;
+            this.SpriteBatch = new SpriteBatch(_controller.ClientSize, _controller.CreateGraphics());
         }
 
         /// <summary>
@@ -267,9 +268,9 @@ namespace BlockBreaker
         /// </summary>
         private void checkActiveBlock()
         {
-            if (activeBlock == 0)
+            if (_activeBlock == 0)
             {
-                controller.grid.insert_grid(Properties.Resources.Block_4, this.iManager);
+                _controller.Grid.insert_grid(Properties.Resources.Block_4, this.IManager);
             }
         }
 
@@ -279,29 +280,29 @@ namespace BlockBreaker
         private void checkscore()
         {
 
-            previous_score = score;
-            activeBlock = 0;
-            foreach (Sprite s in iManager.inGameSprites)
+            PreviousScore = Score;
+            _activeBlock = 0;
+            foreach (Sprite s in IManager.inGameSprites)
             {
                 if (s.GetType().Name == "Block")
                 {
                     Block myBlock = (Block)s;
-                    if (myBlock.blockLife == 0)
+                    if (myBlock.BlockLife == 0)
                     {
-                        score += myBlock.initialLife;
-                        myBlock.blockLife = -1;
+                        Score += myBlock.InitialLife;
+                        myBlock.BlockLife = -1;
                     }
-                    if (myBlock.blockLife > 0)
+                    if (myBlock.BlockLife > 0)
                     {
-                        activeBlock++;
+                        _activeBlock++;
                     }
                 }
             }
-            if (previous_score < score)
+            if (PreviousScore < Score)
             {
-                controller.Invoke(new MethodInvoker(delegate
+                _controller.Invoke(new MethodInvoker(delegate
                 {
-                    controller.score.Text = "Score: " + score;
+                    _controller.Score.Text = "Score: " + Score;
                 }));
             }
 
@@ -314,7 +315,7 @@ namespace BlockBreaker
             AllowInput = false;
 
             // Controlla i tasti che sono stati premuti e svuoto i buffer
-            iManager.update(MousePoint, KeysPressed.ToArray(), KeysHeld.ToArray(), gameTime, deltaTime);
+            IManager.update(MousePoint, KeysPressed.ToArray(), KeysHeld.ToArray(), GameTime, DeltaTime);
             KeysPressed.Clear();
             KeysHeld.Clear();
             AllowInput = true;
@@ -325,44 +326,44 @@ namespace BlockBreaker
         /// </summary>
         private void render()
         {
-            spriteBatch.Clear();
-            foreach (Sprite s in iManager.inGameSprites)
+            SpriteBatch.Clear();
+            foreach (Sprite s in IManager.inGameSprites)
                 {
-                if (s.toRender == true)
+                if (s.ToRender == true)
                 {
                     if (s.GetType().Name == "Ball")
                     {
                         Ball myBall = (Ball)s;
                         if (myBall.X > 1000 && myBall.Y < 0)
-                            s.X = myBall.previousX;
+                            s.X = myBall.PreviousX;
                         if (myBall.Y == 0)
-                            s.Y = myBall.previousY;
+                            s.Y = myBall.PreviousY;
                     }
-                    spriteBatch.Draw(s);
+                    SpriteBatch.Draw(s);
                 }
                 }
-            spriteBatch.End();
+            SpriteBatch.End();
         }
 
         /// <summary>
         /// Funzione che calcola la logica e gli ups (Updates per second , cioè aggiornamento delle posizioni e calcolo di eventuali hit)
         /// </summary>
-        private void updater(Game ThisForm, InputManager iManager, FPSChecker fpsChecker)
+        private void updater(Game ThisForm, InputManager iManager, FpsChecker fpsChecker)
         {
-            if (vita_rimanente > 0)
+            if (VitaRimanente > 0)
             {
-            if (gameTime.ElapsedMilliseconds - fpsChecker.upsTime > fpsChecker.interval)
+            if (GameTime.ElapsedMilliseconds - fpsChecker.UpsTime > fpsChecker.Interval)
             {
-                ThisForm.ball.Update(iManager, ThisForm.ParentForm);
-                ThisForm.racchetta.Update(iManager, ThisForm.ParentForm);
-                if (gameTime.Elapsed.Seconds != fpsChecker.previousSecond)
+                ThisForm.Ball.Update(iManager, ThisForm.ParentForm);
+                ThisForm.Racchetta.Update(iManager, ThisForm.ParentForm);
+                if (GameTime.Elapsed.Seconds != fpsChecker.PreviousSecond)
                 {
-                    fpsChecker.previousSecond = gameTime.Elapsed.Seconds;
-                    fpsChecker.ups = fpsChecker.ups_tmp;
-                    fpsChecker.ups_tmp = 0;
+                    fpsChecker.PreviousSecond = GameTime.Elapsed.Seconds;
+                    fpsChecker.Ups = fpsChecker.UpsTmp;
+                    fpsChecker.UpsTmp = 0;
                 }
-                fpsChecker.upsTime = gameTime.ElapsedMilliseconds;
-                fpsChecker.ups_tmp++;
+                fpsChecker.UpsTime = GameTime.ElapsedMilliseconds;
+                fpsChecker.UpsTmp++;
             }
         }
     }

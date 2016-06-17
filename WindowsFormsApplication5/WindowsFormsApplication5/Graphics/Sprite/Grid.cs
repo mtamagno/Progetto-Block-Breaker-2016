@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace BlockBreaker
 {
@@ -6,23 +7,30 @@ namespace BlockBreaker
     {
         #region Fields
 
-        private System.Windows.Forms.DataGridView grid;
+        private readonly System.Windows.Forms.DataGridView _grid;
 
         #endregion Fields
 
         #region Constructors
 
         //Metodo grid da chiamare per creare una griglia all'interno del form
-        public Grid(int x, int y, float client_height, float client_width, Bitmap Texture, Logic logic)
+        public Grid(int x, int y, float clientHeight, float clientWidth, Bitmap texture, Logic logic)
         {
-            this.grid = new System.Windows.Forms.DataGridView();
-            this.grid.ColumnCount = 20;
-            this.grid.RowCount = 8;
-            this.grid.Left = x;
-            this.grid.Top = y;
-            this.grid.Width = (int)client_width;
-            this.grid.Height = (int)(client_height / 3);
-            this.insert_grid(Texture, logic.iManager);
+            if (texture == null) throw new ArgumentNullException(nameof(texture));
+            if (logic == null) throw new ArgumentNullException(nameof(logic));
+            if (x <= 0) throw new ArgumentOutOfRangeException(nameof(x));
+            if (y <= 0) throw new ArgumentOutOfRangeException(nameof(y));
+            if (clientHeight <= 0) throw new ArgumentOutOfRangeException(nameof(clientHeight));
+            if (clientWidth <= 0) throw new ArgumentOutOfRangeException(nameof(clientWidth));
+
+            this._grid = new System.Windows.Forms.DataGridView();
+            this._grid.ColumnCount = 20;
+            this._grid.RowCount = 8;
+            this._grid.Left = x;
+            this._grid.Top = y;
+            this._grid.Width = (int)clientWidth;
+            this._grid.Height = (int)(clientHeight / 3);
+            this.insert_grid(texture, logic.IManager);
         }
 
         #endregion Constructors
@@ -32,15 +40,17 @@ namespace BlockBreaker
         /// <summary>
         /// Metodo insert_grid utilizzato per inserire nei posti giusti i blocchi grazie alle coordinate della griglia
         /// </summary>
-        /// <param name="Texture"></param>
+        /// <param name="texture"></param>
         /// <param name="iManager"></param>
-        public void insert_grid(Bitmap Texture, InputManager iManager)
+        public void insert_grid(Bitmap texture, InputManager iManager)
         {
-            for (int i = 0; i < grid.ColumnCount; i++)
+            if (texture == null) throw new ArgumentNullException(nameof(texture));
+            if (iManager == null) throw new ArgumentNullException(nameof(iManager));
+            for (int i = 0; i < _grid.ColumnCount; i++)
             {
-                for (int k = 0; k < grid.RowCount; k++)
+                for (int k = 0; k < _grid.RowCount; k++)
                 {
-                    Block block = new Block((grid.Width / grid.ColumnCount) * i + grid.Left + 3, (grid.Height / grid.RowCount) * k + grid.Top + 3, grid.Width / grid.ColumnCount, grid.Height / grid.RowCount);
+                    Block block = new Block((_grid.Width / _grid.ColumnCount) * i + _grid.Left + 3, (_grid.Height / _grid.RowCount) * k + _grid.Top + 3, _grid.Width / _grid.ColumnCount, _grid.Height / _grid.RowCount);
                     iManager.inGameSprites.Add(block);
                 }
             }
@@ -51,25 +61,28 @@ namespace BlockBreaker
         /// </summary>
         /// <param name="s"></param>
         /// <param name="newWidth"></param>
-        /// <param name="new_height"></param>
-        /// <param name="nuova_x"></param>
-        /// <param name="nuova_y"></param>
-        public void redraw_block(Block s, int newWidth, int new_height, float nuova_x, float nuova_y)
+        /// <param name="newHeight"></param>
+        /// <param name="nuovaX"></param>
+        /// <param name="nuovaY"></param>
+        public void redraw_block(Block s, int newWidth, int newHeight, float nuovaX, float nuovaY)
         {
-            s.textureSwitcher();
-            s.Redraw(s, (grid.Width / grid.ColumnCount), (grid.Height / grid.RowCount), s.texture, nuova_x, nuova_y);
+            s.TextureSwitcher();
+            s.Redraw(s, (_grid.Width / _grid.ColumnCount), (_grid.Height / _grid.RowCount), s.texture, nuovaX, nuovaY);
         }
 
         /// <summary>
         /// Metodo utilizzato per scalare la griglia al variare della dimensione della finestra di gioco
         /// </summary>
         /// <param name="grid"></param>
-        /// <param name="client_height"></param>
-        /// <param name="client_width"></param>
-        public void redraw_grid(Grid grid, float client_height, float client_width)
+        /// <param name="clientHeight"></param>
+        /// <param name="clientWidth"></param>
+        public void redraw_grid(Grid grid, float clientHeight, float clientWidth)
         {
-            grid.grid.Width = (int)client_width;
-            grid.grid.Height = (int)(client_height / 3);
+            if (grid == null) throw new ArgumentNullException(nameof(grid));
+            if (clientHeight <= 0) throw new ArgumentOutOfRangeException(nameof(clientHeight));
+            if (clientWidth <= 0) throw new ArgumentOutOfRangeException(nameof(clientWidth));
+            grid._grid.Width = (int)clientWidth;
+            grid._grid.Height = (int)(clientHeight / 3);
         }
 
         #endregion Methods

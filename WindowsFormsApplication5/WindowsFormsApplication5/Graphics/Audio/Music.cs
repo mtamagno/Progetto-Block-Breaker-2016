@@ -6,7 +6,7 @@ namespace BlockBreaker
     {
         #region Fields
 
-        public SoundPlayer backgroundMusic;
+        public SoundPlayer BackgroundMusic;
 
         #endregion Fields
 
@@ -17,8 +17,8 @@ namespace BlockBreaker
         /// </summary>
         public void Dispose_Music()
         {
-            this.backgroundMusic.Stop();
-            this.backgroundMusic.Dispose();
+            this.BackgroundMusic.Stop();
+            this.BackgroundMusic.Dispose();
         }
 
         /// <summary>
@@ -26,8 +26,8 @@ namespace BlockBreaker
         /// </summary>
         public void Game()
         {
-            this.backgroundMusic = new SoundPlayer(Properties.Resources.Game_Music);
-            this.backgroundMusic.PlayLooping();
+            this.BackgroundMusic = new SoundPlayer(Properties.Resources.Game_Music);
+            this.BackgroundMusic.PlayLooping();
         }
 
         /// <summary>
@@ -35,8 +35,8 @@ namespace BlockBreaker
         /// </summary>
         public void GameOver()
         {
-            this.backgroundMusic = new SoundPlayer(Properties.Resources.GameOver_Music);
-            this.backgroundMusic.PlayLooping();
+            this.BackgroundMusic = new SoundPlayer(Properties.Resources.GameOver_Music);
+            this.BackgroundMusic.PlayLooping();
         }
 
         /// <summary>
@@ -44,8 +44,8 @@ namespace BlockBreaker
         /// </summary>
         public void Menu()
         {
-            this.backgroundMusic = new SoundPlayer(Properties.Resources.Menu_Music);
-            this.backgroundMusic.PlayLooping();
+            this.BackgroundMusic = new SoundPlayer(Properties.Resources.Menu_Music);
+            this.BackgroundMusic.PlayLooping();
         }
 
         #endregion Methods

@@ -7,12 +7,12 @@ namespace BlockBreaker
     {
         #region Fields
 
-        public int bottomCollide = 0;
-        public bool canCollide;
-        public bool canFall;
-        public bool followPointer;
+        public int BottomCollide = 0;
+        public bool CanCollide;
+        public bool CanFall;
+        public bool FollowPointer;
         public Bitmap Texture;
-        public bool toRender;
+        public bool ToRender;
         public int Width, Height;
         public float X, Y;
 
@@ -23,30 +23,15 @@ namespace BlockBreaker
         /// Proprietà che ritornano le coordinate delle parti degi sprite
         /// </summary>
 
-        public Rectangle Bottom
-        {
-            get { return new Rectangle((int)X, (int)Y + this.Height, Width, 20); }
-        }
+        public Rectangle Bottom => new Rectangle((int)X, (int)Y + this.Height, Width, 20);
 
-        public Rectangle Left
-        {
-            get { return new Rectangle((int)X, (int)Y, 20, Height); }
-        }
+        public Rectangle Left => new Rectangle((int)X, (int)Y, 20, Height);
 
-        public Rectangle Right
-        {
-            get { return new Rectangle((int)X + this.Width, (int)Y, 20, Height); }
-        }
+        public Rectangle Right => new Rectangle((int)X + this.Width, (int)Y, 20, Height);
 
-        public Rectangle Top
-        {
-            get { return new Rectangle((int)X, (int)Y, Width, 20); }
-        }
+        public Rectangle Top => new Rectangle((int)X, (int)Y, Width, 20);
 
-        public Rectangle toRec
-        {
-            get { return new Rectangle((int)X, (int)Y, Width, Height); }
-        }
+        public Rectangle ToRec => new Rectangle((int)X, (int)Y, Width, Height);
 
         #endregion Properties
 
@@ -93,33 +78,33 @@ namespace BlockBreaker
         {
             if (newWidth > 0 && newheight > 0)
             {
-                sprite.Width = newWidth;
-                sprite.Height = newheight;
-                Bitmap b = new Bitmap(sprite.Width, sprite.Height);
-                using (Graphics g = Graphics.FromImage(b))
+            sprite.Width = newWidth;
+            sprite.Height = newheight;
+            Bitmap b = new Bitmap(sprite.Width, sprite.Height);
+            using (Graphics g = Graphics.FromImage(b))
+            {
+                // Imposta a transparent lo sfondo dello sprite della pallina
+                if (sprite.GetType().Name == "Ball")
                 {
-                    // Imposta a transparent lo sfondo dello sprite della pallina
-                    if (sprite.GetType().Name == "Ball")
-                    {
-                        Color backColor = risorsa.GetPixel(0, 0);
-                        risorsa.MakeTransparent(backColor);
-                    }
+                    Color backColor = risorsa.GetPixel(0, 0);
+                    risorsa.MakeTransparent(backColor);
+                }
                     // Ridisegna lo sprite
                     g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
                 }
-                sprite.X = nuova_X;
-                sprite.Y = nuova_Y;
+            sprite.X = nuova_X;
+            sprite.Y = nuova_Y;
 
                 // Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
-                if (sprite.GetType().Name == "Paddle" && Container.ActiveForm != null)
+                    if (sprite.GetType().Name == "Paddle" && Container.ActiveForm != null)
                     sprite.Y = (Math.Abs(Container.ActiveForm.ClientRectangle.Height - sprite.Height)) * 9 / 10;
 
-                // Imposta la texture dello sprite
-                sprite.Texture = b;
-                return;
-            }
+            // Imposta la texture dello sprite
+            sprite.Texture = b;
+            return;
+        }
 
-            #endregion Methods
+        #endregion Methods
         }
         //Il collider fa un check di eventuali impatti tra sprites
     }
@@ -132,44 +117,29 @@ namespace BlockBreaker
     {
         #region Methods
 
-        public static bool isCollidingWith(this Sprite s1, Sprite s2)
+        public static bool IsCollidingWith(this Sprite s1, Sprite s2)
         {
-            if (s1.toRec.IntersectsWith(s2.toRec))
-                return true;
-            else
-                return false;
+            return s1.ToRec.IntersectsWith(s2.ToRec);
         }
 
         public static bool isTouchingBottom(this Sprite s1, Sprite s2)
         {
-            if (s1.Bottom.IntersectsWith(s2.Top))
-                return true;
-            else
-                return false;
+            return s1.Bottom.IntersectsWith(s2.Top);
         }
 
-        public static bool isTouchingLeft(this Sprite s1, Sprite s2)
+        public static bool IsTouchingLeft(this Sprite s1, Sprite s2)
         {
-            if (s1.Right.IntersectsWith(s2.Left))
-                return true;
-            else
-                return false;
+            return s1.Right.IntersectsWith(s2.Left);
         }
 
-        public static bool isTouchingRight(this Sprite s1, Sprite s2)
+        public static bool IsTouchingRight(this Sprite s1, Sprite s2)
         {
-            if (s1.Left.IntersectsWith(s2.Right))
-                return true;
-            else
-                return false;
+            return s1.Left.IntersectsWith(s2.Right);
         }
 
-        public static bool isTouchingTop(this Sprite s1, Sprite s2)
+        public static bool IsTouchingTop(this Sprite s1, Sprite s2)
         {
-            if (s1.Top.IntersectsWith(s2.Bottom))
-                return true;
-            else
-                return false;
+            return s1.Top.IntersectsWith(s2.Bottom);
         }
 
         #endregion Methods

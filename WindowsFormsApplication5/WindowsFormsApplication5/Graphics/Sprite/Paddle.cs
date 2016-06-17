@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Threading;
 
@@ -9,8 +8,7 @@ namespace BlockBreaker
     {
         #region Fields
 
-        public Bitmap texture;
-        public bool hurted;
+        public bool Hurted;
 
         #endregion Fields
 
@@ -18,15 +16,18 @@ namespace BlockBreaker
 
         public Paddle(float x, float y, int width, int height, Logic logic)
         {
-            texture = Properties.Resources.New_Piskel;
-            canFall = false;
-            canCollide = true;
-            toRender = true;
-            followPointer = true;
-            hurted = false;
+            if (logic == null) throw new ArgumentNullException(nameof(logic));
+            if (width <= 0) throw new ArgumentOutOfRangeException(nameof(width));
+            if (height <= 0) throw new ArgumentOutOfRangeException(nameof(height));
+            var texture = Properties.Resources.New_Piskel;
+            CanFall = false;
+            CanCollide = true;
+            ToRender = true;
+            FollowPointer = true;
+            Hurted = false;
 
             this.CreateSprite(texture, x, y, width, height);
-            logic.iManager.inGameSprites.Add(this);
+            logic.IManager.inGameSprites.Add(this);
         }
 
         #endregion Constructors
@@ -56,7 +57,7 @@ namespace BlockBreaker
         {
             try
             {
-                if (followPointer)
+                if (FollowPointer)
                 {
                     if(thisform != null)
                     if ((Cursor.Position.X - thisform.Location.X) >= thisform.Width/11 && Cursor.Position.X - thisform.Location.X < thisform.Width - thisform.Width / 11)                    
@@ -76,7 +77,7 @@ namespace BlockBreaker
         public void hurt()
         {
             Texture = Properties.Resources.hurt;
-            hurted = true;                
+            Hurted = true;                
             Thread.Sleep(600);
             this.normal();
         }
@@ -88,7 +89,7 @@ namespace BlockBreaker
         {
             Texture = Properties.Resources.New_Piskel;
             Thread.Sleep(50);
-            hurted = false;
+            Hurted = false;
         }
         #endregion Methods
     }
