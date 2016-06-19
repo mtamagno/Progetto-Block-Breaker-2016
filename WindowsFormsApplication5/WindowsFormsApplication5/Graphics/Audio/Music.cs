@@ -1,4 +1,5 @@
 ﻿using System.Media;
+using BlockBreaker.Properties;
 
 namespace BlockBreaker
 {
@@ -13,39 +14,39 @@ namespace BlockBreaker
         #region Methods
 
         /// <summary>
-        /// Funzione per la liberazione delle risorse occupate dalla musica
+        ///     Funzione per la liberazione delle risorse occupate dalla musica
         /// </summary>
         public void Dispose_Music()
         {
-            this.BackgroundMusic.Stop();
-            this.BackgroundMusic.Dispose();
+            BackgroundMusic.Stop();
+            BackgroundMusic.Dispose();
         }
 
         /// <summary>
-        /// Funzione per la riproduzione della musica del gioco
+        ///     Funzione per la riproduzione della musica del gioco
         /// </summary>
         public void Game()
         {
-            this.BackgroundMusic = new SoundPlayer(Properties.Resources.Game_Music);
-            this.BackgroundMusic.PlayLooping();
+            BackgroundMusic = new SoundPlayer(Resources.Game_Music);
+            BackgroundMusic.PlayLooping();
         }
 
         /// <summary>
-        /// Funzione per la riproduzione della musica della schermata del gameover
+        ///     Funzione per la riproduzione della musica della schermata del gameover
         /// </summary>
         public void GameOver()
         {
-            this.BackgroundMusic = new SoundPlayer(Properties.Resources.GameOver_Music);
-            this.BackgroundMusic.PlayLooping();
+            BackgroundMusic = new SoundPlayer(Resources.GameOver_Music);
+            BackgroundMusic.PlayLooping();
         }
 
         /// <summary>
-        /// Funzione per la riproduzione della musica della schermata del menù
+        ///     Funzione per la riproduzione della musica della schermata del menù
         /// </summary>
         public void Menu()
         {
-            this.BackgroundMusic = new SoundPlayer(Properties.Resources.Menu_Music);
-            this.BackgroundMusic.PlayLooping();
+            BackgroundMusic = new SoundPlayer(Resources.Menu_Music);
+            BackgroundMusic.PlayLooping();
         }
 
         #endregion Methods

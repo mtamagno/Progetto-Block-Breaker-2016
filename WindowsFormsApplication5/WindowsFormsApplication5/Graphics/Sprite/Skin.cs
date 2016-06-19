@@ -1,4 +1,5 @@
 ﻿using System;
+using BlockBreaker.Properties;
 
 namespace BlockBreaker
 {
@@ -11,14 +12,14 @@ namespace BlockBreaker
             if (y < 0) throw new ArgumentOutOfRangeException(nameof(y));
             if (width <= 0) throw new ArgumentOutOfRangeException(nameof(width));
             if (height <= 0) throw new ArgumentOutOfRangeException(nameof(height));
-            var texture = Properties.Resources.Skin;
+            var texture = Resources.Skin;
             CanFall = false;
             ToRender = true;
             CanCollide = true;
             FollowPointer = false;
 
-            this.CreateSprite(texture, x, y, width, height);
-            logic.IManager.inGameSprites.Add(this);
+            CreateSprite(texture, x, y, width, height);
+            logic.IManager.InGameSprites.Add(this);
         }
     }
 }

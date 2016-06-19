@@ -6,8 +6,21 @@ namespace BlockBreaker
 {
     internal class FpsChecker
     {
-        #region Fields
+        #region Constructors
 
+        /// <summary>
+        ///     Funzione che avvia il timer
+        /// </summary>
+        /// <param name="timer"></param>
+        public FpsChecker(Stopwatch timer)
+        {
+            if (timer == null) throw new ArgumentNullException(nameof(timer));
+            _gameTime = timer;
+        }
+
+        #endregion Constructors
+
+        #region Fields
 
         //variabili per fps
         private int _fps;
@@ -15,7 +28,7 @@ namespace BlockBreaker
         private readonly Stopwatch _gameTime;
 
         //variabile per limitare gli fps
-        public int Interval = 1000 / 85;
+        public int Interval = 1000/85;
 
         public int PreviousSecond;
         public int Ups;
@@ -29,24 +42,10 @@ namespace BlockBreaker
 
         #endregion Fields
 
-        #region Constructors
-
-        /// <summary>
-        /// Funzione che avvia il timer
-        /// </summary>
-        /// <param name="timer"></param>
-        public FpsChecker(Stopwatch timer)
-        {
-            if (timer == null) throw new ArgumentNullException(nameof(timer));
-            this._gameTime = timer;
-        }
-
-        #endregion Constructors
-
         #region Methods
 
         /// <summary>
-        /// Funzione per il check degli fps, li conta per poi resettare il totale e restituire il risultato ogni secondo
+        ///     Funzione per il check degli fps, li conta per poi resettare il totale e restituire il risultato ogni secondo
         /// </summary>
         /// <param name="controller"></param>
         public void Checkfps(Game controller)
@@ -66,7 +65,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        /// Funzione che scrive sul form il numero degli fps e degli ups
+        ///     Funzione che scrive sul form il numero degli fps e degli ups
         /// </summary>
         /// <param name="controller"></param>
         public void FpsWriter(Game controller)
@@ -76,7 +75,7 @@ namespace BlockBreaker
                 controller?.Invoke(new MethodInvoker(delegate
                 {
                     if (controller.ParentForm != null)
-                        controller.ParentForm.Text = "BlockBreaker - Game      " + "    fps: " + this._fps.ToString() + "ups:" + this.Ups.ToString();
+                        controller.ParentForm.Text = "BlockBreaker - Game      " + "    fps: " + _fps + "ups:" + Ups;
                 }));
             }
             catch

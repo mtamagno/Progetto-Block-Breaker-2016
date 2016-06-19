@@ -1,21 +1,12 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using BlockBreaker.Properties;
 
 namespace BlockBreaker
 {
     public partial class GameOver : Form
     {
-        #region Fields
-
-        public MenuButton Continue;
-        private Bitmap _backgroundimage;
-        public TextBox TextBox;
-        public Label Nickname;
-        private MyFonts fonts;
-
-        #endregion Fields
-
         #region Constructors
 
         public GameOver()
@@ -25,74 +16,84 @@ namespace BlockBreaker
 
         #endregion Constructors
 
+        #region Fields
+
+        public MenuButton Continue;
+        private Bitmap _backgroundimage;
+        public TextBox TextBox;
+        public Label Nickname;
+        private MyFonts _fonts;
+
+        #endregion Fields
+
         #region Methods
 
         /// <summary>
-        /// Funzione che permette di liberare la memoria dall'immagine di background
+        ///     Funzione che permette di liberare la memoria dall'immagine di background
         /// </summary>
         public void Cleaner()
         {
-            this.BackgroundImage.Dispose();
-            this._backgroundimage.Dispose();
+            BackgroundImage.Dispose();
+            _backgroundimage.Dispose();
             GC.Collect();
             GC.WaitForFullGCComplete();
         }
 
         /// <summary>
-        /// Funzione che permette di ridimensionare ad ogni resize, l'immagine di backGround, la textBox ed il pulsante
+        ///     Funzione che permette di ridimensionare ad ogni resize, l'immagine di backGround, la textBox ed il pulsante
         /// </summary>
         /// <param name="l"></param>
         /// <param name="h"></param>
         public void on_resize(int l, int h)
         {
-            if (this.ClientSize.Height > 0 || this.ClientSize.Width > 0)
+            if (ClientSize.Height > 0 || ClientSize.Width > 0)
             {
-            this.Cleaner();
-            this.BackgroundImage = new Bitmap(Properties.Resources.GameOver, this.ClientSize);
-            this.BackgroundImageLayout = ImageLayout.Stretch;
+                Cleaner();
+                BackgroundImage = new Bitmap(Resources.GameOver, ClientSize);
+                BackgroundImageLayout = ImageLayout.Stretch;
 
                 // Imposta l'immagine, il size, il background e il testo del pulsante Continue
-                Size s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-                this.Continue.Text = "Continue"; 
+                var s = new Size(ClientSize.Width/10, ClientSize.Height/10);
+                Continue.Text = "Continue";
 
                 // Imposta la sua posizione e lo aggiungo ai controlli
-                this.Continue.Top = ClientRectangle.Height / 11 * 10 - Continue.Height / 2;
-                this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
-                this.Controls.Add(Continue);
+                Continue.Top = ClientRectangle.Height/11*10 - Continue.Height/2;
+                Continue.Left = ClientRectangle.Width/2 - Continue.Width/2;
+                Controls.Add(Continue);
 
                 // Imposta la label
-                this.Nickname.Dispose();
-                this.Nickname = new Label();
-                MyFonts fonts = new MyFonts(MyFonts.FontType.paragraph);
-                this.Nickname.UseCompatibleTextRendering = true;
-                this.Nickname.Width = 80;
-                this.Nickname.Top = Continue.Top - Continue.Height;
-                this.Nickname.Font = new Font(fonts.type.Families[0], 12, FontStyle.Regular);
-                this.Nickname.ForeColor = Color.White;
-                this.Nickname.BackColor = Color.Black;
-                this.Nickname.Text = "Nickname: ";
-                this.Nickname.Left = ClientRectangle.Width / 2 - Continue.Width / 2 - this.Nickname.Width / 2;
-                this.Controls.Add(Nickname);
+                Nickname.Dispose();
+                Nickname = new Label();
+                var fonts = new MyFonts(MyFonts.FontType.Paragraph);
+                Nickname.UseCompatibleTextRendering = true;
+                Nickname.Width = 80;
+                Nickname.Top = Continue.Top - Continue.Height;
+                Nickname.Font = new Font(fonts.Type.Families[0], 12, FontStyle.Regular);
+                Nickname.ForeColor = Color.White;
+                Nickname.BackColor = Color.Black;
+                Nickname.Text = "Nickname: ";
+                Nickname.Left = ClientRectangle.Width/2 - Continue.Width/2 - Nickname.Width/2;
+                Controls.Add(Nickname);
 
                 // Imposta posizione, placeholder e size della textBox
-                this.TextBox.Dispose();
-                this.TextBox = new TextBox();
-                this.TextBox.Size = Continue.Size;
-                this.TextBox.Top = Continue.Top - Continue.Height;
-                this.TextBox.Left = Continue.Left + this.TextBox.Width / 2;
-                this.TextBox.Text = "Insert Name...";
-                this.TextBox.Click += TextBox_Click;
-                this.Controls.Add(TextBox);
+                TextBox.Dispose();
+                TextBox = new TextBox();
+                TextBox.Size = Continue.Size;
+                TextBox.Top = Continue.Top - Continue.Height;
+                TextBox.Left = Continue.Left + TextBox.Width/2;
+                TextBox.Text = "Insert Name...";
+                TextBox.Click += TextBox_Click;
+                Controls.Add(TextBox);
 
                 // Imposta l'immagine di background
-                if (this.Size.Height > 0)
-                    this._backgroundimage = new Bitmap(Properties.Resources.GameOver, this.Size);
+                if (Size.Height > 0)
+                    _backgroundimage = new Bitmap(Resources.GameOver, Size);
 
                 // Aspetto il Garbage Collector
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
             }
-            this.Focus();
+            Focus();
         }
 
         private void GameOver_Load(object sender, EventArgs e)
@@ -103,44 +104,44 @@ namespace BlockBreaker
         private void Starter()
         {
             // Imposta l'immagine, il size, il background e il testo del pulsante Continue
-            Size s = new Size(this.ClientSize.Width / 10, this.ClientSize.Height / 10);
-            this.TextBox = new TextBox();
-            this.Continue = new MenuButton(s);
-            this.Continue.Text = "Continue";
+            var s = new Size(ClientSize.Width/10, ClientSize.Height/10);
+            TextBox = new TextBox();
+            Continue = new MenuButton(s);
+            Continue.Text = "Continue";
 
             // Imposta la sua posizione e lo aggiungo ai controlli
-            this.Continue.Top = ClientRectangle.Height / 11 * 10 - Continue.Height / 2;
-            this.Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
-            this.Controls.Add(Continue);
+            Continue.Top = ClientRectangle.Height/11*10 - Continue.Height/2;
+            Continue.Left = ClientRectangle.Width/2 - Continue.Width/2;
+            Controls.Add(Continue);
 
             // Imposta posizione, placeholder e size della textBox
 
-            this.TextBox.Size = Continue.Size;
-            this.TextBox.Top = Continue.Top - Continue.Height;
-            this.TextBox.Left = Continue.Left + this.TextBox.Width/2;
-            this.TextBox.Text = "Insert Name...";
-            this.Controls.Add(TextBox);
-            this.TextBox.Click += TextBox_Click;
+            TextBox.Size = Continue.Size;
+            TextBox.Top = Continue.Top - Continue.Height;
+            TextBox.Left = Continue.Left + TextBox.Width/2;
+            TextBox.Text = "Insert Name...";
+            Controls.Add(TextBox);
+            TextBox.Click += TextBox_Click;
 
             // Imposta l'immagine di background
-            if (this.Size.Height > 0 )
-            this._backgroundimage = new Bitmap(Properties.Resources.GameOver, this.Size);
+            if (Size.Height > 0)
+                _backgroundimage = new Bitmap(Resources.GameOver, Size);
 
             // IntPtr handle = backgroundimage.GetHbitmap();
-            this.BackgroundImage = _backgroundimage;
+            BackgroundImage = _backgroundimage;
 
 
             // Imposta la label
             Nickname = new Label();
-            this.Nickname.BackColor = Color.Black;
-            fonts = new MyFonts(MyFonts.FontType.paragraph);
-            this.Nickname.Width = 80;
-            this.Nickname.Top = Continue.Top - Continue.Height;
-            this.Nickname.Font = new Font(fonts.type.Families[0], 12, FontStyle.Regular);
-            this.Nickname.ForeColor = Color.White;
-            this.Nickname.Text = "Nickname: ";
-            this.Nickname.Left = ClientRectangle.Width / 2 - Continue.Width / 2 - this.Nickname.Width / 2;
-            this.Controls.Add(Nickname);
+            Nickname.BackColor = Color.Black;
+            _fonts = new MyFonts(MyFonts.FontType.Paragraph);
+            Nickname.Width = 80;
+            Nickname.Top = Continue.Top - Continue.Height;
+            Nickname.Font = new Font(_fonts.Type.Families[0], 12, FontStyle.Regular);
+            Nickname.ForeColor = Color.White;
+            Nickname.Text = "Nickname: ";
+            Nickname.Left = ClientRectangle.Width/2 - Continue.Width/2 - Nickname.Width/2;
+            Controls.Add(Nickname);
 
             // Aspetto il Garbage Collector
             GC.Collect();

@@ -1,24 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Drawing;
-using System.Xml;
 using System.IO;
-
+using System.Windows.Forms;
+using System.Xml;
 
 namespace BlockBreaker
 {
-    class HighScoresPanel : Panel
+    internal sealed class HighScoresPanel : Panel
     {
-        private MyFonts fontTitle;
-        private MyFonts fontParagraph;
+        private readonly MyFonts _fontParagraph;
+        private readonly MyFonts _fontTitle;
 
-       
 
-        public HighScoresPanel(int Left, int Top, int Width, int Height)
+        public HighScoresPanel(int left, int top, int width, int height)
         {
             var esc = new Label();
             var title = new Label();
@@ -28,49 +22,48 @@ namespace BlockBreaker
             {
                 var Reader = new XmlTextReader("HighScores.xml");
                 var highscoreCounter = 0;
-                for (int i = 0; Reader.Read() && i < 100; i++)
-            {
-                switch (Reader.NodeType)
+                for (var i = 0; Reader.Read() && i < 100; i++)
                 {
+                    switch (Reader.NodeType)
+                    {
+                        case XmlNodeType.Element:
+                            Console.WriteLine("<" + Reader.Name + ">");
+                            break;
 
-                    case XmlNodeType.Element:
-                        Console.WriteLine("<" + Reader.Name + ">");
-                        break;
-
-                    case XmlNodeType.Text:
-                        paragraph.Text += Reader.Value + " - ";
+                        case XmlNodeType.Text:
+                            paragraph.Text += Reader.Value + " - ";
                             Console.WriteLine(Reader.Value);
                             highscoreCounter++;
-                        break;
+                            break;
 
-                    case XmlNodeType.EndElement:
-                        Console.WriteLine("</" + Reader.Name + ">");
-                        break;
-                }
-                if (highscoreCounter == 2)
-                {
+                        case XmlNodeType.EndElement:
+                            Console.WriteLine("</" + Reader.Name + ">");
+                            break;
+                    }
+                    if (highscoreCounter == 2)
+                    {
                         paragraph.Text += "\n\n";
                         highscoreCounter = 0;
+                    }
                 }
-            }
             }
 
             Console.ReadLine();
 
-            this.Left = Left;
-            this.Top = Top;
-            this.Width = Width;
-            this.Height = Height;
-            this.BackColor = Color.Black;
+            Left = left;
+            Top = top;
+            Width = width;
+            Height = height;
+            BackColor = Color.Black;
 
-            this.fontParagraph = new MyFonts(MyFonts.FontType.paragraph);
-            this.fontTitle = new MyFonts(MyFonts.FontType.Title);
+            _fontParagraph = new MyFonts(MyFonts.FontType.Paragraph);
+            _fontTitle = new MyFonts(MyFonts.FontType.Title);
             title.UseCompatibleTextRendering = true;
             title.Top = 30;
             title.Text = "Highscores";
             title.Height = 60;
-            title.Width = this.Width;
-            title.Font = new Font(fontTitle.type.Families[0], 30, FontStyle.Regular);
+            title.Width = Width;
+            title.Font = new Font(_fontTitle.Type.Families[0], 30, FontStyle.Regular);
             title.TextAlign = ContentAlignment.MiddleCenter;
             title.ForeColor = Color.White;
 
@@ -78,26 +71,25 @@ namespace BlockBreaker
             paragraph.Top = 100;
 
             paragraph.UseCompatibleTextRendering = true;
-            paragraph.Width = this.Width;
-            paragraph.Font = new Font(fontParagraph.type.Families[0], 14, FontStyle.Regular);
+            paragraph.Width = Width;
+            paragraph.Font = new Font(_fontParagraph.Type.Families[0], 14, FontStyle.Regular);
             paragraph.TextAlign = ContentAlignment.MiddleCenter;
             paragraph.ForeColor = Color.White;
 
-                esc.UseCompatibleTextRendering = true;
-                esc.Font = new Font(fontParagraph.type.Families[0], 14, FontStyle.Regular);
-                esc.Height = 40;
-                esc.Top = this.Height - esc.Height * 2;
-                esc.Width = 200;
-                esc.TextAlign = ContentAlignment.MiddleCenter;
-                esc.Left = 10;
-                esc.Text = "Esc -> Back To Menu";
-                esc.ForeColor = Color.White;
+            esc.UseCompatibleTextRendering = true;
+            esc.Font = new Font(_fontParagraph.Type.Families[0], 14, FontStyle.Regular);
+            esc.Height = 40;
+            esc.Top = Height - esc.Height*2;
+            esc.Width = 200;
+            esc.TextAlign = ContentAlignment.MiddleCenter;
+            esc.Left = 10;
+            esc.Text = "Esc -> Back To Menu";
+            esc.ForeColor = Color.White;
 
-                this.Controls.Add(esc);
-            this.Controls.Add(title);
-            this.Controls.Add(paragraph);
-            this.Visible = false;
-            }
+            Controls.Add(esc);
+            Controls.Add(title);
+            Controls.Add(paragraph);
+            Visible = false;
         }
     }
-
+}

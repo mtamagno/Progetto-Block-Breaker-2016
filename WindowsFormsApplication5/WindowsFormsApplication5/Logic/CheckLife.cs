@@ -5,9 +5,9 @@ namespace BlockBreaker
     internal class CheckLife
     {
         #region Methods
-        
+
         /// <summary>
-        /// Funzione per il Check dell'hit del bottom
+        ///     Funzione per il Check dell'hit del bottom
         /// </summary>
         /// <param name="thisForm"></param>
         /// <param name="lifes"></param>
@@ -18,20 +18,20 @@ namespace BlockBreaker
             if (thisForm.Background.BottomCollide == 1)
             {
                 thisForm.Ball.CanFall = false;
-                thisForm.Ball.Y = thisForm.Racchetta.Y - thisForm.Ball.Height ;
+                thisForm.Ball.Y = thisForm.Racchetta.Y - thisForm.Ball.Height;
                 thisForm.Ball.FollowPointer = true;
                 thisForm.Ball.VelocityTot = 0;
                 thisForm.Ball.Velocity.X = 0;
                 thisForm.Ball.Velocity.Y = 0;
                 lifes--;
                 thisForm.Background.BottomCollide = 0;
-                for (int i = lifes; i < 3; i++)
+                for (var i = lifes; i < 3; i++)
                 {
                     if (lifes > 0)
                         thisForm.Vita[i].ToRender = false;
                 }
             }
-            return (lifes);
+            return lifes;
         }
 
         #endregion Methods

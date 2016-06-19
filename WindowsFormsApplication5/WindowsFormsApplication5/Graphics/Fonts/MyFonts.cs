@@ -1,15 +1,16 @@
 ﻿using System.Drawing.Text;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.IO;
-using System;
 
 namespace BlockBreaker
 {
-    class MyFonts
-    {   
-        public PrivateFontCollection type;
-        public enum FontType { Title, paragraph, };
+    internal class MyFonts
+    {
+        public enum FontType
+        {
+            Title,
+            Paragraph
+        }
+
+        public PrivateFontCollection Type;
 
         public MyFonts(FontType thisFontType)
         {
@@ -18,18 +19,16 @@ namespace BlockBreaker
 
         private void FontSet(FontType fontType)
         {
+            Type = new PrivateFontCollection();
+            if (fontType == FontType.Paragraph)
+            {
+                Paragraph();
+            }
 
-            type = new PrivateFontCollection();
-            if (fontType == MyFonts.FontType.paragraph)
-             {
-                 Paragraph();
-             }
-
-             if (fontType == MyFonts.FontType.Title)
-             {
-                 Title();
-             }
-
+            if (fontType == FontType.Title)
+            {
+                Title();
+            }
         }
 
 
@@ -38,10 +37,8 @@ namespace BlockBreaker
             PrivateFontCollection Type;
             Type = new PrivateFontCollection();
             Type.AddFontFile("FOnts/SegoeKeycaps.TTF");
-            type = Type;
+            this.Type = Type;
         }
-
-    
 
 
         private void Paragraph()
@@ -49,8 +46,7 @@ namespace BlockBreaker
             PrivateFontCollection Type;
             Type = new PrivateFontCollection();
             Type.AddFontFile("FOnts/Linds.ttf");
-            type = Type;
+            this.Type = Type;
         }
-
     }
 }
