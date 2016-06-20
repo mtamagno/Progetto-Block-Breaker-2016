@@ -7,20 +7,7 @@ namespace BlockBreaker
 {
     public class InputManager
     {
-        #region Methods
-
-        public void update(Point mp, Keys[] kp, Keys[] kh, Stopwatch gt, float dt)
-        {
-            MousePoint = mp;
-            KeyPressed = kp;
-            KeyHeld = kh;
-            GameTime = gt;
-            DeltaTime = dt/1000f;
-        }
-
-        #endregion Methods
-
-        #region Fields
+        #region Public Fields
 
         public float DeltaTime;
         public Stopwatch GameTime;
@@ -29,6 +16,19 @@ namespace BlockBreaker
         public Keys[] KeyPressed;
         public Point MousePoint;
 
-        #endregion Fields
+        #endregion Public Fields
+
+        #region Public Methods
+
+        public void update(Point mp, Keys[] kp, Keys[] kh, Stopwatch gt, float dt)
+        {
+            MousePoint = mp;
+            KeyPressed = kp;
+            KeyHeld = kh;
+            GameTime = gt;
+            DeltaTime = dt / 1000f;
+        }
+
+        #endregion Public Methods
     }
 }

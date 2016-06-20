@@ -1,32 +1,37 @@
-﻿using System;
+﻿using BlockBreaker.Properties;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using BlockBreaker.Properties;
 
 namespace BlockBreaker
 {
     public partial class GameOver : Form
     {
-        #region Constructors
+        #region Public Fields
+
+        public MenuButton Continue;
+        public Label Nickname;
+        public TextBox TextBox;
+
+        #endregion Public Fields
+
+        #region Private Fields
+
+        private Bitmap _backgroundimage;
+        private MyFonts _fonts;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public GameOver()
         {
             InitializeComponent();
         }
 
-        #endregion Constructors
+        #endregion Public Constructors
 
-        #region Fields
-
-        public MenuButton Continue;
-        private Bitmap _backgroundimage;
-        public TextBox TextBox;
-        public Label Nickname;
-        private MyFonts _fonts;
-
-        #endregion Fields
-
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         ///     Funzione che permette di liberare la memoria dall'immagine di background
@@ -53,12 +58,12 @@ namespace BlockBreaker
                 BackgroundImageLayout = ImageLayout.Stretch;
 
                 // Imposta l'immagine, il size, il background e il testo del pulsante Continue
-                var s = new Size(ClientSize.Width/10, ClientSize.Height/10);
+                var s = new Size(ClientSize.Width / 10, ClientSize.Height / 10);
                 Continue.Text = "Continue";
 
                 // Imposta la sua posizione e lo aggiungo ai controlli
-                Continue.Top = ClientRectangle.Height/11*10 - Continue.Height/2;
-                Continue.Left = ClientRectangle.Width/2 - Continue.Width/2;
+                Continue.Top = ClientRectangle.Height / 11 * 10 - Continue.Height / 2;
+                Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
                 Controls.Add(Continue);
 
                 // Imposta la label
@@ -72,7 +77,7 @@ namespace BlockBreaker
                 Nickname.ForeColor = Color.White;
                 Nickname.BackColor = Color.Black;
                 Nickname.Text = "Nickname: ";
-                Nickname.Left = ClientRectangle.Width/2 - Continue.Width/2 - Nickname.Width/2;
+                Nickname.Left = ClientRectangle.Width / 2 - Continue.Width / 2 - Nickname.Width / 2;
                 Controls.Add(Nickname);
 
                 // Imposta posizione, placeholder e size della textBox
@@ -80,7 +85,7 @@ namespace BlockBreaker
                 TextBox = new TextBox();
                 TextBox.Size = Continue.Size;
                 TextBox.Top = Continue.Top - Continue.Height;
-                TextBox.Left = Continue.Left + TextBox.Width/2;
+                TextBox.Left = Continue.Left + TextBox.Width / 2;
                 TextBox.Text = "Insert Name...";
                 TextBox.Click += TextBox_Click;
                 Controls.Add(TextBox);
@@ -96,6 +101,10 @@ namespace BlockBreaker
             Focus();
         }
 
+        #endregion Public Methods
+
+        #region Private Methods
+
         private void GameOver_Load(object sender, EventArgs e)
         {
             Starter();
@@ -104,21 +113,20 @@ namespace BlockBreaker
         private void Starter()
         {
             // Imposta l'immagine, il size, il background e il testo del pulsante Continue
-            var s = new Size(ClientSize.Width/10, ClientSize.Height/10);
+            var s = new Size(ClientSize.Width / 10, ClientSize.Height / 10);
             TextBox = new TextBox();
             Continue = new MenuButton(s);
             Continue.Text = "Continue";
 
             // Imposta la sua posizione e lo aggiungo ai controlli
-            Continue.Top = ClientRectangle.Height/11*10 - Continue.Height/2;
-            Continue.Left = ClientRectangle.Width/2 - Continue.Width/2;
+            Continue.Top = ClientRectangle.Height / 11 * 10 - Continue.Height / 2;
+            Continue.Left = ClientRectangle.Width / 2 - Continue.Width / 2;
             Controls.Add(Continue);
 
             // Imposta posizione, placeholder e size della textBox
-
             TextBox.Size = Continue.Size;
             TextBox.Top = Continue.Top - Continue.Height;
-            TextBox.Left = Continue.Left + TextBox.Width/2;
+            TextBox.Left = Continue.Left + TextBox.Width / 2;
             TextBox.Text = "Insert Name...";
             Controls.Add(TextBox);
             TextBox.Click += TextBox_Click;
@@ -130,7 +138,6 @@ namespace BlockBreaker
             // IntPtr handle = backgroundimage.GetHbitmap();
             BackgroundImage = _backgroundimage;
 
-
             // Imposta la label
             Nickname = new Label();
             Nickname.BackColor = Color.Black;
@@ -140,7 +147,7 @@ namespace BlockBreaker
             Nickname.Font = new Font(_fonts.Type.Families[0], 12, FontStyle.Regular);
             Nickname.ForeColor = Color.White;
             Nickname.Text = "Nickname: ";
-            Nickname.Left = ClientRectangle.Width/2 - Continue.Width/2 - Nickname.Width/2;
+            Nickname.Left = ClientRectangle.Width / 2 - Continue.Width / 2 - Nickname.Width / 2;
             Controls.Add(Nickname);
 
             // Aspetto il Garbage Collector
@@ -153,6 +160,6 @@ namespace BlockBreaker
             TextBox.Clear();
         }
 
-        #endregion Methods
+        #endregion Private Methods
     }
 }

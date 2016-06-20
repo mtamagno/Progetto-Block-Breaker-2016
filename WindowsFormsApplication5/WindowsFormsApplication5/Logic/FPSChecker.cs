@@ -6,7 +6,31 @@ namespace BlockBreaker
 {
     internal class FpsChecker
     {
-        #region Constructors
+        #region Public Fields
+
+        //variabile per limitare gli fps
+        public int Interval = 1000 / 85;
+        public int PreviousSecond;
+        public int Ups;
+        public long UpsTime;
+
+        //vairbili per ups
+        public int UpsTmp;
+
+        #endregion Public Fields
+
+        #region Private Fields
+
+        private readonly Stopwatch _gameTime;
+
+        //variabili per fps
+        private int _fps;
+        private int _fpsCounter;
+        private long _fpsTime;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         /// <summary>
         ///     Funzione che avvia il timer
@@ -18,31 +42,9 @@ namespace BlockBreaker
             _gameTime = timer;
         }
 
-        #endregion Constructors
+        #endregion Public Constructors
 
-        #region Fields
-
-        //variabili per fps
-        private int _fps;
-
-        private readonly Stopwatch _gameTime;
-
-        //variabile per limitare gli fps
-        public int Interval = 1000/85;
-
-        public int PreviousSecond;
-        public int Ups;
-
-        //vairbili per ups
-        public int UpsTmp;
-
-        public long UpsTime;
-        private int _fpsCounter;
-        private long _fpsTime;
-
-        #endregion Fields
-
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         ///     Funzione per il check degli fps, li conta per poi resettare il totale e restituire il risultato ogni secondo
@@ -84,6 +86,6 @@ namespace BlockBreaker
             }
         }
 
-        #endregion Methods
+        #endregion Public Methods
     }
 }

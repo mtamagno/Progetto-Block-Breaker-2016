@@ -1,17 +1,17 @@
-﻿using System.Media;
-using BlockBreaker.Properties;
+﻿using BlockBreaker.Properties;
+using System.Media;
 
 namespace BlockBreaker
 {
     internal class Music
     {
-        #region Fields
+        #region Public Fields
 
         public SoundPlayer BackgroundMusic;
 
-        #endregion Fields
+        #endregion Public Fields
 
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         ///     Funzione per la liberazione delle risorse occupate dalla musica
@@ -49,6 +49,6 @@ namespace BlockBreaker
             BackgroundMusic.PlayLooping();
         }
 
-        #endregion Methods
+        #endregion Public Methods
     }
 }

@@ -4,18 +4,32 @@ namespace BlockBreaker
 {
     internal class MyFonts
     {
+        #region Public Fields
+
+        public PrivateFontCollection Type;
+
+        #endregion Public Fields
+
+        #region Public Constructors
+
+        public MyFonts(FontType thisFontType)
+        {
+            FontSet(thisFontType);
+        }
+
+        #endregion Public Constructors
+
+        #region Public Enums
+
         public enum FontType
         {
             Title,
             Paragraph
         }
 
-        public PrivateFontCollection Type;
+        #endregion Public Enums
 
-        public MyFonts(FontType thisFontType)
-        {
-            FontSet(thisFontType);
-        }
+        #region Private Methods
 
         private void FontSet(FontType fontType)
         {
@@ -24,13 +38,19 @@ namespace BlockBreaker
             {
                 Paragraph();
             }
-
             if (fontType == FontType.Title)
             {
                 Title();
             }
         }
 
+        private void Paragraph()
+        {
+            PrivateFontCollection Type;
+            Type = new PrivateFontCollection();
+            Type.AddFontFile("FOnts/Linds.ttf");
+            this.Type = Type;
+        }
 
         private void Title()
         {
@@ -40,13 +60,6 @@ namespace BlockBreaker
             this.Type = Type;
         }
 
-
-        private void Paragraph()
-        {
-            PrivateFontCollection Type;
-            Type = new PrivateFontCollection();
-            Type.AddFontFile("FOnts/Linds.ttf");
-            this.Type = Type;
-        }
+        #endregion Private Methods
     }
 }

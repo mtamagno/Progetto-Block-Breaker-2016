@@ -1,11 +1,11 @@
-﻿using System;
-using BlockBreaker.Properties;
+﻿using BlockBreaker.Properties;
+using System;
 
 namespace BlockBreaker
 {
     public class Playground : Sprite
     {
-        #region Constructors
+        #region Public Constructors
 
         public Playground(float x, float y, int width, int height, Logic logic)
         {
@@ -21,11 +21,10 @@ namespace BlockBreaker
             ToRender = true;
             CanCollide = true;
             FollowPointer = false;
-
             CreateSprite(texture, x, y, width, height);
             logic.IManager.InGameSprites.Add(this);
         }
 
-        #endregion Constructors
+        #endregion Public Constructors
     }
 }

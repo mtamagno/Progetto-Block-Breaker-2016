@@ -1,19 +1,19 @@
-﻿using System;
+﻿using BlockBreaker.Properties;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using BlockBreaker.Properties;
 
 namespace BlockBreaker
 {
     public sealed class MenuButton : Button
     {
-        #region Fields
+        #region Private Fields
 
         private readonly MyFonts _fonts;
 
-        #endregion Fields
+        #endregion Private Fields
 
-        #region Constructors
+        #region Public Constructors
 
         public MenuButton(Size s)
         {
@@ -35,6 +35,9 @@ namespace BlockBreaker
                 MessageBox.Show("invalid button size");
         }
 
+        #endregion Public Constructors
+
+        #region Private Methods
 
         private void MouseHoverButton(object sender, EventArgs e)
         {
@@ -46,6 +49,6 @@ namespace BlockBreaker
             FlatStyle = FlatStyle.Flat;
         }
 
-        #endregion Constructors
+        #endregion Private Methods
     }
 }

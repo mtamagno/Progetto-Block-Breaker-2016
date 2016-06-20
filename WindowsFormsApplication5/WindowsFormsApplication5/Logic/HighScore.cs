@@ -8,18 +8,17 @@ namespace BlockBreaker
 {
     public class HighScore
     {
-        #region Properties
+        #region Public Properties
 
         public string Name { get; set; }
-
         public int Score { get; set; }
 
-        #endregion Properties
+        #endregion Public Properties
     }
 
     public class HighScoreSaver
     {
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         ///     Funzione che si occupa di aggiungere gli highScores e di riordinarli ogni volta in un file "HighScores.xml" che
@@ -68,6 +67,6 @@ namespace BlockBreaker
             }
         }
 
-        #endregion Methods
+        #endregion Public Methods
     }
 }

@@ -6,13 +6,13 @@ namespace BlockBreaker
 {
     public class Grid
     {
-        #region Fields
+        #region Private Fields
 
         private readonly DataGridView _grid;
 
-        #endregion Fields
+        #endregion Private Fields
 
-        #region Constructors
+        #region Public Constructors
 
         //Metodo grid da chiamare per creare una griglia all'interno del form
         public Grid(int x, int y, float clientHeight, float clientWidth, Bitmap texture, Logic logic)
@@ -23,20 +23,19 @@ namespace BlockBreaker
             if (y <= 0) throw new ArgumentOutOfRangeException(nameof(y));
             if (clientHeight <= 0) throw new ArgumentOutOfRangeException(nameof(clientHeight));
             if (clientWidth <= 0) throw new ArgumentOutOfRangeException(nameof(clientWidth));
-
             _grid = new DataGridView();
             _grid.ColumnCount = 20;
             _grid.RowCount = 8;
             _grid.Left = x;
             _grid.Top = y;
-            _grid.Width = (int) clientWidth;
-            _grid.Height = (int) (clientHeight/3);
+            _grid.Width = (int)clientWidth;
+            _grid.Height = (int)(clientHeight / 3);
             insert_grid(texture, logic.IManager);
         }
 
-        #endregion Constructors
+        #endregion Public Constructors
 
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         ///     Metodo insert_grid utilizzato per inserire nei posti giusti i blocchi grazie alle coordinate della griglia
@@ -51,9 +50,9 @@ namespace BlockBreaker
             {
                 for (var k = 0; k < _grid.RowCount; k++)
                 {
-                    var block = new Block(_grid.Width/_grid.ColumnCount*i + _grid.Left + 3,
-                        _grid.Height/_grid.RowCount*k + _grid.Top + 3, _grid.Width/_grid.ColumnCount,
-                        _grid.Height/_grid.RowCount);
+                    var block = new Block(_grid.Width / _grid.ColumnCount * i + _grid.Left + 3,
+                        _grid.Height / _grid.RowCount * k + _grid.Top + 3, _grid.Width / _grid.ColumnCount,
+                        _grid.Height / _grid.RowCount);
                     iManager.InGameSprites.Add(block);
                 }
             }
@@ -70,7 +69,7 @@ namespace BlockBreaker
         public void redraw_block(Block s, int newWidth, int newHeight, float nuovaX, float nuovaY)
         {
             s.TextureSwitcher();
-            s.Redraw(s, _grid.Width/_grid.ColumnCount, _grid.Height/_grid.RowCount, s.texture, nuovaX, nuovaY);
+            s.Redraw(s, _grid.Width / _grid.ColumnCount, _grid.Height / _grid.RowCount, s.texture, nuovaX, nuovaY);
         }
 
         /// <summary>
@@ -84,10 +83,10 @@ namespace BlockBreaker
             if (grid == null) throw new ArgumentNullException(nameof(grid));
             if (clientHeight <= 0) throw new ArgumentOutOfRangeException(nameof(clientHeight));
             if (clientWidth <= 0) throw new ArgumentOutOfRangeException(nameof(clientWidth));
-            grid._grid.Width = (int) clientWidth;
-            grid._grid.Height = (int) (clientHeight/3);
+            grid._grid.Width = (int)clientWidth;
+            grid._grid.Height = (int)(clientHeight / 3);
         }
 
-        #endregion Methods
+        #endregion Public Methods
     }
 }

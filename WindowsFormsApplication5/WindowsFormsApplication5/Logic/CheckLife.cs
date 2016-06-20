@@ -4,7 +4,7 @@ namespace BlockBreaker
 {
     internal class CheckLife
     {
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         ///     Funzione per il Check dell'hit del bottom
@@ -34,6 +34,6 @@ namespace BlockBreaker
             return lifes;
         }
 
-        #endregion Methods
+        #endregion Public Methods
     }
 }
