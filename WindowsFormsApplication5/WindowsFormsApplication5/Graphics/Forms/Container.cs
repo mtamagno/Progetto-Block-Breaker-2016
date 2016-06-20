@@ -49,17 +49,17 @@ namespace BlockBreaker
                 if (_game != null)
                 {
                     _game.Logic.ShouldStop = true;
-
-                    while (_game.GameThread.IsAlive)
+                    _game.GameThread.Join();
+                    /* while (_game.GameThread.IsAlive)
                     {
                         _game.Logic.ShouldStop = true;
-                    }
-                    while (_game.IsAccessible)
-                    {
-                    }
+                        _game.GameThread.Priority = ThreadPriority.Highest;
+                        _game.GameThread.Join();
+                    }*/
                 }
+                _music.Dispose_Music();
                 //pulisco tutto
-                // DisposeAll();
+                DisposeAll();
                 OnClosing(e);
                 Environment.Exit(0);
             }));
