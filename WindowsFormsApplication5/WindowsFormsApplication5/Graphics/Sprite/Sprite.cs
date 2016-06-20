@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace BlockBreaker
 {
@@ -19,26 +20,26 @@ namespace BlockBreaker
         #endregion Fields
 
         #region Properties
+
         /// <summary>
-        /// Proprietà che ritornano le coordinate delle parti degi sprite
+        ///     Proprietà che ritornano le coordinate delle parti degi sprite
         /// </summary>
+        public Rectangle Bottom => new Rectangle((int) X, (int) Y + Height, Width, 20);
 
-        public Rectangle Bottom => new Rectangle((int)X, (int)Y + this.Height, Width, 20);
+        public Rectangle Left => new Rectangle((int) X, (int) Y, 20, Height);
 
-        public Rectangle Left => new Rectangle((int)X, (int)Y, 20, Height);
+        public Rectangle Right => new Rectangle((int) X + Width, (int) Y, 20, Height);
 
-        public Rectangle Right => new Rectangle((int)X + this.Width, (int)Y, 20, Height);
+        public Rectangle Top => new Rectangle((int) X, (int) Y, Width, 20);
 
-        public Rectangle Top => new Rectangle((int)X, (int)Y, Width, 20);
-
-        public Rectangle ToRec => new Rectangle((int)X, (int)Y, Width, Height);
+        public Rectangle ToRec => new Rectangle((int) X, (int) Y, Width, Height);
 
         #endregion Properties
 
         #region Methods
 
         /// <summary>
-        /// Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
+        ///     Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
         /// </summary>
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
@@ -47,7 +48,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        /// Funzione necessaria alla creazione da bitmap degli sprite, e dei loro disegni
+        ///     Funzione necessaria alla creazione da bitmap degli sprite, e dei loro disegni
         /// </summary>
         /// <param name="texture"></param>
         /// <param name="x"></param>
@@ -57,8 +58,8 @@ namespace BlockBreaker
         public void CreateSprite(Bitmap texture, float x, float y, int width, int height)
         {
             // Disegna il bitmap
-            Bitmap b = new Bitmap(width, height);
-            Graphics g = Graphics.FromImage(b);
+            var b = new Bitmap(width, height);
+            var g = Graphics.FromImage(b);
             g.DrawImage(texture, 0, 0, width, height);
 
             // Imposta tipo di sprite con relativi attributi e gli assegno le coordinate x e y
@@ -70,7 +71,6 @@ namespace BlockBreaker
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
-            return;
         }
 
         //Funzione Redraw necessaria ogni qual volta si effettua il resize dei vari sprite
@@ -80,13 +80,13 @@ namespace BlockBreaker
             {
             sprite.Width = newWidth;
             sprite.Height = newheight;
-            Bitmap b = new Bitmap(sprite.Width, sprite.Height);
-            using (Graphics g = Graphics.FromImage(b))
+                var b = new Bitmap(sprite.Width, sprite.Height);
+                using (var g = Graphics.FromImage(b))
             {
                 // Imposta a transparent lo sfondo dello sprite della pallina
                 if (sprite.GetType().Name == "Ball")
                 {
-                    Color backColor = risorsa.GetPixel(0, 0);
+                        var backColor = risorsa.GetPixel(0, 0);
                     risorsa.MakeTransparent(backColor);
                 }
                     // Ridisegna lo sprite
@@ -96,22 +96,22 @@ namespace BlockBreaker
             sprite.Y = nuova_Y;
 
                 // Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
-                    if (sprite.GetType().Name == "Racket" && Container.ActiveForm != null)
-                    sprite.Y = (Math.Abs(Container.ActiveForm.ClientRectangle.Height - sprite.Height)) * 9 / 10;
+                if (sprite.GetType().Name == "Paddle" && Form.ActiveForm != null)
+                    sprite.Y = Math.Abs(Form.ActiveForm.ClientRectangle.Height - sprite.Height)*9/10;
 
             // Imposta la texture dello sprite
             sprite.Texture = b;
-            return;
         }
 
         #endregion Methods
         }
+
         //Il collider fa un check di eventuali impatti tra sprites
     }
 
     /// <summary>
-    /// Classe SpriteHelper con le varie funzioni utili per sapere quando due sprite impattano
-    /// e in particolare quali sezioni di questi due si stanno intersecando
+    ///     Classe SpriteHelper con le varie funzioni utili per sapere quando due sprite impattano
+    ///     e in particolare quali sezioni di questi due si stanno intersecando
     /// </summary>
     internal static class SpriteHelper
     {

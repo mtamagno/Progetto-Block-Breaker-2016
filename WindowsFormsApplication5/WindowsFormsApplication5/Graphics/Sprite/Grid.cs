@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace BlockBreaker
 {
@@ -7,7 +8,7 @@ namespace BlockBreaker
     {
         #region Fields
 
-        private readonly System.Windows.Forms.DataGridView _grid;
+        private readonly DataGridView _grid;
 
         #endregion Fields
 
@@ -23,14 +24,14 @@ namespace BlockBreaker
             if (clientHeight <= 0) throw new ArgumentOutOfRangeException(nameof(clientHeight));
             if (clientWidth <= 0) throw new ArgumentOutOfRangeException(nameof(clientWidth));
 
-            this._grid = new System.Windows.Forms.DataGridView();
-            this._grid.ColumnCount = 20;
-            this._grid.RowCount = 8;
-            this._grid.Left = x;
-            this._grid.Top = y;
-            this._grid.Width = (int)clientWidth;
-            this._grid.Height = (int)(clientHeight / 3);
-            this.insert_grid(texture, logic.IManager);
+            _grid = new DataGridView();
+            _grid.ColumnCount = 20;
+            _grid.RowCount = 8;
+            _grid.Left = x;
+            _grid.Top = y;
+            _grid.Width = (int) clientWidth;
+            _grid.Height = (int) (clientHeight/3);
+            insert_grid(texture, logic.IManager);
         }
 
         #endregion Constructors
@@ -38,7 +39,7 @@ namespace BlockBreaker
         #region Methods
 
         /// <summary>
-        /// Metodo insert_grid utilizzato per inserire nei posti giusti i blocchi grazie alle coordinate della griglia
+        ///     Metodo insert_grid utilizzato per inserire nei posti giusti i blocchi grazie alle coordinate della griglia
         /// </summary>
         /// <param name="texture"></param>
         /// <param name="iManager"></param>
@@ -46,18 +47,20 @@ namespace BlockBreaker
         {
             if (texture == null) throw new ArgumentNullException(nameof(texture));
             if (iManager == null) throw new ArgumentNullException(nameof(iManager));
-            for (int i = 0; i < _grid.ColumnCount; i++)
+            for (var i = 0; i < _grid.ColumnCount; i++)
             {
-                for (int k = 0; k < _grid.RowCount; k++)
+                for (var k = 0; k < _grid.RowCount; k++)
                 {
-                    Block block = new Block((_grid.Width / _grid.ColumnCount) * i + _grid.Left + 3, (_grid.Height / _grid.RowCount) * k + _grid.Top + 3, _grid.Width / _grid.ColumnCount, _grid.Height / _grid.RowCount);
-                    iManager.inGameSprites.Add(block);
+                    var block = new Block(_grid.Width/_grid.ColumnCount*i + _grid.Left + 3,
+                        _grid.Height/_grid.RowCount*k + _grid.Top + 3, _grid.Width/_grid.ColumnCount,
+                        _grid.Height/_grid.RowCount);
+                    iManager.InGameSprites.Add(block);
                 }
             }
         }
 
         /// <summary>
-        /// Metodo utilizzato per scalare i blocchi al variare della dimensione della finestra di gioco
+        ///     Metodo utilizzato per scalare i blocchi al variare della dimensione della finestra di gioco
         /// </summary>
         /// <param name="s"></param>
         /// <param name="newWidth"></param>
@@ -67,11 +70,11 @@ namespace BlockBreaker
         public void redraw_block(Block s, int newWidth, int newHeight, float nuovaX, float nuovaY)
         {
             s.TextureSwitcher();
-            s.Redraw(s, (_grid.Width / _grid.ColumnCount), (_grid.Height / _grid.RowCount), s.texture, nuovaX, nuovaY);
+            s.Redraw(s, _grid.Width/_grid.ColumnCount, _grid.Height/_grid.RowCount, s.texture, nuovaX, nuovaY);
         }
 
         /// <summary>
-        /// Metodo utilizzato per scalare la griglia al variare della dimensione della finestra di gioco
+        ///     Metodo utilizzato per scalare la griglia al variare della dimensione della finestra di gioco
         /// </summary>
         /// <param name="grid"></param>
         /// <param name="clientHeight"></param>
@@ -81,8 +84,8 @@ namespace BlockBreaker
             if (grid == null) throw new ArgumentNullException(nameof(grid));
             if (clientHeight <= 0) throw new ArgumentOutOfRangeException(nameof(clientHeight));
             if (clientWidth <= 0) throw new ArgumentOutOfRangeException(nameof(clientWidth));
-            grid._grid.Width = (int)clientWidth;
-            grid._grid.Height = (int)(clientHeight / 3);
+            grid._grid.Width = (int) clientWidth;
+            grid._grid.Height = (int) (clientHeight/3);
         }
 
         #endregion Methods

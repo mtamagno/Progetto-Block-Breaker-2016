@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Drawing;
+using BlockBreaker.Properties;
 
 namespace BlockBreaker
 {
     public class Playground : Sprite
     {
-        #region Fields
-
-  
-
-        #endregion Fields
-
         #region Constructors
 
         public Playground(float x, float y, int width, int height, Logic logic)
@@ -22,14 +16,14 @@ namespace BlockBreaker
             if (height <= 0) throw new ArgumentOutOfRangeException(nameof(height));
 
             //Imposta la texture e i vaolri di canfall toRender cancollide e followpointer
-            var texture = Properties.Resources.Schermo_800_600_GBA;
-            this.CanFall = false;
-            this.ToRender = true;
-            this.CanCollide = true;
-            this.FollowPointer = false;
+            var texture = Resources.Schermo_800_600_GBA;
+            CanFall = false;
+            ToRender = true;
+            CanCollide = true;
+            FollowPointer = false;
 
-            this.CreateSprite(texture, x, y, width, height);
-            logic.IManager.inGameSprites.Add(this);
+            CreateSprite(texture, x, y, width, height);
+            logic.IManager.InGameSprites.Add(this);
         }
 
         #endregion Constructors

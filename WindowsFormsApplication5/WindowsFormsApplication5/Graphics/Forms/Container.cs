@@ -1,12 +1,21 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace BlockBreaker
 {
     public partial class Container : Form
     {
+        #region Constructors
+
+        public Container()
+        {
+            InitializeComponent();
+        }
+
+        #endregion Constructors
+
         #region Fields
 
         private bool _again;
@@ -25,90 +34,78 @@ namespace BlockBreaker
 
         #endregion Fields
 
-        #region Constructors
-
-        public Container()
-        {
-            InitializeComponent();
-        }
-
-        #endregion Constructors
-
         #region Methods
 
         /// <summary>
-        /// Funzione per la chiusura di container
+        ///     Funzione per la chiusura di container
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ContainerFormClosing(object sender, FormClosingEventArgs e)
         {
-            this.Invoke(new MethodInvoker(delegate
+            Invoke(new MethodInvoker(delegate
             {
-            //se l utente preme x dalla schermata di gioco devo fermare il thread del gioco
-            if (_game != null)
+                //se l utente preme x dalla schermata di gioco devo fermare il thread del gioco
+                if (_game != null)
                 {
                     _game.Logic.ShouldStop = true;
-
-                    while (_game.GameThread.IsAlive) {
-                        _game.Logic.ShouldStop = true;
-                    }
-                    while (_game.IsAccessible)
+                    _game.GameThread.Join();
+                    /* while (_game.GameThread.IsAlive)
                     {
-
-                    }
+                        _game.Logic.ShouldStop = true;
+                        _game.GameThread.Priority = ThreadPriority.Highest;
+                        _game.GameThread.Join();
+                    }*/
                 }
-            //pulisco tutto
-           // DisposeAll();
-            base.OnClosing(e);
-            System.Environment.Exit(0);
+                _music.Dispose_Music();
+                //pulisco tutto
+                DisposeAll();
+                OnClosing(e);
+                Environment.Exit(0);
             }));
-
-            
         }
 
         /// <summary>
-        /// Funzione Per il Caricamento di Container
+        ///     Funzione Per il Caricamento di Container
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Container2_Load(object sender, EventArgs e)
         {
-            this.MinimumSize = new System.Drawing.Size(700, 450);
+            MinimumSize = new Size(700, 450);
 
             _audioOnOff = true;
-            this._music = new Music();
+            _music = new Music();
 
             // Imposta _again a false per dire che il gioco e' stato avviato per la prima volta
-            this._again = false;
+            _again = false;
 
             // Inizializza il pannello che conterra' i form dell'applicazione
-            this.InitializeGamePanel();
-            this._gamePanels.AutoSizeMode = AutoSizeMode;
+            InitializeGamePanel();
+            _gamePanels.AutoSizeMode = AutoSizeMode;
 
             // Inizializza il _menu come primo form che apparira' nel gioco
-            this.InitializeMenu();
+            InitializeMenu();
 
             //Salvo le dimensioni del client prima dei ridimensionamenti per poter calcolare la proporzione
-            _lunghezzaClientIniziale = this.ClientRectangle.Width;
-            _altezzaClientIniziale = this.ClientRectangle.Height;
+            _lunghezzaClientIniziale = ClientRectangle.Width;
+            _altezzaClientIniziale = ClientRectangle.Height;
         }
 
         private void ButtonAudioSet()
         {
             if (_audioButton != null)
                 _audioButton.Dispose();
-            Size s = new Size(30, 30);
+            var s = new Size(30, 30);
             _audioButton = new AudioButtons(s);
             _audioButton.Visible = true;
             _audioButton.Left = 50;
-            _audioButton.Top = this.Height - this._audioButton.Height - 45;
-            this.Controls.Add(_audioButton);
+            _audioButton.Top = Height - _audioButton.Height - 45;
+            Controls.Add(_audioButton);
             _audioButton.BringToFront();
-            this._audioButton.MouseClick += Audio;
+            _audioButton.MouseClick += Audio;
             _audioButton.TabStop = false;
             _audioButton.BackColor = Color.Transparent;
-
         }
 
         private void Audio(object sender, EventArgs e)
@@ -116,49 +113,48 @@ namespace BlockBreaker
             _audioOnOff = !_audioOnOff;
 
             if (!_audioOnOff)
-                this._music.BackgroundMusic.Stop();
+                _music.BackgroundMusic.Stop();
             else
-                this._music.BackgroundMusic.Play();
+                _music.BackgroundMusic.Play();
 
             _audioButton.ChangeState();
-            this.ProcessTabKey(true);
-
+            ProcessTabKey(true);
         }
 
         /// <summary>
-        /// Funzione necessaria per cambiare form dopo la fine della partita
+        ///     Funzione necessaria per cambiare form dopo la fine della partita
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ContinueToMenu(object sender, EventArgs e)
         {
-
-            if (_gameOver.TextBox.Text != "Insert Name..." && !string.IsNullOrEmpty(_gameOver.TextBox.Text) && !string.IsNullOrWhiteSpace(_gameOver.TextBox.Text))
+            if (_gameOver.TextBox.Text != "Insert Name..." && !string.IsNullOrEmpty(_gameOver.TextBox.Text) &&
+                !string.IsNullOrWhiteSpace(_gameOver.TextBox.Text))
             {
-            // Salva prima lo score, poi l'_highScore nell'xml
-                this._highScore.Name = _gameOver.TextBox.Text;
-            HighScoreSaver highScoreSaver = new HighScoreSaver();
-            highScoreSaver.ModifyOrCreateXML(_highScore);
+                // Salva prima lo score, poi l'_highScore nell'xml
+                _highScore.Name = _gameOver.TextBox.Text;
+                var highScoreSaver = new HighScoreSaver();
+                highScoreSaver.ModifyOrCreateXml(_highScore);
 
-            // Imposta che il giocatore ha gia finito una partita
-            this._again = true;
+                // Imposta che il giocatore ha gia finito una partita
+                _again = true;
 
-            // Pulisce tutto
-            this.DisposeAll();
+                // Pulisce tutto
+                DisposeAll();
 
-            // Inizializza il gamePanel
-            this.InitializeGamePanel();
+                // Inizializza il gamePanel
+                InitializeGamePanel();
 
-            // Inizializza il _menu
-            this.InitializeMenu();
+                // Inizializza il _menu
+                InitializeMenu();
 
-            // Svuota il garbage collector per liberare memoria
-            GC.Collect();
+                // Svuota il garbage collector per liberare memoria
+                GC.Collect();
 
-            // Aspetta che il garbage collecor finisca
-            GC.WaitForPendingFinalizers();
-            GC.WaitForFullGCComplete();
-        }
+                // Aspetta che il garbage collecor finisca
+                GC.WaitForPendingFinalizers();
+                GC.WaitForFullGCComplete();
+            }
 
             else
             {
@@ -170,61 +166,61 @@ namespace BlockBreaker
         {
             try
             {
-                this.Invoke(new MethodInvoker(delegate
+                Invoke(new MethodInvoker(delegate
                 {
-                //rimuovo il gamePanel dal container
-                this.Controls.Remove(_gamePanels);
+                    //rimuovo il gamePanel dal container
+                    Controls.Remove(_gamePanels);
 
-                //Pulisco il gamepanel
-                this._gamePanels.Dispose();
-                    this._gamePanels.Controls.Clear();
+                    //Pulisco il gamepanel
+                    _gamePanels.Dispose();
+                    _gamePanels.Controls.Clear();
 
-                // Imposta il gamePanel a null
-                this._gamePanels = null;
+                    // Imposta il gamePanel a null
+                    _gamePanels = null;
 
-                //pulisco il container
-                this.Controls.Clear();
+                    //pulisco il container
+                    Controls.Clear();
 
-                //pulisco il gioco
-                if (this._game != null)
+                    //pulisco il gioco
+                    if (_game != null)
                     {
-                        this._game.Controls.Clear();
-                        this._game.Close();
-                        this._game.Dispose();
-                        this._game = null;
+                        _game.Controls.Clear();
+                        _game.Close();
+                        _game.Dispose();
+                        _game = null;
                     }
 
-                //pulisco il _menu
-                if (this._menu != null)
+                    //pulisco il _menu
+                    if (_menu != null)
                     {
-                        this._menu.Start.Dispose();
-                        this._menu.Cleaner();
-                        this._menu.Controls.Clear();
-                        this._menu.Close();
-                        this._menu.Dispose();
-                        this._menu = null;
+                        _menu.Start.Dispose();
+                        _menu.Cleaner();
+                        _menu.Controls.Clear();
+                        _menu.Close();
+                        _menu.Dispose();
+                        _menu = null;
                     }
 
-                //pulisco il _gameOver
-                if (this._gameOver != null)
+                    //pulisco il _gameOver
+                    if (_gameOver != null)
                     {
-                        this._gameOver.Continue.Dispose();
-                        this._gameOver.Cleaner();
-                        this._gameOver.Controls.Clear();
-                        this._gameOver.Close();
-                        this._gameOver.Dispose();
-                        this._gameOver = null;
+                        _gameOver.Continue.Dispose();
+                        _gameOver.Cleaner();
+                        _gameOver.Controls.Clear();
+                        _gameOver.Close();
+                        _gameOver.Dispose();
+                        _gameOver = null;
                     }
 
-                //Pulisco il garbage collector
-                GC.Collect();
+                    //Pulisco il garbage collector
+                    GC.Collect();
                     GC.WaitForPendingFinalizers();
                     GC.WaitForFullGCComplete();
                 }));
             }
             catch (InvalidOperationException)
             {
-                this.Close();
+                Close();
             }
         }
 
@@ -251,7 +247,7 @@ namespace BlockBreaker
             form.AutoScaleMode = AutoScaleMode.Inherit;
 
             //aggiungo e mostro il form a schermo
-            this.Invoke(new MethodInvoker(delegate
+            Invoke(new MethodInvoker(delegate
             {
                 _gamePanels.Controls.Add(form);
                 form.Show();
@@ -267,12 +263,11 @@ namespace BlockBreaker
         }
 
 
-
         /// <summary>
-        /// Funzione necessaria ad inizializzare il form del gioco
+        ///     Funzione necessaria ad inizializzare il form del gioco
         /// </summary>
         private void InitializeGame()
-        {   
+        {
             //assegno al gioco un nuovo gioco
             _game = new Game();
 
@@ -283,18 +278,18 @@ namespace BlockBreaker
             _music.Game();
 
             //assegno un evento alla chiusura del _game
-            _game.VisibleChanged += new EventHandler(OnGameover);
+            _game.VisibleChanged += OnGameover;
         }
 
         /// <summary>
-        /// Funzione necessaria a inizializzare il form del gameover
+        ///     Funzione necessaria a inizializzare il form del gameover
         /// </summary>
         private void InitializeGameOver()
         {
             //assegno al _gameOver un nuovo _gameOver
             _gameOver = new GameOver();
 
-            this.Text = "BlockBreaker - Gameover";
+            Text = "BlockBreaker - Gameover";
 
             // Inizializza il _gameOver
             InitializeForm(_gameOver);
@@ -303,7 +298,7 @@ namespace BlockBreaker
             _gameOver.Continue.Text = "Continue";
 
             //Assegno un evento al pusalnte del _gameOver
-            _gameOver.Continue.Click += new EventHandler(this.ContinueToMenu);
+            _gameOver.Continue.Click += ContinueToMenu;
 
             //Faccio partire la musica del _gameOver
             _music.GameOver();
@@ -311,24 +306,23 @@ namespace BlockBreaker
 
         private void OnGameover(object sender, EventArgs e)
         {
-                //se l'utente ha finito il gioco salvo l _highScore ottenuto
-                this._highScore = this._game.Logic.HighScore;
+            //se l'utente ha finito il gioco salvo l _highScore ottenuto
+            _highScore = _game.Logic.HighScore;
 
-                //ri Imposta il _game.Logic a false
-                _game.Logic.ShouldStop = false;
+            //ri Imposta il _game.Logic a false
+            _game.Logic.ShouldStop = false;
 
-                //pulisco tutto
-                DisposeAll();
+            //pulisco tutto
+            DisposeAll();
 
-                // Inizializza di nuovo il gamePanel
-                InitializeGamePanel();
+            // Inizializza di nuovo il gamePanel
+            InitializeGamePanel();
 
-                // Inizializza il _gameOver
-                InitializeGameOver();
-            
+            // Inizializza il _gameOver
+            InitializeGameOver();
+
             GC.Collect();
             GC.WaitForPendingFinalizers();
-
         }
 
         private void InitializeGamePanel()
@@ -337,11 +331,11 @@ namespace BlockBreaker
             _gamePanels = new Panel();
 
             // Imposta altezza e lunghezza del pannello
-            _gamePanels.Width = this.Width;
-            _gamePanels.Height = this.Height;
+            _gamePanels.Width = Width;
+            _gamePanels.Height = Height;
 
             // Imposta il metodo Dock per far riempire al pannello tutto lo spazio del form
-            this.Dock = DockStyle.Fill;
+            Dock = DockStyle.Fill;
 
             // Imposta la posizione iniziale del pannello
             _gamePanels.Top = 0;
@@ -356,42 +350,39 @@ namespace BlockBreaker
 
             try
             {
-            //aggiungo il pannello al form
-            this.Invoke(new MethodInvoker(delegate
-            {
-                this.Controls.Add(_gamePanels);
-            }));
-        }
-            catch(InvalidOperationException)
+                //aggiungo il pannello al form
+                Invoke(new MethodInvoker(delegate { Controls.Add(_gamePanels); }));
+            }
+            catch (InvalidOperationException)
             {
                 Thread.Sleep(1000);
-                this.Close();
+                Close();
             }
         }
 
         /// <summary>
-        /// Funzione necessaria a inizializzare il form del _menu
+        ///     Funzione necessaria a inizializzare il form del _menu
         /// </summary>
         private void InitializeMenu()
         {
             // Assegna al _menu un nuovo _menu
-            this._menu = new Menu();
-            this.Text = "BlockBreaker - Menu";
+            _menu = new Menu();
+            Text = "BlockBreaker - Menu";
             // Inizializza il _menu
             InitializeForm(_menu);
 
             // Controlla se e' la prima partita dell utente
             if (_again)
-                this._menu.Start.Text = "Play Again";
+                _menu.Start.Text = "Play Again";
             else
-                this._menu.Start.Text = "Play";
+                _menu.Start.Text = "Play";
 
             // Assegna al pulsante del _menu un evento
-            this._menu.Start.Click += new EventHandler(this.StartGame);
-            this._menu.Start.Text = "Play";
+            _menu.Start.Click += StartGame;
+            _menu.Start.Text = "Play";
 
             // Fa partire la musica del _menu
-            this._music.Menu();
+            _music.Menu();
         }
 
         // Funzione chiamata quando viene ridimensionata la finestra
@@ -401,43 +392,43 @@ namespace BlockBreaker
                 _game.Logic.WaitResize = true;
 
             // Imposta i nuovi valori del gamePanel
-            _gamePanels.Height = this.ClientRectangle.Height;
-            _gamePanels.Width = this.ClientRectangle.Width;
+            _gamePanels.Height = ClientRectangle.Height;
+            _gamePanels.Width = ClientRectangle.Width;
             _gamePanels.Top = 0;
             _gamePanels.Left = 0;
 
             // Salva le dimensioni del client
-            _lunghezzaClient = this.ClientRectangle.Width;
-            _altezzaClient = this.ClientRectangle.Height;
+            _lunghezzaClient = ClientRectangle.Width;
+            _altezzaClient = ClientRectangle.Height;
 
             if (_game != null)
             {
-                this.InitializeForm(_game);
-                this._game.on_resize(_lunghezzaClientIniziale, _altezzaClientIniziale, _lunghezzaClient, _altezzaClient);
-                this._game.Ball.TotalVelocityReset(_lunghezzaClientIniziale, _altezzaClientIniziale, _lunghezzaClient, _altezzaClient);
-
+                InitializeForm(_game);
+                _game.on_resize(_lunghezzaClientIniziale, _altezzaClientIniziale, _lunghezzaClient, _altezzaClient);
+                _game.Ball.TotalVelocityReset(_lunghezzaClientIniziale, _altezzaClientIniziale, _lunghezzaClient,
+                    _altezzaClient);
             }
-            if (this._menu != null)
+            if (_menu != null)
             {
-                this.InitializeForm(this._menu);
-                this._menu.on_resize(this.Width, this.Height);
-                this._menu.Start.Click += new EventHandler(this.StartGame);
+                InitializeForm(_menu);
+                _menu.on_resize(Width, Height);
+                _menu.Start.Click += StartGame;
             }
-            if (this._gameOver != null)
+            if (_gameOver != null)
             {
-                this.InitializeForm(_gameOver);
-                this._gameOver.on_resize(this.Width, this.Height);
+                InitializeForm(_gameOver);
+                _gameOver.on_resize(Width, Height);
             }
-            if (this._game != null)
+            if (_game != null)
                 _game.Logic.WaitResize = false;
 
             // Aggiorna le nuove dimensioni iniziali del client
-            _lunghezzaClientIniziale = this.ClientRectangle.Width;
-            _altezzaClientIniziale = this.ClientRectangle.Height;
+            _lunghezzaClientIniziale = ClientRectangle.Width;
+            _altezzaClientIniziale = ClientRectangle.Height;
         }
 
         /// <summary>
-        /// Funzione necessaria a far partire il gioco
+        ///     Funzione necessaria a far partire il gioco
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

@@ -22,23 +22,23 @@ namespace BlockBreaker
         #region Methods
 
         /// <summary>
-        /// Funzione che si occupa di aggiungere gli highScores e di riordinarli ogni volta in un file "HighScores.xml" che viene creato se non esiste
+        ///     Funzione che si occupa di aggiungere gli highScores e di riordinarli ogni volta in un file "HighScores.xml" che
+        ///     viene creato se non esiste
         /// </summary>
-        /// <param name="CurrentHighScore"></param>
-        public void ModifyOrCreateXML(HighScore CurrentHighScore)
+        /// <param name="currentHighScore"></param>
+        public void ModifyOrCreateXml(HighScore currentHighScore)
         {
             if (File.Exists("HighScores.xml"))
             {
-
-                XDocument xDocument = XDocument.Load("HighScores.xml");
+                var xDocument = XDocument.Load("HighScores.xml");
                 IEnumerable<XElement> rows;
-                XElement root = xDocument.Element("HighScores");
+                var root = xDocument.Element("HighScores");
                 rows = root.Descendants("HighScore");
-                XElement lastrow = rows.Last();
+                var lastrow = rows.Last();
                 lastrow.AddAfterSelf(
                 new XElement("HighScore",
-                    new XElement("Name", CurrentHighScore.Name),
-                    new XElement("Score", CurrentHighScore.Score)));
+                        new XElement("Name", currentHighScore.Name),
+                        new XElement("Score", currentHighScore.Score)));
 
                 // Crea la lista giusta e salvo
                 var orderedHighScores = xDocument.Descendants("HighScore").OrderByDescending(e => (int.Parse(e.Element("Score").Value)));
@@ -47,18 +47,18 @@ namespace BlockBreaker
             }
             else
             {
-                XmlWriterSettings settings = new XmlWriterSettings();
+                var settings = new XmlWriterSettings();
                 settings.Indent = true;
                 settings.NewLineOnAttributes = true;
-                using (XmlWriter writer = XmlWriter.Create("HighScores.xml", settings))
+                using (var writer = XmlWriter.Create("HighScores.xml", settings))
                 {
                     writer.WriteStartDocument();
                     writer.WriteStartElement("HighScores");
                     writer.WriteStartElement("HighScore");
 
                     // Crea un nuovo nodo
-                    writer.WriteElementString("Name", CurrentHighScore.Name);
-                    writer.WriteElementString("Score", CurrentHighScore.Score.ToString());
+                    writer.WriteElementString("Name", currentHighScore.Name);
+                    writer.WriteElementString("Score", currentHighScore.Score.ToString());
                     writer.WriteEndElement();
                     writer.WriteEndDocument();
                     writer.Flush();

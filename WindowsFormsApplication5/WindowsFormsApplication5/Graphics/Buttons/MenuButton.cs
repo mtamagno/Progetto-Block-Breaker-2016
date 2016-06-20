@@ -1,6 +1,7 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
-using System;
+using BlockBreaker.Properties;
 
 namespace BlockBreaker
 {
@@ -9,6 +10,7 @@ namespace BlockBreaker
         #region Fields
 
         private readonly MyFonts _fonts;
+
         #endregion Fields
 
         #region Constructors
@@ -17,17 +19,17 @@ namespace BlockBreaker
         {
             if (s.Height > 0 && s.Width > 0)
             {
-                _fonts = new MyFonts(MyFonts.FontType.paragraph);
-                this.UseCompatibleTextRendering = true;
-                this.Size = s;
-                this.Font = new Font(_fonts.type.Families[0], 12, FontStyle.Regular);
-                var buttonBackground = new Bitmap(Properties.Resources.BlueRoundedButton, this.Size);
-                this.BackgroundImage = buttonBackground;
-                this.BackgroundImageLayout = ImageLayout.Stretch;
-                this.BackColor = Color.Transparent;
-                this.MouseHover += MouseHoverButton;
-                this.MouseLeave += MouseLeaveButton;
-                this.FlatStyle = FlatStyle.Flat;
+                _fonts = new MyFonts(MyFonts.FontType.Paragraph);
+                UseCompatibleTextRendering = true;
+                Size = s;
+                Font = new Font(_fonts.Type.Families[0], 12, FontStyle.Regular);
+                var buttonBackground = new Bitmap(Resources.BlueRoundedButton, Size);
+                BackgroundImage = buttonBackground;
+                BackgroundImageLayout = ImageLayout.Stretch;
+                BackColor = Color.Transparent;
+                MouseHover += MouseHoverButton;
+                MouseLeave += MouseLeaveButton;
+                FlatStyle = FlatStyle.Flat;
             }
             else
                 MessageBox.Show("invalid button size");
@@ -36,14 +38,12 @@ namespace BlockBreaker
 
         private void MouseHoverButton(object sender, EventArgs e)
         {
-            this.FlatStyle = FlatStyle.Popup;
-           
+            FlatStyle = FlatStyle.Popup;
         }
 
         private void MouseLeaveButton(object sender, EventArgs e)
         {
-            
-            this.FlatStyle = FlatStyle.Flat;
+            FlatStyle = FlatStyle.Flat;
         }
 
         #endregion Constructors
