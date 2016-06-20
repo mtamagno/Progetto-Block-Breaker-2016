@@ -41,8 +41,8 @@ namespace BlockBreaker
                     new XElement("Score", CurrentHighScore.Score)));
 
                 // Crea la lista giusta e salvo
-                var ciao = xDocument.Descendants("HighScore").OrderByDescending(e => (int.Parse(e.Element("Score").Value)));
-                root.ReplaceAll(ciao);
+                var orderedHighScores = xDocument.Descendants("HighScore").OrderByDescending(e => (int.Parse(e.Element("Score").Value)));
+                root.ReplaceAll(orderedHighScores);
                 xDocument.Save("HighScores.xml");
             }
             else

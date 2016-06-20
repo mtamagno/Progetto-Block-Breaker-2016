@@ -12,32 +12,33 @@ namespace BlockBreaker
     {
         #region Fields
 
-        //variabili per accelerazione y, texture, velocità totale e attuale, spia che notifica la raggiunta della velocità massima
-        public int AccelY = 50;
-
         public Stream Stream;
         public PointF Velocity;
         public PointF PreviousVelocity;
+        public int AccelY = 50;
         public float PreviousX;
         public float PreviousY;
         public float PreviousVelocityTot;
         public float VelocityTot;
         public float VelocityTotLimit = 3000;
-        public int VelocityTotRaggiunto;
+        public bool ReachedVelocityTot;
         private bool _blockHit = false;
-        private readonly SoundEffect _music;
+        private readonly SoundEffect _sound;
         private Thread _hurt;
+
         #endregion Fields
 
         #region Constructors
 
         public Ball(float x, float y, int width, int height, Logic logic)
         {
+
             if (logic == null) throw new ArgumentNullException(nameof(logic));
             if (x <= 0) throw new ArgumentOutOfRangeException(nameof(x));
             if (y <= 0) throw new ArgumentOutOfRangeException(nameof(y));
             if (width <= 0) throw new ArgumentOutOfRangeException(nameof(width));
             if (height <= 0) throw new ArgumentOutOfRangeException(nameof(height));
+
             // Imposta le proprietà della pallina
             this.PreviousVelocityTot = 0;
             this.PreviousVelocity.X = 0;
@@ -52,7 +53,7 @@ namespace BlockBreaker
 
 
             Stream = TitleContainer.OpenStream(@"SoundEffect/Music.wav");
-            _music = SoundEffect.FromStream(Stream);
+            _sound = SoundEffect.FromStream(Stream);
 
             //rendo invisibile lo sfondo dello sprite della pallina
             System.Drawing.Color backColor = texture.GetPixel(0, 0);
@@ -84,7 +85,7 @@ namespace BlockBreaker
 
             //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
             this.VelocityTot = (float)Math.Sqrt((double)((this.Velocity.X * this.Velocity.X) + (this.Velocity.Y * this.Velocity.Y)));
-            if (this.VelocityTotRaggiunto == 1)
+            if (this.ReachedVelocityTot == true)
                 this.VelocityTotLimit = this.VelocityTot;
         }
 
@@ -101,7 +102,7 @@ namespace BlockBreaker
 
             //Se la velocità totale non è ancora a velocityTotLimit, Imposta la spia a 0 così da continuare a farla aumentare
             if (VelocityTot < VelocityTotLimit)
-                VelocityTotRaggiunto = 0;
+                ReachedVelocityTot = false;
 
             //Se il valore canFall è vero e quindi si tratta della pallina,
             //in caso la velocità massima non sia arrivata a velocityTotLimit
@@ -112,13 +113,13 @@ namespace BlockBreaker
                 if (this.VelocityTot >= VelocityTotLimit)
                 {
                     this.VelocityTot = VelocityTotLimit;
-                    this.VelocityTotRaggiunto = 1;
+                    this.ReachedVelocityTot = true;
                 }
 
                 //Altrimenti aumento la velocità di y (o decremento se questa è negativa)
                 else
                 {
-                    if (this.VelocityTotRaggiunto == 0)
+                    if (this.ReachedVelocityTot == false)
                     {
                         if (this.Velocity.Y >= 0)
                         {
@@ -150,7 +151,7 @@ namespace BlockBreaker
             Block myBlock = (Block)s;
             _blockHit = false;
 
-            if (this.IsCollidingWith(myBlock) && myBlock.CanCollide == true)
+            if (this.IsCollidingWith(myBlock))
             {
                 // Se un blocco viene toccato dalla pallina gli tolgo una vita e cambio la texture
                 if (this.IsTouchingTop(myBlock) || this.IsTouchingBottom(myBlock))
@@ -221,14 +222,14 @@ namespace BlockBreaker
             // Per ogni sprite presente nella lista contenuta dell'imanager
             foreach (Sprite s in iManager.inGameSprites)
             {
-                if (s.GetType().Name == "Block")
+                if (s.GetType().Name == "Block" && s.CanCollide == true)
                 {
                     BlockCollision(s);
                 }
 
-                if (s.GetType().Name == "Paddle")
+                if (s.GetType().Name == "Racket")
                 {
-                    PaddleCollision(s);
+                    RacketCollision(s);
                 }
 
                 if (s.GetType().Name == "Playground")
@@ -239,39 +240,38 @@ namespace BlockBreaker
         }
 
         //Gestisco i casi in cui la pallina collide contro la racchetta
-        private void PaddleCollision(Sprite s)
+        private void RacketCollision(Sprite s)
         {
-            Paddle mypaddle = (Paddle)s;
-            if (mypaddle.IsCollidingWith(this))
+            Racket myRacket = (Racket)s;
+            if (myRacket.IsCollidingWith(this))
             {
-                _hurt = new Thread(mypaddle.OnHurt);
+                _hurt = new Thread(myRacket.OnHurt);
                 _hurt.Start();
 
                 //La pallina impatta con la racchetta
-                if (this.IsTouchingBottom(mypaddle))
+                if (this.IsTouchingBottom(myRacket))
                 {
                     //La pallina impatta con la metà sinistra
-                    if ((this.X + this.Width / 2) <= (mypaddle.X + mypaddle.Width / 2))
+                    if ((this.X + this.Width / 2) <= (myRacket.X + myRacket.Width / 2))
                     {
                         double coseno;
-                        coseno = Math.Abs(Math.Cos(mypaddle.Angolo(this.X + this.Width / 2 - mypaddle.X, mypaddle.Width / 2)));
+                        coseno = Math.Abs(Math.Cos(myRacket.Angolo(this.X + this.Width / 2 - myRacket.X, myRacket.Width / 2)));
                         this.Velocity.X = -this.VelocityTot * (float)coseno;
                         this.Velocity.Y = -(float)Math.Sqrt(Math.Abs((double)((this.VelocityTot * this.VelocityTot) - (this.Velocity.X * this.Velocity.X))));
-                        this.Y = mypaddle.Y - this.Height;
+                        this.Y = myRacket.Y - this.Height;
                     }
                     else
 
                     //Altrimenti con la metà destra
                     {
                         double seno;
-                        seno = Math.Abs(Math.Sin(mypaddle.Angolo(this.X + this.Width / 2 - mypaddle.X - mypaddle.Width / 2, mypaddle.Width / 2)));
+                        seno = Math.Abs(Math.Sin(myRacket.Angolo(this.X + this.Width / 2 - myRacket.X - myRacket.Width / 2, myRacket.Width / 2)));
                         this.Velocity.X = this.VelocityTot * (float)seno;
                         this.Velocity.Y = -(float)Math.Sqrt((double)(Math.Abs((this.VelocityTot * this.VelocityTot) - (this.Velocity.X * this.Velocity.X))));
-                        this.Y = mypaddle.Y - this.Height;
+                        this.Y = myRacket.Y - this.Height;
                     }
                 }              
             }
-
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace BlockBreaker
         private void PlaySound()
         {
             FrameworkDispatcher.Update();
-            _music.Play();
+            _sound.Play();
         }
 
         /// <summary>

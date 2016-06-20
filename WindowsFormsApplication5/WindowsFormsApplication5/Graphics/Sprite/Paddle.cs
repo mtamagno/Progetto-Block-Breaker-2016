@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace BlockBreaker
 {
-    public class Paddle : Sprite
+    public class Racket : Sprite
     {
         #region Fields
 
@@ -14,7 +14,7 @@ namespace BlockBreaker
 
         #region Constructors
 
-        public Paddle(float x, float y, int width, int height, Logic logic)
+        public Racket(float x, float y, int width, int height, Logic logic)
         {
             if (logic == null) throw new ArgumentNullException(nameof(logic));
             if (width <= 0) throw new ArgumentOutOfRangeException(nameof(width));

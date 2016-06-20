@@ -41,7 +41,7 @@ namespace BlockBreaker
                 "\n.\n." +
                 "\nClick on the button start to start the game"+
                 "\n."+
-                "\nMove your cursor to move the paddle" +
+                "\nMove your cursor to move the Racket" +
                 "\n." +
                 "\nPress space to throw the ball" +
                 "\n." +

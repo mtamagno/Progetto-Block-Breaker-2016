@@ -16,7 +16,7 @@ namespace BlockBreaker
         public Thread GameThread;
         public Grid Grid;
         public Logic Logic;
-        public Paddle Racchetta;
+        public Racket Racchetta;
         public Label Score;
         public Life[] Vita = new Life[3];
         private GamePause _gamePause;
@@ -285,7 +285,7 @@ namespace BlockBreaker
 
             // Inizializza racchetta
             if (this.Visible)
-                Racchetta = new Paddle(Logic.MousePoint.X - this.Location.X,
+                Racchetta = new Racket(Logic.MousePoint.X - this.Location.X,
                     (float)this.Background.Height * 9 / 10 + this.Background.Y,
                     (int)(Math.Abs((float)1 / 8 * this.ParentForm.ClientRectangle.Width)),
                     (int)(Math.Abs((float)1 / 15 * this.ParentForm.ClientRectangle.Height)),

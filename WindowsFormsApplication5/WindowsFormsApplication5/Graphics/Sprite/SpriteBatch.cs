@@ -45,17 +45,18 @@ namespace BlockBreaker
         {
                 try
                 {
-                    if (s.GetType().Name == "Paddle")
+                    if (s.GetType().Name == "Racket")
                     {
-                        Paddle mypaddle = (Paddle)s;
-                        if (mypaddle.Hurt == true)
+                        Racket myRacket = (Racket)s;
+                        if (myRacket.Hurt == true)
                             s.CreateSprite(s.Texture, s.X, s.Y, s.Width, s.Height);
                     }
                     if (s.GetType().Name == "Ball")
                      {
                     Ball myBall = (Ball)s;
                     if (float.IsNaN(s.X))
-                        s.X = myBall.PreviousX;
+                        s.X = myBall.
+                            X;
                     if (float.IsNaN(s.Y))
                         s.Y = myBall.PreviousY;
                     if (float.IsNaN(myBall.Velocity.X))

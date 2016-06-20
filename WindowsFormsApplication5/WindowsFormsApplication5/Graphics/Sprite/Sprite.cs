@@ -96,7 +96,7 @@ namespace BlockBreaker
             sprite.Y = nuova_Y;
 
                 // Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
-                    if (sprite.GetType().Name == "Paddle" && Container.ActiveForm != null)
+                    if (sprite.GetType().Name == "Racket" && Container.ActiveForm != null)
                     sprite.Y = (Math.Abs(Container.ActiveForm.ClientRectangle.Height - sprite.Height)) * 9 / 10;
 
             // Imposta la texture dello sprite

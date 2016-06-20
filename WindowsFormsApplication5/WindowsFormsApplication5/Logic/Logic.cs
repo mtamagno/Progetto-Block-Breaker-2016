@@ -77,28 +77,28 @@ namespace BlockBreaker
                 if (WaitResize == false)
                 {
 
-                        if (_controller.WindowState != FormWindowState.Minimized)
+                    if (_controller.WindowState != FormWindowState.Minimized)
                     {
-                    // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
-                    _controller.Ball.CanCollide = true;
+                        // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
+                        _controller.Ball.CanCollide = true;
 
-                    // Controlla le vite che rimangono al giocatore
-                    VitaRimanente = _checkLife.Check(_controller, VitaRimanente);
+                        // Controlla le vite che rimangono al giocatore
+                        VitaRimanente = _checkLife.Check(_controller, VitaRimanente);
 
-                    // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
-                    if (GameTime.ElapsedMilliseconds % 1000 != 0)
-                    {
-                        checkscore();
-                        checkActiveBlock();
+                        // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
+                        if (GameTime.ElapsedMilliseconds % 1000 != 0)
+                        {
+                            checkscore();
+                            checkActiveBlock();
+                        }
+
+                        // Controlla gli fps contandoli e vede se è il caso di stamparli
+
+                        _fpsChecker.Checkfps(_controller);
+
+                        this.updater(this._controller, this.IManager, _fpsChecker);
+                        render();
                     }
-
-                    // Controlla gli fps contandoli e vede se è il caso di stamparli
-
-                    _fpsChecker.Checkfps(_controller);
-
-                    this.updater(this._controller, this.IManager, _fpsChecker);
-                    render();
-                }
                 }
             }
 
@@ -118,8 +118,8 @@ namespace BlockBreaker
             {
                 s.ToRender = false;
             }
-                return;
-            }
+            return;
+        }
 
         public void gameover()
         {
@@ -137,107 +137,106 @@ namespace BlockBreaker
         //funzione per ridimensionare gli elementi
         public void Resize(int li, int hi, int l, int h)
         {
-            if (VitaRimanente > 0 && h > 0 && hi > 0 && l > 0 && li > 0)               
+            if (VitaRimanente > 0 && h > 0 && hi > 0 && l > 0 && li > 0)
             {
-            //controllo tutti gli sprite che sono in gioco
-            foreach (Sprite s in IManager.inGameSprites)
-            {
-                //ridimensiono la pallina
-                if (s.GetType().Name == "Ball")
+                //controllo tutti gli sprite che sono in gioco
+                foreach (Sprite s in IManager.inGameSprites)
                 {
+                    //ridimensiono la pallina
+                    if (s.GetType().Name == "Ball")
+                    {
+                        Ball myBall = (Ball)s;
+                        if (myBall.X > 1000 && myBall.Y < 0)
+                            s.X = myBall.PreviousX;
+                        if (myBall.Y == 0)
+                            s.Y = myBall.PreviousY;
 
-                            Ball myBall = (Ball)s;
-                            if (myBall.X > 1000 && myBall.Y < 0)
-                                s.X = myBall.PreviousX;
-                            if (myBall.Y == 0)
-                                s.Y = myBall.PreviousY;
-                        
 
-                    s.Redraw(s,
-                        (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
-                        (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
-                        Properties.Resources.Ball,
+                        s.Redraw(s,
+                            (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
+                            (int)(Math.Abs((float)1 / 50 * Math.Min(l, h))),
+                            Properties.Resources.Ball,
+                                s.X * l / li,
+                                s.Y * h / hi);
+                    }
+
+                    //ridimensiono la racchetta
+                    else if (s.GetType().Name == "Racket")
+                    {
+                        s.Redraw(s, (int)(Math.Abs((float)1 / 8 * l)),
+                            (int)(Math.Abs((float)1 / 15 * h)),
+                            Properties.Resources.New_Piskel,
                             s.X * l / li,
                             s.Y * h / hi);
+                    }
+
+                    //ridimensiono lo sfondo
+                    else if (s.GetType().Name == "Playground")
+                    {
+                        s.Redraw(s,
+                            l / 30 * 29,
+                            h / 5 * 4,
+                            Properties.Resources.Schermo_800_600_GBA,
+                            0,
+                            0);
+                        s.X = _controller.ClientRectangle.Width / 2 - s.Width / 2;
+                        s.Y = _controller.ClientRectangle.Height / 2 - s.Height / 2;
+                    }
+
+                    // Ridimensiono la vita
+                    else if (s.GetType().Name == "Life")
+                    {
+                        s.Redraw(s,
+                            (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
+                            (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
+                            Properties.Resources.Life, s.X * l / li, s.Y * h / hi);
+                    }
+
+                    // Ridimensiono la skin
+                    else if (s.GetType().Name == "Skin")
+                    {
+                        s.Redraw(s,
+                            l,
+                            h,
+                            Properties.Resources.Skin,
+                            0,
+                            0);
+                    }
                 }
 
-                //ridimensiono la racchetta
-                else if (s.GetType().Name == "Paddle")
+                // Ridimensiono la griglia
+                _controller.Grid.redraw_grid(_controller.Grid, _controller.Background.Height, _controller.Background.Width);
+
+                //Per ogni sprite in iManager.inGameSprites, ridimensiono lo sprite
+                foreach (Sprite s in IManager.inGameSprites)
                 {
-                    s.Redraw(s, (int)(Math.Abs((float)1 / 8 * l)),
-                        (int)(Math.Abs((float)1 / 15 * h)),
-                        Properties.Resources.New_Piskel,
-                        s.X * l / li,
-                        s.Y * h / hi);
-                }
-
-                //ridimensiono lo sfondo
-                else if (s.GetType().Name == "Playground")
-                {
-                    s.Redraw(s,
-                        l / 30 * 29,
-                        h / 5 * 4,
-                        Properties.Resources.Schermo_800_600_GBA,
-                        0,
-                        0);
-                    s.X = _controller.ClientRectangle.Width / 2 - s.Width / 2;
-                    s.Y = _controller.ClientRectangle.Height / 2 - s.Height / 2;
-                }                            
-
-                // Ridimensiono la vita
-                else if (s.GetType().Name == "Life")
-                {
-                    s.Redraw(s,
-                        (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
-                        (int)(Math.Abs((float)1 / 25 * Math.Min(l, h))),
-                        Properties.Resources.Life, s.X * l / li, s.Y * h / hi);
-                }
-
-                // Ridimensiono la skin
-                else if (s.GetType().Name == "Skin")
-                {
-                    s.Redraw(s,
-                        l,
-                        h,
-                        Properties.Resources.Skin,
-                        0,
-                        0);
-                }
-            }
-
-            // Ridimensiono la griglia
-            _controller.Grid.redraw_grid(_controller.Grid, _controller.Background.Height, _controller.Background.Width);
-
-            //Per ogni sprite in iManager.inGameSprites, ridimensiono lo sprite
-            foreach (Sprite s in IManager.inGameSprites)
-            {
-                //ridimensiono i blocchi di gioco
+                    //ridimensiono i blocchi di gioco
                     if (hi > 0 && li > 0)
                     {
-                if (s.GetType().Name == "Block")
-                {
-                    _controller.Grid.redraw_block((Block)s,
-                        (100 * l / li),
-                        (50 * (h / hi)),
-                        s.X * l / li,
-                        s.Y * h / hi);
-                }
-            }
+                        if (s.GetType().Name == "Block")
+                        {
+                            _controller.Grid.redraw_block((Block)s,
+                                (100 * l / li),
+                                (50 * (h / hi)),
+                                s.X * l / li,
+                                s.Y * h / hi);
+                        }
+                    }
                 }
 
-            // Sposto la racchetta all'altezza giusta
+                // Sposto la racchetta all'altezza giusta
                 _controller.Racchetta.Y = h * 9 / 10;
-            
-            // Ridimensiono la superfice di disegno
-            SpriteBatch.Cntxt.MaximumBuffer = new Size(_controller.ClientSize.Width + 1, _controller.ClientSize.Height + 1);
-            SpriteBatch.Bfgfx = SpriteBatch.Cntxt.Allocate(_controller.CreateGraphics(), new Rectangle(Point.Empty, _controller.ClientSize));
-            SpriteBatch.Gfx = _controller.CreateGraphics();
 
-            //uso il garbage collector per pulire
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
-        }
+                // Ridimensiono la superfice di disegno
+                SpriteBatch.Cntxt.MaximumBuffer = new Size(_controller.ClientSize.Width + 1, _controller.ClientSize.Height + 1);
+                SpriteBatch.Bfgfx = SpriteBatch.Cntxt.Allocate(_controller.CreateGraphics(), new Rectangle(Point.Empty, _controller.ClientSize));
+                SpriteBatch.Gfx = _controller.CreateGraphics();
+
+                //uso il garbage collector per pulire
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                GC.Collect();
+            }
         }
         #endregion Public Methods
 
@@ -328,7 +327,7 @@ namespace BlockBreaker
         {
             SpriteBatch.Clear();
             foreach (Sprite s in IManager.inGameSprites)
-                {
+            {
                 if (s.ToRender == true)
                 {
                     if (s.GetType().Name == "Ball")
@@ -341,7 +340,7 @@ namespace BlockBreaker
                     }
                     SpriteBatch.Draw(s);
                 }
-                }
+            }
             SpriteBatch.End();
         }
 
@@ -352,21 +351,21 @@ namespace BlockBreaker
         {
             if (VitaRimanente > 0)
             {
-            if (GameTime.ElapsedMilliseconds - fpsChecker.UpsTime > fpsChecker.Interval)
-            {
-                ThisForm.Ball.Update(iManager, ThisForm.ParentForm);
-                ThisForm.Racchetta.Update(iManager, ThisForm.ParentForm);
-                if (GameTime.Elapsed.Seconds != fpsChecker.PreviousSecond)
+                if (GameTime.ElapsedMilliseconds - fpsChecker.UpsTime > fpsChecker.Interval)
                 {
-                    fpsChecker.PreviousSecond = GameTime.Elapsed.Seconds;
-                    fpsChecker.Ups = fpsChecker.UpsTmp;
-                    fpsChecker.UpsTmp = 0;
+                    ThisForm.Ball.Update(iManager, ThisForm.ParentForm);
+                    ThisForm.Racchetta.Update(iManager, ThisForm.ParentForm);
+                    if (GameTime.Elapsed.Seconds != fpsChecker.PreviousSecond)
+                    {
+                        fpsChecker.PreviousSecond = GameTime.Elapsed.Seconds;
+                        fpsChecker.Ups = fpsChecker.UpsTmp;
+                        fpsChecker.UpsTmp = 0;
+                    }
+                    fpsChecker.UpsTime = GameTime.ElapsedMilliseconds;
+                    fpsChecker.UpsTmp++;
                 }
-                fpsChecker.UpsTime = GameTime.ElapsedMilliseconds;
-                fpsChecker.UpsTmp++;
             }
         }
-    }
     }
 
     #endregion Private Methods
