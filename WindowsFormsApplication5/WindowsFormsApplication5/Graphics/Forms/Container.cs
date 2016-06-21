@@ -98,22 +98,18 @@ namespace BlockBreaker
         {
             Invoke(new MethodInvoker(delegate
             {
+                DisposeAll();
+                _music.BackgroundMusic.Stop();
+                _music.BackgroundMusic.Dispose();
                 //se l utente preme x dalla schermata di gioco devo fermare il thread del gioco
                 if (_game != null)
                 {
                     _game.Logic.ShouldStop = true;
                     _game.GameThread.Join();
-                    /* while (_game.GameThread.IsAlive)
-                    {
-                        _game.Logic.ShouldStop = true;
-                        _game.GameThread.Priority = ThreadPriority.Highest;
-                        _game.GameThread.Join();
-                    }*/
+                    _game.GameThread.Priority = ThreadPriority.Highest;               
                 }
-                _music.Dispose_Music();
-
                 //pulisco tutto
-                DisposeAll();
+
                 OnClosing(e);
                 Environment.Exit(0);
             }));
