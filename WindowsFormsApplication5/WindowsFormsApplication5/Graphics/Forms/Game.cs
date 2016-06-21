@@ -12,6 +12,8 @@ namespace BlockBreaker
 
         public Playground Background;
         public Ball Ball;
+        public float BallX;
+        public float BallY;
         public Thread GameThread;
         public Grid Grid;
         public Logic Logic;

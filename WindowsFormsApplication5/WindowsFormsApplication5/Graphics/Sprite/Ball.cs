@@ -83,8 +83,8 @@ namespace BlockBreaker
         public virtual void TotalVelocityReset(int lunghezzaClientIniziale, int altezzaClientIniziale,
             int lunghezzaClient, int altezzaClient)
         {
-            Velocity.Y = Velocity.Y*altezzaClient/altezzaClientIniziale;
-            Velocity.X = Velocity.X*lunghezzaClient/lunghezzaClientIniziale;
+            Velocity.Y = Velocity.Y * altezzaClient / altezzaClientIniziale;
+            Velocity.X = Velocity.X * lunghezzaClient / lunghezzaClientIniziale;
 
             //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
             VelocityTot = (float) Math.Sqrt(Velocity.X*Velocity.X + Velocity.Y*Velocity.Y);
@@ -101,7 +101,7 @@ namespace BlockBreaker
             Collider(iManager);
 
             //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
-            VelocityTot = (float) Math.Sqrt(Velocity.X*Velocity.X + Velocity.Y*Velocity.Y);
+            VelocityTot = (float)Math.Sqrt(Velocity.X * Velocity.X + Velocity.Y * Velocity.Y);
 
             //Se la velocità totale non è ancora a velocityTotLimit, Imposta la spia a 0 così da continuare a farla aumentare
             if (VelocityTot < VelocityTotLimit)
@@ -134,16 +134,16 @@ namespace BlockBreaker
                         }
                     }
                 }
-                X += Velocity.X*1/500;
-                Y += Velocity.Y*1/500;
+                X += Velocity.X * 1 / 500;
+                Y += Velocity.Y * 1 / 500;
             }
 
             //se deve seguire il mouse faccio in modo che lo faccia
             if (FollowPointer)
             {
-                if (Cursor.Position.X - thisform.Location.X >= thisform.Width/11 &&
-                    Cursor.Position.X - thisform.Location.X < thisform.Width - thisform.Width/11)
-                    X = Cursor.Position.X - thisform.Location.X - Width/2 - Width/3*2 - Width/10*9;
+                if (Cursor.Position.X - thisform.Location.X >= thisform.Width / 11 &&
+                    Cursor.Position.X - thisform.Location.X < thisform.Width - thisform.Width / 11)
+                    X = Cursor.Position.X - thisform.Location.X - Width / 2 - Width / 3 * 2 - Width / 10 * 9;
             }
         }
 
@@ -154,14 +154,14 @@ namespace BlockBreaker
         //Gestisco i casi in cui la pallina collide contro i blocchi
         private void BlockCollision(Sprite s)
         {
-            var myBlock = (Block) s;
+            var myBlock = (Block)s;
             _blockHit = false;
             if (this.IsCollidingWith(myBlock) && myBlock.CanCollide)
             {
                 // Se un blocco viene toccato dalla pallina gli tolgo una vita e cambio la texture
                 if (this.IsTouchingTop(myBlock) || this.IsTouchingBottom(myBlock))
                 {
-                    if (X + (float) Width/2 > myBlock.X && X + (float) Width/2 < myBlock.X + myBlock.Width)
+                    if (X + (float)Width / 2 > myBlock.X && X + (float)Width / 2 < myBlock.X + myBlock.Width)
                     {
                         // Setta block_hit a true
                         _blockHit = true;
@@ -188,7 +188,7 @@ namespace BlockBreaker
                 }
                 if (this.IsTouchingLeft(myBlock) || this.IsTouchingRight(myBlock))
                 {
-                    if (Y + (float) Height/2 > myBlock.Y && Y + (float) Height/2 < myBlock.Y + myBlock.Height)
+                    if (Y + (float)Height / 2 > myBlock.Y && Y + (float)Height / 2 < myBlock.Y + myBlock.Height)
                     {
                         //Inverte la Velocità X della pallina
                         Velocity.X *= -1;
@@ -263,7 +263,7 @@ namespace BlockBreaker
                 if (this.IsTouchingBottom(myRacket))
                 {
                     //La pallina impatta con la metà sinistra
-                    if (X + Width/2 <= myRacket.X + myRacket.Width/2)
+                    if (X + Width / 2 <= myRacket.X + myRacket.Width / 2)
                     {
                         double coseno;
                         coseno = Math.Abs(Math.Cos(myRacket.Angolo(X + Width/2 - myRacket.X, myRacket.Width/2)));
@@ -294,13 +294,13 @@ namespace BlockBreaker
         /// <param name="s"></param>
         private void ViewCollision(Sprite s)
         {
-            var myview = (Playground) s;
+            var myview = (Playground)s;
 
             // La X della pallina è oltre il limite destro o sinistro
             if (X + Width >= myview.Width + myview.X)
             {
                 Velocity.X *= -1;
-                X = (float) myview.Width - Width + myview.X;
+                X = (float)myview.Width - Width + myview.X;
             }
             else if (X <= myview.X)
             {
