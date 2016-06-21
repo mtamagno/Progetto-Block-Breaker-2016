@@ -23,7 +23,6 @@ namespace BlockBreaker
         private Bitmap _backgroundimage;
         private HighScoresPanel _highScoresPanel;
         private PictureBox _logo;
-        private PictureBox _logo;
         private bool _showhighscore;
         private string _testo;
 
@@ -33,7 +32,7 @@ namespace BlockBreaker
 
         public Menu()
         {
-            Instructions = new Instructions(0, 0, ClientSize.Width, ClientSize.Height);
+            _instructions = new Instructions(0, 0, ClientSize.Width, ClientSize.Height);
             InitializeComponent();
             _showhighscore = false;
         }
@@ -65,25 +64,6 @@ namespace BlockBreaker
             GC.Collect();
             GC.WaitForFullGCComplete();
             return makeInstructionsVisible;
-        }
-
-        /// <summary>
-        ///     Gestore eventi per la pressione di tasti
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void Help_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Escape)
-            {
-                MenuPanel.Visible = true;
-                Start.Visible = true;
-                Help.Visible = true;
-                Instructions.Visible = false;
-                _highScoresPanel.Visible = false;
-                _logo.Visible = true;
-                _showhighscore = false;
-            }
         }
 
         /// <summary>
