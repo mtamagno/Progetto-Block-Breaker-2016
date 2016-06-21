@@ -6,7 +6,7 @@ namespace BlockBreaker
 {
     public class Sprite
     {
-        #region Fields
+        #region Public Fields
 
         public int BottomCollide = 0;
         public bool CanCollide;
@@ -17,35 +17,22 @@ namespace BlockBreaker
         public int Width, Height;
         public float X, Y;
 
-        #endregion Fields
+        #endregion Public Fields
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>
         ///     Proprietà che ritornano le coordinate delle parti degi sprite
         /// </summary>
-        public Rectangle Bottom => new Rectangle((int) X, (int) Y + Height, Width, 20);
+        public Rectangle Bottom => new Rectangle((int)X, (int)Y + Height, Width, 20);
+        public Rectangle Left => new Rectangle((int)X, (int)Y, 20, Height);
+        public Rectangle Right => new Rectangle((int)X + Width, (int)Y, 20, Height);
+        public Rectangle Top => new Rectangle((int)X, (int)Y, Width, 20);
+        public Rectangle ToRec => new Rectangle((int)X, (int)Y, Width, Height);
 
-        public Rectangle Left => new Rectangle((int) X, (int) Y, 20, Height);
+        #endregion Public Properties
 
-        public Rectangle Right => new Rectangle((int) X + Width, (int) Y, 20, Height);
-
-        public Rectangle Top => new Rectangle((int) X, (int) Y, Width, 20);
-
-        public Rectangle ToRec => new Rectangle((int) X, (int) Y, Width, Height);
-
-        #endregion Properties
-
-        #region Methods
-
-        /// <summary>
-        ///     Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
-        /// </summary>
-        /// <param name="sb"></param>
-        public void Draw(SpriteBatch sb)
-        {
-            sb.Draw(this);
-        }
+        #region Public Methods
 
         /// <summary>
         ///     Funzione necessaria alla creazione da bitmap degli sprite, e dei loro disegni
@@ -68,9 +55,17 @@ namespace BlockBreaker
             Y = y;
             Width = width;
             Height = height;
-
             GC.Collect();
             GC.WaitForPendingFinalizers();
+        }
+
+        /// <summary>
+        ///     Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
+        /// </summary>
+        /// <param name="sb"></param>
+        public void Draw(SpriteBatch sb)
+        {
+            sb.Draw(this);
         }
 
         //Funzione Redraw necessaria ogni qual volta si effettua il resize dei vari sprite
@@ -89,6 +84,7 @@ namespace BlockBreaker
                         var backColor = risorsa.GetPixel(0, 0);
                         risorsa.MakeTransparent(backColor);
                     }
+
                     // Ridisegna lo sprite
                     g.DrawImage(risorsa, 0, 0, sprite.Width, sprite.Height);
                 }
@@ -96,15 +92,15 @@ namespace BlockBreaker
                 sprite.Y = nuova_Y;
 
                 // Se il tipo di sprite è player, stiamo ridisegnando la racchetta, che mettiamo ad un altezza standard: 9/10 dell'altezza del form
-                if (sprite.GetType().Name == "Paddle" && Form.ActiveForm != null)
-                    sprite.Y = Math.Abs(Form.ActiveForm.ClientRectangle.Height - sprite.Height)*9/10;
+                if (sprite.GetType().Name == "Racket" && Form.ActiveForm != null)
+                    sprite.Y = Math.Abs(Form.ActiveForm.ClientRectangle.Height - sprite.Height) * 9 / 10;
 
                 // Imposta la texture dello sprite
                 sprite.Texture = b;
             }
-
-            #endregion Methods
         }
+
+        #endregion Public Methods
 
         //Il collider fa un check di eventuali impatti tra sprites
     }
@@ -115,7 +111,7 @@ namespace BlockBreaker
     /// </summary>
     internal static class SpriteHelper
     {
-        #region Methods
+        #region Public Methods
 
         public static bool IsCollidingWith(this Sprite s1, Sprite s2)
         {
@@ -142,6 +138,6 @@ namespace BlockBreaker
             return s1.Top.IntersectsWith(s2.Bottom);
         }
 
-        #endregion Methods
+        #endregion Public Methods
     }
 }

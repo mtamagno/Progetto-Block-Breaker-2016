@@ -1,12 +1,29 @@
-﻿using System;
+﻿using BlockBreaker.Properties;
+using System;
 using System.Drawing;
-using BlockBreaker.Properties;
 
 namespace BlockBreaker
 {
     public class Block : Sprite
     {
-        #region Constructors
+        #region Public Fields
+
+        public int BlockLife;
+
+        // Variabili per vita e texture
+        public int InitialLife;
+        public Bitmap texture;
+
+        #endregion Public Fields
+
+        #region Private Fields
+
+        // Crea il random che mi servirà a calcolare vite in modo casuale
+        private static readonly Random Random = new Random();
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Block(float x, float y, int width, int height)
         {
@@ -26,16 +43,15 @@ namespace BlockBreaker
             //se non bisogna renderizzarlo non deve poter collidere
             if (ToRender != true)
                 CanCollide = false;
-
             TextureSwitcher();
 
             //renderizzo il blocco
             CreateSprite(texture, x, y, width, height);
         }
 
-        #endregion Constructors
+        #endregion Public Constructors
 
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         ///     Funzione che permette di cambiare la texture del blocco a seconda delle vite rimanenti
@@ -48,39 +64,21 @@ namespace BlockBreaker
                 case 0:
                     texture = Resources.Block_1;
                     break;
-
                 case 1:
                     texture = Resources.Block_1;
                     break;
-
                 case 2:
                     texture = Resources.Block_2;
                     break;
-
                 case 3:
                     texture = Resources.Block_3;
                     break;
-
                 case 4:
                     texture = Resources.Block_4;
                     break;
             }
         }
 
-        #endregion Methods
-
-        #region Fields
-
-        public int BlockLife;
-
-        // Variabili per vita e texture
-        public int InitialLife;
-
-        public Bitmap texture;
-
-        // Crea il random che mi servirà a calcolare vite in modo casuale
-        private static readonly Random Random = new Random();
-
-        #endregion Fields
+        #endregion Public Methods
     }
 }

@@ -6,7 +6,17 @@ namespace BlockBreaker
 {
     public class SpriteBatch
     {
-        #region Constructors
+        #region Public Fields
+
+        public BufferedGraphics Bfgfx;
+
+        //Variabile per i buffered CreateSprite
+        public BufferedGraphicsContext Cntxt = BufferedGraphicsManager.Current;
+        public Graphics Gfx;
+
+        #endregion Public Fields
+
+        #region Public Constructors
 
         public SpriteBatch(Size clientSize, Graphics gfx)
         {
@@ -16,19 +26,9 @@ namespace BlockBreaker
             Gfx = gfx;
         }
 
-        #endregion Constructors
+        #endregion Public Constructors
 
-        #region Fields
-
-        public BufferedGraphics Bfgfx;
-        //Variabile per i buffered CreateSprite
-        public BufferedGraphicsContext Cntxt = BufferedGraphicsManager.Current;
-
-        public Graphics Gfx;
-
-        #endregion Fields
-
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         ///     Funzione che pulisce bufferedgraphics
@@ -46,17 +46,18 @@ namespace BlockBreaker
         {
             try
             {
-                if (s.GetType().Name == "Paddle")
+                if (s.GetType().Name == "Racket")
                 {
-                    var mypaddle = (Paddle) s;
-                    if (mypaddle.Hurt)
+                    Racket myRacket = (Racket)s;
+                    if (myRacket.Hurt == true)
                         s.CreateSprite(s.Texture, s.X, s.Y, s.Width, s.Height);
                 }
                 if (s.GetType().Name == "Ball")
                 {
-                    var myBall = (Ball) s;
+                    var myBall = (Ball)s;
                     if (float.IsNaN(s.X))
-                        s.X = myBall.PreviousX;
+                        s.X = myBall.
+                            X;
                     if (float.IsNaN(s.Y))
                         s.Y = myBall.PreviousY;
                     if (float.IsNaN(myBall.VelocityTot))
@@ -66,7 +67,6 @@ namespace BlockBreaker
                     if (float.IsNaN(myBall.Velocity.Y))
                         myBall.Velocity.Y = myBall.PreviousVelocity.Y;
                 }
-
                 Bfgfx.Graphics.DrawImageUnscaled(s.Texture, s.ToRec);
             }
             catch
@@ -92,6 +92,6 @@ namespace BlockBreaker
             }
         }
 
-        #endregion Methods
+        #endregion Public Methods
     }
 }

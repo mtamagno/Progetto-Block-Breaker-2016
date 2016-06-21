@@ -1,22 +1,21 @@
-﻿using System;
+﻿using BlockBreaker.Properties;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
-using BlockBreaker.Properties;
 
 namespace BlockBreaker
 {
     internal sealed class AudioButtons : Button
     {
-        #region Fields
+        #region Private Fields
 
+        private readonly MyFonts fonts;
         private Bitmap _buttonBackground;
         private bool _state;
 
-        private readonly MyFonts fonts;
+        #endregion Private Fields
 
-        #endregion Fields
-
-        #region Constructors
+        #region Public Constructors
 
         public AudioButtons(Size s)
         {
@@ -39,16 +38,9 @@ namespace BlockBreaker
                 MessageBox.Show("invalid button size");
         }
 
+        #endregion Public Constructors
 
-        private void MouseHoverButton(object sender, EventArgs e)
-        {
-            FlatStyle = FlatStyle.Standard;
-        }
-
-        private void MouseLeaveButton(object sender, EventArgs e)
-        {
-            FlatStyle = FlatStyle.Flat;
-        }
+        #region Public Methods
 
         public void ChangeState()
         {
@@ -62,6 +54,20 @@ namespace BlockBreaker
             BackgroundImageLayout = ImageLayout.Stretch;
         }
 
-        #endregion Constructors
+        #endregion Public Methods
+
+        #region Private Methods
+
+        private void MouseHoverButton(object sender, EventArgs e)
+        {
+            FlatStyle = FlatStyle.Standard;
+        }
+
+        private void MouseLeaveButton(object sender, EventArgs e)
+        {
+            FlatStyle = FlatStyle.Flat;
+        }
+
+        #endregion Private Methods
     }
 }

@@ -5,10 +5,14 @@ namespace BlockBreaker
 {
     public class Instructions : Panel
     {
-        #region Methods
+        #region Private Fields
 
-        private readonly MyFonts _fontTitle;
         private readonly MyFonts _fontParagraph;
+        private readonly MyFonts _fontTitle;
+
+        #endregion Private Fields
+
+        #region Public Constructors
 
         public Instructions(int Left, int Top, int Width, int Height)
         {
@@ -17,7 +21,6 @@ namespace BlockBreaker
             this.Width = Width;
             this.Height = Height;
             BackColor = Color.Black;
-
             _fontParagraph = new MyFonts(MyFonts.FontType.Paragraph);
             _fontTitle = new MyFonts(MyFonts.FontType.Title);
             var Esc = new Label();
@@ -31,37 +34,31 @@ namespace BlockBreaker
             Title.Font = new Font(_fontTitle.Type.Families[0], 30, FontStyle.Regular);
             Title.TextAlign = ContentAlignment.MiddleCenter;
             Title.ForeColor = Color.White;
-
-
             Paragraph.Height = 300;
             Paragraph.Top = 100;
-
             Paragraph.Text = "Ingame Instructions:" +
-                             "\n.\n." +
-                             "\nClick on the button start to start the game" +
-                             "\n." +
-                             "\nMove your cursor to move the paddle" +
-                             "\n." +
-                             "\nPress space to throw the ball" +
-                             "\n." +
-                             "\nPress enter to pause the game";
-
+                "\n.\n." +
+                "\nClick on the button start to start the game" +
+                "\n." +
+                "\nMove your cursor to move the Racket" +
+                "\n." +
+                "\nPress space to throw the ball" +
+                "\n." +
+                "\nPress enter to pause the game";
             Paragraph.UseCompatibleTextRendering = true;
             Paragraph.Width = this.Width;
             Paragraph.Font = new Font(_fontParagraph.Type.Families[0], 14, FontStyle.Regular);
             Paragraph.TextAlign = ContentAlignment.MiddleCenter;
             Paragraph.ForeColor = Color.White;
-
             Esc.UseCompatibleTextRendering = true;
             Esc.Font = new Font(_fontParagraph.Type.Families[0], 14, FontStyle.Regular);
             Esc.Height = 40;
-            Esc.Top = this.Height - Esc.Height*2;
+            Esc.Top = this.Height - Esc.Height * 2;
             Esc.Width = 200;
             Esc.TextAlign = ContentAlignment.MiddleCenter;
             Esc.Left = 10;
             Esc.Text = "Esc -> Back To Menu";
             Esc.ForeColor = Color.White;
-
             Controls.Add(Esc);
             Controls.Add(Title);
             Controls.Add(Paragraph);
@@ -72,6 +69,6 @@ namespace BlockBreaker
             Visible = false;
         }
 
-        #endregion Methods
+        #endregion Public Constructors
     }
 }

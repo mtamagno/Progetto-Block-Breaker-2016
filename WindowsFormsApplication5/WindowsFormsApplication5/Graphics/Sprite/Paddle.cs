@@ -1,21 +1,21 @@
-﻿using System;
+﻿using BlockBreaker.Properties;
+using System;
 using System.Threading;
 using System.Windows.Forms;
-using BlockBreaker.Properties;
 
 namespace BlockBreaker
 {
-    public class Paddle : Sprite
+    public class Racket : Sprite
     {
-        #region Fields
+        #region Public Fields
 
         public bool Hurt;
 
-        #endregion Fields
+        #endregion Public Fields
 
-        #region Constructors
+        #region Public Constructors
 
-        public Paddle(float x, float y, int width, int height, Logic logic)
+        public Racket(float x, float y, int width, int height, Logic logic)
         {
             if (logic == null) throw new ArgumentNullException(nameof(logic));
             if (width <= 0) throw new ArgumentOutOfRangeException(nameof(width));
@@ -26,14 +26,13 @@ namespace BlockBreaker
             ToRender = true;
             FollowPointer = true;
             Hurt = false;
-
             CreateSprite(texture, x, y, width, height);
             logic.IManager.InGameSprites.Add(this);
         }
 
-        #endregion Constructors
+        #endregion Public Constructors
 
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         ///     Funzione che restituisce l'Angolo con cui la pallina deve essere fatta rimbalzare, a seconda del punto di impatto
@@ -45,33 +44,19 @@ namespace BlockBreaker
         public double Angolo(float posizioneAttuale, float posizioneMassima)
         {
             double calcolo = 0;
-            calcolo = posizioneAttuale/posizioneMassima*75;
-            calcolo = calcolo*Math.PI/180;
+            calcolo = posizioneAttuale / posizioneMassima * 75;
+            calcolo = calcolo * Math.PI / 180;
             return calcolo;
         }
 
         /// <summary>
-        ///     Funzione Update che richiama il collider e si occupa di spostare le coordinate della racchetta di volta in volta
+        ///     Funzione che rende la racchetta "nomale" facendo tornare la texture uguale a quella dello stato prima dell'impatto
         /// </summary>
-        /// <param name="iManager"></param>
-        /// <param name="thisform"></param>
-        public void Update(InputManager iManager, Form thisform)
+        public void Normalize()
         {
-            try
-            {
-                if (FollowPointer)
-                {
-                    if (thisform != null)
-                        if (Cursor.Position.X - thisform.Location.X >= thisform.Width/11 &&
-                            Cursor.Position.X - thisform.Location.X < thisform.Width - thisform.Width/11)
-                            X = Cursor.Position.X - thisform.Location.X - Width/2 - Width/13;
-                }
-            }
-            catch
-            {
-                // Errore gestito nel caso in cui followpointer non sia ancora stato impostato a false,
-                // ma l'utente abbia chiuso il form container o lo abbia minimizzato
-            }
+            Texture = Resources.New_Piskel;
+            Thread.Sleep(50);
+            Hurt = false;
         }
 
         /// <summary>
@@ -86,15 +71,29 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che rende la racchetta "nomale" facendo tornare la texture uguale a quella dello stato prima dell'impatto
+        ///     Funzione Update che richiama il collider e si occupa di spostare le coordinate della racchetta di volta in volta
         /// </summary>
-        public void Normalize()
+        /// <param name="iManager"></param>
+        /// <param name="thisform"></param>
+        public void Update(InputManager iManager, Form thisform)
         {
-            Texture = Resources.New_Piskel;
-            Thread.Sleep(50);
-            Hurt = false;
+            try
+            {
+                if (FollowPointer)
+                {
+                    if (thisform != null)
+                        if (Cursor.Position.X - thisform.Location.X >= thisform.Width / 11 &&
+                            Cursor.Position.X - thisform.Location.X < thisform.Width - thisform.Width / 11)
+                            X = Cursor.Position.X - thisform.Location.X - Width / 2 - Width / 13;
+                }
+            }
+            catch
+            {
+                // Errore gestito nel caso in cui followpointer non sia ancora stato impostato a false,
+                // ma l'utente abbia chiuso il form container o lo abbia minimizzato
+            }
         }
 
-        #endregion Methods
+        #endregion Public Methods
     }
 }

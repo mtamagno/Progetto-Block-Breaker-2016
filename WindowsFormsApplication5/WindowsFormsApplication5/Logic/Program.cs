@@ -5,7 +5,7 @@ namespace BlockBreaker
 {
     internal static class Program
     {
-        #region Methods
+        #region Private Methods
 
         /// <summary>
         ///     Punto di ingresso principale dell'applicazione.
@@ -18,6 +18,6 @@ namespace BlockBreaker
             Application.Run(new Container());
         }
 
-        #endregion Methods
+        #endregion Private Methods
     }
 }

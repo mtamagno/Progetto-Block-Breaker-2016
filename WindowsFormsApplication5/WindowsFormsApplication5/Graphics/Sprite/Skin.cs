@@ -1,10 +1,12 @@
-﻿using System;
-using BlockBreaker.Properties;
+﻿using BlockBreaker.Properties;
+using System;
 
 namespace BlockBreaker
 {
     public class Skin : Sprite
     {
+        #region Public Constructors
+
         public Skin(float x, float y, int width, int height, Logic logic)
         {
             if (logic == null) throw new ArgumentNullException(nameof(logic));
@@ -17,9 +19,10 @@ namespace BlockBreaker
             ToRender = true;
             CanCollide = true;
             FollowPointer = false;
-
             CreateSprite(texture, x, y, width, height);
             logic.IManager.InGameSprites.Add(this);
         }
+
+        #endregion Public Constructors
     }
 }

@@ -1,11 +1,11 @@
-﻿using System;
-using BlockBreaker.Properties;
+﻿using BlockBreaker.Properties;
+using System;
 
 namespace BlockBreaker
 {
     public class Life : Sprite
     {
-        #region Constructors
+        #region Public Constructors
 
         public Life(float x, float y, int width, int height)
         {
@@ -13,6 +13,7 @@ namespace BlockBreaker
             if (y <= 0) throw new ArgumentOutOfRangeException(nameof(y));
             if (width <= 0) throw new ArgumentOutOfRangeException(nameof(width));
             if (height <= 0) throw new ArgumentOutOfRangeException(nameof(height));
+
             // Imposta le variabili standard della vita alla creazione
             var texture = Resources.Life;
             CanFall = false;
@@ -24,10 +25,6 @@ namespace BlockBreaker
             CreateSprite(texture, x, y, width, height);
         }
 
-        #endregion Constructors
-
-        #region Fields
-
-        #endregion Fields
+        #endregion Public Constructors
     }
 }

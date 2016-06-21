@@ -6,7 +6,6 @@
         /// Variabile di progettazione necessaria.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
         /// <summary>
         /// Pulire le risorse in uso.
         /// </summary>
@@ -19,9 +18,7 @@
             }
             base.Dispose(disposing);
         }
-
         #region Codice generato da Progettazione Windows Form
-
         /// <summary>
         /// Metodo necessario per il supporto della finestra di progettazione. Non modificare
         /// il contenuto del metodo con l'editor di codice.
@@ -43,12 +40,8 @@
             this.Load += new System.EventHandler(this.OnLoad);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.ResumeLayout(false);
-
         }
-
         #endregion
-
         private System.Windows.Forms.Timer timer1;
     }
 }
-

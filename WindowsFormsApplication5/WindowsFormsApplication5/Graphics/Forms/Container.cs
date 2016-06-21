@@ -7,20 +7,13 @@ namespace BlockBreaker
 {
     public partial class Container : Form
     {
-        #region Constructors
-
-        public Container()
-        {
-            InitializeComponent();
-        }
-
-        #endregion Constructors
-
-        #region Fields
+        #region Private Fields
 
         private bool _again;
         private int _altezzaClient;
         private int _altezzaClientIniziale;
+        private AudioButtons _audioButton;
+        private bool _audioOnOff;
         private Game _game;
         private GameOver _gameOver;
         private Panel _gamePanels;
@@ -28,13 +21,73 @@ namespace BlockBreaker
         private int _lunghezzaClient;
         private int _lunghezzaClientIniziale;
         private Menu _menu;
-        private AudioButtons _audioButton;
         private Music _music;
-        private bool _audioOnOff;
 
-        #endregion Fields
+        #endregion Private Fields
 
-        #region Methods
+        #region Public Constructors
+
+        public Container()
+        {
+            InitializeComponent();
+        }
+
+        #endregion Public Constructors
+
+        #region Private Methods
+
+        private void Audio(object sender, EventArgs e)
+        {
+            _audioOnOff = !_audioOnOff;
+            if (!_audioOnOff)
+                _music.BackgroundMusic.Stop();
+            else
+                _music.BackgroundMusic.Play();
+            _audioButton.ChangeState();
+            ProcessTabKey(true);
+        }
+
+        private void ButtonAudioSet()
+        {
+            if (_audioButton != null)
+                _audioButton.Dispose();
+            var s = new Size(30, 30);
+            _audioButton = new AudioButtons(s);
+            _audioButton.Visible = true;
+            _audioButton.Left = 50;
+            _audioButton.Top = Height - _audioButton.Height - 45;
+            Controls.Add(_audioButton);
+            _audioButton.BringToFront();
+            _audioButton.MouseClick += Audio;
+            _audioButton.TabStop = false;
+            _audioButton.BackColor = Color.Transparent;
+        }
+
+        /// <summary>
+        ///     Funzione Per il Caricamento di Container
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Container2_Load(object sender, EventArgs e)
+        {
+            MinimumSize = new Size(700, 450);
+            _audioOnOff = true;
+            _music = new Music();
+
+            // Imposta _again a false per dire che il gioco e' stato avviato per la prima volta
+            _again = false;
+
+            // Inizializza il pannello che conterra' i form dell'applicazione
+            InitializeGamePanel();
+            _gamePanels.AutoSizeMode = AutoSizeMode;
+
+            // Inizializza il _menu come primo form che apparira' nel gioco
+            InitializeMenu();
+
+            //Salvo le dimensioni del client prima dei ridimensionamenti per poter calcolare la proporzione
+            _lunghezzaClientIniziale = ClientRectangle.Width;
+            _altezzaClientIniziale = ClientRectangle.Height;
+        }
 
         /// <summary>
         ///     Funzione per la chiusura di container
@@ -58,67 +111,12 @@ namespace BlockBreaker
                     }*/
                 }
                 _music.Dispose_Music();
+
                 //pulisco tutto
                 DisposeAll();
                 OnClosing(e);
                 Environment.Exit(0);
             }));
-        }
-
-        /// <summary>
-        ///     Funzione Per il Caricamento di Container
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Container2_Load(object sender, EventArgs e)
-        {
-            MinimumSize = new Size(700, 450);
-
-            _audioOnOff = true;
-            _music = new Music();
-
-            // Imposta _again a false per dire che il gioco e' stato avviato per la prima volta
-            _again = false;
-
-            // Inizializza il pannello che conterra' i form dell'applicazione
-            InitializeGamePanel();
-            _gamePanels.AutoSizeMode = AutoSizeMode;
-
-            // Inizializza il _menu come primo form che apparira' nel gioco
-            InitializeMenu();
-
-            //Salvo le dimensioni del client prima dei ridimensionamenti per poter calcolare la proporzione
-            _lunghezzaClientIniziale = ClientRectangle.Width;
-            _altezzaClientIniziale = ClientRectangle.Height;
-        }
-
-        private void ButtonAudioSet()
-        {
-            if (_audioButton != null)
-                _audioButton.Dispose();
-            var s = new Size(30, 30);
-            _audioButton = new AudioButtons(s);
-            _audioButton.Visible = true;
-            _audioButton.Left = 50;
-            _audioButton.Top = Height - _audioButton.Height - 45;
-            Controls.Add(_audioButton);
-            _audioButton.BringToFront();
-            _audioButton.MouseClick += Audio;
-            _audioButton.TabStop = false;
-            _audioButton.BackColor = Color.Transparent;
-        }
-
-        private void Audio(object sender, EventArgs e)
-        {
-            _audioOnOff = !_audioOnOff;
-
-            if (!_audioOnOff)
-                _music.BackgroundMusic.Stop();
-            else
-                _music.BackgroundMusic.Play();
-
-            _audioButton.ChangeState();
-            ProcessTabKey(true);
         }
 
         /// <summary>
@@ -155,7 +153,6 @@ namespace BlockBreaker
                 GC.WaitForPendingFinalizers();
                 GC.WaitForFullGCComplete();
             }
-
             else
             {
                 MessageBox.Show("Inserisci un NickName");
@@ -262,7 +259,6 @@ namespace BlockBreaker
             form.Focus();
         }
 
-
         /// <summary>
         ///     Funzione necessaria ad inizializzare il form del gioco
         /// </summary>
@@ -273,6 +269,7 @@ namespace BlockBreaker
 
             // Inizializza il gioco
             InitializeForm(_game);
+            _game.Refresh();
 
             //faccio partire la musica di gioco
             _music.Game();
@@ -288,7 +285,6 @@ namespace BlockBreaker
         {
             //assegno al _gameOver un nuovo _gameOver
             _gameOver = new GameOver();
-
             Text = "BlockBreaker - Gameover";
 
             // Inizializza il _gameOver
@@ -302,27 +298,6 @@ namespace BlockBreaker
 
             //Faccio partire la musica del _gameOver
             _music.GameOver();
-        }
-
-        private void OnGameover(object sender, EventArgs e)
-        {
-            //se l'utente ha finito il gioco salvo l _highScore ottenuto
-            _highScore = _game.Logic.HighScore;
-
-            //ri Imposta il _game.Logic a false
-            _game.Logic.ShouldStop = false;
-
-            //pulisco tutto
-            DisposeAll();
-
-            // Inizializza di nuovo il gamePanel
-            InitializeGamePanel();
-
-            // Inizializza il _gameOver
-            InitializeGameOver();
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
         }
 
         private void InitializeGamePanel()
@@ -347,7 +322,6 @@ namespace BlockBreaker
 
             //mostro il pannello
             _gamePanels.Show();
-
             try
             {
                 //aggiungo il pannello al form
@@ -368,6 +342,7 @@ namespace BlockBreaker
             // Assegna al _menu un nuovo _menu
             _menu = new Menu();
             Text = "BlockBreaker - Menu";
+
             // Inizializza il _menu
             InitializeForm(_menu);
 
@@ -385,6 +360,28 @@ namespace BlockBreaker
             _music.Menu();
         }
 
+        private void OnGameover(object sender, EventArgs e)
+        {
+           
+           // while (_game.GameThread.IsAlive);
+                //se l'utente ha finito il gioco salvo l _highScore ottenuto
+                _highScore = _game.Logic.HighScore;
+
+            //ri Imposta il _game.Logic a false
+            _game.Logic.ShouldStop = false;
+
+            //pulisco tutto
+            DisposeAll();
+
+            // Inizializza di nuovo il gamePanel
+            InitializeGamePanel();
+
+            // Inizializza il _gameOver
+            InitializeGameOver();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
+
         // Funzione chiamata quando viene ridimensionata la finestra
         private void OnSizeChange(object sender, EventArgs e)
         {
@@ -400,7 +397,6 @@ namespace BlockBreaker
             // Salva le dimensioni del client
             _lunghezzaClient = ClientRectangle.Width;
             _altezzaClient = ClientRectangle.Height;
-
             if (_game != null)
             {
                 InitializeForm(_game);
@@ -451,6 +447,6 @@ namespace BlockBreaker
             GC.WaitForFullGCComplete();
         }
 
-        #endregion Methods
+        #endregion Private Methods
     }
 }

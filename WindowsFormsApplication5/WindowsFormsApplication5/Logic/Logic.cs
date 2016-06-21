@@ -1,9 +1,9 @@
-﻿using System;
+﻿using BlockBreaker.Properties;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using BlockBreaker.Properties;
 
 namespace BlockBreaker
 {
@@ -14,6 +14,7 @@ namespace BlockBreaker
         public Logic(Game form)
         {
             if (form == null) throw new ArgumentNullException(nameof(form));
+
             //inizializzo il controller
             _controller = form;
 
@@ -66,7 +67,6 @@ namespace BlockBreaker
             GameTime.Start();
 
             // Crea il buffer
-
             // Finchè non si deve fermare continua ad eseguire
             while (ShouldStop == false && VitaRimanente > 0)
             {
@@ -74,7 +74,6 @@ namespace BlockBreaker
                 {
                     _controller.Pause();
                 }
-
                 if (WaitResize == false)
                 {
                     if (_controller.WindowState != FormWindowState.Minimized)
@@ -86,16 +85,14 @@ namespace BlockBreaker
                         VitaRimanente = _checkLife.Check(_controller, VitaRimanente);
 
                         // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
-                        if (GameTime.ElapsedMilliseconds%1000 != 0)
+                        if (GameTime.ElapsedMilliseconds % 1000 != 0)
                         {
                             Checkscore();
                             CheckActiveBlock();
                         }
 
                         // Controlla gli fps contandoli e vede se è il caso di stamparli
-
                         _fpsChecker.Checkfps(_controller);
-
                         Updater(_controller, IManager, _fpsChecker);
                         Render();
                     }
@@ -111,7 +108,6 @@ namespace BlockBreaker
                 }
                 Gameover();
             }
-
             GC.Collect();
             GC.WaitForPendingFinalizers();
             foreach (var s in IManager.InGameSprites)
@@ -124,8 +120,9 @@ namespace BlockBreaker
         {
             // Salva lo score
             HighScore.Score = Score;
+
             //comunico al gioco che le vite sono finite
-            _controller.lifeEnd();
+            _controller.LifeEnd();
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
@@ -142,51 +139,49 @@ namespace BlockBreaker
                     //ridimensiono la pallina
                     if (s.GetType().Name == "Ball")
                     {
-                        var myBall = (Ball) s;
+                        var myBall = (Ball)s;
                         if (myBall.X > 1000 && myBall.Y < 0)
                             s.X = myBall.PreviousX;
                         if (myBall.Y == 0)
                             s.Y = myBall.PreviousY;
-
-
                         s.Redraw(s,
-                            (int) Math.Abs((float) 1/50*Math.Min(l, h)),
-                            (int) Math.Abs((float) 1/50*Math.Min(l, h)),
-                            Resources.Ball,
-                            s.X*l/li,
-                            s.Y*h/hi);
+                                (int)Math.Abs((float)1 / 50 * Math.Min(l, h)),
+                                (int)Math.Abs((float)1 / 50 * Math.Min(l, h)),
+                                Resources.Ball,
+                                s.X * l / li,
+                                s.Y * h / hi);
                     }
 
                     //ridimensiono la racchetta
-                    else if (s.GetType().Name == "Paddle")
+                    else if (s.GetType().Name == "Racket")
                     {
-                        s.Redraw(s, (int) Math.Abs((float) 1/8*l),
-                            (int) Math.Abs((float) 1/15*h),
+                        s.Redraw(s, (int)Math.Abs((float)1 / 8 * l),
+                            (int)Math.Abs((float)1 / 15 * h),
                             Resources.New_Piskel,
-                            s.X*l/li,
-                            s.Y*h/hi);
+                            s.X * l / li,
+                            s.Y * h / hi);
                     }
 
                     //ridimensiono lo sfondo
                     else if (s.GetType().Name == "Playground")
                     {
                         s.Redraw(s,
-                            l/30*29,
-                            h/5*4,
-                            Resources.Schermo_800_600_GBA,
+                                l / 30 * 29,
+                                h / 5 * 4,
+                                Resources.Schermo_800_600_GBA,
                             0,
                             0);
-                        s.X = _controller.ClientRectangle.Width/2 - s.Width/2;
-                        s.Y = _controller.ClientRectangle.Height/2 - s.Height/2;
+                        s.X = _controller.ClientRectangle.Width / 2 - s.Width / 2;
+                        s.Y = _controller.ClientRectangle.Height / 2 - s.Height / 2;
                     }
 
                     // Ridimensiono la vita
                     else if (s.GetType().Name == "Life")
                     {
                         s.Redraw(s,
-                            (int) Math.Abs((float) 1/25*Math.Min(l, h)),
-                            (int) Math.Abs((float) 1/25*Math.Min(l, h)),
-                            Resources.Life, s.X*l/li, s.Y*h/hi);
+                                (int)Math.Abs((float)1 / 25 * Math.Min(l, h)),
+                                (int)Math.Abs((float)1 / 25 * Math.Min(l, h)),
+                                Resources.Life, s.X * l / li, s.Y * h / hi);
                     }
 
                     // Ridimensiono la skin
@@ -195,7 +190,7 @@ namespace BlockBreaker
                         s.Redraw(s,
                             l,
                             h,
-                            Resources.Skin,
+                                Resources.Skin,
                             0,
                             0);
                     }
@@ -213,17 +208,17 @@ namespace BlockBreaker
                     {
                         if (s.GetType().Name == "Block")
                         {
-                            _controller.Grid.redraw_block((Block) s,
-                                100*l/li,
-                                50*(h/hi),
-                                s.X*l/li,
-                                s.Y*h/hi);
+                            _controller.Grid.redraw_block((Block)s,
+                                100 * l / li,
+                                50 * (h / hi),
+                                s.X * l / li,
+                                s.Y * h / hi);
                         }
                     }
                 }
 
                 // Sposto la racchetta all'altezza giusta
-                _controller.Racchetta.Y = h*9/10;
+                _controller.Racchetta.Y = h * 9 / 10;
 
                 // Ridimensiono la superfice di disegno
                 SpriteBatch.Cntxt.MaximumBuffer = new Size(_controller.ClientSize.Width + 1,
@@ -285,7 +280,7 @@ namespace BlockBreaker
             {
                 if (s.GetType().Name == "Block")
                 {
-                    var myBlock = (Block) s;
+                    var myBlock = (Block)s;
                     if (myBlock.BlockLife == 0)
                     {
                         Score += myBlock.InitialLife;
@@ -329,7 +324,7 @@ namespace BlockBreaker
                 {
                     if (s.GetType().Name == "Ball")
                     {
-                        var myBall = (Ball) s;
+                        var myBall = (Ball)s;
                         if (myBall.X > 1000 && myBall.Y < 0)
                             s.X = myBall.PreviousX;
                         if (myBall.Y == 0)

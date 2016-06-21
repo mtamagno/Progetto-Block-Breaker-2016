@@ -8,18 +8,17 @@ namespace BlockBreaker
 {
     public class HighScore
     {
-        #region Properties
+        #region Public Properties
 
         public string Name { get; set; }
-
         public int Score { get; set; }
 
-        #endregion Properties
+        #endregion Public Properties
     }
 
     public class HighScoreSaver
     {
-        #region Methods
+        #region Public Methods
 
         /// <summary>
         ///     Funzione che si occupa di aggiungere gli highScores e di riordinarli ogni volta in un file "HighScores.xml" che
@@ -36,14 +35,13 @@ namespace BlockBreaker
                 rows = root.Descendants("HighScore");
                 var lastrow = rows.Last();
                 lastrow.AddAfterSelf(
-                    new XElement("HighScore",
+                new XElement("HighScore",
                         new XElement("Name", currentHighScore.Name),
                         new XElement("Score", currentHighScore.Score)));
 
                 // Crea la lista giusta e salvo
-                var ciao = xDocument.Descendants("HighScore")
-                    .OrderByDescending(e => int.Parse(e.Element("Score").Value));
-                root.ReplaceAll(ciao);
+                var orderedHighScores = xDocument.Descendants("HighScore").OrderByDescending(e => (int.Parse(e.Element("Score").Value)));
+                root.ReplaceAll(orderedHighScores);
                 xDocument.Save("HighScores.xml");
             }
             else
@@ -69,6 +67,6 @@ namespace BlockBreaker
             }
         }
 
-        #endregion Methods
+        #endregion Public Methods
     }
 }
