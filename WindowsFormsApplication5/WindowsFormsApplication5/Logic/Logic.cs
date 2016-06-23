@@ -35,7 +35,6 @@ namespace BlockBreaker
         public Point MousePoint;
         public float DeltaTime;
         public int PreviousScore;
-        public int RigheGriglia;
         public int Score;
         public int VitaRimanente;
         public bool AllowInput;
@@ -46,17 +45,17 @@ namespace BlockBreaker
 
         #region Private Fields
 
-        private readonly CheckLife _checkLife = new CheckLife();
+        private readonly LifeChecker _myLifeChecker = new LifeChecker();
         private int _activeBlock;
         private readonly Game _controller;
-        private FpsChecker _fpsChecker;
+        private FpsChecker _myFpsChecker;
 
         #endregion Private Fields
 
         #region Public Methods
 
         /// <summary>
-        ///     Loop che costituisce il gioco vero e proprio
+        /// Loop che costituisce il gioco vero e proprio
         /// </summary>
         public void GameLoop()
         {
@@ -82,7 +81,7 @@ namespace BlockBreaker
                         _controller.Ball.CanCollide = true;
 
                         // Controlla le vite che rimangono al giocatore
-                        VitaRimanente = _checkLife.Check(_controller, VitaRimanente);
+                        VitaRimanente = _myLifeChecker.Check(_controller, VitaRimanente);
 
                         // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
                         if (GameTime.ElapsedMilliseconds % 1000 != 0)
@@ -92,8 +91,8 @@ namespace BlockBreaker
                         }
 
                         // Controlla gli fps contandoli e vede se è il caso di stamparli
-                        _fpsChecker.Checkfps(_controller);
-                        Updater(_controller, IManager, _fpsChecker);
+                        _myFpsChecker.Checkfps(_controller);
+                        Updater(_controller, IManager, _myFpsChecker);
                         Render();
                     }
                 }
@@ -245,7 +244,7 @@ namespace BlockBreaker
         {
             VitaRimanente = 3;
             GameTime = new Stopwatch();
-            _fpsChecker = new FpsChecker(GameTime);
+            _myFpsChecker = new FpsChecker(GameTime);
             IManager = new InputManager();
             HighScore = new HighScore();
             KeysHeld = new List<Keys>();
@@ -253,7 +252,6 @@ namespace BlockBreaker
             ShouldStop = false;
             VitaRimanente = 3;
             Score = 0;
-            RigheGriglia = 25;
             PreviousScore = 0;
             SpriteBatch = new SpriteBatch(_controller.ClientSize, _controller.CreateGraphics());
         }

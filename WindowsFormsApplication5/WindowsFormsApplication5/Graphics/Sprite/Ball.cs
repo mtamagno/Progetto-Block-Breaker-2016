@@ -97,7 +97,7 @@ namespace BlockBreaker
         /// </summary>
         public void Update(InputManager iManager, Form thisform)
         {
-            if (thisform == null) throw new ArgumentNullException(nameof(thisform));
+            //if (thisform == null) throw new ArgumentNullException(nameof(thisform)); /*---> errore*/
             Collider(iManager);
 
             //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
@@ -236,7 +236,7 @@ namespace BlockBreaker
                 }
                 if (s.GetType().Name == "Playground")
                 {
-                    ViewCollision(s);
+                    PlayGroundCollision(s);
                 }
             }
         }
@@ -292,7 +292,7 @@ namespace BlockBreaker
         ///     Gestisco i casi in cui la pallina collide contro i bordi dello schermo
         /// </summary>
         /// <param name="s"></param>
-        private void ViewCollision(Sprite s)
+        private void PlayGroundCollision(Sprite s)
         {
             var myview = (Playground)s;
 
