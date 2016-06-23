@@ -27,7 +27,7 @@ namespace BlockBreaker
             FollowPointer = true;
             Hurt = false;
             CreateSprite(texture, x, y, width, height);
-            logic.myIManager.InGameSprites.Add(this);
+            logic.MyIManager.InGameSprites.Add(this);
         }
 
         #endregion Public Constructors

@@ -346,7 +346,7 @@ namespace BlockBreaker
         private void OnGameover(object sender, EventArgs e)
         {
             //se l'utente ha finito il gioco salvo l _highScore ottenuto
-            _highScore = _game.MyGameLogic.HighScore;
+            _highScore = _game.MyGameLogic.MyHighScore;
 
             //ri Imposta il _game.MyGameLogic a false
             _game.MyGameLogic.ShouldStop = false;
