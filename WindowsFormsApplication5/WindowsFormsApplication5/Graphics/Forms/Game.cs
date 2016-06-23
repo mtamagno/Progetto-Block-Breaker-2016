@@ -59,7 +59,7 @@ namespace BlockBreaker
                     Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)),
                     (int)Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)),
                     (int)Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)));
-                Logic.IManager.InGameSprites.Add(Vita[i]);
+                Logic.myIManager.InGameSprites.Add(Vita[i]);
             }
             GC.Collect();
             GC.WaitForPendingFinalizers();

@@ -30,7 +30,7 @@ namespace BlockBreaker
             _grid.Top = y;
             _grid.Width = (int)clientWidth;
             _grid.Height = (int)(clientHeight / 3);
-            insert_grid(texture, logic.IManager);
+            insert_grid(texture, logic.myIManager);
         }
 
         #endregion Public Constructors

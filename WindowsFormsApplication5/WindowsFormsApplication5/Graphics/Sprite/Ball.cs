@@ -65,7 +65,7 @@ namespace BlockBreaker
             CreateSprite(texture, x, y, width, height);
 
             // aggiungo la pallina all'inputmanager che tiene conto di tutti gli sprite presenti nel gioco
-            logic.IManager.InGameSprites.Add(this);
+            logic.myIManager.InGameSprites.Add(this);
         }
 
         #endregion Public Constructors
