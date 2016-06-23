@@ -33,7 +33,6 @@ namespace BlockBreaker
         public List<Keys> KeysHeld;
         public List<Keys> KeysPressed;
         public Point MousePoint;
-        public float DeltaTime;
         public int PreviousScore;
         public int Score;
         public int VitaRimanente;
@@ -304,7 +303,7 @@ namespace BlockBreaker
             AllowInput = false;
 
             // Controlla i tasti che sono stati premuti e svuoto i buffer
-            MyIManager.update(MousePoint, KeysPressed.ToArray(), KeysHeld.ToArray(), MyGameTime, DeltaTime);
+            MyIManager.update(MousePoint, KeysPressed.ToArray(), KeysHeld.ToArray());
             KeysPressed.Clear();
             KeysHeld.Clear();
             AllowInput = true;
