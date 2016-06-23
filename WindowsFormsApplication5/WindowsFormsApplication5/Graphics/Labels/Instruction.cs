@@ -62,10 +62,6 @@ namespace BlockBreaker
             Controls.Add(Esc);
             Controls.Add(Title);
             Controls.Add(Paragraph);
-            /*controller.BackgroundImage = Properties.Resources.Instructions;
-            controller.BackgroundImageLayout = ImageLayout.Stretch;
-            controller.Visible = false;
-            return controller;*/
             Visible = false;
         }
 

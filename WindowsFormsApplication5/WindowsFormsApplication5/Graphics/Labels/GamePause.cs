@@ -33,7 +33,7 @@ namespace BlockBreaker
 
         #region Public Methods
 
-        public void SetFont()
+        private void SetFont()
         {
             _fontParagraph = new MyFonts(MyFonts.FontType.Paragraph);
             _fontTitle = new MyFonts(MyFonts.FontType.Title);
@@ -42,7 +42,7 @@ namespace BlockBreaker
             _esc.Font = new Font(_fontParagraph.Type.Families[0], 14, FontStyle.Regular);
         }
 
-        public void SetLabels()
+        private void SetLabels()
         {
             _esc = new Label();
             _title = new Label();
