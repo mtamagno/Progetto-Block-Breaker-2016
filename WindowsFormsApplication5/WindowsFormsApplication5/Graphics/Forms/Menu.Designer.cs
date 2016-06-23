@@ -34,7 +34,7 @@
             this.ClientSize = new System.Drawing.Size(934, 411);
             this.Name = "menu";
             this.Text = "menu";
-            this.Load += new System.EventHandler(this.ContainerLoad);          
+            this.Load += new System.EventHandler(this.MenuLoad);          
             this.ResumeLayout(false);
         }
         #endregion

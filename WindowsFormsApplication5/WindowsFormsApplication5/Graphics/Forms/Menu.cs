@@ -24,7 +24,6 @@ namespace BlockBreaker
         private HighScoresPanel _highScoresPanel;
         private PictureBox _logo;
         private bool _showhighscore;
-        private string _testo;
 
         #endregion Private Fields
 
@@ -102,9 +101,8 @@ namespace BlockBreaker
                 BackgroundImageLayout = ImageLayout.Stretch;
 
                 //Ricrea il Panel
-                _testo = Start.Text;
                 CreatePanel();
-                Writer(_testo);
+
 
                 //Ricrea il logo
                 CreateLogo(ClientSize.Width, ClientSize.Height);
@@ -131,16 +129,6 @@ namespace BlockBreaker
             }
         }
 
-        /// <summary>
-        ///     Permette di scrivere il testo scelto dentro al tasto Start
-        /// </summary>
-        /// <param name="testo"></param>
-        public void Writer(string testo)
-        {
-            Start.Text = testo;
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
 
         #endregion Public Methods
 
@@ -151,7 +139,7 @@ namespace BlockBreaker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ContainerLoad(object sender, EventArgs e)
+        private void MenuLoad(object sender, EventArgs e)
         {
             Starter();
             GC.Collect();
@@ -304,3 +292,4 @@ namespace BlockBreaker
         #endregion Private Methods
     }
 }
+   

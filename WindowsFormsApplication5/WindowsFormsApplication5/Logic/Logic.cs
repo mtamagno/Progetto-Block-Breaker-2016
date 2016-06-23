@@ -323,10 +323,10 @@ namespace BlockBreaker
                     if (s.GetType().Name == "MyBall")
                     {
                         var myBall = (Ball)s;
-                        if (myBall.X > 1000 && myBall.Y < 0)
-                            s.X = myBall.PreviousX;
-                        if (myBall.Y == 0)
-                            s.Y = myBall.PreviousY;
+                        if (float.IsNaN(myBall.X))
+                            myBall.X = myBall.PreviousX;
+                        if (float.IsNaN(myBall.Y))
+                            myBall.Y = myBall.PreviousY;
                     }
                     MySpriteBatch.Draw(s);
                 }

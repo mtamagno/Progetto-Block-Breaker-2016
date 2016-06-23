@@ -26,7 +26,7 @@ namespace BlockBreaker
             KeyPressed = kp;
             KeyHeld = kh;
             GameTime = gt;
-            DeltaTime = dt / 1000f;
+            DeltaTime = dt / 10f;
         }
 
         #endregion Public Methods
