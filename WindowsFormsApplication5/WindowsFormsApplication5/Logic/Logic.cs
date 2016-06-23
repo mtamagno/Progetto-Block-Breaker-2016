@@ -186,7 +186,7 @@ namespace BlockBreaker
                         s.Redraw(s,
                             l,
                             h,
-                            Resources.Skin,
+                                Resources.Skin,
                             0,
                             0);
                     }

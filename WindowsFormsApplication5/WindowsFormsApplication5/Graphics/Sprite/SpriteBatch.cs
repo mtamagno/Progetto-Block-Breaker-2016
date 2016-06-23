@@ -56,9 +56,9 @@ namespace BlockBreaker
                 {
                     var myBall = (Ball)s;
                     if (float.IsNaN(s.X))
-                        s.X = myBall.PreviousX;
+                        myBall.X = myBall.PreviousX;
                     if (float.IsNaN(s.Y))
-                        s.Y = myBall.PreviousY;
+                        myBall.Y = myBall.PreviousY;
                     if (float.IsNaN(myBall.VelocityTot))
                         myBall.VelocityTot = myBall.PreviousVelocityTot;
                     if (float.IsNaN(myBall.Velocity.X))

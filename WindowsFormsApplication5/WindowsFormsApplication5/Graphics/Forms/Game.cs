@@ -232,7 +232,7 @@ namespace BlockBreaker
         ///     Funzione che permette
         /// </summary>
         private void ScoreSet()
-        {
+        {   
             MyScore = new Label();
             MyScore.Left = ClientRectangle.Width / 2 - MyScore.Width / 2;
             MyScore.Top = ClientRectangle.Height - 40;
