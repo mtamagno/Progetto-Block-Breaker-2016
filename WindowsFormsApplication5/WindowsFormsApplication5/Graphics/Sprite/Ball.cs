@@ -65,7 +65,7 @@ namespace BlockBreaker
             CreateSprite(texture, x, y, width, height);
 
             // aggiungo la pallina all'inputmanager che tiene conto di tutti gli sprite presenti nel gioco
-            logic.IManager.InGameSprites.Add(this);
+            logic.myIManager.InGameSprites.Add(this);
         }
 
         #endregion Public Constructors
@@ -236,7 +236,7 @@ namespace BlockBreaker
                 }
                 if (s.GetType().Name == "Playground")
                 {
-                    ViewCollision(s);
+                    PlayGroundCollision(s);
                 }
             }
         }
@@ -292,7 +292,7 @@ namespace BlockBreaker
         ///     Gestisco i casi in cui la pallina collide contro i bordi dello schermo
         /// </summary>
         /// <param name="s"></param>
-        private void ViewCollision(Sprite s)
+        private void PlayGroundCollision(Sprite s)
         {
             var myview = (Playground)s;
 

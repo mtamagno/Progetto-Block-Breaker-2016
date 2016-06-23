@@ -2,7 +2,7 @@
 
 namespace BlockBreaker
 {
-    internal class CheckLife
+    internal class LifeChecker
     {
         #region Public Methods
 
