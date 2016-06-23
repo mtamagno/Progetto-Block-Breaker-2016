@@ -54,11 +54,13 @@ namespace BlockBreaker
             //Libera la memoria dalle immagini
             BackgroundImage.Dispose();
             _backgroundimage.Dispose();
+
             if (_instructions.Visible)
             {
                 _instructions.Visible = false;
                 makeInstructionsVisible = true;
             }
+
             _instructions.Dispose();
             GC.Collect();
             GC.WaitForFullGCComplete();
@@ -135,7 +137,7 @@ namespace BlockBreaker
         #region Private Methods
 
         /// <summary>
-        ///     Carica il menu
+        /// Carica il menu
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

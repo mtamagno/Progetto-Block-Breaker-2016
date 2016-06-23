@@ -84,7 +84,7 @@ namespace BlockBreaker
                         if (MyGameTime.ElapsedMilliseconds % 1000 != 0)
                         {
                             Checkscore();
-                            CheckActiveBlock();
+                            CheckActiveBlocks();
                         }
 
                         // Controlla gli fps contandoli e vede se è il caso di stamparli
@@ -95,7 +95,7 @@ namespace BlockBreaker
                 }
             }
 
-            // Se non rimangono vite richiama GameOver e smette di renderizzare gli sprites
+            // Se non rimangono vite richiama GameOver e smette di mostrare a schermo gli sprites
             if (VitaRimanente <= 0)
             {
                 foreach (var s in MyIManager.InGameSprites)
@@ -117,23 +117,23 @@ namespace BlockBreaker
             // Salva lo score
             MyHighScore.Score = Score;
 
-            //comunico al gioco che le vite sono finite
+            // Comunico al gioco che le vite sono finite
             _myGame.LifeEnd();
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
         }
 
-        //funzione per ridimensionare gli elementi
+        // Funzione per ridimensionare gli elementi
         public void Resize(int li, int hi, int l, int h)
         {
             if (VitaRimanente > 0 && h > 0 && hi > 0 && l > 0 && li > 0)
             {
-                //controllo tutti gli sprite che sono in gioco
+                // Controllo tutti gli sprite che sono in gioco
                 foreach (var s in MyIManager.InGameSprites)
                 {
-                    //ridimensiono la pallina
-                    if (s.GetType().Name == "MyBall")
+                    // Ridimensiono la pallina
+                    if (s.GetType().Name == "Ball")
                     {
                         var myBall = (Ball)s;
                         if (myBall.X > 1000 && myBall.Y < 0)
@@ -148,7 +148,7 @@ namespace BlockBreaker
                                 s.Y * h / hi);
                     }
 
-                    //ridimensiono la racchetta
+                    // Ridimensiono la racchetta
                     else if (s.GetType().Name == "Racket")
                     {
                         s.Redraw(s, (int)Math.Abs((float)1 / 8 * l),
@@ -158,7 +158,7 @@ namespace BlockBreaker
                             s.Y * h / hi);
                     }
 
-                    //ridimensiono lo sfondo
+                    // Ridimensiono lo sfondo
                     else if (s.GetType().Name == "Playground")
                     {
                         s.Redraw(s,
@@ -196,10 +196,10 @@ namespace BlockBreaker
                 _myGame.MyBlockGrid.redraw_grid(_myGame.MyBlockGrid, _myGame.MyPlayground.Height,
                     _myGame.MyPlayground.Width);
 
-                //Per ogni sprite in iManager.inGameSprites, ridimensiono lo sprite
+                // Per ogni sprite in iManager.inGameSprites, ridimensiono lo sprite
                 foreach (var s in MyIManager.InGameSprites)
                 {
-                    //ridimensiono i blocchi di gioco
+                    // Ridimensiono i blocchi di gioco
                     if (hi > 0 && li > 0)
                     {
                         if (s.GetType().Name == "Block")
@@ -255,7 +255,7 @@ namespace BlockBreaker
         /// <summary>
         ///     Funzione per il controllo di quanti blocchi sono rimasti in gioco
         /// </summary>
-        private void CheckActiveBlock()
+        private void CheckActiveBlocks()
         {
             if (_activeBlocks == 0)
             {
@@ -297,6 +297,7 @@ namespace BlockBreaker
         /// </summary>
         private void Input()
         {
+            // Setto AllowInput a false
             AllowInput = false;
 
             // Controlla i tasti che sono stati premuti e svuoto i buffer
@@ -307,23 +308,18 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione render che disegna nella posizione giusta e aggiorna il buffer
+        /// Funzione render che disegna nella posizione giusta e aggiorna il buffer
         /// </summary>
         private void Render()
         {
+            // Pulisce lo spritebatch
             MySpriteBatch.Clear();
+
+            // Mostra a schermo tutti gli sprite con il flag ToRender impostato a true
             foreach (var s in MyIManager.InGameSprites)
             {
                 if (s.ToRender)
                 {
-                    if (s.GetType().Name == "MyBall")
-                    {
-                        var myBall = (Ball)s;
-                        if (float.IsNaN(myBall.X))
-                            myBall.X = myBall.PreviousX;
-                        if (float.IsNaN(myBall.Y))
-                            myBall.Y = myBall.PreviousY;
-                    }
                     MySpriteBatch.Draw(s);
                 }
             }

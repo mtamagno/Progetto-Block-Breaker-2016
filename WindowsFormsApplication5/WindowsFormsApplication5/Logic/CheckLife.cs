@@ -7,7 +7,7 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Funzione per il Check dell'hit del bottom
+        /// Funzione per il Check dell'hit del bottom
         /// </summary>
         /// <param name="thisForm"></param>
         /// <param name="lifes"></param>
