@@ -9,11 +9,11 @@ namespace BlockBreaker
     {
         #region Public Fields
 
-        public MenuButton Help;
-        public MenuButton Highscores;
-        public Instructions Instructions;
-        public Panel MenuPanel = new Panel();
-        public Size S;
+        private MenuButton _help;
+        private MenuButton _highscores;
+        private Instructions _instructions;
+        private readonly Panel _menuPanel = new Panel();
+        private Size _s;
         public MenuButton Start;
 
         #endregion Public Fields
@@ -32,7 +32,7 @@ namespace BlockBreaker
 
         public Menu()
         {
-            Instructions = new Instructions(0, 0, ClientSize.Width, ClientSize.Height);
+            _instructions = new Instructions(0, 0, ClientSize.Width, ClientSize.Height);
             InitializeComponent();
             _showhighscore = false;
         }
@@ -55,12 +55,12 @@ namespace BlockBreaker
             //Libera la memoria dalle immagini
             BackgroundImage.Dispose();
             _backgroundimage.Dispose();
-            if (Instructions.Visible)
+            if (_instructions.Visible)
             {
-                Instructions.Visible = false;
+                _instructions.Visible = false;
                 makeInstructionsVisible = true;
             }
-            Instructions.Dispose();
+            _instructions.Dispose();
             GC.Collect();
             GC.WaitForFullGCComplete();
             return makeInstructionsVisible;
@@ -75,10 +75,10 @@ namespace BlockBreaker
         {
             if (e.KeyChar == (char)Keys.Escape)
             {
-                MenuPanel.Visible = true;
+                _menuPanel.Visible = true;
                 Start.Visible = true;
-                Help.Visible = true;
-                Instructions.Visible = false;
+                _help.Visible = true;
+                _instructions.Visible = false;
                 _highScoresPanel.Visible = false;
                 _logo.Visible = true;
                 _showhighscore = false;
@@ -110,24 +110,24 @@ namespace BlockBreaker
                 CreateLogo(ClientSize.Width, ClientSize.Height);
 
                 //Ricrea le istruzioni
-                Instructions = new Instructions(0, 0, ClientSize.Width, ClientSize.Height);
+                _instructions = new Instructions(0, 0, ClientSize.Width, ClientSize.Height);
                 _highScoresPanel.Dispose();
                 _highScoresPanel = new HighScoresPanel(0, 0, ClientSize.Width, ClientSize.Height);
-                Controls.Add(Instructions);
+                Controls.Add(_instructions);
                 Controls.Add(_highScoresPanel);
                 if (_showhighscore)
                 {
                     _highScoresPanel.Visible = true;
-                    MenuPanel.Visible = false;
+                    _menuPanel.Visible = false;
                     _logo.Visible = false;
                 }
                 if (makeInstructionsVisible)
                 {
-                    MenuPanel.Visible = false;
+                    _menuPanel.Visible = false;
                     _logo.Visible = false;
-                    Instructions.Visible = true;
+                    _instructions.Visible = true;
                 }
-                Help.KeyPress += Help_KeyPress;
+                _help.KeyPress += Help_KeyPress;
             }
         }
 
@@ -164,11 +164,11 @@ namespace BlockBreaker
         private void ControlsAdder()
         {
             // Aggiunge i bottoni al panel e poi il panel ai controlli
-            Controls.Add(MenuPanel);
-            MenuPanel.Controls.Add(Start);
-            MenuPanel.Controls.Add(Help);
-            MenuPanel.Controls.Add(Highscores);
-            Controls.Add(Instructions);
+            Controls.Add(_menuPanel);
+            _menuPanel.Controls.Add(Start);
+            _menuPanel.Controls.Add(_help);
+            _menuPanel.Controls.Add(_highscores);
+            Controls.Add(_instructions);
             Controls.Add(_highScoresPanel);
         }
 
@@ -186,8 +186,8 @@ namespace BlockBreaker
                 _logo.Dispose();
             }
             _logo = new PictureBox();
-            _logo.Width = MenuPanel.Width * 4;
-            _logo.Height = MenuPanel.Top;
+            _logo.Width = _menuPanel.Width * 4;
+            _logo.Height = _menuPanel.Top;
             _logo.Image = new Bitmap(Resources.logo1, _logo.Size);
             _logo.BackColor = Color.Transparent;
             _logo.Top = 0;
@@ -201,42 +201,42 @@ namespace BlockBreaker
         /// </summary>
         private void CreatePanel()
         {
-            S = new Size(ClientSize.Width / 6, ClientSize.Height / 10);
+            _s = new Size(ClientSize.Width / 6, ClientSize.Height / 10);
 
             // Imposta le dimensioni e la posizione del pannello panel che conterrà Start e help
-            MenuPanel.Size = new Size(ClientRectangle.Width / 5, ClientRectangle.Height / 2);
-            MenuPanel.Top = ClientRectangle.Height / 2 - MenuPanel.Size.Height / 15 * 2;
-            MenuPanel.Left = ClientRectangle.Width / 2 - MenuPanel.Size.Width / 2;
-            MenuPanel.BackColor = Color.FromArgb(150, Color.Black);
-            MenuPanel.BorderStyle = BorderStyle.Fixed3D;
+            _menuPanel.Size = new Size(ClientRectangle.Width / 5, ClientRectangle.Height / 2);
+            _menuPanel.Top = ClientRectangle.Height / 2 - _menuPanel.Size.Height / 15 * 2;
+            _menuPanel.Left = ClientRectangle.Width / 2 - _menuPanel.Size.Width / 2;
+            _menuPanel.BackColor = Color.FromArgb(150, Color.Black);
+            _menuPanel.BorderStyle = BorderStyle.Fixed3D;
 
             // Imposta le dimensioni e la posizione di Start
             if (Start != null)
                 Start.Dispose();
-            Start = new MenuButton(S);
-            Start.Top = MenuPanel.Height / 4 - Start.Height / 5 * 2;
-            Start.Left = MenuPanel.Width / 2 - Start.Width / 2;
+            Start = new MenuButton(_s);
+            Start.Top = _menuPanel.Height / 4 - Start.Height / 5 * 2;
+            Start.Left = _menuPanel.Width / 2 - Start.Width / 2;
 
             // Imposta le dimensioni e la posizione di help
-            Help?.Dispose();
-            Help = new MenuButton(S);
-            Help.Top = MenuPanel.Height / 3 + Help.Height / 5 * 2;
-            Help.Left = MenuPanel.Width / 2 - Help.Width / 2;
-            Help.Text = "Help";
+            _help?.Dispose();
+            _help = new MenuButton(_s);
+            _help.Top = _menuPanel.Height / 3 + _help.Height / 5 * 2;
+            _help.Left = _menuPanel.Width / 2 - _help.Width / 2;
+            _help.Text = "Help";
 
             // Imposta le dimensioni e la posizione di Highscore
-            Highscores?.Dispose();
-            Highscores = new MenuButton(S);
-            Highscores.Top = MenuPanel.Height / 4 + Highscores.Height * 2;
-            Highscores.Left = MenuPanel.Width / 2 - Highscores.Width / 2;
-            Highscores.Text = "Highscores";
+            _highscores?.Dispose();
+            _highscores = new MenuButton(_s);
+            _highscores.Top = _menuPanel.Height / 4 + _highscores.Height * 2;
+            _highscores.Left = _menuPanel.Width / 2 - _highscores.Width / 2;
+            _highscores.Text = "Highscores";
 
             // Eventhandler
-            Help.Click += Show_Instructions;
-            Highscores.Click += Show_highscore;
-            MenuPanel.Controls.Add(Start);
-            MenuPanel.Controls.Add(Help);
-            MenuPanel.Controls.Add(Highscores);
+            _help.Click += Show_Instructions;
+            _highscores.Click += Show_highscore;
+            _menuPanel.Controls.Add(Start);
+            _menuPanel.Controls.Add(_help);
+            _menuPanel.Controls.Add(_highscores);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace BlockBreaker
         /// <param name="e"></param>
         private void Show_highscore(object sender, EventArgs e)
         {
-            MenuPanel.Visible = false;
+            _menuPanel.Visible = false;
             _logo.Visible = false;
             _highScoresPanel.Visible = true;
             Focus();
@@ -261,9 +261,9 @@ namespace BlockBreaker
         /// <param name="e"></param>
         private void Show_Instructions(object sender, EventArgs e)
         {
-            MenuPanel.Visible = false;
+            _menuPanel.Visible = false;
             _logo.Visible = false;
-            Instructions.Visible = true;
+            _instructions.Visible = true;
             Focus();
             KeyPress += Help_KeyPress;
         }
@@ -273,7 +273,7 @@ namespace BlockBreaker
         /// </summary>
         private void Starter()
         {
-            S = new Size(ClientSize.Width / 5, ClientSize.Height / 10);
+            _s = new Size(ClientSize.Width / 5, ClientSize.Height / 10);
 
             // Background
             _backgroundimage = new Bitmap(Resources.BackGround_Image, Size);
@@ -283,7 +283,7 @@ namespace BlockBreaker
             CreatePanel();
 
             // Instructions
-            Instructions = new Instructions(0, 0, ClientSize.Width, ClientSize.Height);
+            _instructions = new Instructions(0, 0, ClientSize.Width, ClientSize.Height);
             _highScoresPanel = new HighScoresPanel(0, 0, ClientSize.Width, ClientSize.Height);
 
             //_logo

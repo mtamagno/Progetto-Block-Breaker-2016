@@ -10,13 +10,13 @@ namespace BlockBreaker
         #region Public Fields
 
         public MenuButton Continue;
-        public Label Nickname;
         public TextBox TextBox;
 
         #endregion Public Fields
 
         #region Private Fields
 
+        private Label _nickname;
         private Bitmap _backgroundimage;
         private MyFonts _fonts;
 
@@ -67,18 +67,18 @@ namespace BlockBreaker
                 Controls.Add(Continue);
 
                 // Imposta la label
-                Nickname.Dispose();
-                Nickname = new Label();
+                _nickname.Dispose();
+                _nickname = new Label();
                 var fonts = new MyFonts(MyFonts.FontType.Paragraph);
-                Nickname.UseCompatibleTextRendering = true;
-                Nickname.Width = 80;
-                Nickname.Top = Continue.Top - Continue.Height;
-                Nickname.Font = new Font(fonts.Type.Families[0], 12, FontStyle.Regular);
-                Nickname.ForeColor = Color.White;
-                Nickname.BackColor = Color.Black;
-                Nickname.Text = "Nickname: ";
-                Nickname.Left = ClientRectangle.Width / 2 - Continue.Width / 2 - Nickname.Width / 2;
-                Controls.Add(Nickname);
+                _nickname.UseCompatibleTextRendering = true;
+                _nickname.Width = 80;
+                _nickname.Top = Continue.Top - Continue.Height;
+                _nickname.Font = new Font(fonts.Type.Families[0], 12, FontStyle.Regular);
+                _nickname.ForeColor = Color.White;
+                _nickname.BackColor = Color.Black;
+                _nickname.Text = "Nickname: ";
+                _nickname.Left = ClientRectangle.Width / 2 - Continue.Width / 2 - _nickname.Width / 2;
+                Controls.Add(_nickname);
 
                 // Imposta posizione, placeholder e size della textBox
                 TextBox.Dispose();
@@ -139,16 +139,16 @@ namespace BlockBreaker
             BackgroundImage = _backgroundimage;
 
             // Imposta la label
-            Nickname = new Label();
-            Nickname.BackColor = Color.Black;
+            _nickname = new Label();
+            _nickname.BackColor = Color.Black;
             _fonts = new MyFonts(MyFonts.FontType.Paragraph);
-            Nickname.Width = 80;
-            Nickname.Top = Continue.Top - Continue.Height;
-            Nickname.Font = new Font(_fonts.Type.Families[0], 12, FontStyle.Regular);
-            Nickname.ForeColor = Color.White;
-            Nickname.Text = "Nickname: ";
-            Nickname.Left = ClientRectangle.Width / 2 - Continue.Width / 2 - Nickname.Width / 2;
-            Controls.Add(Nickname);
+            _nickname.Width = 80;
+            _nickname.Top = Continue.Top - Continue.Height;
+            _nickname.Font = new Font(_fonts.Type.Families[0], 12, FontStyle.Regular);
+            _nickname.ForeColor = Color.White;
+            _nickname.Text = "Nickname: ";
+            _nickname.Left = ClientRectangle.Width / 2 - Continue.Width / 2 - _nickname.Width / 2;
+            Controls.Add(_nickname);
 
             // Aspetto il Garbage Collector
             GC.Collect();

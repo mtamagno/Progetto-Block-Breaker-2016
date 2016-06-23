@@ -1,6 +1,6 @@
 ﻿using BlockBreaker.Properties;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
+//using Microsoft.Xna.Framework;
+//using Microsoft.Xna.Framework.Audio;
 using System;
 using System.Drawing;
 using System.Threading;
@@ -27,7 +27,7 @@ namespace BlockBreaker
 
         #region Private Fields
 
-        private readonly SoundEffect _sound;
+        //       private readonly SoundEffect _sound;
         private bool _blockHit;
         private Thread _hurt;
 
@@ -54,8 +54,8 @@ namespace BlockBreaker
             CanCollide = true;
             FollowPointer = true;
             ToRender = true;
-            var stream = TitleContainer.OpenStream(@"SoundEffect/Music.wav");
-            _sound = SoundEffect.FromStream(stream);
+            //       var stream = TitleContainer.OpenStream(@"SoundEffect/Music.wav");
+            //         _sound = SoundEffect.FromStream(stream);
 
             //rendo invisibile lo sfondo dello sprite della pallina
             var backColor = texture.GetPixel(0, 0);
@@ -87,7 +87,7 @@ namespace BlockBreaker
             Velocity.X = Velocity.X * lunghezzaClient / lunghezzaClientIniziale;
 
             //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
-            VelocityTot = (float)Math.Sqrt(Velocity.X * Velocity.X + Velocity.Y * Velocity.Y);
+            VelocityTot = (float) Math.Sqrt(Velocity.X*Velocity.X + Velocity.Y*Velocity.Y);
             if (ReachedVelocityTotLimit == true)
                 VelocityTotLimit = VelocityTot;
         }
@@ -246,14 +246,14 @@ namespace BlockBreaker
         /// </summary>
         private void PlaySound()
         {
-            FrameworkDispatcher.Update();
-            _sound.Play();
+            //     FrameworkDispatcher.Update();
+            //    _sound.Play();
         }
 
         //Gestisco i casi in cui la pallina collide contro la racchetta
         private void RacketCollision(Sprite s)
         {
-            Racket myRacket = (Racket)s;
+            Racket myRacket = (Racket) s;
             if (myRacket.IsCollidingWith(this))
             {
                 _hurt = new Thread(myRacket.OnHurt);
@@ -266,10 +266,10 @@ namespace BlockBreaker
                     if (X + Width / 2 <= myRacket.X + myRacket.Width / 2)
                     {
                         double coseno;
-                        coseno = Math.Abs(Math.Cos(myRacket.Angolo(X + Width / 2 - myRacket.X, myRacket.Width / 2)));
-                        Velocity.X = -VelocityTot * (float)coseno;
+                        coseno = Math.Abs(Math.Cos(myRacket.Angolo(X + Width/2 - myRacket.X, myRacket.Width/2)));
+                        Velocity.X = -VelocityTot*(float) coseno;
                         Velocity.Y =
-                            -(float)Math.Sqrt(Math.Abs((double)(VelocityTot * VelocityTot - Velocity.X * Velocity.X)));
+                            -(float) Math.Sqrt(Math.Abs((double) (VelocityTot*VelocityTot - Velocity.X*Velocity.X)));
                         Y = myRacket.Y - Height;
                     }
                     else
@@ -279,9 +279,9 @@ namespace BlockBreaker
                         double seno;
                         seno =
                             Math.Abs(
-                                Math.Sin(myRacket.Angolo(X + Width / 2 - myRacket.X - myRacket.Width / 2, myRacket.Width / 2)));
-                        Velocity.X = VelocityTot * (float)seno;
-                        Velocity.Y = -(float)Math.Sqrt(Math.Abs(VelocityTot * VelocityTot - Velocity.X * Velocity.X));
+                                Math.Sin(myRacket.Angolo(X + Width/2 - myRacket.X - myRacket.Width/2, myRacket.Width/2)));
+                        Velocity.X = VelocityTot*(float) seno;
+                        Velocity.Y = -(float) Math.Sqrt(Math.Abs(VelocityTot*VelocityTot - Velocity.X*Velocity.X));
                         Y = myRacket.Y - Height;
                     }
                 }

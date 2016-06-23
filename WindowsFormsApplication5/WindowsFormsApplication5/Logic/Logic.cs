@@ -122,7 +122,7 @@ namespace BlockBreaker
             HighScore.Score = Score;
 
             //comunico al gioco che le vite sono finite
-            _controller.lifeEnd();
+            _controller.LifeEnd();
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();

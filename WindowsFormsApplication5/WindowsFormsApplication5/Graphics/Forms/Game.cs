@@ -19,7 +19,7 @@ namespace BlockBreaker
         public Logic Logic;
         public Racket Racchetta;
         public Label Score;
-        public Life[] Vita = new Life[3];
+        public Life[] Vita;
 
         #endregion Public Fields
 
@@ -47,7 +47,7 @@ namespace BlockBreaker
         /// <summary>
         ///     Funzione che permette l'inizializzazione delle vite e del loro disegno iniziale
         /// </summary>
-        public void life_init()
+        private void life_init()
         {
             for (var i = 0; i < Logic.VitaRimanente; i++)
             {
@@ -65,7 +65,7 @@ namespace BlockBreaker
             GC.WaitForPendingFinalizers();
         }
 
-        public void lifeEnd()
+        public void LifeEnd()
         {
             Invoke(new MethodInvoker(delegate { Visible = false; }));
         }
@@ -114,7 +114,7 @@ namespace BlockBreaker
             _gamePause.Visible = true;
         }
 
-        public void ThrowBall()
+        private void ThrowBall()
         {
             if (_gamePause.Visible == false)
             {
@@ -144,19 +144,19 @@ namespace BlockBreaker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void OnLoad(object sender, EventArgs e)
+        public void OnLoad(object sender, EventArgs e)
         {
             if (sender == null) throw new ArgumentNullException(nameof(sender));
             try
             {
-                LoadContent();
+                Starter();
             }
 
             // Gestiamo un raro caso in cui crashava il gioco che viene gestito da OnLoad
             catch
             {
                 base.OnLoad(e);
-                LoadContent();
+                Starter();
             }
         }
 
@@ -227,13 +227,6 @@ namespace BlockBreaker
             GC.WaitForPendingFinalizers();
         }
 
-        /// <summary>
-        ///     Funzione che permette di caricare il contenuto all'avvio
-        /// </summary>
-        private void LoadContent()
-        {
-            Starter();
-        }
 
         /// <summary>
         ///     Funzione che permette
@@ -257,6 +250,7 @@ namespace BlockBreaker
         /// </summary>
         private void Starter()
         {
+            Vita = new Life[3];
             // Inizializza la logica
             Logic = new Logic(this);
 
