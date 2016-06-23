@@ -21,8 +21,8 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Funzione che si occupa di aggiungere gli highScores e di riordinarli ogni volta in un file "HighScores.xml" che
-        ///     viene creato se non esiste
+        /// Funzione che si occupa di aggiungere gli highScores e di riordinarli ogni volta in un file "HighScores.xml" che
+        /// viene creato se non esiste
         /// </summary>
         /// <param name="currentHighScore"></param>
         public void ModifyOrCreateXml(HighScore currentHighScore)
@@ -32,15 +32,15 @@ namespace BlockBreaker
                 var xDocument = XDocument.Load("HighScores.xml");
                 IEnumerable<XElement> rows;
                 var root = xDocument.Element("HighScores");
-                rows = root.Descendants("myHighScore");
+                rows = root.Descendants("HighScore");
                 var lastrow = rows.Last();
                 lastrow.AddAfterSelf(
-                new XElement("myHighScore",
+                new XElement("HighScore",
                         new XElement("Name", currentHighScore.Name),
                         new XElement("MyScore", currentHighScore.Score)));
 
                 // Crea la lista giusta e salvo
-                var orderedHighScores = xDocument.Descendants("myHighScore").OrderByDescending(e => (int.Parse(e.Element("Score").Value)));
+                var orderedHighScores = xDocument.Descendants("HighScore").OrderByDescending(e => (int.Parse(e.Element("MyScore").Value)));
                 root.ReplaceAll(orderedHighScores);
                 xDocument.Save("HighScores.xml");
             }
@@ -53,7 +53,7 @@ namespace BlockBreaker
                 {
                     writer.WriteStartDocument();
                     writer.WriteStartElement("HighScores");
-                    writer.WriteStartElement("myHighScore");
+                    writer.WriteStartElement("HighScore");
 
                     // Crea un nuovo nodo
                     writer.WriteElementString("Name", currentHighScore.Name);

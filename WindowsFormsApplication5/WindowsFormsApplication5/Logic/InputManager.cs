@@ -9,24 +9,18 @@ namespace BlockBreaker
     {
         #region Public Fields
 
-        public float DeltaTime;
-        public Stopwatch GameTime;
         public List<Sprite> InGameSprites = new List<Sprite>();
         public Keys[] KeyHeld;
         public Keys[] KeyPressed;
-        public Point MousePoint;
 
         #endregion Public Fields
 
         #region Public Methods
 
-        public void update(Point mp, Keys[] kp, Keys[] kh, Stopwatch gt, float dt)
+        public void update(Keys[] kp, Keys[] kh)
         {
-            MousePoint = mp;
             KeyPressed = kp;
             KeyHeld = kh;
-            GameTime = gt;
-            DeltaTime = dt / 10f;
         }
 
         #endregion Public Methods

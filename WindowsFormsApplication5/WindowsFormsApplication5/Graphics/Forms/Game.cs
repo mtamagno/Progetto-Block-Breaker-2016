@@ -283,7 +283,7 @@ namespace BlockBreaker
 
             // Inizializza racchetta
             if (Visible)
-                MyRacket = new Racket(MyGameLogic.MousePoint.X - Location.X,
+                MyRacket = new Racket(Cursor.Position.X - this.Location.X,
                     (float)MyPlayground.Height * 9 / 10 + MyPlayground.Y,
                     (int)Math.Abs((float)1 / 8 * ParentForm.ClientRectangle.Width),
                     (int)Math.Abs((float)1 / 15 * ParentForm.ClientRectangle.Height),
