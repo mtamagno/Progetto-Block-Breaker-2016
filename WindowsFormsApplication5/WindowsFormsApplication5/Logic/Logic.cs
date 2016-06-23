@@ -79,7 +79,7 @@ namespace BlockBreaker
                     if (_controller.WindowState != FormWindowState.Minimized)
                     {
                         // La pallina deve collidere di nuovo se era stata disabilitata la sua collisione
-                        _controller.Ball.CanCollide = true;
+                        _controller.MyBall.CanCollide = true;
 
                         // Controlla le vite che rimangono al giocatore
                         VitaRimanente = _checkLife.Check(_controller, VitaRimanente);
@@ -137,7 +137,7 @@ namespace BlockBreaker
                 foreach (var s in IManager.InGameSprites)
                 {
                     //ridimensiono la pallina
-                    if (s.GetType().Name == "Ball")
+                    if (s.GetType().Name == "MyBall")
                     {
                         var myBall = (Ball)s;
                         if (myBall.X > 1000 && myBall.Y < 0)
@@ -197,8 +197,8 @@ namespace BlockBreaker
                 }
 
                 // Ridimensiono la griglia
-                _controller.Grid.redraw_grid(_controller.Grid, _controller.Background.Height,
-                    _controller.Background.Width);
+                _controller.MyBlockGrid.redraw_grid(_controller.MyBlockGrid, _controller.MyPlayground.Height,
+                    _controller.MyPlayground.Width);
 
                 //Per ogni sprite in iManager.inGameSprites, ridimensiono lo sprite
                 foreach (var s in IManager.InGameSprites)
@@ -208,7 +208,7 @@ namespace BlockBreaker
                     {
                         if (s.GetType().Name == "Block")
                         {
-                            _controller.Grid.redraw_block((Block)s,
+                            _controller.MyBlockGrid.redraw_block((Block)s,
                                 100 * l / li,
                                 50 * (h / hi),
                                 s.X * l / li,
@@ -218,7 +218,7 @@ namespace BlockBreaker
                 }
 
                 // Sposto la racchetta all'altezza giusta
-                _controller.Racchetta.Y = h * 9 / 10;
+                _controller.MyRacket.Y = h * 9 / 10;
 
                 // Ridimensiono la superfice di disegno
                 SpriteBatch.Cntxt.MaximumBuffer = new Size(_controller.ClientSize.Width + 1,
@@ -265,7 +265,7 @@ namespace BlockBreaker
         {
             if (_activeBlock == 0)
             {
-                _controller.Grid.insert_grid(Resources.Block_4, IManager);
+                _controller.MyBlockGrid.insert_grid(Resources.Block_4, IManager);
             }
         }
 
@@ -294,7 +294,7 @@ namespace BlockBreaker
             }
             if (PreviousScore < Score)
             {
-                _controller.Invoke(new MethodInvoker(delegate { _controller.Score.Text = "Score: " + Score; }));
+                _controller.Invoke(new MethodInvoker(delegate { _controller.MyScore.Text = "MyScore: " + Score; }));
             }
         }
 
@@ -322,7 +322,7 @@ namespace BlockBreaker
             {
                 if (s.ToRender)
                 {
-                    if (s.GetType().Name == "Ball")
+                    if (s.GetType().Name == "MyBall")
                     {
                         var myBall = (Ball)s;
                         if (myBall.X > 1000 && myBall.Y < 0)
@@ -344,8 +344,8 @@ namespace BlockBreaker
         {
             if (VitaRimanente <= 0) return;
             if (GameTime.ElapsedMilliseconds - fpsChecker.UpsTime <= fpsChecker.Interval) return;
-            thisForm.Ball.Update(iManager, thisForm.ParentForm);
-            thisForm.Racchetta.Update(iManager, thisForm.ParentForm);
+            thisForm.MyBall.Update(iManager, thisForm.ParentForm);
+            thisForm.MyRacket.Update(iManager, thisForm.ParentForm);
             if (GameTime.Elapsed.Seconds != fpsChecker.PreviousSecond)
             {
                 fpsChecker.PreviousSecond = GameTime.Elapsed.Seconds;

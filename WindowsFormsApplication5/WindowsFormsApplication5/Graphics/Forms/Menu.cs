@@ -275,7 +275,7 @@ namespace BlockBreaker
         {
             _s = new Size(ClientSize.Width / 5, ClientSize.Height / 10);
 
-            // Background
+            // MyPlayground
             _backgroundimage = new Bitmap(Resources.BackGround_Image, Size);
             BackgroundImage = _backgroundimage;
 

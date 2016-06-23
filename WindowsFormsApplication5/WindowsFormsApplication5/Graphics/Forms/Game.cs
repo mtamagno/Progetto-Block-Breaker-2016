@@ -10,25 +10,25 @@ namespace BlockBreaker
     {
         #region Public Fields
 
-        public Playground Background;
-        public Ball Ball;
-        public float BallX;
-        public float BallY;
-        public Thread GameThread;
-        public Grid Grid;
-        public Logic Logic;
-        public Racket Racchetta;
-        public Label Score;
-        public Life[] Vita;
+        public Playground MyPlayground;
+        public Ball MyBall;
+        public float MyBallX;
+        public float MyBallY;
+        public Thread MyGameThread;
+        public Grid MyBlockGrid;
+        public Logic MyGameLogic; 
+        public Racket MyRacket;
+        public Label MyScore;
+        public Life[] MyLife;
 
         #endregion Public Fields
 
         #region Private Fields
 
-        private bool _ballpointer;
-        private GamePause _gamePause;
-        private Label _gameTitle;
-        private Skin _skin;
+        private bool _myBallpointer;
+        private GamePause _myGamePause;
+        private Label _myGameTitle;
+        private Skin _mySkin;
 
         #endregion Private Fields
 
@@ -49,9 +49,9 @@ namespace BlockBreaker
         /// </summary>
         private void life_init()
         {
-            for (var i = 0; i < Logic.VitaRimanente; i++)
+            for (var i = 0; i < MyGameLogic.VitaRimanente; i++)
             {
-                Vita[i] = new Life(ClientRectangle.Width - (float)1 / 50 * ClientRectangle.Width
+                MyLife[i] = new Life(ClientRectangle.Width - (float)1 / 50 * ClientRectangle.Width
                                    -
                                    Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)) *
                                    (i + 1) - 10 * (i + 1),
@@ -59,7 +59,7 @@ namespace BlockBreaker
                     Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)),
                     (int)Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)),
                     (int)Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)));
-                Logic.IManager.InGameSprites.Add(Vita[i]);
+                MyGameLogic.IManager.InGameSprites.Add(MyLife[i]);
             }
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -75,15 +75,15 @@ namespace BlockBreaker
             // Richiama logic.resize
             if (hi > 0 && h > 0 && li > 0 && l > 0)
             {
-                _gamePause.Width = Width;
-                _gamePause.Height = Height;
-                Logic.Resize(li, hi, l, h);
-                Racchetta.Y = (float)Background.Height * 9 / 10 + Background.Y;
-                Score.Top = ClientRectangle.Height - 40;
-                Score.Left = ClientRectangle.Width / 2 - Score.Width / 2;
-                _gameTitle.Left = ClientRectangle.Width / 2 - _gameTitle.Width / 2;
-                _gamePause.ResetText();
-                _gamePause.SetText();
+                _myGamePause.Width = Width;
+                _myGamePause.Height = Height;
+                MyGameLogic.Resize(li, hi, l, h);
+                MyRacket.Y = (float)MyPlayground.Height * 9 / 10 + MyPlayground.Y;
+                MyScore.Top = ClientRectangle.Height - 40;
+                MyScore.Left = ClientRectangle.Width / 2 - MyScore.Width / 2;
+                _myGameTitle.Left = ClientRectangle.Width / 2 - _myGameTitle.Width / 2;
+                _myGamePause.ResetText();
+                _myGamePause.SetText();
 
                 //               Pause();
             }
@@ -95,42 +95,42 @@ namespace BlockBreaker
 
         public void Pause()
         {
-            if (Ball.FollowPointer)
-                _ballpointer = true;
-            Ball.FollowPointer = false;
-            Ball.CanFall = false;
-            Ball.PreviousX = Ball.X;
-            Ball.PreviousY = Ball.Y;
-            Ball.PreviousVelocityTot = Ball.VelocityTot;
-            if (Ball.Velocity.X != 0)
+            if (MyBall.FollowPointer)
+                _myBallpointer = true;
+            MyBall.FollowPointer = false;
+            MyBall.CanFall = false;
+            MyBall.PreviousX = MyBall.X;
+            MyBall.PreviousY = MyBall.Y;
+            MyBall.PreviousVelocityTot = MyBall.VelocityTot;
+            if (MyBall.Velocity.X != 0)
             {
-                Ball.PreviousVelocity.X = Ball.Velocity.X;
+                MyBall.PreviousVelocity.X = MyBall.Velocity.X;
             }
-            if (Ball.Velocity.Y != 0)
+            if (MyBall.Velocity.Y != 0)
             {
-                Ball.PreviousVelocity.Y = Ball.Velocity.Y;
+                MyBall.PreviousVelocity.Y = MyBall.Velocity.Y;
             }
-            Racchetta.FollowPointer = false;
-            _gamePause.Visible = true;
+            MyRacket.FollowPointer = false;
+            _myGamePause.Visible = true;
         }
 
         private void ThrowBall()
         {
-            if (_gamePause.Visible == false)
+            if (_myGamePause.Visible == false)
             {
-                _ballpointer = false;
-                Ball.FollowPointer = false;
-                Ball.CanFall = true;
-                Ball.VelocityTotLimit = 3000;
-                Racchetta.FollowPointer = true;
+                _myBallpointer = false;
+                MyBall.FollowPointer = false;
+                MyBall.CanFall = true;
+                MyBall.VelocityTotLimit = 3000;
+                MyRacket.FollowPointer = true;
             }
-            if (_gamePause.Visible)
+            if (_myGamePause.Visible)
             {
-                _gamePause.Visible = false;
-                if (_ballpointer)
+                _myGamePause.Visible = false;
+                if (_myBallpointer)
                 {
-                    Ball.FollowPointer = true;
-                    Racchetta.FollowPointer = true;
+                    MyBall.FollowPointer = true;
+                    MyRacket.FollowPointer = true;
                 }
             }
         }
@@ -172,16 +172,16 @@ namespace BlockBreaker
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (sender == null) throw new ArgumentNullException(nameof(sender));
-            if (!Logic.AllowInput) return;
+            if (!MyGameLogic.AllowInput) return;
             if (e.KeyChar == (char)Keys.Space)
             {
                 ThrowBall();
-                Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
+                MyGameLogic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
             }
-            if (e.KeyChar == (char)Keys.Enter && _gamePause.Visible == false)
+            if (e.KeyChar == (char)Keys.Enter && _myGamePause.Visible == false)
             {
                 Pause();
-                Logic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
+                MyGameLogic.KeysPressed.Add((Keys)e.KeyChar.ToString().ToUpper().ToCharArray()[0]);
             }
             if (e.KeyChar == (char)Keys.Escape)
             {
@@ -190,7 +190,7 @@ namespace BlockBreaker
                     MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    Logic.VitaRimanente = 0;
+                    MyGameLogic.VitaRimanente = 0;
                 }
                 else if (dialogResult == DialogResult.No)
                 {
@@ -204,16 +204,16 @@ namespace BlockBreaker
         /// </summary>
         private void GameTitleset()
         {
-            _gameTitle = new Label();
-            _gameTitle.Top = 20;
-            _gameTitle.Width = ClientRectangle.Width / 3 * 2;
-            _gameTitle.TextAlign = ContentAlignment.MiddleCenter;
-            _gameTitle.Left = ClientRectangle.Width / 2 - _gameTitle.Width / 2;
-            _gameTitle.Text = "BlockBreaker";
-            _gameTitle.BackColor = Color.Black;
-            _gameTitle.ForeColor = Color.White;
-            _gameTitle.Font = new Font("Arial", 15);
-            Controls.Add(_gameTitle);
+            _myGameTitle = new Label();
+            _myGameTitle.Top = 20;
+            _myGameTitle.Width = ClientRectangle.Width / 3 * 2;
+            _myGameTitle.TextAlign = ContentAlignment.MiddleCenter;
+            _myGameTitle.Left = ClientRectangle.Width / 2 - _myGameTitle.Width / 2;
+            _myGameTitle.Text = "BlockBreaker";
+            _myGameTitle.BackColor = Color.Black;
+            _myGameTitle.ForeColor = Color.White;
+            _myGameTitle.Font = new Font("Arial", 15);
+            Controls.Add(_myGameTitle);
         }
 
         /// <summary>
@@ -221,8 +221,8 @@ namespace BlockBreaker
         /// </summary>
         private void init_grid()
         {
-            Grid = new Grid((int)Background.X, (int)Background.Y, Background.Height, Background.Width,
-                Resources.Block_4, Logic);
+            MyBlockGrid = new Grid((int)MyPlayground.X, (int)MyPlayground.Y, MyPlayground.Height, MyPlayground.Width,
+                Resources.Block_4, MyGameLogic);
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
@@ -233,16 +233,16 @@ namespace BlockBreaker
         /// </summary>
         private void ScoreSet()
         {
-            Score = new Label();
-            Score.Left = ClientRectangle.Width / 2 - Score.Width / 2;
-            Score.Top = ClientRectangle.Height - 40;
-            Score.Width = ClientRectangle.Width / 8;
-            Score.TextAlign = ContentAlignment.MiddleCenter;
-            Score.Text = "Score: 0";
-            Score.BackColor = Color.Black;
-            Score.ForeColor = Color.Transparent;
-            Score.Font = new Font("Arial", 15);
-            Controls.Add(Score);
+            MyScore = new Label();
+            MyScore.Left = ClientRectangle.Width / 2 - MyScore.Width / 2;
+            MyScore.Top = ClientRectangle.Height - 40;
+            MyScore.Width = ClientRectangle.Width / 8;
+            MyScore.TextAlign = ContentAlignment.MiddleCenter;
+            MyScore.Text = "MyScore: 0";
+            MyScore.BackColor = Color.Black;
+            MyScore.ForeColor = Color.Transparent;
+            MyScore.Font = new Font("Arial", 15);
+            Controls.Add(MyScore);
         }
 
         /// <summary>
@@ -250,53 +250,53 @@ namespace BlockBreaker
         /// </summary>
         private void Starter()
         {
-            Vita = new Life[3];
+            MyLife = new Life[3];
             // Inizializza la logica
-            Logic = new Logic(this);
+            MyGameLogic = new Logic(this);
 
             //Inizializzo la skin
-            _skin = new Skin(ClientRectangle.X,
+            _mySkin = new Skin(ClientRectangle.X,
                 ClientRectangle.Y,
                 ClientRectangle.Width,
                 ClientRectangle.Height,
-            Logic);
-            _skin.X = 0;
-            _skin.Y = 0;
-            _ballpointer = true;
+            MyGameLogic);
+            _mySkin.X = 0;
+            _mySkin.Y = 0;
+            _myBallpointer = true;
 
             // Inizializza la variabile della visione del menù pausa a falso in caso sia vera
-            _gamePause = new GamePause(0, 0, Width, Height);
-            _gamePause.Visible = false;
-            Controls.Add(_gamePause);
+            _myGamePause = new GamePause(0, 0, Width, Height);
+            _myGamePause.Visible = false;
+            Controls.Add(_myGamePause);
 
             // Inizializza il background
-            Background = new Playground(ClientRectangle.X,
+            MyPlayground = new Playground(ClientRectangle.X,
                 ClientRectangle.Y,
                 ClientRectangle.Width / 30 * 29,
                 ClientRectangle.Height / 5 * 4,
-                Logic);
-            Background.X = ClientRectangle.Width / 2 - Background.Width / 2;
-            Background.Y = ClientRectangle.Height / 2 - Background.Height / 2;
+                MyGameLogic);
+            MyPlayground.X = ClientRectangle.Width / 2 - MyPlayground.Width / 2;
+            MyPlayground.Y = ClientRectangle.Height / 2 - MyPlayground.Height / 2;
 
             // Inizializza griglia
             init_grid();
 
             // Inizializza racchetta
             if (Visible)
-                Racchetta = new Racket(Logic.MousePoint.X - Location.X,
-                    (float)Background.Height * 9 / 10 + Background.Y,
+                MyRacket = new Racket(MyGameLogic.MousePoint.X - Location.X,
+                    (float)MyPlayground.Height * 9 / 10 + MyPlayground.Y,
                     (int)Math.Abs((float)1 / 8 * ParentForm.ClientRectangle.Width),
                     (int)Math.Abs((float)1 / 15 * ParentForm.ClientRectangle.Height),
-                    Logic);
+                    MyGameLogic);
 
             // Inizializza pallina
-            Ball = new Ball(300,
-                Racchetta.Y - 10,
+            MyBall = new Ball(300,
+                MyRacket.Y - 10,
                 (int)
                     Math.Abs((float)1 / 50 * Math.Min(ParentForm.ClientRectangle.Width, ParentForm.ClientRectangle.Height)),
                 (int)
                     Math.Abs((float)1 / 50 * Math.Min(ParentForm.ClientRectangle.Width, ParentForm.ClientRectangle.Height)),
-                Logic);
+                MyGameLogic);
 
             // Inizializza le vite
             life_init();
@@ -308,8 +308,10 @@ namespace BlockBreaker
             ScoreSet();
 
             // Inizializza il thread del gioco
-            GameThread = new Thread(Logic.GameLoop);
-            GameThread.Start();
+            MyGameThread = new Thread(MyGameLogic.GameLoop);
+            MyGameThread.IsBackground = true;
+            MyGameThread.Start();
+
 
             // Aspetta il Garbage Collector
             GC.Collect();

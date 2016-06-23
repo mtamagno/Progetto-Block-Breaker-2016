@@ -98,19 +98,6 @@ namespace BlockBreaker
         {
             Invoke(new MethodInvoker(delegate
             {
-                DisposeAll();
-                _music.BackgroundMusic.Stop();
-                _music.BackgroundMusic.Dispose();
-                //se l utente preme x dalla schermata di gioco devo fermare il thread del gioco
-                if (_game != null)
-                {
-                    _game.Logic.ShouldStop = true;
-                    _game.GameThread.Join();
-                    _game.GameThread.Priority = ThreadPriority.Highest;               
-                }
-                //pulisco tutto
-
-                OnClosing(e);
                 Environment.Exit(0);
             }));
         }
@@ -359,10 +346,10 @@ namespace BlockBreaker
         private void OnGameover(object sender, EventArgs e)
         {
             //se l'utente ha finito il gioco salvo l _highScore ottenuto
-            _highScore = _game.Logic.HighScore;
+            _highScore = _game.MyGameLogic.HighScore;
 
-            //ri Imposta il _game.Logic a false
-            _game.Logic.ShouldStop = false;
+            //ri Imposta il _game.MyGameLogic a false
+            _game.MyGameLogic.ShouldStop = false;
 
             //pulisco tutto
             DisposeAll();
@@ -380,7 +367,7 @@ namespace BlockBreaker
         private void OnSizeChange(object sender, EventArgs e)
         {
             if (_game != null)
-                _game.Logic.WaitResize = true;
+                _game.MyGameLogic.WaitResize = true;
 
             // Imposta i nuovi valori del gamePanel
             _gamePanels.Height = ClientRectangle.Height;
@@ -395,7 +382,7 @@ namespace BlockBreaker
             {
                 InitializeForm(_game);
                 _game.on_resize(_lunghezzaClientIniziale, _altezzaClientIniziale, _lunghezzaClient, _altezzaClient);
-                _game.Ball.TotalVelocityReset(_lunghezzaClientIniziale, _altezzaClientIniziale, _lunghezzaClient,
+                _game.MyBall.TotalVelocityReset(_lunghezzaClientIniziale, _altezzaClientIniziale, _lunghezzaClient,
                     _altezzaClient);
             }
             if (_menu != null)
@@ -410,7 +397,7 @@ namespace BlockBreaker
                 _gameOver.on_resize(Width, Height);
             }
             if (_game != null)
-                _game.Logic.WaitResize = false;
+                _game.MyGameLogic.WaitResize = false;
 
             // Aggiorna le nuove dimensioni iniziali del client
             _lunghezzaClientIniziale = ClientRectangle.Width;

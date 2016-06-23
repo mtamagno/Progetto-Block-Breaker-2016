@@ -72,11 +72,11 @@ namespace BlockBreaker
         /// <param name="controller"></param>
         public void FpsWriter(Game controller)
         {
-            try
+            if (controller.ParentForm != null)
+                try
             {
                 controller?.Invoke(new MethodInvoker(delegate
-                {
-                    if (controller.ParentForm != null)
+                {                  
                         controller.ParentForm.Text = "BlockBreaker - Game      " + "    fps: " + _fps + "ups:" + Ups;
                 }));
             }

@@ -97,7 +97,7 @@ namespace BlockBreaker
         /// </summary>
         public void Update(InputManager iManager, Form thisform)
         {
-            if (thisform == null) throw new ArgumentNullException(nameof(thisform));
+            if (thisform == null) return;
             Collider(iManager);
 
             //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit

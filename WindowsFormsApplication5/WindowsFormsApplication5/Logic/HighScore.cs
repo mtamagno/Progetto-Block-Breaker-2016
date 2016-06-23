@@ -37,10 +37,10 @@ namespace BlockBreaker
                 lastrow.AddAfterSelf(
                 new XElement("HighScore",
                         new XElement("Name", currentHighScore.Name),
-                        new XElement("Score", currentHighScore.Score)));
+                        new XElement("MyScore", currentHighScore.Score)));
 
                 // Crea la lista giusta e salvo
-                var orderedHighScores = xDocument.Descendants("HighScore").OrderByDescending(e => (int.Parse(e.Element("Score").Value)));
+                var orderedHighScores = xDocument.Descendants("HighScore").OrderByDescending(e => (int.Parse(e.Element("MyScore").Value)));
                 root.ReplaceAll(orderedHighScores);
                 xDocument.Save("HighScores.xml");
             }
@@ -57,7 +57,7 @@ namespace BlockBreaker
 
                     // Crea un nuovo nodo
                     writer.WriteElementString("Name", currentHighScore.Name);
-                    writer.WriteElementString("Score", currentHighScore.Score.ToString());
+                    writer.WriteElementString("MyScore", currentHighScore.Score.ToString());
                     writer.WriteEndElement();
                     writer.WriteEndDocument();
                     writer.Flush();
