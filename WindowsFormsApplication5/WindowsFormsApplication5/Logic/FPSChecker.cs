@@ -4,18 +4,15 @@ using System.Windows.Forms;
 
 namespace BlockBreaker
 {
-    internal class FpsChecker
+    internal class FpsInit
     {
         #region Public Fields
 
-        //variabile per limitare gli fps
-        public int Interval = 1000 / 85;
+        public int Limiter = 1000 / 85;
         public int PreviousSecond;
         public int Ups;
         public long UpsTime;
-
-        //vairbili per ups
-        public int UpsTmp;
+        public int UpsCounter;
 
         #endregion Public Fields
 
@@ -23,7 +20,6 @@ namespace BlockBreaker
 
         private readonly Stopwatch _gameTime;
 
-        //variabili per fps
         private int _fps;
         private int _fpsCounter;
         private long _fpsTime;
@@ -33,10 +29,10 @@ namespace BlockBreaker
         #region Public Constructors
 
         /// <summary>
-        ///     Funzione che avvia il timer
+        /// Funzione che prende il timer dal Form Game
         /// </summary>
         /// <param name="timer"></param>
-        public FpsChecker(Stopwatch timer)
+        public FpsInit(Stopwatch timer)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
             _gameTime = timer;
@@ -50,7 +46,7 @@ namespace BlockBreaker
         ///     Funzione per il check degli fps, li conta per poi resettare il totale e restituire il risultato ogni secondo
         /// </summary>
         /// <param name="controller"></param>
-        public void Checkfps(Game controller)
+        public void CheckFps_Ups(Game controller)
         {
             if (controller == null) throw new ArgumentNullException(nameof(controller));
             if (_gameTime.ElapsedMilliseconds - _fpsTime > 1000)
@@ -58,7 +54,7 @@ namespace BlockBreaker
                 _fpsTime = _gameTime.ElapsedMilliseconds;
                 _fps = _fpsCounter;
                 _fpsCounter = 0;
-                FpsWriter(controller);
+                Writer(controller);
             }
             else
             {
@@ -70,7 +66,7 @@ namespace BlockBreaker
         ///     Funzione che scrive sul form il numero degli fps e degli ups
         /// </summary>
         /// <param name="controller"></param>
-        public void FpsWriter(Game controller)
+        public void Writer(Game controller)
         {
             if (controller.ParentForm != null)
                 try

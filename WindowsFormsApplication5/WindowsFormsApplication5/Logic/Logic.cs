@@ -45,7 +45,7 @@ namespace BlockBreaker
         private readonly LifeChecker _myLifeChecker = new LifeChecker();
         private int _activeBlocks;
         private readonly Game _myGame;
-        private FpsChecker _myFpsChecker;
+        private FpsInit _myFpsChecker;
 
         #endregion Private Fields
 
@@ -88,7 +88,7 @@ namespace BlockBreaker
                         }
 
                         // Controlla gli fps contandoli e vede se è il caso di stamparli
-                        _myFpsChecker.Checkfps(_myGame);
+                        _myFpsChecker.CheckFps_Ups(_myGame);
                         Updater(_myGame, MyIManager, _myFpsChecker);
                         Render();
                     }
@@ -241,7 +241,7 @@ namespace BlockBreaker
         {
             VitaRimanente = 3;
             MyGameTime = new Stopwatch();
-            _myFpsChecker = new FpsChecker(MyGameTime);
+            _myFpsChecker = new FpsInit(MyGameTime);
             MyIManager = new InputManager();
             MyHighScore = new HighScore();
             KeysHeld = new List<Keys>();
@@ -301,7 +301,7 @@ namespace BlockBreaker
             AllowInput = false;
 
             // Controlla i tasti che sono stati premuti e svuoto i buffer
-            MyIManager.update(KeysPressed.ToArray(), KeysHeld.ToArray());
+            MyIManager.Update(KeysPressed.ToArray(), KeysHeld.ToArray());
             KeysPressed.Clear();
             KeysHeld.Clear();
             AllowInput = true;
@@ -330,20 +330,20 @@ namespace BlockBreaker
         ///     Funzione che calcola la logica e gli ups (Updates per second , cioè aggiornamento delle posizioni e calcolo di
         ///     eventuali hit)
         /// </summary>
-        private void Updater(Game thisForm, InputManager iManager, FpsChecker fpsChecker)
+        private void Updater(Game thisForm, InputManager iManager, FpsInit fpsChecker)
         {
             if (VitaRimanente <= 0) return;
-            if (MyGameTime.ElapsedMilliseconds - fpsChecker.UpsTime <= fpsChecker.Interval) return;
+            if (MyGameTime.ElapsedMilliseconds - fpsChecker.UpsTime <= fpsChecker.Limiter) return;
             thisForm.MyBall.Update(iManager, thisForm.ParentForm);
             thisForm.MyRacket.Update(iManager, thisForm.ParentForm);
             if (MyGameTime.Elapsed.Seconds != fpsChecker.PreviousSecond)
             {
                 fpsChecker.PreviousSecond = MyGameTime.Elapsed.Seconds;
-                fpsChecker.Ups = fpsChecker.UpsTmp;
-                fpsChecker.UpsTmp = 0;
+                fpsChecker.Ups = fpsChecker.UpsCounter;
+                fpsChecker.UpsCounter = 0;
             }
             fpsChecker.UpsTime = MyGameTime.ElapsedMilliseconds;
-            fpsChecker.UpsTmp++;
+            fpsChecker.UpsCounter++;
         }
     }
 

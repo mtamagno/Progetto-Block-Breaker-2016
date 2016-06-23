@@ -17,7 +17,7 @@ namespace BlockBreaker
 
         #region Public Methods
 
-        public void update(Keys[] kp, Keys[] kh)
+        public void Update(Keys[] kp, Keys[] kh)
         {
             KeyPressed = kp;
             KeyHeld = kh;
