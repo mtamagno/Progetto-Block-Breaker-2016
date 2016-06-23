@@ -90,7 +90,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione per la chiusura di container
+        /// Funzione per la chiusura di container
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

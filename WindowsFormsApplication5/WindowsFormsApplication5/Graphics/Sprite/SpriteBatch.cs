@@ -52,12 +52,11 @@ namespace BlockBreaker
                     if (myRacket.Hurt == true)
                         s.CreateSprite(s.Texture, s.X, s.Y, s.Width, s.Height);
                 }
-                if (s.GetType().Name == "MyBall")
+                if (s.GetType().Name == "Ball")
                 {
                     var myBall = (Ball)s;
                     if (float.IsNaN(s.X))
-                        s.X = myBall.
-                            X;
+                        s.X = myBall.PreviousX;
                     if (float.IsNaN(s.Y))
                         s.Y = myBall.PreviousY;
                     if (float.IsNaN(myBall.VelocityTot))

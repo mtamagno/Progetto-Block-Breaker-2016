@@ -59,15 +59,6 @@ namespace BlockBreaker
             GC.WaitForPendingFinalizers();
         }
 
-        /// <summary>
-        ///     Funzione Draw che rimanda alla funzione DrawImageUnscaled all'interno di SpriteBatch
-        /// </summary>
-        /// <param name="sb"></param>
-        public void Draw(SpriteBatch sb)
-        {
-            sb.Draw(this);
-        }
-
         //Funzione Redraw necessaria ogni qual volta si effettua il resize dei vari sprite
         public void Redraw(Sprite sprite, int newWidth, int newheight, Bitmap risorsa, float nuova_X, float nuova_Y)
         {
