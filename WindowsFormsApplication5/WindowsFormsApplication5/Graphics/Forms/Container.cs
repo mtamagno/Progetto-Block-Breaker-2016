@@ -348,9 +348,6 @@ namespace BlockBreaker
             //se l'utente ha finito il gioco salvo l _highScore ottenuto
             _highScore = _game.MyGameLogic.MyHighScore;
 
-            //ri Imposta il _game.MyGameLogic a false
-            _game.MyGameLogic.ShouldStop = false;
-
             //pulisco tutto
             DisposeAll();
 

@@ -32,12 +32,10 @@ namespace BlockBreaker
         public HighScore MyHighScore;
         public List<Keys> KeysHeld;
         public List<Keys> KeysPressed;
-        public Point MousePoint;
         public int PreviousScore;
         public int Score;
         public int VitaRimanente;
         public bool AllowInput;
-        public bool ShouldStop;
         public volatile bool WaitResize;
 
         #endregion Public Fields
@@ -66,7 +64,7 @@ namespace BlockBreaker
 
             // Crea il buffer
             // Finchè non si deve fermare continua ad eseguire
-            while (ShouldStop == false && VitaRimanente > 0)
+            while (VitaRimanente > 0)
             {
                 if (_myGame.WindowState == FormWindowState.Minimized)
                 {
@@ -97,14 +95,14 @@ namespace BlockBreaker
                 }
             }
 
-            // Se non ne rimangono segnala con la variabile shouldStop che si deve visualizzare la schermata GameOver
+            // Se non rimangono vite richiama GameOver e smette di renderizzare gli sprites
             if (VitaRimanente <= 0)
             {
                 foreach (var s in MyIManager.InGameSprites)
                 {
                     s.ToRender = false;
                 }
-                Gameover();
+                GameOver();
             }
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -114,7 +112,7 @@ namespace BlockBreaker
             }
         }
 
-        public void Gameover()
+        public void GameOver()
         {
             // Salva lo score
             MyHighScore.Score = Score;
@@ -248,7 +246,6 @@ namespace BlockBreaker
             MyHighScore = new HighScore();
             KeysHeld = new List<Keys>();
             KeysPressed = new List<Keys>();
-            ShouldStop = false;
             VitaRimanente = 3;
             Score = 0;
             PreviousScore = 0;
@@ -303,7 +300,7 @@ namespace BlockBreaker
             AllowInput = false;
 
             // Controlla i tasti che sono stati premuti e svuoto i buffer
-            MyIManager.update(MousePoint, KeysPressed.ToArray(), KeysHeld.ToArray());
+            MyIManager.update(KeysPressed.ToArray(), KeysHeld.ToArray());
             KeysPressed.Clear();
             KeysHeld.Clear();
             AllowInput = true;
