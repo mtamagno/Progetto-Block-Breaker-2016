@@ -16,7 +16,11 @@ namespace BlockBreaker
         #endregion Private Fields
 
         #region Public Constructors
-
+        /// <summary>
+        /// Costruttore, prende in ingresso grandezza e posizione e va a costruire il panel riferito allo stato gamePause.
+        /// </summary>
+        /// <returns></returns>
+        /// 
         public GamePause(int left, int top, int width, int height)
         {
             Left = left;
@@ -32,7 +36,10 @@ namespace BlockBreaker
         #endregion Public Constructors
 
         #region Public Methods
-
+        /// <summary>
+        /// Funzione che permettere di settare il font
+        /// </summary>
+        /// <returns></returns>
         private void SetFont()
         {
             _fontParagraph = new MyFonts(MyFonts.FontType.Paragraph);
@@ -42,6 +49,12 @@ namespace BlockBreaker
             _esc.Font = new Font(_fontParagraph.Type.Families[0], 14, FontStyle.Regular);
         }
 
+
+        /// <summary>
+        /// Funzione che crea i label relativi al panel
+        /// </summary>
+        /// <returns></returns>
+        /// 
         private void SetLabels()
         {
             _esc = new Label();
@@ -49,6 +62,10 @@ namespace BlockBreaker
             _paragraph = new Label();
         }
 
+        /// <summary>
+        /// Funzione che scrive all interno dei label e ne setta le varie caratteristiche
+        /// </summary>
+        /// <returns></returns>
         public void SetText()
         {
             _title.UseCompatibleTextRendering = true;

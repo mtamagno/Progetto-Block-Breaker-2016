@@ -393,7 +393,7 @@ namespace BlockBreaker
             if (_game != null)
             {
                 InitializeForm(_game);
-                _game.on_resize(_lunghezzaClientIniziale, _altezzaClientIniziale, _lunghezzaClient, _altezzaClient);
+                _game.OnResize(_lunghezzaClientIniziale, _altezzaClientIniziale, _lunghezzaClient, _altezzaClient);
                 _game.MyBall.TotalVelocityReset(_lunghezzaClientIniziale, _altezzaClientIniziale, _lunghezzaClient,
                     _altezzaClient);
             }
