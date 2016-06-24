@@ -267,7 +267,7 @@ namespace BlockBreaker
         #region Private Methods
 
         /// <summary>
-        ///     Funzione per l'inizializzazione del gioco
+        /// Funzione per l'inizializzazione del gioco
         /// </summary>
         private void Init()
         {
@@ -285,7 +285,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione per il controllo di quanti blocchi sono rimasti in gioco
+        /// Funzione per il controllo di quanti blocchi sono rimasti in gioco
         /// </summary>
         private void CheckActiveBlocks()
         {
@@ -296,7 +296,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione per il check dello score dell'utente
+        /// Funzione per il check dello score dell'utente
         /// </summary>
         private void Checkscore()
         {
@@ -325,7 +325,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che svuota il buffer creato quando il Thread Game non è ancora partito ma si è spinto qualcosa
+        /// Funzione che svuota il buffer creato quando il Thread Game non è ancora partito ma si è spinto qualcosa
         /// </summary>
         private void Input()
         {
@@ -359,8 +359,8 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che calcola la logica e gli ups (Updates per second , cioè aggiornamento delle posizioni e calcolo di
-        ///     eventuali hit)
+        /// Funzione che calcola la logica e gli ups (Updates per second , cioè aggiornamento delle posizioni e calcolo di
+        /// eventuali hit)
         /// </summary>
         private void Updater(Game thisForm, InputManager iManager, FpsInit fpsChecker)
         {

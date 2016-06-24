@@ -35,8 +35,8 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Funzione che restituisce l'Angolo con cui la pallina deve essere fatta rimbalzare, a seconda del punto di impatto
-        ///     sulla racchetta
+        /// Funzione che restituisce l'Angolo con cui la pallina deve essere fatta rimbalzare, a seconda del punto di impatto
+        /// sulla racchetta
         /// </summary>
         /// <param name="posizioneAttuale"></param>
         /// <param name="posizioneMassima"></param>
@@ -50,7 +50,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che rende la racchetta "nomale" facendo tornare la texture uguale a quella dello stato prima dell'impatto
+        /// Funzione che rende la racchetta "nomale" facendo tornare la texture uguale a quella dello stato prima dell'impatto
         /// </summary>
         public void Normalize()
         {
@@ -60,7 +60,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che rende la racchetta "animata" cambiando la texture per un breve periodo di tempo ad ogni hit
+        /// Funzione che rende la racchetta "animata" cambiando la texture per un breve periodo di tempo ad ogni hit
         /// </summary>
         public void OnHurt()
         {
@@ -71,7 +71,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione Update che richiama il collider e si occupa di spostare le coordinate della racchetta di volta in volta
+        /// Funzione Update che richiama il collider e si occupa di spostare le coordinate della racchetta di volta in volta
         /// </summary>
         /// <param name="iManager"></param>
         /// <param name="thisform"></param>

@@ -54,7 +54,7 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Funzione che permette di cambiare la texture del blocco a seconda delle vite rimanenti
+        /// Funzione che permette di cambiare la texture del blocco a seconda delle vite rimanenti
         /// </summary>
         public void TextureSwitcher()
         {

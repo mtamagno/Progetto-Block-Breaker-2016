@@ -12,8 +12,6 @@ namespace BlockBreaker
 
         public Playground MyPlayground;
         public Ball MyBall;
-        public float MyBallX;
-        public float MyBallY;
         public Thread MyGameThread;
         public Grid MyBlockGrid;
         public Logic MyGameLogic; 
@@ -45,31 +43,42 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Funzione che permette l'inizializzazione delle vite e del loro disegno iniziale
+        /// Funzione che permette l'inizializzazione delle vite e del loro disegno iniziale
         /// </summary>
         private void life_init()
         {
+
             for (var i = 0; i < MyGameLogic.VitaRimanente; i++)
             {
-                MyLife[i] = new Life(ClientRectangle.Width - (float)1 / 50 * ClientRectangle.Width
-                                   -
-                                   Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)) *
-                                   (i + 1) - 10 * (i + 1),
-                    (float)1 / 50 * ClientRectangle.Height +
-                    Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)),
-                    (int)Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)),
-                    (int)Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)));
+                var lifeX = ClientRectangle.Width - (float)1 / 50 * ClientRectangle.Width -
+                Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height)) * (i + 1) - 10 * (i + 1);
+                var lifeY = (float)1 / 50 * ClientRectangle.Height +
+                    Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height));
+                var lifeWidth = (int)Math.Abs((float)1 / 25 * Math.Min(ClientRectangle.Width, ClientRectangle.Height));
+                var lifeHeigth = lifeWidth;
+                MyLife[i] = 
+                    new Life(lifeX, lifeY,lifeWidth, lifeHeigth);
                 MyGameLogic.MyIManager.InGameSprites.Add(MyLife[i]);
             }
             GC.Collect();
             GC.WaitForPendingFinalizers();
         }
 
+        /// <summary>
+        /// Funzione che rende il form invisibile perchè non si hanno piu vite a disposizione
+        /// </summary>
         public void LifeEnd()
         {
-            Invoke(new MethodInvoker(delegate { Visible = false; }));
+            Invoke(new MethodInvoker(delegate { this.Visible = false; }));
         }
 
+        /// <summary>
+        /// Funzione utilizzata durante i resize
+        /// </summary>
+        /// <param name="li"></param>
+        /// <param name="hi"></param>
+        /// <param name="l"></param>
+        /// <param name="h"></param>
         public void on_resize(int li, int hi, int l, int h)
         {
             // Richiama logic.resize
@@ -84,8 +93,6 @@ namespace BlockBreaker
                 _myGameTitle.Left = ClientRectangle.Width / 2 - _myGameTitle.Width / 2;
                 _myGamePause.ResetText();
                 _myGamePause.SetText();
-
-                //               Pause();
             }
             else
             {
@@ -93,6 +100,9 @@ namespace BlockBreaker
             }
         }
 
+        /// <summary>
+        /// Funzione utilizzata per mettere in pausa il gioco
+        /// </summary>
         public void Pause()
         {
             if (MyBall.FollowPointer)
@@ -114,6 +124,9 @@ namespace BlockBreaker
             _myGamePause.Visible = true;
         }
 
+        /// <summary>
+        /// Funzione utilizzata per lanciare la pallina
+        /// </summary>
         private void ThrowBall()
         {
             if (_myGamePause.Visible == false)
@@ -140,7 +153,7 @@ namespace BlockBreaker
         #region Protected Methods
 
         /// <summary>
-        ///     Funzione che permette il caricamento iniziale del gioco
+        /// Funzione che permette il caricamento iniziale del gioco
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -165,7 +178,7 @@ namespace BlockBreaker
         #region Private Methods
 
         /// <summary>
-        ///     Funzione che gestisce l'evento della pressione dei tasti durante l'esecuzione del gioco
+        /// Funzione che gestisce l'evento della pressione dei tasti durante l'esecuzione del gioco
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -200,7 +213,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che permette il reset del titolo del gioco per poterlo scalare
+        /// Funzione che permette il reset del titolo del gioco per poterlo scalare
         /// </summary>
         private void GameTitleset()
         {
@@ -217,7 +230,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che permette di inizializzare la griglia
+        /// Funzione che permette di inizializzare la griglia
         /// </summary>
         private void init_grid()
         {
@@ -229,7 +242,7 @@ namespace BlockBreaker
 
 
         /// <summary>
-        ///     Funzione che permette
+        /// Funzione che permette
         /// </summary>
         private void ScoreSet()
         {   
@@ -246,7 +259,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione Starter invocata all'avvio di questo form per inizializzarlo
+        /// Funzione Starter invocata all'avvio di questo form per inizializzarlo
         /// </summary>
         private void Starter()
         {

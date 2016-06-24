@@ -42,7 +42,7 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Funzione per il check degli fps, li conta per poi resettare il totale e restituire il risultato ogni secondo
+        /// Funzione per il check degli fps, li conta per poi resettare il totale e restituire il risultato ogni secondo
         /// </summary>
         /// <param name="controller"></param>
         public void CheckFps_Ups(Game controller)
@@ -62,7 +62,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che scrive sul form il numero degli fps e degli ups
+        /// Funzione che scrive sul form il numero degli fps e degli ups
         /// </summary>
         /// <param name="controller"></param>
         public void Writer(Game controller)
@@ -77,7 +77,8 @@ namespace BlockBreaker
             }
             catch
             {
-                // Gestisce l'errore in caso si arrivi qui ma non si possa invocare il form attivo perchè è stato chiuso
+                    // Prende l'eccezione senza fare nulla poichè basta aspettare che il form si chiuda se non si
+                    // riesce a scrivere, dato che vuol dire che sta temrinando
             }
         }
 

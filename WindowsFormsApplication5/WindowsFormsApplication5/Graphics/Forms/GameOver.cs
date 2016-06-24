@@ -34,7 +34,7 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Funzione che permette di liberare la memoria dall'immagine di background
+        /// Funzione che permette di liberare la memoria dall'immagine di background
         /// </summary>
         public void Cleaner()
         {
@@ -45,11 +45,11 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che permette di ridimensionare ad ogni resize, l'immagine di backGround, la textBox ed il pulsante
+        /// Funzione che permette di ridimensionare ad ogni resize, l'immagine di backGround, la textBox ed il pulsante
         /// </summary>
         /// <param name="l"></param>
         /// <param name="h"></param>
-        public void on_resize(int l, int h)
+        public void OnResize(int l, int h)
         {
             if (ClientSize.Height > 0 || ClientSize.Width > 0)
             {
@@ -105,7 +105,8 @@ namespace BlockBreaker
 
         #region Private Methods
 
-        private void GameOver_Load(object sender, EventArgs e)
+
+        private void OnLoad(object sender, EventArgs e)
         {
             Starter();
         }

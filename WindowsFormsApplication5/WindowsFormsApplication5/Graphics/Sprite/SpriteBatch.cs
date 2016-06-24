@@ -29,7 +29,7 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Funzione che pulisce bufferedgraphics
+        /// Funzione che pulisce bufferedgraphics
         /// </summary>
         public void Clear()
         {
@@ -37,7 +37,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che gestisce l'animazione della racchetta e disegna gli sprites
+        /// Funzione che gestisce l'animazione della racchetta e disegna gli sprites
         /// </summary>
         /// <param name="s"></param>
         public void Draw(Sprite s)
@@ -73,7 +73,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione per la terminazione di bufferedGraphics
+        /// Funzione per la terminazione di bufferedGraphics
         /// </summary>
         public void End()
         {

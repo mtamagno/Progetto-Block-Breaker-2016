@@ -36,6 +36,11 @@ namespace BlockBreaker
 
         #region Private Methods
 
+        /// <summary>
+        /// Funzione che imposta l'audio on o off
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Audio(object sender, EventArgs e)
         {
             _audioOnOff = !_audioOnOff;
@@ -47,6 +52,9 @@ namespace BlockBreaker
             ProcessTabKey(true);
         }
 
+        /// <summary>
+        /// Funzione che imposta il bottone dell'audio
+        /// </summary>
         private void ButtonAudioSet()
         {
             if (_audioButton != null)
@@ -64,11 +72,11 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione Per il Caricamento di Container
+        /// Funzione Per il Caricamento di Container
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Container2_Load(object sender, EventArgs e)
+        private void OnLoad(object sender, EventArgs e)
         {
             MinimumSize = new Size(700, 450);
             _audioOnOff = true;
@@ -103,7 +111,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione necessaria per cambiare form dopo la fine della partita
+        /// Funzione necessaria per cambiare form dopo la fine della partita
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -141,6 +149,9 @@ namespace BlockBreaker
             }
         }
 
+        /// <summary>
+        /// Funzione per pulire la memoria che si incrementa di ciclo in ciclo in game se non svuotata
+        /// </summary>
         private void DisposeAll()
         {
             try
@@ -203,6 +214,10 @@ namespace BlockBreaker
             }
         }
 
+        /// <summary>
+        /// Funzione per l'inizializzazione del form
+        /// </summary>
+        /// <param name="form"></param>
         private void InitializeForm(Form form)
         {
             // Imposta il topLevel del form a false
@@ -242,7 +257,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione necessaria ad inizializzare il form del gioco
+        /// Funzione necessaria ad inizializzare il form del gioco
         /// </summary>
         private void InitializeGame()
         {
@@ -261,7 +276,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione necessaria a inizializzare il form del gameover
+        /// Funzione necessaria a inizializzare il form del gameover
         /// </summary>
         private void InitializeGameOver()
         {
@@ -281,6 +296,7 @@ namespace BlockBreaker
             //Faccio partire la musica del _gameOver
             _music.GameOver();
         }
+
 
         private void InitializeGamePanel()
         {
@@ -317,7 +333,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione necessaria a inizializzare il form del _menu
+        /// Funzione necessaria a inizializzare il form del _menu
         /// </summary>
         private void InitializeMenu()
         {
@@ -384,13 +400,13 @@ namespace BlockBreaker
             if (_menu != null)
             {
                 InitializeForm(_menu);
-                _menu.on_resize(Width, Height);
+                _menu.OnResize(Width, Height);
                 _menu.Start.Click += StartGame;
             }
             if (_gameOver != null)
             {
                 InitializeForm(_gameOver);
-                _gameOver.on_resize(Width, Height);
+                _gameOver.OnResize(Width, Height);
             }
             if (_game != null)
                 _game.MyGameLogic.WaitResize = false;
@@ -401,7 +417,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione necessaria a far partire il gioco
+        /// Funzione necessaria a far partire il gioco
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

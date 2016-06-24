@@ -14,7 +14,7 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Funzione per la liberazione delle risorse occupate dalla musica
+        /// Funzione per la liberazione delle risorse occupate dalla musica
         /// </summary>
         public void Dispose_Music()
         {
@@ -23,7 +23,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione per la riproduzione della musica del gioco
+        /// Funzione per la riproduzione della musica del gioco
         /// </summary>
         public void Game()
         {
@@ -32,7 +32,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione per la riproduzione della musica della schermata del gameover
+        /// Funzione per la riproduzione della musica della schermata del gameover
         /// </summary>
         public void GameOver()
         {
@@ -41,7 +41,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione per la riproduzione della musica della schermata del menù
+        /// Funzione per la riproduzione della musica della schermata del menù
         /// </summary>
         public void Menu()
         {

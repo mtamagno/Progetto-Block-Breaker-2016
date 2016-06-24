@@ -38,7 +38,7 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Metodo insert_grid utilizzato per inserire nei posti giusti i blocchi grazie alle coordinate della griglia
+        /// Metodo insert_grid utilizzato per inserire nei posti giusti i blocchi grazie alle coordinate della griglia
         /// </summary>
         /// <param name="texture"></param>
         /// <param name="iManager"></param>
@@ -59,7 +59,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Metodo utilizzato per scalare i blocchi al variare della dimensione della finestra di gioco
+        /// Metodo utilizzato per scalare i blocchi al variare della dimensione della finestra di gioco
         /// </summary>
         /// <param name="s"></param>
         /// <param name="newWidth"></param>
@@ -73,7 +73,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Metodo utilizzato per scalare la griglia al variare della dimensione della finestra di gioco
+        /// Metodo utilizzato per scalare la griglia al variare della dimensione della finestra di gioco
         /// </summary>
         /// <param name="grid"></param>
         /// <param name="clientHeight"></param>

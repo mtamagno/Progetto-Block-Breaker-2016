@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="BlockBreaker.AudioButtons" Collapsed="true">
+    <Position X="30" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAABAAAABAACAAAAACAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>Graphics\Buttons\AudioButtons.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Music">
+    <Position X="40.25" Y="6" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAABAAAgIAAAAACAAAAAAAAA=</HashCode>
+      <FileName>Graphics\Audio\Music.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.MenuButton">
+    <Position X="35" Y="7.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Graphics\Buttons\MenuButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.MyFonts">
+    <Position X="33.75" Y="3.75" Width="2.5" />
+    <NestedTypes>
+      <Enum Name="BlockBreaker.MyFonts.FontType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Graphics\Fonts\MyFonts.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAEAAAAAAAAEAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Graphics\Fonts\MyFonts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Container">
+    <Position X="33.5" Y="0.75" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAACQAACBQCAGIUCgiAAYQEAAAgEIABDAgAAQ=</HashCode>
+      <FileName>Graphics\Forms\Container.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Game">
+    <Position X="37" Y="0.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAQgIAgYACgAAAoAAACACgACACASoACAAAQAAAAEAaA=</HashCode>
+      <FileName>Graphics\Forms\Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.GameOver" Collapsed="true">
+    <Position X="30" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAACIAAAAAQACAAAACAACAgAAAAAAgAgQBAAA=</HashCode>
+      <FileName>Graphics\Forms\GameOver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Menu">
+    <Position X="37" Y="2.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAEoACgAAAABAAHAAAACABEAoAAggAIgAAABAAE=</HashCode>
+      <FileName>Graphics\Forms\Menu.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.GamePause" Collapsed="true">
+    <Position X="31.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAKAAAAAAAIAAAACAAACBAAAIAAAAAIAAAAA=</HashCode>
+      <FileName>Graphics\Labels\GamePause.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.HighScoresPanel" Collapsed="true">
+    <Position X="30" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Graphics\Labels\HighScoresPanel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Instructions" Collapsed="true">
+    <Position X="33.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Graphics\Labels\Instruction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Ball">
+    <Position X="21.75" Y="6.5" Width="7" />
+    <TypeIdentifier>
+      <HashCode>AIQIAAUCAAAAAgAAAAIAAIwCAAAAMAAQAAAACAAEAAA=</HashCode>
+      <FileName>Graphics\Sprite\Ball.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Block">
+    <Position X="0.5" Y="6.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAQAAAAAgAAAAAAAAAAAAAABgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Graphics\Sprite\Block.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Grid" Collapsed="true">
+    <Position X="33.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAoAAAIAA=</HashCode>
+      <FileName>Graphics\Sprite\Grid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Racket">
+    <Position X="12.5" Y="6.5" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAEAAAEAAAAAAAAAAAAAAAAAAAhAA=</HashCode>
+      <FileName>Graphics\Sprite\Racket.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Skin">
+    <Position X="17.5" Y="6.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Graphics\Sprite\Skin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Sprite">
+    <Position X="11.75" Y="0.75" Width="6.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAABAEAAAAAgAAQAEAAQAAJAACACALAAAIAYAA=</HashCode>
+      <FileName>Graphics\Sprite\Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.SpriteHelper">
+    <Position X="19.25" Y="1.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAADBAAAAAAAQAAAAAAAIAAAA=</HashCode>
+      <FileName>Graphics\Sprite\Sprite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.SpriteBatch">
+    <Position X="36.5" Y="4.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAIAAACAAAAAAgACAAAAAQAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Graphics\Sprite\SpriteBatch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Playground">
+    <Position X="7.75" Y="6.5" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Graphics\Sprite\PlayGround.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.FpsInit">
+    <Position X="26.5" Y="1" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAABACAEAAAAoAAAAAgAAIAAAAAAAABAAAEAAAEAAAI=</HashCode>
+      <FileName>Logic\FPSChecker.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.HighScore">
+    <Position X="38.75" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAgAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logic\HighScore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.InputManager">
+    <Position X="29.25" Y="5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAACABAAAA=</HashCode>
+      <FileName>Logic\InputManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Logic">
+    <Position X="14" Y="9.25" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAIAgCEoIgAAAAkAAQAAAEEAVAAAAAAAABESAQEgAQA=</HashCode>
+      <FileName>Logic\Logic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Program" Collapsed="true">
+    <Position X="35.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Logic\Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Properties.Resources" Collapsed="true">
+    <Position X="37.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAggAAAAAAQAAAAAEBEAAAAYBDAgABACCiAIYBAII=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BlockBreaker.Properties.Settings" Collapsed="true">
+    <Position X="31.75" Y="3.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -73,8 +73,8 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Risetta la velocità totale massima a seconda della grandezza del client in modo che non rallenti o acceleri la
-        ///     pallina a seconda del size
+        /// Risetta la velocità totale massima a seconda della grandezza del client in modo che non rallenti o acceleri la
+        /// pallina a seconda del size
         /// </summary>
         /// <param name="lunghezzaClientIniziale"></param>
         /// <param name="altezzaClientIniziale"></param>
@@ -93,7 +93,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che dopo aver chiamato il collider, si occupa dello spostamento vero e proprio di pallina e racchetta
+        /// Funzione che dopo aver chiamato il collider, si occupa dello spostamento vero e proprio di pallina e racchetta
         /// </summary>
         public void Update(InputManager iManager, Form thisform)
         {
@@ -219,7 +219,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Metodo collider che calcola le azioni da svolgere in caso di impatto
+        /// Metodo collider che calcola le azioni da svolgere in caso di impatto
         /// </summary>
         private void Collider(InputManager iManager)
         {
@@ -242,7 +242,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Metodo playsound che riproduce il suono
+        /// Metodo playsound che riproduce il suono
         /// </summary>
         private void PlaySound()
         {
@@ -289,7 +289,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Gestisco i casi in cui la pallina collide contro i bordi dello schermo
+        /// Gestisco i casi in cui la pallina collide contro i bordi dello schermo
         /// </summary>
         /// <param name="s"></param>
         private void PlayGroundCollision(Sprite s)

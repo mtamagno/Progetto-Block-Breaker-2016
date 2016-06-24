@@ -41,9 +41,9 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Funzione che permette di pulire dalla memoria le immagini caricate nel menù e che segnala se quando ciò avviene
-        ///     erano aperte o meno le istruzioni,
-        ///     questo è necessario per capire poi se riaprirle dopo un resize
+        /// Funzione che permette di pulire dalla memoria le immagini caricate nel menù e che segnala se quando ciò avviene
+        /// erano aperte o meno le istruzioni,
+        /// questo è necessario per capire poi se riaprirle dopo un resize
         /// </summary>
         /// <returns></returns>
         public bool Cleaner()
@@ -68,7 +68,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Gestore eventi per la pressione di tasti
+        /// Gestore eventi per la pressione di tasti
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -87,11 +87,11 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che si occupa del resize di questo form e dei sui componenti
+        /// Funzione che si occupa del resize di questo form e dei sui componenti
         /// </summary>
         /// <param name="l">new Width</param>
         /// <param name="h">new height</param>
-        public void on_resize(int l, int h)
+        public void OnResize(int l, int h)
         {
             if (ClientSize.Width > 0 && ClientSize.Height > 0)
             {
@@ -142,7 +142,7 @@ namespace BlockBreaker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuLoad(object sender, EventArgs e)
+        private void OnLoad(object sender, EventArgs e)
         {
             Starter();
             GC.Collect();
@@ -150,7 +150,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Aggiunge i tasti al panel, poi il panel e le istruzioni ai controlli del form
+        /// Aggiunge i tasti al panel, poi il panel e le istruzioni ai controlli del form
         /// </summary>
         private void ControlsAdder()
         {
@@ -164,7 +164,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Crea il logo con le giuste dimensioni
+        /// Crea il logo con le giuste dimensioni
         /// </summary>
         /// <param name="Left"></param>
         /// <param name="Top"></param>
@@ -187,8 +187,8 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Dimensiona il panel a seconda della grandezza della grandezza del
-        ///     client e lo riempie con i pulsanti Start e help
+        /// Dimensiona il panel a seconda della grandezza della grandezza del
+        /// client e lo riempie con i pulsanti Start e help
         /// </summary>
         private void CreatePanel()
         {
@@ -231,7 +231,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Funzione che permette di mostrare Gli highScores migliori
+        /// Funzione che permette di mostrare Gli highScores migliori
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -246,7 +246,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Evento che permette di nascondere le istruzioni nascondendo il resto
+        /// Evento che permette di nascondere le istruzioni nascondendo il resto
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -260,7 +260,7 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        ///     Direttive che vanno eseguite in ogni caso
+        /// Direttive che vanno eseguite in ogni caso
         /// </summary>
         private void Starter()
         {
@@ -284,9 +284,9 @@ namespace BlockBreaker
             GC.Collect();
             GC.WaitForPendingFinalizers();
 
-            //Effettua un on_resize che annulla un particolare bug nelle librerie di Drawings.dll
-            //Che si può indurre eliminando questo primo on_resize e cliccando su help, poi effettuando il (primo) resize dalla schermata delle istruzioni
-            on_resize(ClientSize.Width, ClientSize.Height);
+            //Effettua un OnResize che annulla un particolare bug nelle librerie di Drawings.dll
+            //Che si può indurre eliminando questo primo OnResize e cliccando su help, poi effettuando il (primo) resize dalla schermata delle istruzioni
+            OnResize(ClientSize.Width, ClientSize.Height);
 
             // Aggiunge i tasti al panel, poi il panel e le istruzioni ai controlli del form
             ControlsAdder();

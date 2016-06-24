@@ -34,7 +34,7 @@
             this.ClientSize = new System.Drawing.Size(884, 411);
             this.Name = "GameOver";
             this.Text = "GameOver";
-            this.Load += new System.EventHandler(this.GameOver_Load);
+            this.Load += new System.EventHandler(this.OnLoad);
             this.ResumeLayout(false);
         }
         #endregion

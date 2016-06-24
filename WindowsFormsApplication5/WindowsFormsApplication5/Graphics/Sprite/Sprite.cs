@@ -22,7 +22,7 @@ namespace BlockBreaker
         #region Public Properties
 
         /// <summary>
-        ///     Proprietà che ritornano le coordinate delle parti degi sprite
+        /// Proprietà che ritornano le coordinate delle parti degi sprite
         /// </summary>
         public Rectangle Bottom => new Rectangle((int)X, (int)Y + Height, Width, 20);
         public Rectangle Left => new Rectangle((int)X, (int)Y, 20, Height);
@@ -35,7 +35,7 @@ namespace BlockBreaker
         #region Public Methods
 
         /// <summary>
-        ///     Funzione necessaria alla creazione da bitmap degli sprite, e dei loro disegni
+        /// Funzione necessaria alla creazione da bitmap degli sprite, e dei loro disegni
         /// </summary>
         /// <param name="texture"></param>
         /// <param name="x"></param>
@@ -97,8 +97,8 @@ namespace BlockBreaker
     }
 
     /// <summary>
-    ///     Classe SpriteHelper con le varie funzioni utili per sapere quando due sprite impattano
-    ///     e in particolare quali sezioni di questi due si stanno intersecando
+    /// Classe SpriteHelper con le varie funzioni utili per sapere quando due sprite impattano
+    /// e in particolare quali sezioni di questi due si stanno intersecando
     /// </summary>
     internal static class SpriteHelper
     {

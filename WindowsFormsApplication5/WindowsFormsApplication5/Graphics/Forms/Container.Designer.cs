@@ -6,6 +6,7 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -18,7 +19,9 @@
             }
             base.Dispose(disposing);
         }
+
         #region Windows Form Designer generated code
+
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -35,10 +38,11 @@
             this.Name = "Container";
             this.Text = "CONTAINER";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ContainerFormClosing);
-            this.Load += new System.EventHandler(this.Container2_Load);
+            this.Load += new System.EventHandler(this.OnLoad);
             this.SizeChanged += new System.EventHandler(this.OnSizeChange);
             this.ResumeLayout(false);
         }
+
         #endregion
     }
 }

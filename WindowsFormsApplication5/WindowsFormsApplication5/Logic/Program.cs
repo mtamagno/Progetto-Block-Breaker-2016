@@ -8,7 +8,7 @@ namespace BlockBreaker
         #region Private Methods
 
         /// <summary>
-        ///     Punto di ingresso principale dell'applicazione.
+        /// Punto di ingresso principale dell'applicazione.
         /// </summary>
         [STAThread]
         private static void Main()

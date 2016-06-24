@@ -13,7 +13,7 @@ namespace BlockBreaker.Properties {
     
     
     /// <summary>
-    ///   Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
+    ///  Classe di risorse fortemente tipizzata per la ricerca di stringhe localizzate e così via.
     /// </summary>
     // Questa classe è stata generata automaticamente dalla classe StronglyTypedResourceBuilder.
     // tramite uno strumento quale ResGen o Visual Studio.
@@ -33,7 +33,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
+        /// Restituisce l'istanza di ResourceManager nella cache utilizzata da questa classe.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager {
@@ -47,8 +47,8 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
-        ///   ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
+        /// Esegue l'override della proprietà CurrentUICulture del thread corrente per tutte le
+        /// ricerche di risorse eseguite utilizzando questa classe di risorse fortemente tipizzata.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
@@ -61,7 +61,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Audio {
             get {
@@ -71,7 +71,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap AudioOff {
             get {
@@ -81,7 +81,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap BackGround_Image {
             get {
@@ -91,7 +91,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Ball {
             get {
@@ -101,7 +101,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Block_1 {
             get {
@@ -111,7 +111,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Block_2 {
             get {
@@ -121,7 +121,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Block_3 {
             get {
@@ -131,7 +131,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Block_4 {
             get {
@@ -141,7 +141,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap BlueRoundedButton {
             get {
@@ -151,7 +151,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.IO.UnmanagedMemoryStream simile a System.IO.MemoryStream.
+        /// Cerca una risorsa localizzata di tipo System.IO.UnmanagedMemoryStream simile a System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream Game_Music {
             get {
@@ -160,7 +160,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap GameOver {
             get {
@@ -170,7 +170,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.IO.UnmanagedMemoryStream simile a System.IO.MemoryStream.
+        /// Cerca una risorsa localizzata di tipo System.IO.UnmanagedMemoryStream simile a System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream GameOver_Music {
             get {
@@ -179,7 +179,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Gamepause {
             get {
@@ -189,7 +189,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap hurt {
             get {
@@ -199,7 +199,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Life {
             get {
@@ -209,7 +209,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Byte[].
+        /// Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
         internal static byte[] Linds {
             get {
@@ -219,7 +219,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap logo1 {
             get {
@@ -229,7 +229,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.IO.UnmanagedMemoryStream simile a System.IO.MemoryStream.
+        /// Cerca una risorsa localizzata di tipo System.IO.UnmanagedMemoryStream simile a System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream Menu_Music {
             get {
@@ -238,7 +238,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap New_Piskel {
             get {
@@ -248,7 +248,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Schermo_800_600_GBA {
             get {
@@ -258,7 +258,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Byte[].
+        /// Cerca una risorsa localizzata di tipo System.Byte[].
         /// </summary>
         internal static byte[] SegoeKeycaps {
             get {
@@ -268,7 +268,7 @@ namespace BlockBreaker.Properties {
         }
         
         /// <summary>
-        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Skin {
             get {
