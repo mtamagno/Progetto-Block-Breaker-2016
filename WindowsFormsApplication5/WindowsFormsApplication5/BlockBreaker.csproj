@@ -205,6 +205,9 @@
     <None Include="Resources\maxresdefault.jpg" />
     <None Include="Resources\prohibition_prohibited_prohibit-10-512.png" />
     <None Include="Resources\AudioOff.png" />
+    <Content Include="Relazione\Immagini\Untitled.png" />
+    <Content Include="Relazione\Immagini\Use cases Highscores.PNG" />
+    <Content Include="Relazione\Immagini\Use cases Instructions.PNG" />
     <Content Include="SoundEffect\Music.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
