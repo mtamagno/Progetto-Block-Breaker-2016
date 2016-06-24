@@ -172,6 +172,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Relazione\File di Testo\TESTIGN.odt" />
     <None Include="Relazione\Relazione.odt" />
     <None Include="Relazione\File di Testo\ANALISI E PROGETTAZIONE - DIAGRAMMA DEGLI STATI.rtf" />
     <None Include="Relazione\File di Testo\SPECIFICA DEI REQUISITI.rtf" />
