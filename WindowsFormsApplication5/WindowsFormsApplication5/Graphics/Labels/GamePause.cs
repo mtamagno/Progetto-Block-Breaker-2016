@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace BlockBreaker
 {
-    internal sealed class GamePause : Panel
+    public class GamePause : Panel
     {
         #region Private Fields
 
