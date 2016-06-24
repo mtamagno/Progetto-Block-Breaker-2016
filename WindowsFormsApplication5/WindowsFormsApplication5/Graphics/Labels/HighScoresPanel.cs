@@ -27,6 +27,7 @@ namespace BlockBreaker
             var esc = new Label();
             var title = new Label();
             var paragraph = new Label();
+            //Se il file esiste
             if (File.Exists("HighScores.xml"))
             {
                 var Reader = new XmlTextReader("HighScores.xml");
@@ -54,6 +55,8 @@ namespace BlockBreaker
                     }
                 }
             }
+
+            //Leggi dalla console
             Console.ReadLine();
             Left = left;
             Top = top;
