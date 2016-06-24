@@ -114,8 +114,7 @@ namespace BlockBreaker
             {
                 // Salva prima lo score, poi l'_highScore nell'xml
                 _highScore.Name = _gameOver.TextBox.Text;
-                var highScoreSaver = new HighScoreSaver();
-                highScoreSaver.ModifyOrCreateXml(_highScore);
+                _highScore.ModifyOrCreateXml(_highScore);
 
                 // Imposta che il giocatore ha gia finito una partita
                 _again = true;

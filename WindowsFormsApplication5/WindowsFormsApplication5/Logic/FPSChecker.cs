@@ -6,7 +6,7 @@ namespace BlockBreaker
 {
     internal class FpsInit
     {
-        #region Public Fields
+        #region PubliFields
 
         public int Limiter = 1000 / 85;
         public int PreviousSecond;
@@ -19,7 +19,6 @@ namespace BlockBreaker
         #region Private Fields
 
         private readonly Stopwatch _gameTime;
-
         private int _fps;
         private int _fpsCounter;
         private long _fpsTime;

@@ -95,7 +95,6 @@
     <Compile Include="Graphics\Labels\Instruction.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Logic\CheckLife.cs" />
     <Compile Include="Logic\FPSChecker.cs" />
     <Compile Include="Graphics\Forms\Game.cs">
       <SubType>Form</SubType>
@@ -113,7 +112,7 @@
     <Compile Include="Graphics\Sprite\Block.cs" />
     <Compile Include="Graphics\Sprite\Grid.cs" />
     <Compile Include="Graphics\Sprite\Life.cs" />
-    <Compile Include="Graphics\Sprite\Paddle.cs" />
+    <Compile Include="Graphics\Sprite\Racket.cs" />
     <Compile Include="Graphics\Sprite\Sprite.cs" />
     <Compile Include="Graphics\Sprite\SpriteBatch.cs" />
     <Compile Include="Graphics\Sprite\PlayGround.cs" />

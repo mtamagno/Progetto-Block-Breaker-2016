@@ -42,7 +42,6 @@ namespace BlockBreaker
 
         #region Private Fields
 
-        private readonly LifeChecker _myLifeChecker = new LifeChecker();
         private int _activeBlocks;
         private readonly Game _myGame;
         private FpsInit _myFpsChecker;
@@ -78,7 +77,7 @@ namespace BlockBreaker
                         _myGame.MyBall.CanCollide = true;
 
                         // Controlla le vite che rimangono al giocatore
-                        VitaRimanente = _myLifeChecker.Check(_myGame, VitaRimanente);
+                        VitaRimanente = CheckBottomCollide(_myGame, VitaRimanente);
 
                         // Altrimenti controlla che sia passato un secondo dall'ultimo check di punteggio e blocchi attivi, e in caso chiama la funzione
                         if (MyGameTime.ElapsedMilliseconds % 1000 != 0)
@@ -112,6 +111,37 @@ namespace BlockBreaker
             }
         }
 
+        /// <summary>
+        /// Funzione per il Check dell'hit del bottom
+        /// </summary>
+        /// <param name="thisForm"></param>
+        /// <param name="lifes"></param>
+        /// <returns></returns>
+        public int CheckBottomCollide(Game thisForm, int lifes)
+        {
+            if (thisForm == null) throw new ArgumentNullException(nameof(thisForm));
+            if (thisForm.MyPlayground.BottomCollide == 1)
+            {
+                thisForm.MyBall.CanFall = false;
+                thisForm.MyBall.Y = thisForm.MyRacket.Y - thisForm.MyBall.Height;
+                thisForm.MyBall.FollowPointer = true;
+                thisForm.MyBall.VelocityTot = 0;
+                thisForm.MyBall.Velocity.X = 0;
+                thisForm.MyBall.Velocity.Y = 0;
+                lifes--;
+                thisForm.MyPlayground.BottomCollide = 0;
+                for (var i = lifes; i < 3; i++)
+                {
+                    if (lifes > 0)
+                        thisForm.MyLife[i].ToRender = false;
+                }
+            }
+            return lifes;
+        }
+
+        /// <summary>
+        /// Funzione richiamata al gameover utile per salvare lo score e comunicare che non si hanno piu vite
+        /// </summary>
         public void GameOver()
         {
             // Salva lo score
@@ -124,7 +154,9 @@ namespace BlockBreaker
             GC.Collect();
         }
 
-        // Funzione per ridimensionare gli elementi
+        /// <summary>
+        /// Funzione per ridimensionare gli elementi
+        /// </summary>
         public void Resize(int li, int hi, int l, int h)
         {
             if (VitaRimanente > 0 && h > 0 && hi > 0 && l > 0 && li > 0)

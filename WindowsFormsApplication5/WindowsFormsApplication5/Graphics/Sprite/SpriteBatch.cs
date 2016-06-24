@@ -9,8 +9,6 @@ namespace BlockBreaker
         #region Public Fields
 
         public BufferedGraphics Bfgfx;
-
-        //Variabile per i buffered CreateSprite
         public BufferedGraphicsContext Cntxt = BufferedGraphicsManager.Current;
         public Graphics Gfx;
 
