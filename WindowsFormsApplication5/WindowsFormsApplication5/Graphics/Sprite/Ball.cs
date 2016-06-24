@@ -1,6 +1,5 @@
-﻿using BlockBreaker.Properties;
-//using Microsoft.Xna.Framework;
-//using Microsoft.Xna.Framework.Audio;
+﻿
+using BlockBreaker.Properties;
 using System;
 using System.Drawing;
 using System.Threading;
@@ -14,6 +13,7 @@ namespace BlockBreaker
 
         //variabili per accelerazione y, texture, velocità totale e attuale, spia che notifica la raggiunta della velocità massima
         public int AccelY = 50;
+
         public PointF PreviousVelocity;
         public float PreviousVelocityTot;
         public float PreviousX;
@@ -27,8 +27,8 @@ namespace BlockBreaker
 
         #region Private Fields
 
-        //       private readonly SoundEffect _sound;
         private bool _blockHit;
+
         private Thread _hurt;
 
         #endregion Private Fields
@@ -54,8 +54,6 @@ namespace BlockBreaker
             CanCollide = true;
             FollowPointer = true;
             ToRender = true;
-            //       var stream = TitleContainer.OpenStream(@"SoundEffect/Music.wav");
-            //         _sound = SoundEffect.FromStream(stream);
 
             //rendo invisibile lo sfondo dello sprite della pallina
             var backColor = texture.GetPixel(0, 0);
@@ -87,7 +85,7 @@ namespace BlockBreaker
             Velocity.X = Velocity.X * lunghezzaClient / lunghezzaClientIniziale;
 
             //Calcolo la velocità totale della pallina che non deve superare i velocityTotLimit
-            VelocityTot = (float) Math.Sqrt(Velocity.X*Velocity.X + Velocity.Y*Velocity.Y);
+            VelocityTot = (float)Math.Sqrt(Velocity.X * Velocity.X + Velocity.Y * Velocity.Y);
             if (ReachedVelocityTotLimit == true)
                 VelocityTotLimit = VelocityTot;
         }
@@ -242,53 +240,6 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        /// Metodo playsound che riproduce il suono
-        /// </summary>
-        private void PlaySound()
-        {
-            //     FrameworkDispatcher.Update();
-            //    _sound.Play();
-        }
-
-        //Gestisco i casi in cui la pallina collide contro la racchetta
-        private void RacketCollision(Sprite s)
-        {
-            Racket myRacket = (Racket) s;
-            if (myRacket.IsCollidingWith(this))
-            {
-                _hurt = new Thread(myRacket.OnHurt);
-                _hurt.Start();
-
-                //La pallina impatta con la racchetta
-                if (this.IsTouchingBottom(myRacket))
-                {
-                    //La pallina impatta con la metà sinistra
-                    if (X + Width / 2 <= myRacket.X + myRacket.Width / 2)
-                    {
-                        double coseno;
-                        coseno = Math.Abs(Math.Cos(myRacket.Angolo(X + Width/2 - myRacket.X, myRacket.Width/2)));
-                        Velocity.X = -VelocityTot*(float) coseno;
-                        Velocity.Y =
-                            -(float) Math.Sqrt(Math.Abs((double) (VelocityTot*VelocityTot - Velocity.X*Velocity.X)));
-                        Y = myRacket.Y - Height;
-                    }
-                    else
-
-                    //Altrimenti con la metà destra
-                    {
-                        double seno;
-                        seno =
-                            Math.Abs(
-                                Math.Sin(myRacket.Angolo(X + Width/2 - myRacket.X - myRacket.Width/2, myRacket.Width/2)));
-                        Velocity.X = VelocityTot*(float) seno;
-                        Velocity.Y = -(float) Math.Sqrt(Math.Abs(VelocityTot*VelocityTot - Velocity.X*Velocity.X));
-                        Y = myRacket.Y - Height;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Gestisco i casi in cui la pallina collide contro i bordi dello schermo
         /// </summary>
         /// <param name="s"></param>
@@ -318,6 +269,53 @@ namespace BlockBreaker
             {
                 Velocity.Y *= -1;
                 Y = myview.Y;
+            }
+        }
+
+        /// <summary>
+        /// Metodo playsound che riproduce il suono
+        /// </summary>
+        private void PlaySound()
+        {
+            //     FrameworkDispatcher.Update();
+            //    _sound.Play();
+        }
+
+        //Gestisco i casi in cui la pallina collide contro la racchetta
+        private void RacketCollision(Sprite s)
+        {
+            Racket myRacket = (Racket)s;
+            if (myRacket.IsCollidingWith(this))
+            {
+                _hurt = new Thread(myRacket.OnHurt);
+                _hurt.Start();
+
+                //La pallina impatta con la racchetta
+                if (this.IsTouchingBottom(myRacket))
+                {
+                    //La pallina impatta con la metà sinistra
+                    if (X + Width / 2 <= myRacket.X + myRacket.Width / 2)
+                    {
+                        double coseno;
+                        coseno = Math.Abs(Math.Cos(myRacket.Angolo(X + Width / 2 - myRacket.X, myRacket.Width / 2)));
+                        Velocity.X = -VelocityTot * (float)coseno;
+                        Velocity.Y =
+                            -(float)Math.Sqrt(Math.Abs((double)(VelocityTot * VelocityTot - Velocity.X * Velocity.X)));
+                        Y = myRacket.Y - Height;
+                    }
+                    else
+
+                    //Altrimenti con la metà destra
+                    {
+                        double seno;
+                        seno =
+                            Math.Abs(
+                                Math.Sin(myRacket.Angolo(X + Width / 2 - myRacket.X - myRacket.Width / 2, myRacket.Width / 2)));
+                        Velocity.X = VelocityTot * (float)seno;
+                        Velocity.Y = -(float)Math.Sqrt(Math.Abs(VelocityTot * VelocityTot - Velocity.X * Velocity.X));
+                        Y = myRacket.Y - Height;
+                    }
+                }
             }
         }
 

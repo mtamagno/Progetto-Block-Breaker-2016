@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -25,9 +26,13 @@ namespace BlockBreaker
         /// Proprietà che ritornano le coordinate delle parti degli sprite
         /// </summary>
         public Rectangle Bottom => new Rectangle((int)X, (int)Y + Height, Width, 20);
+
         public Rectangle Left => new Rectangle((int)X, (int)Y, 20, Height);
+
         public Rectangle Right => new Rectangle((int)X + Width, (int)Y, 20, Height);
+
         public Rectangle Top => new Rectangle((int)X, (int)Y, Width, 20);
+
         public Rectangle ToRec => new Rectangle((int)X, (int)Y, Width, Height);
 
         #endregion Public Properties

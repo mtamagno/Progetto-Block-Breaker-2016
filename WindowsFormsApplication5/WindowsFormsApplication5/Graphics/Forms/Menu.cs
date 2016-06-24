@@ -1,4 +1,5 @@
-﻿using BlockBreaker.Properties;
+﻿
+using BlockBreaker.Properties;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,12 +10,12 @@ namespace BlockBreaker
     {
         #region Public Fields
 
-        private MenuEvents MyEvents;
         public MenuButton _help;
-        private MenuButton _highscores;
+        public HighScoresPanel _highScoresPanel;
         public Instructions _instructions;
+        public PictureBox _logo;
         public Panel _menuPanel = new Panel();
-        private Size _s;
+        public bool _showHighScore;
         public MenuButton Start;
 
         #endregion Public Fields
@@ -22,9 +23,9 @@ namespace BlockBreaker
         #region Private Fields
 
         private Bitmap _backgroundimage;
-        public HighScoresPanel _highScoresPanel;
-        public PictureBox _logo;
-        public bool _showHighScore;
+        private MenuButton _highscores;
+        private Size _s;
+        private MenuEvents MyEvents;
 
         #endregion Private Fields
 
@@ -87,7 +88,6 @@ namespace BlockBreaker
                 //Ricrea il Panel
                 CreatePanel();
 
-
                 //Ricrea il logo
                 CreateLogo(ClientSize.Width, ClientSize.Height);
 
@@ -114,22 +114,9 @@ namespace BlockBreaker
             }
         }
 
-
         #endregion Public Methods
 
         #region Private Methods
-
-        /// <summary>
-        /// Carica il menu
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnLoad(object sender, EventArgs e)
-        {
-            Starter();
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-        }
 
         /// <summary>
         /// Aggiunge i tasti al panel, poi il panel e le istruzioni ai controlli del form
@@ -212,6 +199,17 @@ namespace BlockBreaker
             _menuPanel.Controls.Add(_highscores);
         }
 
+        /// <summary>
+        /// Carica il menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnLoad(object sender, EventArgs e)
+        {
+            Starter();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+        }
 
         /// <summary>
         /// Direttive che vanno eseguite in ogni caso
@@ -250,4 +248,3 @@ namespace BlockBreaker
         #endregion Private Methods
     }
 }
-   

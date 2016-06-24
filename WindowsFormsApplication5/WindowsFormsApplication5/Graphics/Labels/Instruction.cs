@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace BlockBreaker
@@ -12,13 +13,14 @@ namespace BlockBreaker
 
         #endregion Private Fields
 
-        #region Public Constructors
         /// <summary>
         /// Costruttore, prende in ingresso grandezza e posizione e va a costruire il panel riferito allo stato gamePause,
         /// in oltre scrive dentro i label i relativi testi.
         /// </summary>
         /// <returns></returns>
-        /// 
+        ///
+
+        #region Public Constructors
 
         public Instructions(int Left, int Top, int Width, int Height)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -16,17 +17,19 @@ namespace BlockBreaker
         #endregion Private Fields
 
         #region Public Constructors
+
         /// <summary>
         /// Costruttore, prende in ingresso grandezza e posizione e va a costruire il panel riferito allo stato gamePause,
         /// in oltre scrive dentro i label i relativi testi.
         /// </summary>
         /// <returns></returns>
-        /// 
+        ///
         public HighScoresPanel(int left, int top, int width, int height)
         {
             var esc = new Label();
             var title = new Label();
             var paragraph = new Label();
+
             //Se il file esiste
             if (File.Exists("HighScores.xml"))
             {
@@ -39,11 +42,13 @@ namespace BlockBreaker
                         case XmlNodeType.Element:
                             Console.WriteLine("<" + Reader.Name + ">");
                             break;
+
                         case XmlNodeType.Text:
                             paragraph.Text += Reader.Value + " - ";
                             Console.WriteLine(Reader.Value);
                             highscoreCounter++;
                             break;
+
                         case XmlNodeType.EndElement:
                             Console.WriteLine("</" + Reader.Name + ">");
                             break;

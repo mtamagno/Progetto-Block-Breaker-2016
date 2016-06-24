@@ -13,10 +13,11 @@ namespace BlockBreaker
         #region Public Constructors
 
         /// <summary>
-        /// Costruttore, prende in ingresso il tipo del font scelto in modo tale da sapere come impostare il tipo di font
+        /// Costruttore, prende in ingresso il tipo del font scelto
+        /// in modo tale da sapere come impostare il tipo di font
         /// </summary>
         /// <returns></returns>
-        /// 
+        ///
         public MyFonts(FontType thisFontType)
         {
             FontSet(thisFontType);
@@ -25,11 +26,12 @@ namespace BlockBreaker
         #endregion Public Constructors
 
         #region Public Enums
+
         /// <summary>
         /// Tipo enum che contiene i tipi di font disponibili
         /// </summary>
         /// <returns></returns>
-        /// 
+        ///
         public enum FontType
         {
             Title,
@@ -38,12 +40,13 @@ namespace BlockBreaker
 
         #endregion Public Enums
 
-        #region Private Methods
         /// <summary>
         /// Funzione utilizzata per andare a impostare un font personalizzato
         /// </summary>
         /// <returns></returns>
-        /// 
+        ///
+
+        #region Private Methods
 
         private void FontSet(FontType fontType)
         {
@@ -62,7 +65,7 @@ namespace BlockBreaker
         /// Funzione che imposta il font che verra' utilizzato nei paragrafi
         /// </summary>
         /// <returns></returns>
-        /// 
+        ///
         private void Paragraph()
         {
             PrivateFontCollection Type;
@@ -75,7 +78,7 @@ namespace BlockBreaker
         /// Funzione che imposta il font che verra' utilizzato nei titoli
         /// </summary>
         /// <returns></returns>
-        /// 
+        ///
         private void Title()
         {
             PrivateFontCollection Type;

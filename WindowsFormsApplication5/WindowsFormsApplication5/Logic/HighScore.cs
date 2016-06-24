@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -11,7 +12,12 @@ namespace BlockBreaker
         #region Public Properties
 
         public string Name { get; set; }
+
         public int Score { get; set; }
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         /// <summary>
         /// Funzione che si occupa di aggiungere gli highScores e di riordinarli ogni volta in un file "HighScores.xml" che
@@ -59,6 +65,7 @@ namespace BlockBreaker
                 }
             }
         }
-        #endregion Public Properties
+
+        #endregion Public Methods
     }
 }

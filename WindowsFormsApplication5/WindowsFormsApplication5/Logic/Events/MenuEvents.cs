@@ -1,15 +1,27 @@
-﻿using System.Windows.Forms;
+﻿
 using System;
+using System.Windows.Forms;
 
 namespace BlockBreaker
 {
-    class MenuEvents
+    internal class MenuEvents
     {
+        #region Private Fields
+
         private Menu menuForm;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public MenuEvents(Menu menu)
         {
             menuForm = menu;
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         /// <summary>
         /// Gestore eventi per la pressione di tasti
@@ -58,5 +70,7 @@ namespace BlockBreaker
             menuForm.Focus();
             menuForm.KeyPress += this.Help_KeyPress;
         }
+
+        #endregion Public Methods
     }
 }

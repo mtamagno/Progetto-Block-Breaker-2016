@@ -1,4 +1,5 @@
-﻿using BlockBreaker.Properties;
+﻿
+using BlockBreaker.Properties;
 using System;
 using System.Drawing;
 
@@ -12,6 +13,7 @@ namespace BlockBreaker
 
         // Variabili per vita e texture
         public int InitialLife;
+
         public Bitmap texture;
 
         #endregion Public Fields
@@ -64,15 +66,19 @@ namespace BlockBreaker
                 case 0:
                     texture = Resources.Block_1;
                     break;
+
                 case 1:
                     texture = Resources.Block_1;
                     break;
+
                 case 2:
                     texture = Resources.Block_2;
                     break;
+
                 case 3:
                     texture = Resources.Block_3;
                     break;
+
                 case 4:
                     texture = Resources.Block_4;
                     break;

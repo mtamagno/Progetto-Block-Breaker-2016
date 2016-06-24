@@ -1,4 +1,5 @@
-﻿using BlockBreaker.Properties;
+﻿
+using BlockBreaker.Properties;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -14,11 +15,12 @@ namespace BlockBreaker
         #endregion Private Fields
 
         #region Public Constructors
+
         /// <summary>
         /// Costruttore, prende in ingresso la dimensione e crea il pulsante personalizzato "bottone"
         /// </summary>
         /// <returns></returns>
-        /// 
+        ///
         public MenuButton(Size s)
         {
             if (s.Height > 0 && s.Width > 0)
@@ -47,7 +49,7 @@ namespace BlockBreaker
         /// Evento che si verifica al passaggio del mouse sopra il bottone
         /// </summary>
         /// <returns></returns>
-        /// 
+        ///
         private void MouseHoverButton(object sender, EventArgs e)
         {
             FlatStyle = FlatStyle.Popup;
@@ -57,7 +59,7 @@ namespace BlockBreaker
         /// Evento che si verifica quando si sposta il cursore del mouse dall'interno del bottone all'esterno
         /// </summary>
         /// <returns></returns>
-        /// 
+        ///
         private void MouseLeaveButton(object sender, EventArgs e)
         {
             FlatStyle = FlatStyle.Flat;

@@ -1,4 +1,5 @@
-﻿using BlockBreaker.Properties;
+﻿
+using BlockBreaker.Properties;
 using System;
 
 namespace BlockBreaker

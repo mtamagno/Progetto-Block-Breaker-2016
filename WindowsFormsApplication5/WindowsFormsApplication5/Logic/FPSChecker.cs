@@ -6,13 +6,13 @@ namespace BlockBreaker
 {
     internal class FpsInit
     {
-        #region PubliFields
+        #region Public Fields
 
         public int Limiter = 1000 / 85;
         public int PreviousSecond;
         public int Ups;
-        public long UpsTime;
         public int UpsCounter;
+        public long UpsTime;
 
         #endregion Public Fields
 
@@ -69,17 +69,17 @@ namespace BlockBreaker
         {
             if (controller.ParentForm != null)
                 try
-            {
-                controller?.Invoke(new MethodInvoker(delegate
-                {                  
+                {
+                    controller?.Invoke(new MethodInvoker(delegate
+                    {
                         controller.ParentForm.Text = "BlockBreaker - Game      " + "    fps: " + _fps + "ups:" + Ups;
-                }));
-            }
-            catch
-            {
+                    }));
+                }
+                catch
+                {
                     // Prende l'eccezione senza fare nulla poichè basta aspettare che il form si chiuda se non si
                     // riesce a scrivere, dato che vuol dire che sta temrinando
-            }
+                }
         }
 
         #endregion Public Methods

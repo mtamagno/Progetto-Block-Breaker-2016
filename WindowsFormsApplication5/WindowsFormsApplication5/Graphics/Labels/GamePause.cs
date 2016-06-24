@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace BlockBreaker
@@ -16,6 +17,7 @@ namespace BlockBreaker
         #endregion Private Fields
 
         #region Public Constructors
+
         /// <summary>
         /// Costruttore, prende in ingresso grandezza e posizione e va a costruire il panel riferito allo stato gamePause.
         /// </summary>
@@ -35,6 +37,54 @@ namespace BlockBreaker
         #endregion Public Constructors
 
         #region Public Methods
+
+        /// <summary>
+        /// Imposta il testo dei tasti
+        /// </summary>
+        public void SetText()
+        {
+            //Titolo
+            _title.UseCompatibleTextRendering = true;
+            _title.Top = 40;
+            _title.Text = "Game Pause";
+            _title.Height = 60;
+            _title.Width = Width;
+            _title.TextAlign = ContentAlignment.MiddleCenter;
+            _title.ForeColor = Color.White;
+
+            //Paragrafo
+            _paragraph.Height = 300;
+            _paragraph.Top = 100;
+            _paragraph.Text = "Press:" +
+                              "\n.\n.\n." +
+                              "\nSpace To resume the game" +
+                              "\n.\n." +
+                              "\nEsc To GameOver";
+            _paragraph.UseCompatibleTextRendering = true;
+            _paragraph.Width = Width;
+            _paragraph.TextAlign = ContentAlignment.MiddleCenter;
+            _paragraph.ForeColor = Color.White;
+
+            //Esc
+            _esc.UseCompatibleTextRendering = true;
+            _esc.Height = 40;
+            _esc.Top = Height - _esc.Height * 2;
+            _esc.Width = 200;
+            _esc.TextAlign = ContentAlignment.MiddleCenter;
+            _esc.Left = 10;
+            _esc.Text = "Space -> Back To Game";
+            _esc.ForeColor = Color.White;
+
+            //Aggiunge ai controlli
+            Controls.Add(_esc);
+            Controls.Add(_title);
+            Controls.Add(_paragraph);
+            Visible = false;
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         /// <summary>
         /// Imposta il font da noi scelto
@@ -58,50 +108,6 @@ namespace BlockBreaker
             _paragraph = new Label();
         }
 
-        /// <summary>
-        /// Imposta il testo dei tasti
-        /// </summary>
-        public void SetText()
-        {
-            //Titolo
-            _title.UseCompatibleTextRendering = true;
-            _title.Top = 40;
-            _title.Text = "Game Pause";
-            _title.Height = 60;
-            _title.Width = Width;
-            _title.TextAlign = ContentAlignment.MiddleCenter;
-            _title.ForeColor = Color.White;
-            
-            //Paragrafo
-            _paragraph.Height = 300;
-            _paragraph.Top = 100;
-            _paragraph.Text = "Press:" +
-                              "\n.\n.\n." +
-                              "\nSpace To resume the game" +
-                              "\n.\n." +
-                              "\nEsc To GameOver";
-            _paragraph.UseCompatibleTextRendering = true;
-            _paragraph.Width = Width;
-            _paragraph.TextAlign = ContentAlignment.MiddleCenter;
-            _paragraph.ForeColor = Color.White;
-            
-            //Esc
-            _esc.UseCompatibleTextRendering = true;
-            _esc.Height = 40;
-            _esc.Top = Height - _esc.Height * 2;
-            _esc.Width = 200;
-            _esc.TextAlign = ContentAlignment.MiddleCenter;
-            _esc.Left = 10;
-            _esc.Text = "Space -> Back To Game";
-            _esc.ForeColor = Color.White;
-
-            //Aggiunge ai controlli
-            Controls.Add(_esc);
-            Controls.Add(_title);
-            Controls.Add(_paragraph);
-            Visible = false;
-        }
-
-        #endregion Public Methods
+        #endregion Private Methods
     }
 }

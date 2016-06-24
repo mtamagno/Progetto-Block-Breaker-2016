@@ -11,14 +11,15 @@ namespace BlockBreaker
 
         public MenuButton Continue;
         public TextBox TextBox;
-        private GameOverEvents MyEvents;
+
         #endregion Public Fields
 
         #region Private Fields
 
-        private Label _nickname;
         private Bitmap _backgroundimage;
         private MyFonts _fonts;
+        private Label _nickname;
+        private GameOverEvents MyEvents;
 
         #endregion Private Fields
 
@@ -120,8 +121,8 @@ namespace BlockBreaker
         /// </summary>
         private void Starter()
         {
-
             MyEvents = new GameOverEvents(this);
+
             // Imposta l'immagine, il size, il background e il testo del pulsante Continue
             var s = new Size(ClientSize.Width / 10, ClientSize.Height / 10);
             TextBox = new TextBox();
