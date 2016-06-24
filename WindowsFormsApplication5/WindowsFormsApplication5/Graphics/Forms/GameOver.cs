@@ -105,12 +105,19 @@ namespace BlockBreaker
 
         #region Private Methods
 
-
+        /// <summary>
+        /// Funzione che inizializza il form richiamando starter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnLoad(object sender, EventArgs e)
         {
             Starter();
         }
 
+        /// <summary>
+        /// Funzione che imposta i valori del form all'inizializzazione
+        /// </summary>
         private void Starter()
         {
 

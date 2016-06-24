@@ -11,15 +11,15 @@ namespace BlockBreaker
         #region Private Fields
 
         private ContainerEvents MyEvents;
-        public bool _again;
+        public bool Again;
         private int _altezzaClient;
         private int _altezzaClientIniziale;
         private AudioButtons _audioButton;
         private bool _audioOnOff;
         private Game _game;
-        public GameOver _gameOver;
+        public GameOver GameOver;
         private Panel _gamePanels;
-        public HighScore _highScore;
+        public HighScore HighScore;
         private int _lunghezzaClient;
         private int _lunghezzaClientIniziale;
         private Menu _menu;
@@ -86,7 +86,7 @@ namespace BlockBreaker
             _music = new Music();
 
             // Imposta _again a false per dire che il gioco e' stato avviato per la prima volta
-            _again = false;
+            Again = false;
 
             // Inizializza il pannello che conterra' i form dell'applicazione
             InitializeGamePanel();
@@ -156,14 +156,14 @@ namespace BlockBreaker
                     }
 
                     //pulisco il _gameOver
-                    if (_gameOver != null)
+                    if (GameOver != null)
                     {
-                        _gameOver.Continue.Dispose();
-                        _gameOver.Cleaner();
-                        _gameOver.Controls.Clear();
-                        _gameOver.Close();
-                        _gameOver.Dispose();
-                        _gameOver = null;
+                        GameOver.Continue.Dispose();
+                        GameOver.Cleaner();
+                        GameOver.Controls.Clear();
+                        GameOver.Close();
+                        GameOver.Dispose();
+                        GameOver = null;
                     }
 
                     //Pulisco il garbage collector
@@ -245,17 +245,17 @@ namespace BlockBreaker
         private void InitializeGameOver()
         {
             //assegno al _gameOver un nuovo _gameOver
-            _gameOver = new GameOver();
+            GameOver = new GameOver();
             Text = "BlockBreaker - Gameover";
 
             // Inizializza il _gameOver
-            InitializeForm(_gameOver);
+            InitializeForm(GameOver);
 
             //Assegno un testo al pulsante del form _gameOver
-            _gameOver.Continue.Text = "Continue";
+            GameOver.Continue.Text = "Continue";
 
             //Assegno un evento al pusalnte del _gameOver
-            _gameOver.Continue.Click += MyEvents.ContinueToMenu;
+            GameOver.Continue.Click += MyEvents.ContinueToMenu;
 
             //Faccio partire la musica del _gameOver
             _music.GameOver();
@@ -309,7 +309,7 @@ namespace BlockBreaker
             InitializeForm(_menu);
 
             // Controlla se e' la prima partita dell utente
-            if (_again)
+            if (Again)
                 _menu.Start.Text = "Play Again";
             else
                 _menu.Start.Text = "Play";
@@ -325,7 +325,7 @@ namespace BlockBreaker
         private void OnGameover(object sender, EventArgs e)
         {
             //se l'utente ha finito il gioco salvo l _highScore ottenuto
-            _highScore = _game.MyGameLogic.MyHighScore;
+            HighScore = _game.MyGameLogic.MyHighScore;
 
             //pulisco tutto
             DisposeAll();
@@ -367,10 +367,10 @@ namespace BlockBreaker
                 _menu.OnResize(Width, Height);
                 _menu.Start.Click += StartGame;
             }
-            if (_gameOver != null)
+            if (GameOver != null)
             {
-                InitializeForm(_gameOver);
-                _gameOver.OnResize(Width, Height);
+                InitializeForm(GameOver);
+                GameOver.OnResize(Width, Height);
             }
             if (_game != null)
                 _game.MyGameLogic.WaitResize = false;

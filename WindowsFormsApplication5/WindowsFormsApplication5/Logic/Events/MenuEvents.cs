@@ -20,10 +20,10 @@ namespace BlockBreaker
         {
             if (e.KeyChar == (char)Keys.Escape)
             {
-                menuForm._menuPanel.Visible = true;
+                menuForm.MenuPanel.Visible = true;
                 menuForm.Start.Visible = true;
-                menuForm._help.Visible = true;
-                menuForm._instructions.Visible = false;
+                menuForm.Help.Visible = true;
+                menuForm.Instructions.Visible = false;
                 menuForm._highScoresPanel.Visible = false;
                 menuForm._logo.Visible = true;
                 menuForm._showHighScore = false;
@@ -37,7 +37,7 @@ namespace BlockBreaker
         /// <param name="e"></param>
         public void ShowHighScore(object sender, EventArgs e)
         {
-            menuForm._menuPanel.Visible = false;
+            menuForm.MenuPanel.Visible = false;
             menuForm._logo.Visible = false;
             menuForm._highScoresPanel.Visible = true;
             menuForm.Focus();
@@ -52,9 +52,9 @@ namespace BlockBreaker
         /// <param name="e"></param>
         public void ShowInstructions(object sender, EventArgs e)
         {
-            menuForm._menuPanel.Visible = false;
+            menuForm.MenuPanel.Visible = false;
             menuForm._logo.Visible = false;
-            menuForm._instructions.Visible = true;
+            menuForm.Instructions.Visible = true;
             menuForm.Focus();
             menuForm.KeyPress += this.Help_KeyPress;
         }

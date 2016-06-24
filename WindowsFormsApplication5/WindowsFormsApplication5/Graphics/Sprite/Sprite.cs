@@ -22,7 +22,7 @@ namespace BlockBreaker
         #region Public Properties
 
         /// <summary>
-        /// Proprietà che ritornano le coordinate delle parti degi sprite
+        /// Proprietà che ritornano le coordinate delle parti degli sprite
         /// </summary>
         public Rectangle Bottom => new Rectangle((int)X, (int)Y + Height, Width, 20);
         public Rectangle Left => new Rectangle((int)X, (int)Y, 20, Height);
