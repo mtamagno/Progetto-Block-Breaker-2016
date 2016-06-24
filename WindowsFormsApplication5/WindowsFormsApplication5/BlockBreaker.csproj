@@ -210,6 +210,9 @@
     <Content Include="Relazione\Immagini\Test allocazione memoria 3.PNG" />
     <Content Include="Relazione\Immagini\Test allocazione memoria 4.png" />
     <Content Include="Relazione\Immagini\Test allocazione memoria.PNG" />
+    <Content Include="Relazione\Immagini\Test Block Destruction 2.PNG" />
+    <Content Include="Relazione\Immagini\Test Block Destruction 3.PNG" />
+    <Content Include="Relazione\Immagini\Test Block Destruction.PNG" />
     <Content Include="Relazione\Immagini\Untitled.png" />
     <Content Include="Relazione\Immagini\Use cases Highscores.PNG" />
     <Content Include="Relazione\Immagini\Use cases Instructions.PNG" />
