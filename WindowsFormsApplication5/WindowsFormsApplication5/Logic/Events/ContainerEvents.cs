@@ -1,43 +1,32 @@
 ﻿using System;
 using System.Windows.Forms;
-
 namespace BlockBreaker
 {
-    internal class ContainerEvents
+    class ContainerEvents
     {
-        #region Private Fields
+            private Container ContainerForm;
 
-        private Container ContainerForm;
-
-        #endregion Private Fields
-
-        #region Public Constructors
-
-        public ContainerEvents(Container container)
-        {
-            ContainerForm = container;
-        }
-
-        #endregion Public Constructors
-
-        #region Public Methods
-
-        /// <summary>
-        /// Funzione necessaria per cambiare form dopo la fine della partita
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void ContinueToMenu(object sender, EventArgs e)
-        {
-            if (ContainerForm._gameOver.TextBox.Text != "Insert Name..." && !string.IsNullOrEmpty(ContainerForm._gameOver.TextBox.Text) &&
-                !string.IsNullOrWhiteSpace(ContainerForm._gameOver.TextBox.Text))
+            public ContainerEvents(Container container)
             {
+            ContainerForm = container;
+            }
+
+            /// <summary>
+            /// Funzione necessaria per cambiare form dopo la fine della partita
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+            public void ContinueToMenu(object sender, EventArgs e)
+            {
+                if (ContainerForm.GameOver.TextBox.Text != "Insert Name..." && !string.IsNullOrEmpty(ContainerForm.GameOver.TextBox.Text) &&
+                    !string.IsNullOrWhiteSpace(ContainerForm.GameOver.TextBox.Text))
+                {
                 // Salva prima lo score, poi l'_highScore nell'xml
-                ContainerForm._highScore.Name = ContainerForm._gameOver.TextBox.Text;
-                ContainerForm._highScore.ModifyOrCreateXml(ContainerForm._highScore);
+                ContainerForm.HighScore.Name = ContainerForm.GameOver.TextBox.Text;
+                ContainerForm.HighScore.ModifyOrCreateXml(ContainerForm.HighScore);
 
                 // Imposta che il giocatore ha gia finito una partita
-                ContainerForm._again = true;
+                ContainerForm.Again = true;
 
                 // Pulisce tutto
                 ContainerForm.DisposeAll();
@@ -48,19 +37,21 @@ namespace BlockBreaker
                 // Inizializza il _menu
                 ContainerForm.InitializeMenu();
 
-                // Svuota il garbage collector per liberare memoria
-                GC.Collect();
+                    // Svuota il garbage collector per liberare memoria
+                    GC.Collect();
 
-                // Aspetta che il garbage collecor finisca
-                GC.WaitForPendingFinalizers();
-                GC.WaitForFullGCComplete();
-            }
-            else
-            {
+                    // Aspetta che il garbage collecor finisca
+                    GC.WaitForPendingFinalizers();
+                    GC.WaitForFullGCComplete();
+                }
+                else
+                {
                 MessageBox.Show("Inserisci un NickName");
+                }
             }
         }
+   
 
-        #endregion Public Methods
-    }
+
+
 }
