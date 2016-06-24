@@ -11,7 +11,7 @@ namespace BlockBreaker
 
         public MenuButton Continue;
         public TextBox TextBox;
-
+        private GameOverEvents MyEvents;
         #endregion Public Fields
 
         #region Private Fields
@@ -87,7 +87,7 @@ namespace BlockBreaker
                 TextBox.Top = Continue.Top - Continue.Height;
                 TextBox.Left = Continue.Left + TextBox.Width / 2;
                 TextBox.Text = "Insert Name...";
-                TextBox.Click += TextBox_Click;
+                TextBox.Click += MyEvents.TextBox_Click;
                 Controls.Add(TextBox);
 
                 // Imposta l'immagine di background
@@ -113,6 +113,8 @@ namespace BlockBreaker
 
         private void Starter()
         {
+
+            MyEvents = new GameOverEvents(this);
             // Imposta l'immagine, il size, il background e il testo del pulsante Continue
             var s = new Size(ClientSize.Width / 10, ClientSize.Height / 10);
             TextBox = new TextBox();
@@ -130,7 +132,7 @@ namespace BlockBreaker
             TextBox.Left = Continue.Left + TextBox.Width / 2;
             TextBox.Text = "Insert Name...";
             Controls.Add(TextBox);
-            TextBox.Click += TextBox_Click;
+            TextBox.Click += MyEvents.TextBox_Click;
 
             // Imposta l'immagine di background
             if (Size.Height > 0)
@@ -154,11 +156,6 @@ namespace BlockBreaker
             // Aspetto il Garbage Collector
             GC.Collect();
             GC.WaitForPendingFinalizers();
-        }
-
-        private void TextBox_Click(object sender, EventArgs e)
-        {
-            TextBox.Clear();
         }
 
         #endregion Private Methods

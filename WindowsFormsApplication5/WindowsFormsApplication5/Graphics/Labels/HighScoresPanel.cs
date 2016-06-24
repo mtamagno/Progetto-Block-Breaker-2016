@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace BlockBreaker
 {
-    internal sealed class HighScoresPanel : Panel
+    public class HighScoresPanel : Panel
     {
         #region Private Fields
 

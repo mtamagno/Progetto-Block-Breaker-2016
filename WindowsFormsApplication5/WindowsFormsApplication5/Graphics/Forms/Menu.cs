@@ -9,10 +9,11 @@ namespace BlockBreaker
     {
         #region Public Fields
 
-        private MenuButton _help;
+        private MenuEvents MyEvents;
+        public MenuButton _help;
         private MenuButton _highscores;
-        private Instructions _instructions;
-        private readonly Panel _menuPanel = new Panel();
+        public Instructions _instructions;
+        public Panel _menuPanel = new Panel();
         private Size _s;
         public MenuButton Start;
 
@@ -21,9 +22,9 @@ namespace BlockBreaker
         #region Private Fields
 
         private Bitmap _backgroundimage;
-        private HighScoresPanel _highScoresPanel;
-        private PictureBox _logo;
-        private bool _showHighScore;
+        public HighScoresPanel _highScoresPanel;
+        public PictureBox _logo;
+        public bool _showHighScore;
 
         #endregion Private Fields
 
@@ -68,25 +69,6 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        /// Gestore eventi per la pressione di tasti
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void Help_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Escape)
-            {
-                _menuPanel.Visible = true;
-                Start.Visible = true;
-                _help.Visible = true;
-                _instructions.Visible = false;
-                _highScoresPanel.Visible = false;
-                _logo.Visible = true;
-                _showHighScore = false;
-            }
-        }
-
-        /// <summary>
         /// Funzione che si occupa del resize di questo form e dei sui componenti
         /// </summary>
         /// <param name="l">new Width</param>
@@ -127,7 +109,7 @@ namespace BlockBreaker
                     _logo.Visible = false;
                     _instructions.Visible = true;
                 }
-                _help.KeyPress += Help_KeyPress;
+                _help.KeyPress += MyEvents.Help_KeyPress;
                 Start.Text = "Play";
             }
         }
@@ -223,47 +205,20 @@ namespace BlockBreaker
             _highscores.Text = "Highscores";
 
             // Eventhandler
-            _help.Click += ShowInstructions;
-            _highscores.Click += ShowHighScore;
+            _help.Click += MyEvents.ShowInstructions;
+            _highscores.Click += MyEvents.ShowHighScore;
             _menuPanel.Controls.Add(Start);
             _menuPanel.Controls.Add(_help);
             _menuPanel.Controls.Add(_highscores);
         }
 
-        /// <summary>
-        /// Funzione che permette di mostrare Gli highScores migliori
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ShowHighScore(object sender, EventArgs e)
-        {
-            _menuPanel.Visible = false;
-            _logo.Visible = false;
-            _highScoresPanel.Visible = true;
-            Focus();
-            KeyPress += Help_KeyPress;
-            _showHighScore = true;
-        }
-
-        /// <summary>
-        /// Evento che permette di nascondere le istruzioni nascondendo il resto
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ShowInstructions(object sender, EventArgs e)
-        {
-            _menuPanel.Visible = false;
-            _logo.Visible = false;
-            _instructions.Visible = true;
-            Focus();
-            KeyPress += Help_KeyPress;
-        }
 
         /// <summary>
         /// Direttive che vanno eseguite in ogni caso
         /// </summary>
         private void Starter()
         {
+            MyEvents = new MenuEvents(this);
             _s = new Size(ClientSize.Width / 5, ClientSize.Height / 10);
 
             // MyPlayground

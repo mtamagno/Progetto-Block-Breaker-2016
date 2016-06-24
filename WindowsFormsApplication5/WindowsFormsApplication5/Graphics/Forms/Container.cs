@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -9,15 +10,16 @@ namespace BlockBreaker
     {
         #region Private Fields
 
-        private bool _again;
+        private ContainerEvents MyEvents;
+        public bool _again;
         private int _altezzaClient;
         private int _altezzaClientIniziale;
         private AudioButtons _audioButton;
         private bool _audioOnOff;
         private Game _game;
-        private GameOver _gameOver;
+        public GameOver _gameOver;
         private Panel _gamePanels;
-        private HighScore _highScore;
+        public HighScore _highScore;
         private int _lunghezzaClient;
         private int _lunghezzaClientIniziale;
         private Menu _menu;
@@ -78,6 +80,7 @@ namespace BlockBreaker
         /// <param name="e"></param>
         private void OnLoad(object sender, EventArgs e)
         {
+            MyEvents = new ContainerEvents(this);
             MinimumSize = new Size(700, 450);
             _audioOnOff = true;
             _music = new Music();
@@ -111,48 +114,9 @@ namespace BlockBreaker
         }
 
         /// <summary>
-        /// Funzione necessaria per cambiare form dopo la fine della partita
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ContinueToMenu(object sender, EventArgs e)
-        {
-            if (_gameOver.TextBox.Text != "Insert Name..." && !string.IsNullOrEmpty(_gameOver.TextBox.Text) &&
-                !string.IsNullOrWhiteSpace(_gameOver.TextBox.Text))
-            {
-                // Salva prima lo score, poi l'_highScore nell'xml
-                _highScore.Name = _gameOver.TextBox.Text;
-                _highScore.ModifyOrCreateXml(_highScore);
-
-                // Imposta che il giocatore ha gia finito una partita
-                _again = true;
-
-                // Pulisce tutto
-                DisposeAll();
-
-                // Inizializza il gamePanel
-                InitializeGamePanel();
-
-                // Inizializza il _menu
-                InitializeMenu();
-
-                // Svuota il garbage collector per liberare memoria
-                GC.Collect();
-
-                // Aspetta che il garbage collecor finisca
-                GC.WaitForPendingFinalizers();
-                GC.WaitForFullGCComplete();
-            }
-            else
-            {
-                MessageBox.Show("Inserisci un NickName");
-            }
-        }
-
-        /// <summary>
         /// Funzione per pulire la memoria che si incrementa di ciclo in ciclo in game se non svuotata
         /// </summary>
-        private void DisposeAll()
+        public void DisposeAll()
         {
             try
             {
@@ -259,7 +223,7 @@ namespace BlockBreaker
         /// <summary>
         /// Funzione necessaria ad inizializzare il form del gioco
         /// </summary>
-        private void InitializeGame()
+        public void InitializeGame()
         {
             //assegno al gioco un nuovo gioco
             _game = new Game();
@@ -291,14 +255,14 @@ namespace BlockBreaker
             _gameOver.Continue.Text = "Continue";
 
             //Assegno un evento al pusalnte del _gameOver
-            _gameOver.Continue.Click += ContinueToMenu;
+            _gameOver.Continue.Click += MyEvents.ContinueToMenu;
 
             //Faccio partire la musica del _gameOver
             _music.GameOver();
         }
 
 
-        private void InitializeGamePanel()
+        public void InitializeGamePanel()
         {
             //assegno al pannello un nuovo pannello
             _gamePanels = new Panel();
@@ -335,7 +299,7 @@ namespace BlockBreaker
         /// <summary>
         /// Funzione necessaria a inizializzare il form del _menu
         /// </summary>
-        private void InitializeMenu()
+        public void InitializeMenu()
         {
             // Assegna al _menu un nuovo _menu
             _menu = new Menu();
