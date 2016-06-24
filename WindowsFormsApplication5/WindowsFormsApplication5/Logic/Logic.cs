@@ -320,7 +320,7 @@ namespace BlockBreaker
             }
             if (PreviousScore < Score)
             {
-                _myGame.Invoke(new MethodInvoker(delegate { _myGame.MyScore.Text = "Score: " + Score; }));
+                _myGame.Invoke(new MethodInvoker(delegate { _myGame.MyScore.Text = "MyScore: " + Score; }));
             }
         }
 

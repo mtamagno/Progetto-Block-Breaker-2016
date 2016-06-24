@@ -128,6 +128,7 @@ namespace BlockBreaker
                     _instructions.Visible = true;
                 }
                 _help.KeyPress += Help_KeyPress;
+                Start.Text = "Play";
             }
         }
 
