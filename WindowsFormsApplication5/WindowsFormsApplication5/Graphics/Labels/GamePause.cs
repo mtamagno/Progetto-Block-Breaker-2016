@@ -16,7 +16,11 @@ namespace BlockBreaker
         #endregion Private Fields
 
         #region Public Constructors
-
+        /// <summary>
+        /// Costruttore, prende in ingresso grandezza e posizione e va a costruire il panel riferito allo stato gamePause.
+        /// </summary>
+        /// <returns></returns>
+        /// 
         public GamePause(int left, int top, int width, int height)
         {
             Left = left;

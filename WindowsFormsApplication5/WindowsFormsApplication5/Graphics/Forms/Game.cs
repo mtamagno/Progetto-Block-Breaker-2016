@@ -45,7 +45,7 @@ namespace BlockBreaker
         /// <summary>
         /// Funzione che permette l'inizializzazione delle vite e del loro disegno iniziale
         /// </summary>
-        private void life_init()
+        private void LifeInit()
         {
 
             for (var i = 0; i < MyGameLogic.VitaRimanente; i++)
@@ -79,7 +79,7 @@ namespace BlockBreaker
         /// <param name="hi"></param>
         /// <param name="l"></param>
         /// <param name="h"></param>
-        public void on_resize(int li, int hi, int l, int h)
+        public void OnResize(int li, int hi, int l, int h)
         {
             // Richiama logic.resize
             if (hi > 0 && h > 0 && li > 0 && l > 0)
@@ -312,7 +312,7 @@ namespace BlockBreaker
                 MyGameLogic);
 
             // Inizializza le vite
-            life_init();
+            LifeInit();
 
             // inizializzo il titolo del gioco
             GameTitleset();

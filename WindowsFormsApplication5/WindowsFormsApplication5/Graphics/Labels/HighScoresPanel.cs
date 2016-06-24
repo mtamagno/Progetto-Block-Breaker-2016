@@ -16,7 +16,12 @@ namespace BlockBreaker
         #endregion Private Fields
 
         #region Public Constructors
-
+        /// <summary>
+        /// Costruttore, prende in ingresso grandezza e posizione e va a costruire il panel riferito allo stato gamePause,
+        /// in oltre scrive dentro i label i relativi testi.
+        /// </summary>
+        /// <returns></returns>
+        /// 
         public HighScoresPanel(int left, int top, int width, int height)
         {
             var esc = new Label();

@@ -16,7 +16,11 @@ namespace BlockBreaker
         #endregion Private Fields
 
         #region Public Constructors
-
+        /// <summary>
+        /// Costruttore, prende in ingresso la dimensione e crea il pulsante personalizzato "bottone"
+        /// </summary>
+        /// <returns></returns>
+        /// 
         public AudioButtons(Size s)
         {
             _state = true;
@@ -42,6 +46,11 @@ namespace BlockBreaker
 
         #region Public Methods
 
+        /// <summary>
+        /// Funzione che cambia la grafica del bottone nel caso in cui l audio sia attivo o meno
+        /// </summary>
+        /// <returns></returns>
+        /// 
         public void ChangeState()
         {
             _state = !_state;
@@ -57,11 +66,20 @@ namespace BlockBreaker
         #endregion Public Methods
 
         #region Private Methods
-
+        /// <summary>
+        /// Evento che si verifica al passaggio del mouse sopra il bottone
+        /// </summary>
+        /// <returns></returns>
+        /// 
         private void MouseHoverButton(object sender, EventArgs e)
         {
             FlatStyle = FlatStyle.Standard;
         }
+        /// <summary>
+        /// Evento che si verifica quando si sposta il cursore del mouse dall'interno del bottone all'esterno
+        /// </summary>
+        /// <returns></returns>
+        /// 
 
         private void MouseLeaveButton(object sender, EventArgs e)
         {
