@@ -127,10 +127,6 @@
     <Compile Include="Graphics\Fonts\MyFonts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Graphics\Sprite\Skin.cs" />
-    <Content Include="Relazione\UML\Overview.jpg" />
-    <Content Include="Relazione\UML\Overview_expanded.jpg" />
-    <Content Include="Relazione\UML\Package Structure.jpg" />
-    <Content Include="Relazione\UML\Type Hierarchy.jpg" />
     <EmbeddedResource Include="Graphics\Forms\Container.resx">
       <DependentUpon>Container.cs</DependentUpon>
     </EmbeddedResource>
@@ -269,6 +265,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logic\Events\" />
+    <Folder Include="Relazione\UML\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
