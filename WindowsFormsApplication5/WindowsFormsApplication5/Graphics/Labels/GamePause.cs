@@ -33,6 +33,9 @@ namespace BlockBreaker
 
         #region Public Methods
 
+        /// <summary>
+        /// Imposta il font da noi scelto
+        /// </summary>
         private void SetFont()
         {
             _fontParagraph = new MyFonts(MyFonts.FontType.Paragraph);
@@ -42,6 +45,9 @@ namespace BlockBreaker
             _esc.Font = new Font(_fontParagraph.Type.Families[0], 14, FontStyle.Regular);
         }
 
+        /// <summary>
+        /// Inizializza i livelli da noi utilizzati
+        /// </summary>
         private void SetLabels()
         {
             _esc = new Label();
@@ -49,8 +55,12 @@ namespace BlockBreaker
             _paragraph = new Label();
         }
 
+        /// <summary>
+        /// Imposta il testo dei nostri tasti
+        /// </summary>
         public void SetText()
         {
+            //Titolo
             _title.UseCompatibleTextRendering = true;
             _title.Top = 40;
             _title.Text = "Game Pause";
@@ -58,6 +68,8 @@ namespace BlockBreaker
             _title.Width = Width;
             _title.TextAlign = ContentAlignment.MiddleCenter;
             _title.ForeColor = Color.White;
+            
+            //Paragrafo
             _paragraph.Height = 300;
             _paragraph.Top = 100;
             _paragraph.Text = "Press:" +
@@ -69,6 +81,8 @@ namespace BlockBreaker
             _paragraph.Width = Width;
             _paragraph.TextAlign = ContentAlignment.MiddleCenter;
             _paragraph.ForeColor = Color.White;
+            
+            //Esc
             _esc.UseCompatibleTextRendering = true;
             _esc.Height = 40;
             _esc.Top = Height - _esc.Height * 2;
@@ -77,13 +91,11 @@ namespace BlockBreaker
             _esc.Left = 10;
             _esc.Text = "Space -> Back To Game";
             _esc.ForeColor = Color.White;
+
+            //Aggiunge ai controlli
             Controls.Add(_esc);
             Controls.Add(_title);
             Controls.Add(_paragraph);
-            /*controller.BackgroundImage = Properties.Resources.Instructions;
-            controller.BackgroundImageLayout = ImageLayout.Stretch;
-            controller.Visible = false;
-            return controller;*/
             Visible = false;
         }
 

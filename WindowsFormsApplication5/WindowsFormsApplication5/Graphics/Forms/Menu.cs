@@ -23,7 +23,7 @@ namespace BlockBreaker
         private Bitmap _backgroundimage;
         private HighScoresPanel _highScoresPanel;
         private PictureBox _logo;
-        private bool _showhighscore;
+        private bool _showHighScore;
 
         #endregion Private Fields
 
@@ -33,7 +33,7 @@ namespace BlockBreaker
         {
             _instructions = new Instructions(0, 0, ClientSize.Width, ClientSize.Height);
             InitializeComponent();
-            _showhighscore = false;
+            _showHighScore = false;
         }
 
         #endregion Public Constructors
@@ -82,7 +82,7 @@ namespace BlockBreaker
                 _instructions.Visible = false;
                 _highScoresPanel.Visible = false;
                 _logo.Visible = true;
-                _showhighscore = false;
+                _showHighScore = false;
             }
         }
 
@@ -115,7 +115,7 @@ namespace BlockBreaker
                 _highScoresPanel = new HighScoresPanel(0, 0, ClientSize.Width, ClientSize.Height);
                 Controls.Add(_instructions);
                 Controls.Add(_highScoresPanel);
-                if (_showhighscore)
+                if (_showHighScore)
                 {
                     _highScoresPanel.Visible = true;
                     _menuPanel.Visible = false;
@@ -223,8 +223,8 @@ namespace BlockBreaker
             _highscores.Text = "Highscores";
 
             // Eventhandler
-            _help.Click += Show_Instructions;
-            _highscores.Click += Show_highscore;
+            _help.Click += ShowInstructions;
+            _highscores.Click += ShowHighScore;
             _menuPanel.Controls.Add(Start);
             _menuPanel.Controls.Add(_help);
             _menuPanel.Controls.Add(_highscores);
@@ -235,14 +235,14 @@ namespace BlockBreaker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Show_highscore(object sender, EventArgs e)
+        private void ShowHighScore(object sender, EventArgs e)
         {
             _menuPanel.Visible = false;
             _logo.Visible = false;
             _highScoresPanel.Visible = true;
             Focus();
             KeyPress += Help_KeyPress;
-            _showhighscore = true;
+            _showHighScore = true;
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace BlockBreaker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Show_Instructions(object sender, EventArgs e)
+        private void ShowInstructions(object sender, EventArgs e)
         {
             _menuPanel.Visible = false;
             _logo.Visible = false;

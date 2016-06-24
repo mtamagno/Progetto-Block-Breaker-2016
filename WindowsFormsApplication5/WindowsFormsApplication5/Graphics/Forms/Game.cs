@@ -182,7 +182,7 @@ namespace BlockBreaker
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Form1_KeyPress(object sender, KeyPressEventArgs e)
+        private void WhenKeyIsPressed(object sender, KeyPressEventArgs e)
         {
             if (sender == null) throw new ArgumentNullException(nameof(sender));
             if (!MyGameLogic.AllowInput) return;
